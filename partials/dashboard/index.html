@@ -1,0 +1,80 @@
+<style type="text/css">
+.time {
+    margin-top: 100px;
+}
+
+.time h1 {
+    font-weight: 500;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 100px;
+    text-align: center;
+    color: #918C8C;
+}
+
+.time p {
+    margin-top: -20px;
+    text-align: center;
+    font-size: 20px;
+    color: #918C8C;
+}
+
+.greetings {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 50px;
+}
+
+.message {
+    text-align: center;
+    font-size: 30px;
+}
+
+.lastlog {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #AAA;
+}
+
+.div-bottom {
+    position: absolute;
+}
+
+.timesheet {
+    text-align: center;
+    font-size: 20px;
+
+}
+</style>
+<div>
+    <ul class="nav nav-list">
+        <li class="time" style="line-height: 44px;">
+            <h1 class="animated fadeInLeft">21:00</h1>
+            <p class="animated fadeInRight">Sat,October 1st 2029</p>
+        </li>
+        <li class="greetings">
+            <p class="animated fadeInLeft">{{greetings}}, {{profile.first_name}}.</p>
+        </li>
+        <li class="message" ng-if="logtype=='login'">
+            <p class="animated fadeInRight">Would you like to log in now?</p>
+            <input ng-disabled="logbutton" ng-click="submitlog('In')" type="button" class=" btn btn-lg btn-round btn-primary" value="LOG IN" style="margin-top:50px;">
+        </li>
+        <li class="message" ng-if="logtype=='logout'">
+            <p class="animated fadeInRight">Would you like to log out?</p>
+            <input ng-disabled="logbutton" ng-click="submitlog('Out')" type="button" class=" btn btn-lg btn-round btn-primary" value="LOG OUT" style="margin-top:50px;">
+        </li>
+        <li class="lastlog">
+            <p>{{lastlog}}</p>
+        </li>
+        <li class="timesheet">
+            <a href="#/timesheet">
+                <button class="btn ripple btn-outline btn-primary" style="width:200px;">
+                    <div>
+                        <span>View Timesheet</span>
+                    </div>
+                </button>
+            </a>
+        </li>
+    </ul>
+</div>
+<script src="./ASSETS/js/main.js"></script>
