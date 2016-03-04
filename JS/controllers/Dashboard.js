@@ -1,6 +1,7 @@
 app.controller('Dashboard', function(
   										$scope,
                                         SessionFactory,
+                                        TimelogFactory,
                                         EmployeesFactory,
                                         md5
   									){
@@ -53,7 +54,7 @@ app.controller('Dashboard', function(
 
     function get_last_log(){
         var filter = { 'pk' : $scope.profile.pk };
-        var promise = EmployeesFactory.last_log(filter);
+        var promise = TimelogFactory.last_log(filter);
         promise.then(function(data){
             var log = data.data.result[0];
 
@@ -77,7 +78,7 @@ app.controller('Dashboard', function(
 
     function get_last_log_today(){
         var filter = { 'pk' : $scope.profile.pk };
-        var promise = EmployeesFactory.log_today(filter);
+        var promise = TimelogFactory.log_today(filter);
         promise.then(function(data){
             var log = data.data.result[0];
             
@@ -105,7 +106,7 @@ app.controller('Dashboard', function(
             'employees_pk' : $scope.profile.pk
         };
 
-        var promise = EmployeesFactory.submit_log(filter);
+        var promise = TimelogFactory.submit_log(filter);
         promise.then(function(data){
             get_last_log_today();
 

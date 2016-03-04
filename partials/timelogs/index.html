@@ -2,10 +2,10 @@
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
             <div class="col-md-12">
-                <h3 class="animated fadeInLeft">Timesheet</h3>
+                <h3 class="animated fadeInLeft">Time Logs</h3>
                 <p class="animated fadeInDown">
                     Home <span class="fa-angle-right fa"></span> 
-                    Timesheet
+                    Time Logs
                 </p>
             </div>
         </div>
@@ -13,10 +13,6 @@
     <div class="panel">
         <div style="padding-left: 20px; padding-top:20px;">
             <h4>
-                <select ng-model="filter.datetype" ng-hide="true">
-                  <option value="Date Submitted">Date Submitted</option>
-                  <option value="Date Received">Date Received</option>
-                </select>
                 Date From: <input ng-model="filter.datefrom" type="text" id="datefrom" style="width:120px;"/>
                 Date To: <input ng-model="filter.dateto" type="text" id="dateto" style="width:120px;"/>
 
@@ -32,7 +28,10 @@
             <table id="datatables-example" class="table table-striped table-bordered" width="90%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>Employee ID</th>
+                        <th>Employee</th>
                         <th>Date</th>
+                        <th>Day</th>
                         <th>Log In</th>
                         <th>Log Out</th>
                         <th># of Hours</th>
@@ -40,7 +39,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in timesheet_data" style="cursor:pointer;">
+                        <td>{{v.employee_id}}</td>
+                        <td>{{v.employee}}</td>
                         <td>{{v.log_date}}</td>
+                        <td>{{v.log_day}}</td>
                         <td>{{v.login}}</td>
                         <td>{{v.logout}}</td>
                         <td>{{v.hrs}}</td>

@@ -5,7 +5,7 @@
 	<meta name="description" content="Career Hunter Recruitment Solutions, Time Tracking System">
 	<meta name="author" content="CHRS IT">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CHRS | Time Tracking System</title>
+    <title>CHRS | Integrity</title>
  
     <!-- start: Css -->
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/bootstrap.min.css">
@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/>
 	<link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
 	<!-- end: Css -->
-
 	
     <link rel="shortcut icon" href="./ASSETS/img/lion_logo2.png">
     
@@ -29,8 +28,77 @@
 </head>
 
 <body id="mimin" class="dashboard">
+    <div class="m-app-loading" ng-animate-children>
+        <!--
+        HACKY CODE WARNING: I'm putting Style block inside directive so that it
+        will be removed from the DOM when we remove the directive container.
+        -->
+        <style type="text/css">
+         
+        div.m-app-loading {
+            position: absolute;
+        }
+         
+        div.m-app-loading div.animated-container {
+            background-color: #333333 ;
+            bottom: 0px ;
+            left: 0px ;
+            opacity: 1.0 ;
+            position: fixed;
+            right: 0px ;
+            top: 0px ;
+            z-index: 999999 ;
+        }
+         
+        /* Used to initialize the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave {
+            opacity: 1.0 ;
+            transition: all linear 200ms ;
+            -webkit-transition: all linear 200ms ;
+        }
+         
+        /* Used to set the end properties of the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave-active {
+            opacity: 0 ;
+        }
+         
+        div.m-app-loading div.messaging {
+            color: #FFFFFF ;
+            font-family: monospace ;
+            left: 0px ;
+            margin-top: -37px ;
+            position: absolute ;
+            right: 0px ;
+            text-align: center ;
+            top: 50% ;
+        }
+         
+        div.m-app-loading h1 {
+            font-size: 26px ;
+            line-height: 35px ;
+            margin: 0px 0px 20px 0px ;
+        }
+         
+        div.m-app-loading p {
+            font-size: 18px ;
+            line-height: 14px ;
+            margin: 0px 0px 0px 0px ;
+        }
+        </style>
+
+        <!-- BEGIN: Actual animated container. -->
+        <div class="animated-container">
+            <div class="messaging">
+                <p>
+                    Please stand by while Integrity is initializing ...
+                </p>
+            </div>
+        </div>
+        <!-- END: Actual animated container. -->
+    </div>
+    <!-- END: App-Loading Screen. -->
+
     <!-- start: Header -->
-    
     <nav class="navbar navbar-default header navbar-fixed-top">
         <div class="col-md-12 nav-wrapper">
             <div class="navbar-header" style="width:100%;">
@@ -41,11 +109,11 @@
                 <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" ng-controller="Avatar">
                     <li class="user-name"><span>{{ profile.first_name + " " + profile.last_name }}</span></li>
                     <li class="dropdown avatar-dropdown">
-                        <img src="./ASSETS/img/avatar.gif" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <img src="./ASSETS/img/LogoRGB_254.png" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu user-dropdown">
-                            <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
+                            <!-- <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
                             <li><a href="#"><span class="fa fa-calendar"></span> My Calendar</a></li>
-                            <li role="separator" class="divider"></li>
+                            <li role="separator" class="divider"></li> -->
                             <li class="more">
                                 <ul>
                                     <li><a href=""><span class="fa fa-cogs"></span></a></li>
@@ -87,10 +155,15 @@
     <script src="./JS/controllers/Avatar.js"></script>
     <script src="./JS/controllers/Dashboard.js"></script>
     <script src="./JS/controllers/Timesheet.js"></script>
+    <script src="./JS/controllers/Timelogs.js"></script>
 
     <!-- FACTORIES -->
     <script src="./JS/factories/SessionFactory.js"></script>
     <script src="./JS/factories/EmployeesFactory.js"></script>  
+    <script src="./JS/factories/TimelogFactory.js"></script>  
+
+    <!-- DIRECTIVES -->
+    <script src="./JS/directives/splash.js"></script>
 
     <!-- plugins -->
     <script src="./ASSETS/js/plugins/moment.min.js"></script>

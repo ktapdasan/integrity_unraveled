@@ -1,4 +1,4 @@
-app.controller('Timesheet', function(
+app.controller('Timelogs', function(
   										$scope,
                                         SessionFactory,
                                         EmployeesFactory,
@@ -56,7 +56,8 @@ app.controller('Timesheet', function(
 
         today = yyyy+'-'+mm+'-'+dd;
 
-        $scope.filter.datefrom = getMonday(new Date());
+        //$scope.filter.datefrom = getMonday(new Date());
+        $scope.filter.datefrom = yyyy+'-'+mm+'-01';
         $scope.filter.dateto = today;
 
     }
@@ -91,13 +92,13 @@ app.controller('Timesheet', function(
     function timesheet(){
         $scope.filter.pk = $scope.profile.pk;
 
-        var promise = TimelogFactory.timesheet($scope.filter);
+        var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
         })   
     }
 
     $scope.export_timesheet = function(){
-        window.open('./FUNCTIONS/Timelog/timesheet_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
+        window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
     }
 });

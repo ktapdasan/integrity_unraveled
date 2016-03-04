@@ -19,6 +19,10 @@
     <!-- end: Css -->
 
     <style type="text/css">
+    body {
+        /*background-color: #2196f3;*/
+        background-color: #000;
+    }
     .time h1 {
         margin-top: -10px;
         font-weight: 500;
@@ -66,12 +70,12 @@
                         <!-- <h1 class="atomic-symbol">Mi</h1> -->
                         <IMG SRC="./ASSETS/img/logo.png" style="width:200px;"/>
                         <div class="form-group form-animate-text" style="margin-top:10px !important;">
-                            <input id="employee_id" type="text" class="form-text" value="160002" required>
+                            <input id="employee_id" type="text" class="form-text" value="" required>
                             <span class="bar"></span>
                             <label>Employee ID</label>
                         </div>
                         <div class="form-group form-animate-text" style="margin-top:40px !important;">
-                            <input id="employee_password" type="password" class="form-text" value="iloveyou" required>
+                            <input id="employee_password" type="password" class="form-text" value="" required>
                             <span class="bar"></span>
                             <label>Password</label>
                         </div>
@@ -92,6 +96,7 @@
         <script src="./ASSETS/js/jquery.min.js"></script>
         <script src="./ASSETS/js/jquery.ui.min.js"></script>
         <script src="./ASSETS/js/bootstrap.min.js"></script>
+        <script src="./ASSETS/js/jquery.backstretch.js"></script>
 
         <script src="./ASSETS/js/plugins/moment.min.js"></script>
         <script src="./ASSETS/js/plugins/icheck.min.js"></script>
@@ -108,6 +113,8 @@
                     checkboxClass: 'icheckbox_flat-aero',
                     radioClass: 'iradio_flat-aero'
                 });
+
+                $.backstretch("ASSETS/img/keyboard.jpg");
             });
 
             function checksession(){

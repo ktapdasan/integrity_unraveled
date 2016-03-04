@@ -44,7 +44,7 @@ class Employees extends ClassParent {
                 from accounts
                 left join employees on (accounts.employee_id = employees.employee_id)
                 where employees.archived = false
-                and accounts.employee_id = $empid
+                and accounts.employee_id = '$empid'
                 and accounts.password = md5('$password')
                 ;
 EOT;
@@ -106,11 +106,12 @@ EOT;
                 select 
                     employees_pk,
                     type,
-                    date_created::date as date,
-                    date_created::time(0) as time
+                    time_log::date as date,
+                    time_log::time(0) as time,
+                    date_created
                 from time_log
                 where employees_pk = $pk
-                order by date_created desc limit 1
+                order by time_log desc limit 1
                 ;
 EOT;
 
@@ -128,11 +129,12 @@ EOT;
                 select 
                     employees_pk,
                     type,
-                    date_created::date as date,
-                    date_created::time(0) as time
+                    time_log::date as date,
+                    time_log::time(0) as time,
+                    date_created
                 from time_log
                 where employees_pk = $pk
-                and date_created::date = '$today'
+                and time_log::date = '$today'
                 order by date_created desc limit 1
                 ;
 EOT;
@@ -175,22 +177,99 @@ EOT;
         $pk = $data['pk'];
 
         $sql = <<<EOT
-                select 
-                    date_created::date as date,
+                with Q as
+                (
+                    select
+                        employees_pk,
+                        (select employee_id from employees where pk = employees_pk) as employee_id,
+                        (select first_name ||' '|| middle_name ||' '|| last_name from employees where pk = employees_pk) as employee,
+                        type,
+                        time_log::date as log_date,
+                        time_log::time(0) as log_time,
+                        date_created
+                    from time_log
+                    where employees_pk = $pk
+                    and time_log::date between '$datefrom' and '$dateto'
+                )
+                select
+                    employees_pk,
+                    employee_id,
+                    employee,
+                    log_date,
                     (
-                        case when type = 'In'
-                        then date_created::time(0)
-                        else date_created::time(0) end
+                        select
+                            min(log_time)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'In'
                     ) as login,
                     (
-                        case when type = 'Out'
-                        then date_created::time(0)
-                        else date_created::time(0) end
-                    ) as logout
-                from time_log
-                where employees_pk = $pk
-                and date_created between '$datefrom' and '$dateto'
-                order by date_created
+                        select
+                            max(log_time)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'Out'
+                    ) as logout,
+                    (
+                        select
+                            max(log_time)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'Out'
+                    ) -
+                    (
+                        select
+                            min(log_time)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'In'
+                    ) as hrs
+                from Q as logs
+                group by employees_pk, employee, employee_id, log_date
+                order by logs.log_date
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function timelogs($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $datefrom = $data['datefrom'];
+        $dateto = $data['dateto'];
+        //$pk = $data['pk'];
+        
+        $sql = <<<EOT
+                with Q as
+                (
+                    select
+                        employees_pk,
+                        (select employee_id from employees where pk = employees_pk) as employee_id,
+                        (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
+                        type,
+                        time_log::date as log_date,
+                        time_log::time(0) as log_time,
+                        date_created
+                    from time_log
+                    where time_log::date between '$datefrom' and '$dateto'
+                )
+                select
+                    employees_pk,
+                    employee_id,
+                    employee,
+                    log_date,
+                    to_char(log_date, 'Day') as log_day,
+                    (
+                        select
+                            case when logs.type = 'In' then
+                            min(log_time)
+                            else max(log_time) end
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'In'
+                    ) as log_time,
+                    type as log_type
+                from Q as logs
+                group by employees_pk, employee, employee_id, log_date, type
+                order by logs.employee, logs.log_date
                 ;
 EOT;
 
