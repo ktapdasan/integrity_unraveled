@@ -3,7 +3,8 @@ app.controller('Dashboard', function(
                                         SessionFactory,
                                         TimelogFactory,
                                         EmployeesFactory,
-                                        md5
+                                        md5,
+                                        $timeout
   									){
 
     $scope.profile = {};
@@ -110,9 +111,10 @@ app.controller('Dashboard', function(
         promise.then(function(data){
             get_last_log_today();
 
-            setTimeout(function(){
+            var to = $timeout(function() {
+                $timeout.cancel(to);
                 $scope.logbutton = false;
-            }, 2000)
+            }, 5000);
         })
     }
 });

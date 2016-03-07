@@ -197,20 +197,20 @@ EOT;
                     employee,
                     log_date,
                     (
-                        select
+                        coalesce((select
                             min(log_time)
                         from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'In'
+                        and Q.log_date = logs.log_date and Q.type = 'In')::text,'None')
                     ) as login,
                     (
-                        select
-                            max(log_time)
+                        coalesce((select
+                            min(log_time)
                         from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'Out'
+                        and Q.log_date = logs.log_date and Q.type = 'Out')::text,'None')
                     ) as logout,
-                    (
+                    coalesce(((
                         select
-                            max(log_time)
+                            min(log_time)
                         from Q where Q.employees_pk = logs.employees_pk
                         and Q.log_date = logs.log_date and Q.type = 'Out'
                     ) -
@@ -219,7 +219,7 @@ EOT;
                             min(log_time)
                         from Q where Q.employees_pk = logs.employees_pk
                         and Q.log_date = logs.log_date and Q.type = 'In'
-                    ) as hrs
+                    ))::text,'N/A') as hrs
                 from Q as logs
                 group by employees_pk, employee, employee_id, log_date
                 order by logs.log_date
@@ -258,14 +258,21 @@ EOT;
                     employee,
                     log_date,
                     to_char(log_date, 'Day') as log_day,
+                    case when logs.type = 'In' then
                     (
                         select
-                            case when logs.type = 'In' then
-                            min(log_time)
-                            else max(log_time) end
+                            coalesce(min(log_time), null)
                         from Q where Q.employees_pk = logs.employees_pk
                         and Q.log_date = logs.log_date and Q.type = 'In'
-                    ) as log_time,
+                    )
+                    else
+                    (
+                        select
+                            coalesce(min(log_time), null)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'Out'
+                    ) end as log_time,
+                        
                     type as log_type
                 from Q as logs
                 group by employees_pk, employee, employee_id, log_date, type
@@ -277,4 +284,14 @@ EOT;
     }
 
 }
+
+/*
+select
+                            case when logs.type = 'In' then
+                            min(log_time)
+                            else max(log_time) end
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'In'
+                    ) as log_time,
+*/
 ?>
