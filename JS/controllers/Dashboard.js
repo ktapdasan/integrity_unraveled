@@ -162,12 +162,6 @@ app.controller('Dashboard', function(
     }
 
     $scope.switch = function(logtype){
-        UINotification.success({
-                                    message: 'You have successfully logged out.', 
-                                    title: 'SUCCESS', 
-                                    delay : 15000,
-                                    positionY: 'top', positionX: 'right'
-                                });
 
         if(logtype == 'logout'){
             $scope.logtype = "login";

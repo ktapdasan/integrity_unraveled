@@ -4,7 +4,8 @@ app.controller('Header', function(
                                         EmployeesFactory,
                                         md5,
                                         ngDialog,
-                                        UINotification
+                                        UINotification,
+                                        $location
   									){
 
     init();
@@ -21,6 +22,8 @@ app.controller('Header', function(
     $scope.modal = {};
 
     function init(){
+        
+
         var promise = SessionFactory.getsession();
         promise.then(function(data){
             var _id = md5.createHash('pk');
@@ -48,6 +51,8 @@ app.controller('Header', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+
+            menuselect($location.$$path.replace(/\//,''));
         })   
     }
 
@@ -176,6 +181,14 @@ app.controller('Header', function(
     }
 
     $scope.menuclicked = function(menu){
+        menuselect(menu);
+    }
+
+    function menuselect(menu){
+        if(menu == ''){
+            menu = 'home';
+        }
+        
         for(var i in $scope.menu){
             $scope.menu[i] = '';
         }
