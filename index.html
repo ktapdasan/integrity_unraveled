@@ -15,9 +15,18 @@
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/simple-line-icons.css"/>
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/>
 	<link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog.min.css" >
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-theme-plain.min.css" >
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-theme-default.min.css" >
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-custom-width.css" >
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dropdown/isteven-multi-select.css" >
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/notification/angular-ui-notification.min.css" >
 	<!-- end: Css -->
 	
-    <link rel="shortcut icon" href="./ASSETS/img/lion_logo2.png">
+    <link rel="shortcut icon" href="./ASSETS/img/time.ico">
     
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -25,6 +34,15 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    .custom-menu li a {
+        color: #2196f3 !important;
+    }
+
+    .navbar-nav li:hover{
+        background-color: #e7e7e7;
+    }
+    </style>
 </head>
 
 <body id="mimin" class="dashboard">
@@ -84,6 +102,8 @@
             line-height: 14px ;
             margin: 0px 0px 0px 0px ;
         }
+
+
         </style>
 
         <!-- BEGIN: Actual animated container. -->
@@ -101,12 +121,26 @@
     <!-- start: Header -->
     <nav class="navbar navbar-default header navbar-fixed-top">
         <div class="col-md-12 nav-wrapper">
-            <div class="navbar-header" style="width:100%;">
+            <div class="navbar-header" style="width:100%;" ng-controller="Header">
                 <a href="#/" class="navbar-brand"> 
                     <b>Integrity</b>
                 </a>
+                <ul class="nav navbar-nav navbar-left user-nav custom-menu">
+                    <li ng-class="menu.home">
+                        <a href="#/" ng-click="menuclicked('home')">Home</a>
+                    </li>
+                    <li ng-class="menu.timesheet">
+                        <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a>
+                    </li>
+                    <li class="dropdown" ng-class="menu.manual">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manual<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" ng-click="manual_log()">Manual Log</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-                <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" ng-controller="Avatar">
+                <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" >
                     <li class="user-name"><span>{{ profile.first_name + " " + profile.last_name }}</span></li>
                     <li class="dropdown avatar-dropdown">
                         <img src="./ASSETS/img/LogoRGB_254.png" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
@@ -117,8 +151,8 @@
                             <li class="more">
                                 <ul>
                                     <li><a href=""><span class="fa fa-cogs"></span></a></li>
-                                    <li><a href=""><span class="fa fa-lock"></span></a></li>
-                                    <li><a href="" ng-click="logout()"><span class="fa fa-power-off"></span></a></li>
+                                    <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li>
+                                    <li alt="Log out"><a href="" ng-click="logout()"><span class="fa fa-power-off"></span></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -152,7 +186,7 @@
     <script src="./JS/module.js"></script>
 
     <!-- CONTROLLERS -->
-    <script src="./JS/controllers/Avatar.js"></script>
+    <script src="./JS/controllers/Header.js"></script>
     <script src="./JS/controllers/Dashboard.js"></script>
     <script src="./JS/controllers/Timesheet.js"></script>
     <script src="./JS/controllers/Timelogs.js"></script>
@@ -169,9 +203,115 @@
     <script src="./ASSETS/js/plugins/moment.min.js"></script>
     <script src="./ASSETS/js/plugins/jquery.nicescroll.js"></script>
     <script src="./ASSETS/js/plugins/md5/angular-md5.js"></script>
+    <script src="./ASSETS/js/plugins/dialog/ngDialog.js"></script>
+    <script src="./ASSETS/js/plugins/dropdown/isteven-multi-select.js"></script>
+    <script src="./ASSETS/js/plugins/notification/angular-ui-notification.min.js"></script>
 
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>
+
+    <script type="text/ng-template" id="ConfirmModal">
+        <div class="ngdialog-message" style="width: 500px;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <h4>{{ modal.message }}</h4>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="PasswordModal">
+        <div class="ngdialog-message" style="width: 500px;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+            <div>
+                <table style="width: 85%;">
+                    <thead>
+                        <tr>
+                            <td>
+                                Current Password :
+                            </td>
+                            <td>
+                                <input type="password" ng-model="modal.data.old_password" maxlength="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                New Password :
+                            </td>
+                            <td>
+                                <input type="password" ng-model="modal.data.new_password" maxlength="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Confirm Password :
+                            </td>
+                            <td>
+                                <input type="password" ng-model="modal.data.confirm_password" maxlength="20"/>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="ManualLogModal">
+        <div class="ngdialog-message" style="width: 500px;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+                
+            </div>
+            <div>
+                <table style="width: 85%;">
+                    <thead>
+                        <tr>
+                            <td>
+                                Type :
+                            </td>
+                            <td>
+                                <select ng-model="modal.data.type">
+                                    <option value="In">Log In</option>
+                                    <option value="Out">Log Out</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date :
+                            </td>
+                            <td>
+                                <input type="text" ng-model="modal.data.date" maxlength="10" style="width:110px;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Time
+                            </td>
+                            <td>
+                                <input type="text" ng-model="modal.data.time" maxlength="5" style="width:70px;"/>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
     
   </body>
 </html>

@@ -3,12 +3,14 @@ app.controller('Timelogs', function(
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
-                                        md5
+                                        md5,
+                                        UINotification
   									){
 
     $scope.profile = {};
     $scope.filter = {};
     $scope.timesheet_data = [];
+    $scope.employees = [];
 
     init();
 
@@ -35,6 +37,7 @@ app.controller('Timelogs', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
+            employees();
             timesheet();
         })   
     } 
@@ -85,20 +88,55 @@ app.controller('Timelogs', function(
         return monday;
     }
 
+    function employees(){
+        var filter = {
+            archived : 'false'
+        };
+
+        var promise = EmployeesFactory.fetch(filter);
+        promise.then(function(data){
+            var a = data.data.result;
+            $scope.employees=[];
+            for(var i in a){
+                $scope.employees.push({
+                                            pk: a[i].pk,
+                                            name: a[i].last_name +", "+a[i].first_name+" "+a[i].middle_name,
+                                            ticked: false
+                                        });
+            }
+        })
+    }
+
     $scope.show_timesheet = function(){
         timesheet();        
     }
 
     function timesheet(){
         $scope.filter.pk = $scope.profile.pk;
-
+        
+        delete $scope.filter.employees_pk;
+        if($scope.filter.employee.length > 0){
+            $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        }
+        
         var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
+
+            
         })   
     }
 
     $scope.export_timesheet = function(){
-        window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
+        $scope.filter.pk = $scope.profile.pk;
+        
+        delete $scope.filter.employees_pk;
+        if($scope.filter.employee.length > 0){
+            $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        }
+
+        window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk);
+
+        
     }
 });

@@ -1,10 +1,15 @@
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+</style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
             <div class="col-md-12">
                 <h3 class="animated fadeInLeft">Timesheet</h3>
                 <p class="animated fadeInDown">
-                    Home <span class="fa-angle-right fa"></span> 
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
                     Timesheet
                 </p>
             </div>
@@ -33,6 +38,7 @@
                 <thead>
                     <tr>
                         <th>Date</th>
+                        <th>Day</th>
                         <th>Log In</th>
                         <th>Log Out</th>
                         <th># of Hours</th>
@@ -41,8 +47,9 @@
                 <tbody>
                     <tr ng-repeat="(k, v) in timesheet_data" style="cursor:pointer;">
                         <td>{{v.log_date}}</td>
-                        <td>{{v.login}}</td>
-                        <td>{{v.logout}}</td>
+                        <td>{{v.log_day}}</td>
+                        <td ng-class="(v.login == 'None')?'red':''">{{v.login}}</td>
+                        <td ng-class="(v.logout == 'None')?'red':''">{{v.logout}}</td>
                         <td>{{v.hrs}}</td>
                     </tr>
                 </tbody>

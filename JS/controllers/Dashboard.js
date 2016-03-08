@@ -4,7 +4,9 @@ app.controller('Dashboard', function(
                                         TimelogFactory,
                                         EmployeesFactory,
                                         md5,
-                                        $timeout
+                                        $timeout,
+                                        ngDialog,
+                                        UINotification
   									){
 
     $scope.profile = {};
@@ -100,21 +102,78 @@ app.controller('Dashboard', function(
     }
 
     $scope.submitlog = function(type){
-        $scope.logbutton = true;
+        
 
         var filter = {
             'type' : type,
             'employees_pk' : $scope.profile.pk
         };
 
-        var promise = TimelogFactory.submit_log(filter);
-        promise.then(function(data){
-            get_last_log_today();
+        if(type == "Out"){
+            $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to log out?',
+                save : 'Log out',
+                close : 'Cancel'
+            };
 
-            var to = $timeout(function() {
-                $timeout.cancel(to);
-                $scope.logbutton = false;
-            }, 5000);
-        })
+            ngDialog.openConfirm({
+                template: 'ConfirmModal',
+                className: 'ngdialog-theme-plain',
+                scope: $scope,
+                showClose: false
+            })
+            .then(function(value){
+                return false;
+            }, function(value){
+                $scope.logbutton = true;
+                var promise = TimelogFactory.submit_log(filter);
+                promise.then(function(data){
+                    get_last_log_today();
+
+                    UINotification.success({
+                                    message: 'You have successfully logged out.', 
+                                    title: 'SUCCESS', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+
+                    var to = $timeout(function() {
+                        $timeout.cancel(to);
+                        $scope.logbutton = false;
+                    }, 5000);
+                })
+            });
+        }
+        else {
+            $scope.logbutton = true;
+            var promise = TimelogFactory.submit_log(filter);
+            promise.then(function(data){
+                get_last_log_today();
+
+                var to = $timeout(function() {
+                    $timeout.cancel(to);
+                    $scope.logbutton = false;
+                }, 5000);
+            })
+        }
+
+        
+    }
+
+    $scope.switch = function(logtype){
+        UINotification.success({
+                                    message: 'You have successfully logged out.', 
+                                    title: 'SUCCESS', 
+                                    delay : 15000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+
+        if(logtype == 'logout'){
+            $scope.logtype = "login";
+        }
+        else {
+            $scope.logtype = "logout";
+        }
     }
 });

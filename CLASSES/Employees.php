@@ -59,6 +59,7 @@ EOT;
                 with A as
                 (
                     select 
+                        employees.pk,
                         employees.employee_id,
                         employees.first_name,
                         employees.middle_name,
@@ -196,6 +197,7 @@ EOT;
                     employee_id,
                     employee,
                     log_date,
+                    to_char(log_date, 'Day') as log_day,
                     (
                         coalesce((select
                             min(log_time)
@@ -221,7 +223,7 @@ EOT;
                         and Q.log_date = logs.log_date and Q.type = 'In'
                     ))::text,'N/A') as hrs
                 from Q as logs
-                group by employees_pk, employee, employee_id, log_date
+                group by employees_pk, employee, employee_id, log_date, log_day
                 order by logs.log_date
                 ;
 EOT;
@@ -234,10 +236,14 @@ EOT;
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
+        $where='';
+        if($data['employees_pk']){
+            $where .= "and employees_pk = ". $data['employees_pk']; 
+        }
+
         $datefrom = $data['datefrom'];
         $dateto = $data['dateto'];
-        //$pk = $data['pk'];
-        
+
         $sql = <<<EOT
                 with Q as
                 (
@@ -251,36 +257,68 @@ EOT;
                         date_created
                     from time_log
                     where time_log::date between '$datefrom' and '$dateto'
+                    $where
                 )
                 select
                     employees_pk,
                     employee_id,
                     employee,
                     log_date,
+                    to_char(log_date, 'dd-Mon-YYYY') as log_date2,
                     to_char(log_date, 'Day') as log_day,
-                    case when logs.type = 'In' then
                     (
-                        select
-                            coalesce(min(log_time), null)
+                        coalesce((select
+                            min(log_time)
                         from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'In'
-                    )
-                    else
+                        and Q.log_date = logs.log_date and Q.type = 'In')::text,'None')
+                    ) as log_in,
                     (
+                        coalesce((select
+                            min(log_time)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'Out')::text,'None')
+                    ) as log_out,
+                    coalesce(((
                         select
-                            coalesce(min(log_time), null)
+                            min(log_time)
                         from Q where Q.employees_pk = logs.employees_pk
                         and Q.log_date = logs.log_date and Q.type = 'Out'
-                    ) end as log_time,
-                        
-                    type as log_type
+                    ) -
+                    (
+                        select
+                            min(log_time)
+                        from Q where Q.employees_pk = logs.employees_pk
+                        and Q.log_date = logs.log_date and Q.type = 'In'
+                    ))::text,'N/A') as hrs
                 from Q as logs
-                group by employees_pk, employee, employee_id, log_date, type
-                order by logs.employee, logs.log_date
+                group by employees_pk, employee, employee_id, log_date
+                order by logs.log_date,logs.employee
                 ;
 EOT;
 
         return ClassParent::get($sql);
+    }
+
+    public function change_password($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $employee_id = $data['employee_id'];
+        $old_password = $data['old_password'];
+        $password = md5($data['new_password']);
+
+        $sql = <<<EOT
+                update accounts set
+                (password)
+                =
+                ('$password')
+                where employee_id = '$employee_id'
+                and password = md5('$old_password')
+                ;
+EOT;
+
+        return ClassParent::update($sql);
     }
 
 }

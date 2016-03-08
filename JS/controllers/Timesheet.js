@@ -56,7 +56,7 @@ app.controller('Timesheet', function(
 
         today = yyyy+'-'+mm+'-'+dd;
 
-        $scope.filter.datefrom = getMonday(new Date());
+        $scope.filter.datefrom = yyyy+'-'+mm+'-01'; //getMonday(new Date());
         $scope.filter.dateto = today;
 
     }
@@ -85,7 +85,7 @@ app.controller('Timesheet', function(
     }
 
     $scope.show_timesheet = function(){
-        timesheet();        
+        timesheet();
     }
 
     function timesheet(){
@@ -94,7 +94,7 @@ app.controller('Timesheet', function(
         var promise = TimelogFactory.timesheet($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
-        })   
+        })
     }
 
     $scope.export_timesheet = function(){

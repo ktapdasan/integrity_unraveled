@@ -1,4 +1,11 @@
-var app = angular.module('onload', ['ngRoute','ngCookies','angular-md5']);
+var app = angular.module('onload', [
+                                    'ngRoute',
+                                    'ngCookies',
+                                    'angular-md5',
+                                    'ngDialog',
+                                    'isteven-multi-select',
+                                    'ui-notification'
+                                ]);
 
 app.config(function($routeProvider){
     $routeProvider

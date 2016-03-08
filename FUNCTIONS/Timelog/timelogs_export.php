@@ -13,17 +13,34 @@ $data = $class->timelogs($data);
 // print_r($data);
 // exit();
 $count=1;
-$header=	'Employee ID, Employee Name, Date, Day, Time, Type';
+$header=	'Employee ID, Employee Name, Day, Date, Time, Type';
 $body="";
 
 foreach($data['result'] as $k=>$v){
+	if($v['log_in']=='None'){
+		$v['log_in']='';
+	}
+
+	if($v['log_out']=='None'){
+		$v['log_out']='';
+	}
+
+	//login
 	$body .= 
 			$v['employee_id'].',"'.
 			$v['employee'].'","'.
-			$v['log_date'].'","'.
-			$v['log_day'].'",'.
-			$v['log_time'].','.
-			$v['log_type']."\n";
+			$v['log_day'].'","'.
+			$v['log_date2'].'",'.
+			$v['log_in'].','.
+			"In\n";
+	//logout
+	$body .= 
+			$v['employee_id'].',"'.
+			$v['employee'].'","'.
+			$v['log_day'].'","'.
+			$v['log_date2'].'",'.
+			$v['log_out'].','.
+			"Out\n";
 
 	$count++;
 }
