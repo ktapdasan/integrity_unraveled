@@ -1,5 +1,6 @@
 app.controller('Footer', function(
   										$scope,
+                                        $cookies,
                                         SessionFactory,
                                         EmployeesFactory,
                                         md5,
@@ -69,13 +70,21 @@ app.controller('Footer', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
 
-            $scope.current_msg = $scope.messages[$scope.counter];
-            $scope.counter++;
-            audio1.play();
+            var commented = $cookies.get('commented');
+            
+            if(commented){
+                $scope.counter = 7;
+                $scope.next_slide();
+            }
+            else {
+                $scope.current_msg = $scope.messages[$scope.counter];
+                audio1.play();    
+            }
         })   
     }
 
     $scope.next_slide = function(){
+        $scope.counter++;
         if($scope.counter == 0){
             audio1.play();
         }
@@ -103,16 +112,13 @@ app.controller('Footer', function(
         else if($scope.counter == 8){
             audio9.play();
         }
-        
-
 
         if($scope.counter > $scope.messages.length - 1){
-            //$scope.counter = 0;
             $scope.comment = true;
         }
         $scope.current_msg = $scope.messages[$scope.counter];
         
-        $scope.counter++;
+        
     }
 
     $scope.submit_comment = function(){
