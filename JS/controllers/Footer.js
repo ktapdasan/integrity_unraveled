@@ -137,9 +137,9 @@ app.controller('Footer', function(
             $scope.done = false;
 
             UINotification.success({
-                                        message: 'Your comment has been successfully saved.', 
+                                        message: 'Your comment has been successfully submitted. \nRest assured that the IIT team is already working on it.', 
                                         title: 'SUCCESS', 
-                                        delay : 5000,
+                                        delay : 10000,
                                         positionY: 'top', positionX: 'right'
                                     });
 
