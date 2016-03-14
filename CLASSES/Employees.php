@@ -321,6 +321,30 @@ EOT;
         return ClassParent::update($sql);
     }
 
+    public function submit_comment($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $tool = $data['tool'];
+        $feedback = $data['feedback'];
+
+        $sql = <<<EOT
+                insert into feedbacks
+                (
+                    feedback,
+                    tool
+                )
+                values
+                (
+                    '$feedback',
+                    '$tool'
+                );
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
 }
 
 /*

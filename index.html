@@ -42,6 +42,80 @@
     .custom-menu li:hover{
         background-color: #e7e7e7;
     }
+
+    body>footer {
+        /*background-color: #eee;*/
+        font-size: 11px;
+        position: fixed;
+        bottom: 0;
+        padding: 8px;
+        /*width: 100%;*/
+        width: 400px;
+
+        max-height: 400px;
+        display: block;
+
+        /*additional remove to make a footer and uncomment comments above*/
+        margin-left: 75%;
+    }
+
+    body>footer .footer-main {
+        width: 100%;
+        text-align: right;   
+    }
+
+    .div2 {
+        height: 400px;
+        cursor: pointer;
+    }
+
+    .div2 .bubble img {
+        width: 300px;
+        margin-right: 150px;
+    }
+
+    .div2 .msg {
+        font-size: 20px !important;
+        width: 250px;
+        height: 100px;
+        z-index: 99999;
+        position: absolute;
+        margin-top: 50px;
+        margin-left: 30px;
+    }
+
+    .div1 {
+        padding-right: 20px;
+    }
+
+    .div1 textarea {
+        font-size: 15px;
+    }
+
+    .div1 button {
+
+    }
+
+    /*.div2 .msg textarea {
+        background-color: transparent;
+        margin-left: 20px;
+        text-align: left;
+        resize:none;
+        cursor: pointer;
+
+        border: none;
+        overflow: auto;
+        outline: none;
+
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .div2 .msg textarea:focus {
+        border: 0 none #F0F3F4;
+        outline: 0;
+    }*/
     </style>
 </head>
 
@@ -171,6 +245,33 @@
         <div ng-view=""></div>
     </div>  
 
+    <footer >
+        <div class="footer-main" ng-controller="Footer">
+            <div class="div1" ng-if="comment && done">
+                <textarea cols="38" rows="10" ng-model="comments.comment"></textarea>
+                <button class="btn ripple btn-outline btn-primary" style="width:100%;" ng-click="submit_comment()">
+                    <div>
+                        <span>SUBMIT</span>
+                    </div>
+                </button>
+            </div>
+            <div class="div2" ng-click="next_slide()" ng-if="!comment">
+                <div class="msg">
+                    <span>{{current_msg}}</span>
+                    <br />
+                    <img src="./ASSETS/img/arrow-down2.gif" style="width:20px;"/>
+                </div>
+                <div class="bubble">
+                    <img src="./ASSETS/img/bubble.png" style="height:200px;"/>
+                </div>
+                <div class="mascot">
+                    <img src="./ASSETS/img/mascot.png" style="height:200px;"/>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+
     <!-- start: Javascript -->
     <script src="./ASSETS/js/jquery.min.js"></script>
     <script src="./ASSETS/js/jquery.ui.min.js"></script>
@@ -187,6 +288,7 @@
 
     <!-- CONTROLLERS -->
     <script src="./JS/controllers/Header.js"></script>
+    <script src="./JS/controllers/Footer.js"></script>
     <script src="./JS/controllers/Dashboard.js"></script>
     <script src="./JS/controllers/Timesheet.js"></script>
     <script src="./JS/controllers/Timelogs.js"></script>
