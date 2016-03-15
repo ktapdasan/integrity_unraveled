@@ -73,7 +73,7 @@ app.controller('Footer', function(
             var commented = $cookies.get('commented');
             
             if(commented){
-                $scope.counter = 7;
+                $scope.counter = 9;
                 $scope.next_slide();
             }
             else {
@@ -162,5 +162,12 @@ app.controller('Footer', function(
     $scope.temp_open = function(){
         $scope.done = true;
         $scope.comment = false;
+
+        var commented = $cookies.get('commented');
+            
+        if(commented){
+            $scope.counter = 8;
+            $scope.next_slide();
+        }
     }
 });
