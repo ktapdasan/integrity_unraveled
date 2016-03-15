@@ -317,9 +317,15 @@
         date = null;
 
     var update = function () {
-        date = moment(new Date())
-        datetime.html(date.format('hh:mm A'));
-        datetime2.html(date.format('dddd MMMM DD, YYYY'));
+        
+        //console.log(new Date('2016/01/01 12:00:01'));
+        $.post('./FUNCTIONS/session/current_time.php', function(data){
+          //console.log(data);
+          date = moment(new Date(data));
+          datetime.html(date.format('hh:mm A'));
+          datetime2.html(date.format('dddd MMMM DD, YYYY'));
+        });
+        
     };
 
     $(document).ready(function(){
