@@ -109,17 +109,19 @@ app.controller('Dashboard', function(
             'employees_pk' : $scope.profile.pk
         };
 
+        var logout_msg = 'Starting tomorrow, you no longer need to log using your GMail. Log in and Log out will be recorded using Integrity.';
+        //'Are you sure you want to log out?'
         if(type == "Out"){
             $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to log out?',
+                title : 'Reminder',
+                message: logout_msg,
                 save : 'Log out',
                 close : 'Cancel'
             };
 
             ngDialog.openConfirm({
                 template: 'ConfirmModal',
-                className: 'ngdialog-theme-plain',
+                className: 'ngdialog-theme-plain custom-width',
                 scope: $scope,
                 showClose: false
             })
