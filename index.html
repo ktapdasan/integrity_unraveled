@@ -52,7 +52,7 @@
         /*width: 100%;*/
         width: 400px;
 
-        max-height: 400px;
+        max-height: 450px;
         display: block;
 
         /*additional remove to make a footer and uncomment comments above*/
@@ -65,7 +65,7 @@
     }
 
     .div2 {
-        height: 400px;
+        height: 450px;
         cursor: pointer;
     }
 
@@ -91,31 +91,6 @@
     .div1 textarea {
         font-size: 15px;
     }
-
-    .div1 button {
-
-    }
-
-    /*.div2 .msg textarea {
-        background-color: transparent;
-        margin-left: 20px;
-        text-align: left;
-        resize:none;
-        cursor: pointer;
-
-        border: none;
-        overflow: auto;
-        outline: none;
-
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-    }
-
-    .div2 .msg textarea:focus {
-        border: 0 none #F0F3F4;
-        outline: 0;
-    }*/
     </style>
 </head>
 
@@ -231,6 +206,30 @@
                             </li>
                         </ul>
                     </li>
+                    <li style="padding-top:10px; padding-left:5px;">
+                        <img src="./ASSETS/img/new2.gif" style="width:60px; cursor:pointer;" title="View the Latest Updates" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <ul class="dropdown-menu user-dropdown" style="max-height:400px; overflow-y:auto;">
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Added menu button for latest updates
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Added option to show/hide the comment box
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Comment Box. Once you have already submitted your comment, the callouts will always start with Let's start now so you can submit more comments.
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Log in page. The Enter key can now be used to log in.
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -247,7 +246,10 @@
 
     <footer >
         <div class="footer-main" ng-controller="Footer">
+            <img src="./ASSETS/img/close.png" style="margin-bottom: 5px; cursor:pointer; margin-right:20px;" ng-click="temp_close()" ng-if="done"/>
+            <img src="./ASSETS/img/comment.png" style="margin-bottom: 5px; cursor:pointer; margin-right:20px;" ng-click="temp_open()" ng-if="!done"/>
             <div class="div1" ng-if="comment && done">
+
                 <textarea style="width:100%;" rows="10" ng-model="comments.comment"></textarea>
                 <button class="btn ripple btn-outline btn-primary" style="width:100%;" ng-click="submit_comment()">
                     <div>

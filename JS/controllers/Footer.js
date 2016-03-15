@@ -153,4 +153,14 @@ app.controller('Footer', function(
                                     });
         });
     }
+
+    $scope.temp_close = function(){
+        $scope.done = false;
+        $scope.comment = true;
+    }
+
+    $scope.temp_open = function(){
+        $scope.done = true;
+        $scope.comment = false;
+    }
 });

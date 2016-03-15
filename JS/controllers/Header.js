@@ -53,17 +53,6 @@ app.controller('Header', function(
             $scope.profile = data.data.result[0];
 
             menuselect($location.$$path.replace(/\//,''));
-
-            var msg = "Here are the updates as of March 14, 2016 05:00 PM" ;
-            msg += "<br /><br /> 1. Log in page. The Enter key can now be used to log in.";
-            msg += "<br /><br /> 2. Comment Box. Once you have already submitted your comment, the callouts will always start with Let's start now so you can submit more comments.";
-
-            UINotification.info({
-                                        message: msg, 
-                                        title: 'UPDATES', 
-                                        delay : 50000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
         })   
     }
 
