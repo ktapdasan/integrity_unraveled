@@ -109,11 +109,10 @@ app.controller('Dashboard', function(
             'employees_pk' : $scope.profile.pk
         };
 
-        var logout_msg = 'Starting tomorrow, you no longer need to log using your GMail. Log in and Log out will be recorded using Integrity.';
-        //'Are you sure you want to log out?'
         if(type == "Out"){
+            var logout_msg = 'Are you sure you want to log out?';
             $scope.modal = {
-                title : 'Reminder',
+                title : '',
                 message: logout_msg,
                 save : 'Log out',
                 close : 'Cancel'
@@ -121,7 +120,7 @@ app.controller('Dashboard', function(
 
             ngDialog.openConfirm({
                 template: 'ConfirmModal',
-                className: 'ngdialog-theme-plain custom-width',
+                className: 'ngdialog-theme-plain',
                 scope: $scope,
                 showClose: false
             })
@@ -148,16 +147,50 @@ app.controller('Dashboard', function(
             });
         }
         else {
-            $scope.logbutton = true;
-            var promise = TimelogFactory.submit_log(filter);
-            promise.then(function(data){
-                get_last_log_today();
+            $scope.modal = {
+                title : 'Cheers!',
+                message: 'Today, March 16, 2016 is the official launching of Integrity. Please help us remind everybody that there is no need to Log in using your GMail.',
+                save : 'Log  in',
+                close : 'Cancel'
+            };
 
-                var to = $timeout(function() {
-                    $timeout.cancel(to);
-                    $scope.logbutton = false;
-                }, 5000);
+            ngDialog.openConfirm({
+                template: 'ConfirmModal',
+                className: 'ngdialog-theme-plain',
+                scope: $scope,
+                showClose: false
             })
+            .then(function(value){
+                return false;
+            }, function(value){
+                $scope.logbutton = true;
+                var promise = TimelogFactory.submit_log(filter);
+                promise.then(function(data){
+                    get_last_log_today();
+
+                    UINotification.success({
+                                    message: 'You have successfully logged out.', 
+                                    title: 'SUCCESS', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+
+                    var to = $timeout(function() {
+                        $timeout.cancel(to);
+                        $scope.logbutton = false;
+                    }, 5000);
+                })
+            });
+            // $scope.logbutton = true;
+            // var promise = TimelogFactory.submit_log(filter);
+            // promise.then(function(data){
+            //     get_last_log_today();
+
+            //     var to = $timeout(function() {
+            //         $timeout.cancel(to);
+            //         $scope.logbutton = false;
+            //     }, 5000);
+            // })
         }
 
         
