@@ -169,7 +169,7 @@ app.controller('Dashboard', function(
                     get_last_log_today();
 
                     UINotification.success({
-                                    message: 'You have successfully logged out.', 
+                                    message: 'You have successfully logged in.', 
                                     title: 'SUCCESS', 
                                     delay : 5000,
                                     positionY: 'top', positionX: 'right'
