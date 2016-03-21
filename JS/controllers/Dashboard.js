@@ -144,25 +144,33 @@ app.controller('Dashboard', function(
                         $scope.logbutton = false;
                     }, 5000);
                 })
+                .then(null, function(data){
+                    UINotification.error({
+                                    message: 'An error occurred while saving your log out. Please try again.', 
+                                    title: 'ERROR', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+                });
             });
         }
         else {
-            $scope.modal = {
-                title : 'Cheers!',
-                message: 'Today, March 16, 2016 is the official launching of Integrity. Please help us remind everybody that there is no need to Log in using your GMail.',
-                save : 'Log  in',
-                close : 'Cancel'
-            };
+            // $scope.modal = {
+            //     title : 'Cheers!',
+            //     message: 'Today, March 16, 2016 is the official launching of Integrity. Please help us remind everybody that there is no need to Log in using your GMail.',
+            //     save : 'Log  in',
+            //     close : 'Cancel'
+            // };
 
-            ngDialog.openConfirm({
-                template: 'ConfirmModal',
-                className: 'ngdialog-theme-plain',
-                scope: $scope,
-                showClose: false
-            })
-            .then(function(value){
-                return false;
-            }, function(value){
+            // ngDialog.openConfirm({
+            //     template: 'ConfirmModal',
+            //     className: 'ngdialog-theme-plain',
+            //     scope: $scope,
+            //     showClose: false
+            // })
+            // .then(function(value){
+            //     return false;
+            // }, function(value){
                 $scope.logbutton = true;
                 var promise = TimelogFactory.submit_log(filter);
                 promise.then(function(data){
@@ -180,7 +188,15 @@ app.controller('Dashboard', function(
                         $scope.logbutton = false;
                     }, 5000);
                 })
-            });
+                .then(null, function(data){
+                    UINotification.error({
+                                    message: 'An error occurred while saving your log in. Please try again.', 
+                                    title: 'ERROR',
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+                });
+            //});
             // $scope.logbutton = true;
             // var promise = TimelogFactory.submit_log(filter);
             // promise.then(function(data){
