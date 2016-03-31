@@ -65,7 +65,7 @@ EOT;
                         employees.middle_name,
                         employees.last_name,
                         employees.email_address,
-                        employees_titles.title_pk
+                        employees_titles.titles_pk
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
                     where employees.archived = false
