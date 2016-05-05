@@ -24,6 +24,11 @@ app.config(function($routeProvider){
         controller: 'Timelogs',
         templateUrl: 'partials/timelogs/index.html'
     })
+    .when('/employees',
+    {
+        controller: 'Employees',
+        templateUrl: 'partials/employees/index.html'
+    })
     .otherwise(
     {
         redirectTo: '/'
