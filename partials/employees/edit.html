@@ -1,0 +1,165 @@
+<style type="text/css">
+    #submit {
+        color: #2196f3 !important;
+    }
+
+    #submit:hover{
+        background-color: #e7e7e7;
+    }
+
+    body>footer {
+        /*background-color: #eee;*/
+        font-size: 11px;
+        position: fixed;
+        bottom: 0;
+        padding: 8px;
+        /*width: 100%;*/
+        width: 400px;
+
+        max-height: 450px;
+        display: block;
+
+        /*additional remove to make a footer and uncomment comments above*/
+        margin-left: 75%;
+    }
+
+    body>footer .footer-main {
+        width: 100%;
+        text-align: right;   
+    }
+
+    .red {
+        color: #ff0000;
+    }
+
+    .container {
+        width: 500px;
+        clear: both;
+    }
+    .container input {
+        width: 100%;
+        clear: both;
+    }
+
+</style>
+
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h3 class="animated fadeInLeft"> Edit Employee</h3>
+                <p class="animated fadeInDown">
+                    <a href="#/employees">Employees</a> <span class="fa-angle-right fa"></span> 
+                    Edit Employee
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: in-block; padding-left:30px; padding-right:30px; background: #fff">
+        <table>
+                
+                <tr>
+                    <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
+                    </td>
+                    <td >
+                        <input required maxlength = "9"type = "text" is-number style="display: block; float: left; width:400px" tabindex="1" ng-model="emp_id"/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px"> Business E-mail Address:</label>
+                    </td>
+                    <td>
+                        <input required ng-model="employee.business_email_address" type="text" style="display: block; float: left; width:400px;" tabindex="6"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">First Name:</label> 
+                   </td>
+                    <td>    
+                        <input required ng-model="employee.first_name" type="text" style="display: block; float: left; width:400px;" tabindex="2"/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">E-mail Address:</label>
+                    </td>
+                    <td>
+                        <input ng-model="employee.email_address" type="text" style="display: block; float: left; width:400px;" tabindex="7"/>
+                    </td>                        
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Middle Name:</label>
+                    </td>
+                    <td>
+                        <input required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:400px;" tabindex="3"/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Department:</label>
+                    </td>
+                    <td>
+                        <select required ng-model="employee.department" type='number' style="display: block; float: left; width:400px" tabindex="8">
+                            <!-- <option style="display:none">-- Please Select One --</option> -->
+                            <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
+                                
+                                {{v.department}}
+
+                            </option>
+
+                        </select>
+                    </td>  
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Last Name:</label>
+                    </td>
+                     <td>
+                        <input required ng-model="employee.last_name" type="text" style="display: block; float: left; width:400px;" tabindex="4"/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Level:</label>
+                    </td>
+                    <td>
+                        <select required ng-model="employee.level" style="display: block; float: left; width:400px" tabindex="9">
+                            <!-- <option style="display:none">-- Please Select One --</option> -->
+                            <option> one </option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Position:</label>
+                    </td>
+                    <td>
+                        <select required ng-model="employee.titles_pk" style="display: block; float: left; width:400px" tabindex="5">
+                            <!-- <option style="display:none">-- Please Select One --</option> -->
+                            <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
+
+                                {{v.title}}
+
+                            </option>
+
+                        </select>
+                    </td>
+                    <!-- <td>
+                        <input required id="new_employee_position" ng-model="filter.searchstring" type="text" style="display: block; float: left; width:400px;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                    </td> -->
+                    <!-- <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Status:</label>
+                    </td>
+                     -->
+                </tr>
+
+                <tr>
+                    <td colspan = "4">
+                        <center style="font-size: 18px; font-style: bold">
+                            <input type="button" class="btn btn-success2" value="Submit" ng-click="submit_employee()" tabindex="10"/>
+
+                        </center>
+                    </td>
+                </tr>
+        </table>
+    </div>
+</div>

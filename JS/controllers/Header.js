@@ -12,8 +12,11 @@ app.controller('Header', function(
 
     $scope.menu = {
         home : 'active',
+        employees : '',
         timesheet : '',
+        admin : '',
         manual : ''
+        
     }
 
     $scope.pk = null;

@@ -36,9 +36,9 @@ $class = new Employees(
 						$filters['archived']
 					);
 
-$data = $class->fetch($_POST);
+$data = $class->fetch_all($_POST);
 
-header("HTTP/1.0 404 User Not Found");
+header("HTTP/1.0 404 User .");
 if($data['status']){
 	header("HTTP/1.0 200 OK");
 }

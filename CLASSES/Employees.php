@@ -1,6 +1,8 @@
 <?php
 require_once('../../CLASSES/ClassParent.php');
-class Employees extends ClassParent {
+class Employees extends ClassParent 
+{
+
 
     var $pk = NULL;
     var $employee_id = NULL;
@@ -8,17 +10,28 @@ class Employees extends ClassParent {
     var $middle_name = NULL;
     var $last_name = NULL;
     var $email_address = NULL;
+    var $business_email_address = NULL;
+    var $titles_pk = NULL;
+    var $level = NULL;
+    var $department = NULL;
+    var $date_created = NULL;
     var $archived = NULL;
 
     public function __construct(
-                                    $pk,
-                                    $employee_id,
-                                    $first_name,
-                                    $middle_name,
-                                    $last_name,
-                                    $email_address,
-                                    $archived
-                                ){
+                                    $pk='',
+                                    $employee_id='',
+                                    $first_name='',
+                                    $middle_name='',
+                                    $last_name='',
+                                    $email_address='',
+                                    $business_email_address='',
+                                    $titles_pk='',
+                                    $level='',
+                                    $department='',
+                                    $date_created='',
+                                    $archived=''
+                                )
+    {
         
         $fields = get_defined_vars();
         
@@ -73,6 +86,55 @@ EOT;
                 select
                     *
                 from A
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function fetch_all($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $str=$data['searchstring'];
+        $where = "";
+        if ($str){
+            $where .= " AND (first_name ILIKE '$str%' OR middle_name ILIKE '$str%' 
+                OR last_name ILIKE '$str%' OR employee_id ILIKE '$str%' )";
+        }
+
+        $status = $data['status'];
+        if ($status){
+            if ($status == 'Active'){
+                $status = 'false';
+            }
+            else {
+                $status = 'true';
+            }
+            $where .= " AND archived = $status";
+        }
+    
+
+        $sql = <<<EOT
+                select 
+                    pk,
+                    employee_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    email_address,
+                    business_email_address,
+                    titles_pk,
+                    (select title from titles where pk = employees.titles_pk) as title,
+                    level,
+                    department as departments_pk,
+                    (select array_to_string(array_agg(department), ', ') from departments where pk = any(employees.department)) as department,
+                    date_created,
+                    archived
+                from employees
+                where true
+                $where
                 ;
 EOT;
 
@@ -231,6 +293,28 @@ EOT;
         return ClassParent::get($sql);
     }
 
+       public function employees($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $employeeNumber = $data['employeeNumber'];
+        $EmployeeFN = $data['dateto'];
+        $pk = $data['pk'];
+
+$sql = <<<EOT
+                update accounts set
+                (password)
+                =
+                ('$password')
+                where employee_id = '$employee_id'
+                and password = md5('$old_password')
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    } 
+
     public function timelogs($data){
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
@@ -345,6 +429,70 @@ EOT;
         return ClassParent::insert($sql);
     }
 
+    public function create($data){
+        $department="{".$this->department."}";
+
+        $sql = <<<EOT
+                insert into employees
+                (
+                    employee_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    titles_pk,
+                    business_email_address,
+                    email_address,
+                    department,
+                    level
+                )
+                values
+                (
+                    '$this->employee_id',
+                    '$this->first_name',
+                    '$this->middle_name',
+                    '$this->last_name',
+                    '$this->titles_pk',
+                    '$this->business_email_address',
+                    '$this->email_address',
+                    '$department',
+                    '$this->level'
+                );
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function deactivate(){
+
+        $sql = <<<EOT
+                update employees
+                set archived = True
+                where pk = $this->pk;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function update(){
+
+        $sql = <<<EOT
+                update employees
+
+                set
+                employee_id = '$this->employee_id',
+                first_name = '$this->first_name',
+                middle_name = '$this->middle_name',
+                last_name = '$this->last_name',
+                business_email_address = '$this->business_email_address',
+                email_address = '$this->email_address'
+                
+
+                where pk = $this->pk;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+        
 }
 
 /*

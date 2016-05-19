@@ -24,11 +24,22 @@ app.config(function($routeProvider){
         controller: 'Timelogs',
         templateUrl: 'partials/timelogs/index.html'
     })
-    .when('/employees',
+     .when('/employees',
     {
         controller: 'Employees',
-        templateUrl: 'partials/employees/index.html'
+        templateUrl: 'partials/employees/list.html'
     })
+     .when('/employees/new',
+    {
+        controller: 'New_Employees',
+        templateUrl: 'partials/employees/new.html'
+    })
+     .when('/employees/edit',
+    {
+        controller: 'Employees',
+        templateUrl: 'partials/employees/edit.html'
+    })
+    
     .otherwise(
     {
         redirectTo: '/'

@@ -206,6 +206,7 @@ p.quote{
   color: #262626;
   background-color: #f5f5f5;
 }
+
 .megamenu.disabled > a,
 .megamenu.disabled > a:hover,
 .megamenu.disabled > a:focus {
@@ -1069,6 +1070,18 @@ ul li a:focus {
     background-color: #1c84c6 !important;
   }
 
+  .btn-success2,
+  .label-success2,
+  .alert-success2,
+  .badge-success2 {
+    color: #fff !important;
+    border: none !important;
+    background-color: #27C24C !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    font-size: 17px !important;
+  }
+
   .btn-success,
   .label-success,
   .alert-success,
@@ -1076,6 +1089,16 @@ ul li a:focus {
     color: #fff !important;
     border: none !important;
     background-color: #27C24C !important;
+  }
+
+  .btn-add,
+  .label-add,
+  .alert-add,
+  .badge-add {
+    margin-left: 240px !important;
+    color: #fff !important;
+    border: none !important;
+    background-color: #f0022a !important;
   }
 
   .btn-info,
@@ -1891,7 +1914,7 @@ ul li a:focus {
 .user-dropdown:before {
   position: absolute;
   top: -7px;
-  left: 134px;
+  left: 0px;
   display: inline-block;
   border-right: 7px solid transparent;
   border-bottom: 7px solid #ccc;
@@ -1903,7 +1926,7 @@ ul li a:focus {
 .user-dropdown:after {
   position: absolute;
   top: -6px;
-  left: 135px;
+  left: 0px;
   display: inline-block;
   border-right: 6px solid transparent;
   border-bottom: 6px solid #ffffff;

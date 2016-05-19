@@ -100,4 +100,5 @@ app.controller('Timesheet', function(
     $scope.export_timesheet = function(){
         window.open('./FUNCTIONS/Timelog/timesheet_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
     }
+
 });
