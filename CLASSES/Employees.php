@@ -432,7 +432,8 @@ EOT;
     public function create($data){
         $department="{".$this->department."}";
 
-        $sql = <<<EOT
+        $sql = "begin;";
+        $sql .= <<<EOT
                 insert into employees
                 (
                     employee_id,
@@ -458,6 +459,20 @@ EOT;
                     '$this->level'
                 );
 EOT;
+        $sql .= <<<EOT
+                insert into accounts
+                (
+                    employee_id,
+                    password
+                )
+                values
+                (
+                    '$this->employee_id',
+                    md5('user123456')
+                );
+EOT;
+
+        $sql .= "commit;";
 
         return ClassParent::insert($sql);
     }
