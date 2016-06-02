@@ -137,6 +137,23 @@ app.factory('EmployeesFactory', function($http){
         return promise;
     };
 
+    factory.get_levels = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_levels.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     factory.submit_employee = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/submit_employee.php',
@@ -157,6 +174,23 @@ app.factory('EmployeesFactory', function($http){
     factory.delete_employees = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/delete_employees.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.activate_employees = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/activate_employees.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

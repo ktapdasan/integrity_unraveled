@@ -11,16 +11,21 @@ $class = new Employees($data);
 $data = $class->employeelist($data);
 
 $count=1;
-$header=	'#,Employee ID, Employee Name, Log In, Log Out, # of Hours';
+$header=	'#,Employee ID,First Name,Middle Name,Last Name,E-mail Address,Business E-mail Address,Position,Level,Department/s';
 $body="";
 
 foreach($data['result'] as $k=>$v){
+
 	$body .= $count.','.
-			$v['employee_id'].',"'.
-			$v['employee'].'",'.
-			$v['login'].',"'.
-			$v['logout'].'",'.
-			$v['hrs']."\n";
+			$v['employee_id'].','.
+			$v['first_name'].','.
+			$v['middle_name'].','.
+			$v['last_name'].','.
+			$v['email_address'].','.
+			$v['business_email_address'].','.
+			$v['title'].','.
+			$v['level'].','.
+			$v['department']."\n";
 
 	$count++;
 }

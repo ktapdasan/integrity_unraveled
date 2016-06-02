@@ -12,7 +12,7 @@ class Employees extends ClassParent
     var $email_address = NULL;
     var $business_email_address = NULL;
     var $titles_pk = NULL;
-    var $level = NULL;
+    var $levels_pk = NULL;
     var $department = NULL;
     var $date_created = NULL;
     var $archived = NULL;
@@ -26,7 +26,7 @@ class Employees extends ClassParent
                                     $email_address='',
                                     $business_email_address='',
                                     $titles_pk='',
-                                    $level='',
+                                    $levels_pk='',
                                     $department='',
                                     $date_created='',
                                     $archived=''
@@ -127,14 +127,17 @@ EOT;
                     business_email_address,
                     titles_pk,
                     (select title from titles where pk = employees.titles_pk) as title,
-                    level,
-                    department as departments_pk,
+                    levels_pk,
+                    (select level_title from levels where pk = employees.levels_pk) as level,
+                    array_to_string(department, ',') as departments_pk,
+                    department as departments_pk_arr,
                     (select array_to_string(array_agg(department), ', ') from departments where pk = any(employees.department)) as department,
                     date_created,
                     archived
                 from employees
                 where true
                 $where
+                order by date_created
                 ;
 EOT;
 
@@ -383,6 +386,70 @@ EOT;
         return ClassParent::get($sql);
     }
 
+
+
+
+
+    public function employeelist($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $str=$data['searchstring'];
+        $where = "";
+        if ($str){
+            $where .= " AND (first_name ILIKE '$str%' OR middle_name ILIKE '$str%' 
+                OR last_name ILIKE '$str%' OR employee_id ILIKE '$str%' )";
+        }
+
+        $status = $data['status'];
+        if ($status){
+            if ($status == 'Active'){
+                $status = 'false';
+            }
+            else {
+                $status = 'true';
+            }
+            $where .= " AND archived = $status";
+        }
+
+        $sql = <<<EOT
+                
+                select
+                    
+                    employee_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    email_address,
+                    business_email_address,
+                    titles_pk,
+                    (select title from titles where pk = employees.titles_pk) as title,
+                    levels_pk,
+                    (select level_title from levels where pk = employees.levels_pk) as level,
+                    array_to_string(department, ',') as departments_pk,
+                    department as departments_pk_arr,
+                    (select array_to_string(array_agg(department), ' & ') from departments where pk = any(employees.department)) as department
+                    
+                from employees
+                where true
+                $where
+                order by date_created
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+
+
+
+
+
+
+
+
+
     public function change_password($data){
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
@@ -430,7 +497,7 @@ EOT;
     }
 
     public function create($data){
-        $department="{".$this->department."}";
+        $this->department = "{".$this->department."}";
 
         $sql = "begin;";
         $sql .= <<<EOT
@@ -440,11 +507,11 @@ EOT;
                     first_name,
                     middle_name,
                     last_name,
-                    titles_pk,
                     business_email_address,
                     email_address,
+                    titles_pk,
                     department,
-                    level
+                    levels_pk
                 )
                 values
                 (
@@ -452,11 +519,11 @@ EOT;
                     '$this->first_name',
                     '$this->middle_name',
                     '$this->last_name',
-                    '$this->titles_pk',
                     '$this->business_email_address',
                     '$this->email_address',
-                    '$department',
-                    '$this->level'
+                    '$this->titles_pk',
+                    '$this->department',
+                    '$this->levels_pk'
                 );
 EOT;
         $sql .= <<<EOT
@@ -477,6 +544,41 @@ EOT;
         return ClassParent::insert($sql);
     }
 
+    public function update_employees(){
+        $this->department = "{".$this->department."}";
+
+        $sql = <<<EOT
+                UPDATE employees set
+                (
+                    employee_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    business_email_address,
+                    email_address,
+                    titles_pk,
+                    department,
+                    levels_pk
+                )
+                =
+                (
+                    '$this->employee_id',
+                    '$this->first_name',
+                    '$this->middle_name',
+                    '$this->last_name',
+                    '$this->business_email_address',
+                    '$this->email_address',
+                    $this->titles_pk,
+                    '$this->department',
+                    $this->levels_pk
+                )
+                WHERE pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::update($sql);
+    }
+
     public function deactivate(){
 
         $sql = <<<EOT
@@ -485,28 +587,21 @@ EOT;
                 where pk = $this->pk;
 EOT;
 
-        return ClassParent::insert($sql);
+        return ClassParent::update($sql);
     }
 
-    public function update(){
+    public function reactivate(){
 
         $sql = <<<EOT
                 update employees
-
-                set
-                employee_id = '$this->employee_id',
-                first_name = '$this->first_name',
-                middle_name = '$this->middle_name',
-                last_name = '$this->last_name',
-                business_email_address = '$this->business_email_address',
-                email_address = '$this->email_address'
-                
-
+                set archived = False
                 where pk = $this->pk;
 EOT;
 
-        return ClassParent::insert($sql);
+        return ClassParent::update($sql);
     }
+
+    
         
 }
 

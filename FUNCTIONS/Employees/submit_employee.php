@@ -12,8 +12,10 @@ $class = new Employees(
                             $_POST['email_address'],
                             $_POST['business_email_address'],
                             $_POST['titles_pk'],
-                            $_POST['level'],
-                            $_POST['department']
+                            $_POST['levels_pk'],
+                            $_POST['departments_pk'],
+                            NULL,
+                            NULL
 
 			);
 

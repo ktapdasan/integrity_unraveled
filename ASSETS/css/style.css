@@ -357,7 +357,7 @@ p.quote{
 
 /*start: search v1*/
   .search-v1{}
-    .search-v1 .panel,.search-v1 .panel-body{background: #fbfbfb;}
+    .search-v1 .panel,.search-v1 .panel-body{background: #ffffff;}
     .search-v1 .tabs-area{border:none !important;margin-top: -18px;background: #fff;}
     .search-v1 #tabs-demo6 li{padding: 5px !important;}
     .search-v1 #tabs-demo6 li.active:after{
@@ -1095,7 +1095,7 @@ ul li a:focus {
   .label-add,
   .alert-add,
   .badge-add {
-    margin-left: 240px !important;
+    margin-left: 350px !important;
     color: #fff !important;
     border: none !important;
     background-color: #f0022a !important;
@@ -2782,7 +2782,7 @@ ul li a:focus {
         border: 3px solid #fff;
       }
     .box-v2 .panel-body{
-      background: #E30049;
+      background: #ffffff;
       color: #fff;
       line-height: 0;
       padding-bottom: 30px;
@@ -2798,7 +2798,7 @@ ul li a:focus {
     .box-v4 .panel-body .box-v4-alert{
       width: 100%;
       padding: 30px;
-      background-color: #F9F9F9;
+      background-color: #ffffff;
       border-top: 1px solid #e7eaec;
       border-bottom: 1px solid #e7eaec;
       margin-bottom: 10px;

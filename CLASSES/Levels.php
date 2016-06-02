@@ -1,17 +1,13 @@
 <?php
 require_once('../../CLASSES/ClassParent.php');
-class Department extends ClassParent {
+class Levels extends ClassParent {
 
     var $pk = NULL;
-    var $department = NULL;
-    var $code = NULL;
-    var $archived = NULL;
+    var $level_title = NULL;
 
     public function __construct(
                                     $pk='',
-                                    $department='',
-                                    $code='',
-                                    $archived=''
+                                    $level_title=''
                                 ){
         
         $fields = get_defined_vars();
@@ -29,13 +25,13 @@ class Department extends ClassParent {
     }
 
     public function fetch(){
-        $department = pg_escape_string(strip_tags(trim($post['get_department'])));
+        $level_title = pg_escape_string(strip_tags(trim($post['get_levels'])));
 
         $sql = <<<EOT
-                select 
-                    pk,
-                    department
-                from departments
+                select
+                    pk, 
+                    level_title
+                from levels
                 order by pk
                 ;
 EOT;

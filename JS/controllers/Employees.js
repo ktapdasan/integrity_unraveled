@@ -14,9 +14,11 @@ app.controller('Employees', function(
 
     $scope.titles={};
     $scope.department={};
+    $scope.level_title={};
 
     $scope.employee={};
-    $scope.employees = {};
+    $scope.employees={};
+    $scope.timesheet_data = [];
     
 
     init();
@@ -30,6 +32,7 @@ app.controller('Employees', function(
             get_profile();
             get_positions();
             get_department();
+            get_levels();
             
         })
         .then(null, function(data){
@@ -53,7 +56,7 @@ app.controller('Employees', function(
 
        employees();
     }
-
+/*
     $scope.search_employees = function () {
         if ($scope.filter.searchstring.replace(/\s/g,'').length == 0){
             employees();
@@ -61,7 +64,7 @@ app.controller('Employees', function(
         else if ($scope.filter.searchstring.length > 1){
             employees();
         }
-    }
+    }*/
 
     function employees(){
         
@@ -91,6 +94,16 @@ app.controller('Employees', function(
         var promise = EmployeesFactory.get_department();
         promise.then(function(data){
             $scope.department.data = data.data.result;
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
+    function get_levels(){
+        var promise = EmployeesFactory.get_levels();
+        promise.then(function(data){
+            $scope.level_title.data = data.data.result;
         })
         .then(null, function(data){
             
@@ -150,14 +163,58 @@ app.controller('Employees', function(
         });
     }
 
+    $scope.activate_employees = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to reactivate this employee?',
+                save : 'Reactivate',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
 
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            var promise = EmployeesFactory.activate_employees($scope.employees.data[k]);
+            promise.then(function(data){
+                
 
+                $scope.archived=true;
 
+                UINotification.success({
+                                        message: 'You have successfully deactivated an employees account.', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                employees();
 
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to deactivate, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
 
-
+                            
+        });
+    }
 
     $scope.edit_employees = function(k){
+        
+        
         $scope.employee = $scope.employees.data[k];
         $scope.modal = {
 
@@ -175,7 +232,8 @@ app.controller('Employees', function(
                 
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
-                                '<p>Are you sure you want to change your password?</p>' +
+                                '<p></p>' +
+                                '<p>Are you sure you want to apply changes to this employee account?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -221,5 +279,9 @@ app.controller('Employees', function(
         });
     }
     
+    $scope.export_employeelist = function(){
+        window.open('./FUNCTIONS/Employees/employeelist_export.php?');
+    }
+
     
 });

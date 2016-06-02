@@ -40,7 +40,10 @@
         width: 100%;
         clear: both;
     }
-
+    #css .ng-dirty.ng-valid {
+    border:1px solid Green;
+    }
+    
 </style>
 
 
@@ -57,50 +60,63 @@
         </div>
     </div>
 
-    <div style="display: in-block; padding-left:30px; padding-right:30px; background: #fff">
+    <div class="panel-heading">
+
+<form name="myForm">
         <table>
                 
                 <tr>
                     <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
                     </td>
-                    <td>
-                        <input required ng-model="employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:400px" tabindex="1"/>
+                    <td id="css">
+                        <input name="user" required ng-model="employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:400px" tabindex="1"/>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.user.$error.required">Employee I.D. is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px"> Business E-mail Address:</label>
                     </td>
-                    <td>
-                        <input required ng-model="employee.business_email_address" type="text" style="display: block; float: left; width:400px;" tabindex="6"/>
+                    <td id="css">
+                        <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:400px;" tabindex="6"/>
+
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
+
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">First Name:</label> 
                    </td>
-                    <td>    
-                        <input required ng-model="employee.first_name" type="text" style="display: block; float: left; width:400px;" tabindex="2"/>
+                    <td id="css">    
+                        <input name="firstName"required ng-model="employee.first_name" type="text" style="display: block; float: left; width:400px;" tabindex="2"/>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">E-mail Address:</label>
                     </td>
-                    <td>
-                        <input ng-model="employee.email_address" type="text" style="display: block; float: left; width:400px;" tabindex="7"/>
+                    <td id="css">
+                        <input name="emailAddress" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:400px;" tabindex="7"/>
+                        <span style="color:red; display: block; float: left; width:400px;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
+
+                        <span style="color:red; display: block; float: left; width:400px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
                     </td>                        
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Middle Name:</label>
                     </td>
-                    <td>
-                        <input required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:400px;" tabindex="3"/>
+                    <td id="css">
+                        <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:400px;" tabindex="3"/>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Department:</label>
                     </td>
-                    <td>
-                        <select required ng-model="employee.department" type='number' style="display: block; float: left; width:400px" tabindex="8">
+                    <td id="css">
+                        <select name="department" required ng-model="employee.departments_pk" style="display: block; float: left; width:400px" tabindex="8">
                             <!-- <option style="display:none">-- Please Select One --</option> -->
+                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
                                 
                                 {{v.department}}
@@ -108,33 +124,41 @@
                             </option>
 
                         </select>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.department.$error.required">Departmnt is required.</span>
                     </td>  
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Last Name:</label>
                     </td>
-                     <td>
-                        <input required ng-model="employee.last_name" type="text" style="display: block; float: left; width:400px;" tabindex="4"/>
+                     <td id="css">
+                        <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:400px;" tabindex="4"/>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Level:</label>
                     </td>
-                    <td>
-                        <select required ng-model="employee.level" style="display: block; float: left; width:400px" tabindex="9">
+                    <td id="css">
+                        <select name="level" required ng-model="employee.levels_pk" style="display: block; float: left; width:400px" tabindex="9">
                             <!-- <option style="display:none">-- Please Select One --</option> -->
-                            <option> Associate </option>
+                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                            <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}">
 
+                                {{v.level_title}}
+
+                            </option>
                         </select>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.level.$error.required">Level is required.</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Position:</label>
                     </td>
-                    <td>
-                        <select required ng-model="employee.titles_pk" style="display: block; float: left; width:400px" tabindex="5">
+                    <td id="css">
+                        <select name="position" required ng-model="employee.titles_pk" style="display: block; float: left; width:400px" tabindex="5">
                             <!-- <option style="display:none">-- Please Select One --</option> -->
+                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
 
                                 {{v.title}}
@@ -142,6 +166,7 @@
                             </option>
 
                         </select>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.position.$error.required">Position is required.</span>
                     </td>
                     <!-- <td>
                         <input required id="new_employee_position" ng-model="filter.searchstring" type="text" style="display: block; float: left; width:400px;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
@@ -155,11 +180,20 @@
                 <tr>
                     <td colspan = "4">
                         <center style="font-size: 18px; font-style: bold">
-                            <input type="button" class="btn btn-success2" value="Submit" ng-click="submit_employee()" tabindex="10"/>
+                            <input type="submit" ng-disabled="myForm.user.$error && myForm.user.$invalid
+                            || myForm.firstName.$error && myForm.firstName.$invalid
+                            || myForm.middleName.$error && myForm.middleName.$invalid
+                            || myForm.lastName.$error && myForm.lastName.$invalid
+                            || myForm.emailAddressAddressAddress.$pristine || myForm.emailAddressAddress.$dirty && myForm.emailAddress.$invalid
+                            || myForm.businessEmail.$pristine || myForm.businessEmail.$dirty && myForm.businessEmail.$invalid
+                            || myForm.department.$error && myForm.department.$invalid
+                            || myForm.position.$error && myForm.position.$invalid
+                            || myForm.level.$error && myForm.level.$invalid" class="btn btn-success2" value="Submit" ng-click="submit_employee()" tabindex="10"/>
 
                         </center>
                     </td>
                 </tr>
         </table>
+    </form>
     </div>
 </div>

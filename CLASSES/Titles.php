@@ -36,7 +36,7 @@ class Titles extends ClassParent {
                     pk, 
                     title
                 from titles
-                order by title
+                order by pk
                 ;
 EOT;
 
