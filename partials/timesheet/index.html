@@ -1,3 +1,5 @@
+
+
 <style type="text/css">
 .red {
     color: #ff0000;
@@ -19,8 +21,8 @@
         <div style="padding-left: 20px; padding-top:20px;">
             <h4>
                 <select ng-model="filter.datetype" ng-hide="true">
-                  <option value="Date Submitted">Date Submitted</option>
-                  <option value="Date Received">Date Received</option>
+                    <option value="Date Submitted">Date Submitted</option>
+                    <option value="Date Received">Date Received</option>
                 </select>
                 Date From: <input ng-model="filter.datefrom" type="text" id="datefrom" style="width:120px;"/>
                 Date To: <input ng-model="filter.dateto" type="text" id="dateto" style="width:120px;"/>
@@ -48,9 +50,25 @@
                     <tr ng-repeat="(k, v) in timesheet_data" style="cursor:pointer;">
                         <td>{{v.log_date}}</td>
                         <td>{{v.log_day}}</td>
-                        <td ng-class="(v.login == 'None')?'red':''">{{v.login}}</td>
-                        <td ng-class="(v.logout == 'None')?'red':''">{{v.logout}}</td>
-                        <td>{{v.hrs}}</td>
+                        <td ng-class="(v.login == 'None')?'':''">
+                            <span ng-if = "v.login == 'None'">
+                                <span ng-click="open_manual_log('In', k)">
+                                    <font color="red">None</font></span>
+                            </span>
+                            <span ng-if = 'v.login != "None"'>
+                                {{v.login}}
+                            </span>
+                        </td>
+                        <td ng-class="(v.logout == 'None')?'':''">
+                            <span ng-if="v.logout == 'None'">
+                                <span ng-click="open_manual_log('Out', k)">
+                                    <font color="red">None</font></span>
+                            </span>
+                            <span ng-if="v.logout != 'None'">
+                                {{v.logout}}
+                            </span>
+                        </td>
+                        <td>{{v.hrs}}</td>                
                     </tr>
                 </tbody>
             </table>

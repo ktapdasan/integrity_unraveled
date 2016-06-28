@@ -1,14 +1,21 @@
+
 app.controller('Timesheet', function(
   										$scope,
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
+                                        ngDialog,
                                         md5
   									){
 
     $scope.profile = {};
     $scope.filter = {};
     $scope.timesheet_data = [];
+    $scope.log = {};
+    $scope.log.time_log = new Date;
+   /* $scope.selectedTimeAsNumber = 10 * 36e5 + 30 * 6e4 + 40 * 1e3;
+    $scope.selectedTimeAsString = '';
+    $scope.sharedDate = new Date(new Date().setMinutes(0, 0));*/
 
     init();
 
@@ -100,5 +107,110 @@ app.controller('Timesheet', function(
     $scope.export_timesheet = function(){
         window.open('./FUNCTIONS/Timelog/timesheet_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
     }
+
+    $scope.savelog = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to deactivate this employee?',
+                save : 'Deactivate',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmLogModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            var promise = EmployeesFactory.delete_employees($scope.employees.data[k]);
+            promise.then(function(data){
+                
+
+                $scope.archived=true;
+
+                UINotification.success({
+                                        message: 'You have successfully deactivated an employees account.', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                employees();
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to deactivate, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+
+
+        
+    $scope.open_manual_log = function(type, key){
+
+        $scope.log.date_log = $scope.timesheet_data[key].log_date;
+        $scope.log.selectedTimeAsString;
+        //$scope.employee = $scope.timesheet_data[key];
+        $scope.modal = {
+
+            title : 'Manual Log ' + type,
+            save : 'Submit',
+            close : 'Cancel',
+           
+        };
+
+        ngDialog.openConfirm({
+            template: 'ManualLogModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+
+                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Are you sure you want to apply changes to this employee account?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+            var a = new Date($scope.log.time_log);
+            var H = a.getHours();
+            var M = a.getMinutes(); 
+
+            $scope.log["employees_pk"] = $scope.profile.pk;
+            $scope.log.time_log = H + ":" +M ;
+          
+            var promise = TimelogFactory.save_manual_log($scope.log);
+            console.log($scope.log);
+        });
+    }
+
+
 
 });

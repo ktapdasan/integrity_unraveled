@@ -68,6 +68,7 @@
                         <td>{{v.log_day}}</td>
                         <td ng-class="(v.log_in == 'None')?'red':''">{{v.log_in}}</td>
                         <td ng-class="(v.log_out == 'None')?'red':''">{{v.log_out}}</td>
+                         <input type = "button" class = 'btn btn-primary' value = "None" ng-click='manual_log()'>
                     </tr>
                 </tbody>
             </table>

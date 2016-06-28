@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/simple-line-icons.css"/>
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/>
-    <link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
+   <link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
 
     <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog.min.css" >
     <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-theme-plain.min.css" >
@@ -24,9 +24,13 @@
     <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dropdown/isteven-multi-select.css" >
 
     <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/notification/angular-ui-notification.min.css" >
+
+ 
+    <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/libs.min.css">
+    <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/docs.min.css">
     <!-- end: Css -->
     
-    <link rel="shortcut icon" href="./ASSETS/img/time.ico">
+    <link rel="shortcut icon" href="./ASSETS/img/time.ico"> 
     
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -92,6 +96,7 @@
         font-size: 15px;
     }
     </style>
+
 </head>
 
 <body id="mimin" class="dashboard">
@@ -202,7 +207,7 @@
                             <li role="separator" class="divider"></li> -->
                             <li class="more">
                                 <ul>
-                                    <li><a href=""><span class="fa fa-cogs"></span></a></li>
+                               <li><a href=""><span class="fa fa-cogs"></span></a></li>
                                     <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li>
                                     <li alt="Log out"><a href="" ng-click="logout()"><span class="fa fa-power-off"></span></a></li>
                                 </ul>
@@ -243,11 +248,11 @@
         <!-- start:Left Menu -->
         
         <!-- end: Left Menu -->
-
+<ng-timepicker ng-model="log.time_log" show-meridian="true"></ng-timepicker>
         <div ng-view=""></div>
     </div>  
 
-    <!-- <footer >
+     <!--<footer >
         <div class="footer-main" ng-controller="Footer">
             <img src="./ASSETS/img/close.png" style="margin-bottom: 5px; cursor:pointer; margin-right:60px;" ng-click="temp_close()" ng-if="done"/>
             <img src="./ASSETS/img/comment.png" style="margin-bottom: 5px; cursor:pointer; margin-right:60px;" ng-click="temp_open()" ng-if="!done"/>
@@ -275,7 +280,7 @@
                 
             </div>
         </div>
-    </footer> -->
+    </footer>-->
 
     <!-- start: Javascript -->
     <script src="./ASSETS/js/jquery.min.js"></script>
@@ -316,6 +321,13 @@
     <script src="./ASSETS/js/plugins/dialog/ngDialog.js"></script>
     <script src="./ASSETS/js/plugins/dropdown/isteven-multi-select.js"></script>
     <script src="./ASSETS/js/plugins/notification/angular-ui-notification.min.js"></script>
+
+
+    <!--timepicker-->
+    <script src="./ASSETS/js/plugins/timepicker/angular-sanitize.min.js" data-semver="1.5.5"></script>
+    <script src="./ASSETS/js/plugins/timepicker/angular-strap.js" data-semver="v2.3.8"></script>
+    <script src="./ASSETS/js/plugins/timepicker/angular-strap.tpl.js" data-semver="v2.3.8"></script>
+    <script src="./ASSETS/js/plugins/timepicker/angular-strap.docs.tpl.js" data-semver="v2.3.8"></script>
 
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>
@@ -375,57 +387,26 @@
         <div class="ngdialog-buttons">
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
-        </div>
+        </div> 
     </script>
 
     <script type="text/ng-template" id="ManualLogModal">
-        <div class="ngdialog-message" style="width: 500px;">
-            <div style="margin-top: -15px;">
-                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
-                
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-            <div>
-                <table style="width: 85%;">
-                    <thead>
-                        <tr>
-                            <td>
-                                Type :
-                            </td>
-                            <td>
-                                <select ng-model="modal.data.type">
-                                    <option value="In">Log In</option>
-                                    <option value="Out">Log Out</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Date :
-                            </td>
-                            <td>
-                                <input type="text" ng-model="modal.data.date" maxlength="10" style="width:110px;"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Time
-                            </td>
-                            <td>
-                                <input type="text" ng-model="modal.data.time" maxlength="5" style="width:70px;"/>
-                            </td>
-                        </tr>
-                    </thead>
-                </table>
+            <div label="form-group" ng-class="{'has-error': timepickerForm.time.$invalid}" > 
+                <label style= "font-size:20px; float: left;">Time:</label>
+                <input type="text" class="form-control" size="8" ng-model="log.time_log" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/>           
+                <label style = "font-size:20px;">Reason:</label> 
+                <textarea ng-model="log.reason" rows ='6' cols ='32' tabindex="1" autofocus required/>
             </div>
         </div>
-        <div class="ngdialog-buttons">
+        <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
     </script>
-
-
-
 
 
     <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">
@@ -620,8 +601,219 @@
                 </div>
 </div>
     </script>
-    
+
+
+    <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">
+        <div class="ngdialog-message" style="width: 500px;">
+            <div style="margin-top: -5px;">
+                <h3><span style="color:#0c79be; margin-left:25px">{{ modal.title }}</span></h3>
+            </div>
+
+    <style type="text/css">
+        #submit {
+            color: #2196f3 !important;
+        }
+
+        #submit:hover{
+            background-color: #e7e7e7;
+        }
+
+        body>footer {
+            /*background-color: #eee;*/
+            font-size: 11px;
+            position: fixed;
+            bottom: 0;
+            padding: 8px;
+            /*width: 100%;*/
+            width: 400px;
+
+            max-height: 450px;
+            display: block;
+
+            /*additional remove to make a footer and uncomment comments above*/
+            margin-left: 75%;
+        }
+
+        body>footer .footer-main {
+            width: 100%;
+            text-align: right;   
+        }
+
+        .red {
+            color: #ff0000;
+        }
+
+        .container {
+            width: 500px;
+            clear: both;
+        }
+        .container input {
+            width: 100%;
+            clear: both;
+        }
+        #css .ng-dirty.ng-valid {
+        border:1px solid Green;
+        }
+        #css .ng-dirty.ng-invalid {
+            border:1px solid Red;
+        }
+
+    </style>
+
+
+                <div id="content2" style="margin: 20px; border:0px solid #f0f0f0;">
+                     <div>
+                        <form name="myForm" novalidate>
+                        <table>
+                                
+                                <tr>
+                                    <td> 
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">Employee ID:</label>
+                                    </td>
+                                    <td id="css">
+                                        <input name="user" required ng-model = "employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:320px; height:25px;" tabindex="1"/>
+
+                                        <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                                        <span ng-show="myForm.user.$error.required">Employee ID is required.</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> Business E-mail Address:</label>
+                                    </td>
+                                    <td id="css">
+                                        <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="6"/>
+                                        
+                                        <span style="color:red" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
+                                        <span style="color:red" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">First Name:</label> 
+                                   </td>
+                                    <td id="css">    
+                                        <input name="firstName" required ng-model="employee.first_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="2"/>
+                                        <span style="color:red" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
+                                        <span ng-show="myForm.firstName.$error.required">First Name is required.</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">E-mail Address:</label>
+                                    </td>
+                                    <td id="css">
+                                        <input name="email" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="7"/>
+                                        
+                                        <span style="color:red" ng-show="myForm.email.$error.required">E-mail Address is required.</span>
+                                        <span style="color:red" ng-show="myForm.email.$error.email">Please, write a valid E-mail Address address.</span>
+                                    </td>                        
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Middle Name:</label>
+                                    </td>
+                                    <td id="css">
+                                        <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="3"/>
+                                        <span style="color:red" ng-show="myForm.middleName.$dirty && myForm.middleName.$invalid">
+                                        <span ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Department:</label>
+                                    </td>
+                                    <td id="css">
+                                        <select required ng-model="employee.departments_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="8">
+                                            <!-- <option style="display:none">-- Please Select One --</option> -->
+                                            <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
+
+                                                {{v.department}}
+
+                                            </option>
+
+                                        </select>
+                                        
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Last Name:</label>
+                                    </td>
+                                     <td id="css">
+                                        <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="4"/>
+                                        <span style="color:red" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
+                                        <span ng-show="myForm.lastName.$error.required">Last Name is required.</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Level:</label>
+                                    </td>
+                                    <td id="css">
+                                        <select required ng-model="employee.levels_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="9">
+                                                <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}">
+                                                    {{v.level_title}}
+
+                                                </option>
+
+                                        </select>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Position:</label>
+                                    </td>
+                                    <td id="css">
+                                        <select required ng-model="employee.titles_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                                            <!-- <option style="display:none">-- Please Select One --</option> -->
+                                            <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
+
+                                                {{v.title}}
+
+                                            </option>
+
+                                        </select>
+                                        
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan = "4">
+                                        <center style="font-size: 18px; font-style: bold">
+                                            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+                                            <button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
+                                            || myForm.firstName.$dirty && myForm.firstName.$invalid
+                                            || myForm.middleName.$dirty && myForm.middleName.$invalid
+                                            || myForm.lastName.$dirty && myForm.lastName.$invalid
+                                            || myForm.email.$dirty && myForm.email.$invalid
+                                            || myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+
+                                        </center>
+                                    </td>
+                                </tr>
+                        </table>
+                        </form>
+                    </div>
+                </div>
+</div>
+    </script>
+
+
+ <script type="text/ng-template" id="ConfirmLogModal">
+        <div class="ngdialog-message" style="width: 100%;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <h4>{{ modal.message }}</h4>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
   </body>
+
 </html>
 
 

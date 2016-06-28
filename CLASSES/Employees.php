@@ -386,10 +386,7 @@ EOT;
         return ClassParent::get($sql);
     }
 
-
-
-
-
+  
     public function employeelist($data){
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
@@ -440,15 +437,6 @@ EOT;
 
         return ClassParent::get($sql);
     }
-
-
-
-
-
-
-
-
-
 
     public function change_password($data){
         foreach($data as $k=>$v){
@@ -601,7 +589,32 @@ EOT;
         return ClassParent::update($sql);
     }
 
-    
+
+//      public function open_manual_log($data){
+//        foreach($data as $k=>$v){
+//             $data[$k] = pg_escape_string(trim(strip_tags($v)));
+//         }
+
+//         $log_time = $data['log_time'];
+//         $log_reason= $data['log_reason'];
+
+//         $sql = <<<EOT
+//                 insert into time_log
+//                 (
+//                     log_time,
+//                     log_reason
+//                 )
+//                 values
+//                 (
+//                     '$log_time',
+//                     '$log_reason'
+//                 )
+//                 ;
+// EOT;
+
+//         return ClassParent::insert($sql);   
+
+  
         
 }
 

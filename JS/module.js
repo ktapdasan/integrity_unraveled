@@ -4,7 +4,10 @@ var app = angular.module('onload', [
                                     'angular-md5',
                                     'ngDialog',
                                     'isteven-multi-select',
-                                    'ui-notification'
+                                    'ui-notification',
+                                    'ngSanitize',
+                                    'mgcrea.ngStrap'
+                                    
                                 ]);
 
 app.config(function($routeProvider){
