@@ -20,6 +20,7 @@ app.controller('Employees', function(
     $scope.employees={};
     $scope.timesheet_data = [];
     
+    $scope.modal = {};
 
     init();
 
@@ -283,5 +284,4 @@ app.controller('Employees', function(
         window.open('./FUNCTIONS/Employees/employeelist_export.php?');
     }
 
-    
 });

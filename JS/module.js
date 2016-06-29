@@ -37,12 +37,16 @@ app.config(function($routeProvider){
         controller: 'New_Employees',
         templateUrl: 'partials/employees/new.html'
     })
-     .when('/employees/edit',
+    .when('/employees/edit',
     {
         controller: 'Employees',
         templateUrl: 'partials/employees/edit.html'
     })
-    
+    .when('/admin/departments',
+    {
+        controller: 'Department',
+        templateUrl: 'partials/admin/department/index.html'
+    })
     .otherwise(
     {
         redirectTo: '/'

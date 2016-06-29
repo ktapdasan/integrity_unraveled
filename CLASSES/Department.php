@@ -34,13 +34,49 @@ class Department extends ClassParent {
         $sql = <<<EOT
                 select 
                     pk,
-                    department
+                    department,
+                    code
                 from departments
                 order by pk
                 ;
 EOT;
 
         return ClassParent::get($sql);
+    }
+
+    public function deactivate(){
+
+        $sql = <<<EOT
+                update employees
+                set archived = True
+                where pk = $this->pk;
+EOT;
+
+          return ClassParent::update($sql);
+    }
+
+
+    public function update_department(){
+        $department = $this->department;
+        $code = $this->code;
+
+
+        $sql = <<<EOT
+                UPDATE departments set
+                (
+                    department,
+                    code
+                )
+                =
+                (
+                    '$department',
+                    '$code'
+                )
+                WHERE pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::update($sql);
     }
 }
 
