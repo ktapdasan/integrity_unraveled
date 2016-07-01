@@ -38,6 +38,40 @@ EOT;
 
         return ClassParent::get($sql);
     }
+
+     public function deactivate(){
+
+        $sql = <<<EOT
+                update levels
+                set archived = True
+                where pk = $this->pk;
+EOT;
+
+          return ClassParent::update($sql);
+    }
+
+
+    public function update(){
+        $level_title = $this->level_title;
+        
+
+
+        $sql = <<<EOT
+                UPDATE levels set
+                (
+                    level_title
+                )
+                =
+                (
+                    '$level_title'
+                )
+                WHERE pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::update($sql);
+    }
+
 }
 
 ?>

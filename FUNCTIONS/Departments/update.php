@@ -2,7 +2,7 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Department.php');
 
-$class = new  Department(
+$class = new Levels(
 				$_POST['pk'],
                 $_POST['department'],
                 Null
