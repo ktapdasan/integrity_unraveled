@@ -47,7 +47,7 @@ EOT;
     public function deactivate(){
 
         $sql = <<<EOT
-                update employees
+                update department
                 set archived = True
                 where pk = $this->pk;
 EOT;

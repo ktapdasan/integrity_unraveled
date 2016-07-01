@@ -27,7 +27,7 @@ app.config(function($routeProvider){
         controller: 'Timelogs',
         templateUrl: 'partials/timelogs/index.html'
     })
-     .when('/employees',
+    .when('/employees',
     {
         controller: 'Employees',
         templateUrl: 'partials/employees/list.html'
@@ -46,7 +46,18 @@ app.config(function($routeProvider){
     {
         controller: 'Department',
         templateUrl: 'partials/admin/department/index.html'
+    }) 
+    .when('/admin/positions',
+    {
+        controller: 'Position',
+        templateUrl: 'partials/admin/position/index.html'
     })
+    .when('/admin/levels',
+    {
+        controller: 'Levels',
+        templateUrl: 'partials/admin/levels/index.html'
+    })
+    
     .otherwise(
     {
         redirectTo: '/'

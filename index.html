@@ -307,12 +307,16 @@
 
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
+    <script src="./JS/controllers/Position.js"></script>
+    <script src="./JS/controllers/Levels.js"></script>
 
     <!-- FACTORIES -->
     <script src="./JS/factories/SessionFactory.js"></script>
     <script src="./JS/factories/EmployeesFactory.js"></script>  
     <script src="./JS/factories/TimelogFactory.js"></script>  
     <script src="./JS/factories/DepartmentsFactory.js"></script>  
+    <script src="./JS/factories/TitlesFactory.js"></script>  
+    <script src="./JS/factories/LevelsFactory.js"></script>  
 
     <!-- DIRECTIVES -->
     <script src="./JS/directives/splash.js"></script>
@@ -835,6 +839,43 @@
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
     </script>
+
+    <script type="text/ng-template" id="PositionModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+        <form name="myForm" novalidate>
+            <div> 
+                <label style= "font-size:20px; float: left;">New Position Name:</label>
+                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 250px;" />          
+            </div>
+        </form>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="LevelModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+        <form name="myForm" novalidate>
+            <div> 
+                <label style= "font-size:20px; float: left;">New Level Name:</label>
+                <input required type="text" size="10" ng-model="modal.fields.level_title" style="width: 250px;" />          
+            </div>
+        </form>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
   </body>
 
 </html>

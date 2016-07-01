@@ -42,6 +42,39 @@ EOT;
 
         return ClassParent::get($sql);
     }
+
+    public function deactivate(){
+
+        $sql = <<<EOT
+                update titles
+                set archived = True
+                where pk = $this->pk;
+EOT;
+
+          return ClassParent::update($sql);
+    }
+
+
+    public function update(){
+        $title = $this->title;
+        
+
+
+        $sql = <<<EOT
+                UPDATE titles set
+                (
+                    title
+                )
+                =
+                (
+                    '$title'
+                )
+                WHERE pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::update($sql);
+    }
 }
 
 ?>
