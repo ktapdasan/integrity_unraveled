@@ -17,16 +17,29 @@
             </div>
         </div>
     </div>
-        <div class="responsive-table"><center>
+
+    
+    <div class="panel">
+        <div style="padding-left: 500px;"><h4>
+                            <select ng-model="filter.status" ng-change= "show_titles()">
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                            <input type="button" class="btn btn-add" value = "Add New Position" alt="edit"ng-click="add_position(k)" title="Edit" style = "float: right;"/></h4> 
+        </div>
+    </div>
+
+
+        <div class="responsive-table">
             <table id="datatables-example" width="50%" cellspacing="0">
                 <thead>
                     <tr>
                         <th><font size = 4>Positions</font></th>
-                        <th><font size = 4> Options</font></th>
+                        <th><font size = 4>Options</font></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in titles.data" style="cursor:pointer;">
+                    <tr ng-repeat="(k, v) in titles.data" style="cursor:pointer;" ng-if= "titles.status">
                         <td>{{v.title}}</td>
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_position(k)" title="Edit">
@@ -34,7 +47,11 @@
                         </center>
                         </td>
                     </tr>
-                </tbody></center>
+                    <tr ng-if="!titles.status">
+                        <td colspan = "9">No Position Found</td>
+                    </tr>
+                    
+                </tbody>
             </table>
         </div>
         <div style="height:50px; width:100%;">

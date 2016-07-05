@@ -6,7 +6,8 @@ $filters = array(
 					'pk' => NULL,
 					'title' => NULL,
 					'created_by' => NULL,
-					'date_created' => NULL
+					'date_created' => NULL,
+					'archived'=> NULL
 				);
 
 foreach($_POST as $k=>$v){
@@ -17,7 +18,8 @@ $class = new Titles(
 						$filters['pk'], 
 						$filters['title'], 
 						$filters['created_by'], 
-						$filters['date_created']
+						$filters['date_created'],
+						$filters['archived']
 					);
 
 $data = $class->fetch();

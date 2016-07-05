@@ -4,7 +4,7 @@ require_once('../../CLASSES/Department.php');
 
 
 $class = new  Department(
-				$_POST['pk'],
+										$_POST['pk'],
                             NULL,
                             NULL,
                             NULL

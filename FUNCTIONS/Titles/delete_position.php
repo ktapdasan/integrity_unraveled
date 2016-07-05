@@ -4,7 +4,8 @@ require_once('../../CLASSES/Titles.php');
 
 
 $class = new Titles(
-				$_POST['pk'],
+							$_POST['pk'],
+                            NULL,
                             NULL,
                             NULL,
                             NULL

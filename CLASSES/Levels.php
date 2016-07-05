@@ -7,7 +7,8 @@ class Levels extends ClassParent {
 
     public function __construct(
                                     $pk='',
-                                    $level_title=''
+                                    $level_title='',
+                                    $archived=''
                                 ){
         
         $fields = get_defined_vars();
@@ -25,13 +26,14 @@ class Levels extends ClassParent {
     }
 
     public function fetch(){
-        $level_title = pg_escape_string(strip_tags(trim($post['get_levels'])));
+        /*$level_title = pg_escape_string(strip_tags(trim($post['get_levels'])));*/
 
         $sql = <<<EOT
                 select
                     pk, 
                     level_title
                 from levels
+                where archived = $this->archived
                 order by pk
                 ;
 EOT;
@@ -58,13 +60,9 @@ EOT;
 
         $sql = <<<EOT
                 UPDATE levels set
-                (
                     level_title
-                )
                 =
-                (
                     '$level_title'
-                )
                 WHERE pk = $this->pk
                 ;
 EOT;
@@ -72,6 +70,24 @@ EOT;
         return ClassParent::update($sql);
     }
 
+   public function add_level(){
+       $level_title = $this->level_title;
+        
+        $sql = <<<EOT
+                insert into levels
+                (
+                    level_title
+                )
+                values
+                (
+                    '$level_title'   
+                )
+                ;
+EOT;
+        
+
+        return ClassParent::insert($sql);
+    }
 }
 
 ?>

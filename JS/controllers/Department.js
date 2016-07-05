@@ -8,11 +8,13 @@ app.controller('Department', function(
                                         md5
   									){
 
-    
-    $scope.department={};
     $scope.filter= {};
-    
+    $scope.filter.status= 'Active';
+
+    $scope.department={};
+    $scope.departments={};
     $scope.modal = {};
+    
 
     init();
 
@@ -23,7 +25,7 @@ app.controller('Department', function(
             $scope.pk = data.data[_id];
 
             get_profile();
-            get_department();
+            departments();
             
         })
         .then(null, function(data){
@@ -45,7 +47,7 @@ app.controller('Department', function(
 
 
 
-    function get_department(){
+   /* function get_department(){
         var promise = DepartmentsFactory.get_department();
         promise.then(function(data){
             $scope.department.data = data.data.result;
@@ -53,7 +55,7 @@ app.controller('Department', function(
         .then(null, function(data){
             
         });
-    }
+    }*/
 
     
     $scope.edit_department = function(k){
@@ -101,7 +103,7 @@ app.controller('Department', function(
             promise.then(function(data){
 
                 UINotification.success({
-                                        message: 'You have successfully applied changes to this employee account.', 
+                                        message: 'You have successfully applied changes to this department.', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
@@ -142,7 +144,7 @@ app.controller('Department', function(
         .then(function(value){
             return false;
         }, function(value){
-            var promise = DepartmentsFactory.delete_department($scope.department);
+            var promise = DepartmentsFactory.delete_department($scope.department.data[k]);
             promise.then(function(data){
                 
 
@@ -154,7 +156,7 @@ app.controller('Department', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                employees();
+
 
             })
             .then(null, function(data){
@@ -171,4 +173,93 @@ app.controller('Department', function(
         });
     }
 
-});
+    $scope.add_department = function(k){
+     
+        $scope.modal = {
+
+            title : 'Add New Department',
+            save : 'Apply Changes',
+            close : 'Cancel',
+
+           
+        };
+
+        ngDialog.openConfirm({
+            template: 'DepartmentNewModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+
+                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Are you sure you want to add this department?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+            var promise = DepartmentsFactory.add_department($scope.modal);
+            promise.then(function(data){
+
+                UINotification.success({
+                                        message: 'You have successfully added new department', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to save changes, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+    
+    $scope.show_departments = function(){
+        departments();
+    }
+   
+
+    function departments(){
+
+        $scope.departments.status = false;
+        $scope.departments.data= '';
+        if ($scope.filter.status == 'Active'){
+            $scope.filter.archived = 'false';  
+        }
+        else {
+            $scope.filter.archived = 'true';   
+        }
+       
+        var promise = DepartmentsFactory.get_department($scope.filter);
+        promise.then(function(data){
+            $scope.departments.status = true;
+            $scope.departments.data = data.data.result;
+
+        })
+        .then(null, function(data){
+            $scope.departments.status = false;
+        });
+    }
+
+ });

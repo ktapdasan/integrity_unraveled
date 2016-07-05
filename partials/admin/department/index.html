@@ -5,6 +5,7 @@
 }
 </style>
 
+
 <div id="content2">
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
@@ -17,9 +18,21 @@
             </div>
         </div>
     </div>
-        <div class="responsive-table"><center>
+
+    <div class="panel">
+        <div style="padding-left: 500px;"><h4>
+                            <select ng-model="filter.status" ng-change= "show_departments()">
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                            <input type="button" class="btn btn-add" value = "Add New Department" alt="edit"ng-click="add_department(k)" title="Edit" style = "float: right;"/></h4> 
+        </div>
+    </div>
+    
+        <div class="responsive-table">
             <table id="datatables-example" width="50%" cellspacing="0">
                 <thead>
+                     
                     <tr>
                         <th><font size = 4>Departments</font></th>
                         <th><font size = 4>Code</font></th>
@@ -27,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in department.data" style="cursor:pointer;">
+                    <tr ng-repeat="(k, v) in departments.data" style="cursor:pointer;" ng-if="departments.status">
                         <td>{{v.department}}</td>
                         <td>{{v.code}}</td>
                         <td><center>
@@ -35,8 +48,10 @@
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_department(k)" title="Delete">                        
                         </center>
                         </td>
+                    <tr ng-if="!departments.status">
+                        <td colspan = "9">No Departments Found</td>
                     </tr>
-                </tbody></center>
+                </tbody>
             </table>
         </div>
         <div style="height:50px; width:100%;">

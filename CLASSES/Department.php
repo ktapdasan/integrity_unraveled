@@ -37,6 +37,7 @@ class Department extends ClassParent {
                     department,
                     code
                 from departments
+                where archived = $this->archived
                 order by pk
                 ;
 EOT;
@@ -47,8 +48,8 @@ EOT;
     public function deactivate(){
 
         $sql = <<<EOT
-                update department
-                set archived = True
+                update departments set 
+                archived = true
                 where pk = $this->pk;
 EOT;
 
@@ -77,6 +78,28 @@ EOT;
 EOT;
 
         return ClassParent::update($sql);
+    }
+
+    public function add_department(){
+        $department = $this->department;
+        $code = $this->code;
+        
+        $sql = <<<EOT
+                insert into departments
+                (
+                    department,
+                    code
+                )
+                values
+                (
+                    '$department',
+                    '$code'
+                )
+                ;
+EOT;
+        
+
+        return ClassParent::insert($sql);
     }
 }
 
