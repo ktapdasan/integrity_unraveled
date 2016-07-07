@@ -100,12 +100,12 @@ if($data['status']==true){
 
 	//send the message, check for errors
 
-	if (!$mail->send()) {
-	    echo "Mailer Error: " . $mail->ErrorInfo;
-	} else {
-	    //echo "Message sent!";
-	    //header("HTTP/1.0 200 OK");
-	}
+	// if (!$mail->send()) {
+	//     echo "Mailer Error: " . $mail->ErrorInfo;
+	// } else {
+	//     //echo "Message sent!";
+	//     header("HTTP/1.0 200 OK");
+	// }
 
 	header("HTTP/1.0 200 OK");
 }
