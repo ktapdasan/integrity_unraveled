@@ -38,7 +38,6 @@ class ManualLog extends ClassParent {
         $time_log = $this->time_log;
         $reason= $this->reason;
 
-
         $sql = <<<EOT
                 insert into manual_log
                 (
@@ -53,6 +52,7 @@ class ManualLog extends ClassParent {
                     '$time_log',
                     '$reason' 
                 )
+                returning pk
                 ;
 EOT;
 

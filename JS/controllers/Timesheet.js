@@ -176,9 +176,7 @@ app.controller('Timesheet', function(
             template: 'ManualLogModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
-                var nestedConfirmDialog;
-
-                
+                var nestedConfirmDialog;                
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +

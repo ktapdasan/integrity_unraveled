@@ -53,7 +53,7 @@
                         <td ng-class="(v.login == 'None')?'':''">
                             <span ng-if = "v.login == 'None'">
                                 <span ng-click="open_manual_log('In', k)">
-                                    <font color="red" title = "Manual Log">None</font></span>
+                                    <font color="red" title = "File Manual Log"><u>None</u></font></span>
                             </span>
                             <span ng-if = 'v.login != "None"'>
                                 {{v.login}}
@@ -62,7 +62,7 @@
                         <td ng-class="(v.logout == 'None')?'':''">
                             <span ng-if="v.logout == 'None'">
                                 <span ng-click="open_manual_log('Out', k)">
-                                    <font color="red" title = "Manual Log">None</font></span>
+                                    <font color="red" title = "File Manual Log"><u>None</u></font></span>
                             </span>
                             <span ng-if="v.logout != 'None'">
                                 {{v.logout}}

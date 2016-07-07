@@ -117,7 +117,7 @@ class ClassParent {
             $return['status'] = true;
             $return['sql'] = $sql;
             $return['msg'] = "Success";
-            $return['returning'] = $query;
+            $return['returning'] = pg_fetch_assoc($query);
         }
         else{
             $return['status'] = false;

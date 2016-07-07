@@ -186,6 +186,25 @@
                     <li ng-class="menu.timesheet">
                         <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a>
                     </li>
+                    <li ng-class="menu.timelogs">
+                        <a href="#/timelogs" ng-click="menuclicked('timelogs')">Time Logs</a>
+                    </li>
+                    <li ng-class="menu.management">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/management/departments" ng-click="menuclicked('management')">Manual Logs</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/positions" ng-click="menuclicked('management')">Leaves</a></li>
+                        </ul>
+                    </li>
+                    <li ng-class="menu.admin">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/admin/departments" ng-click="menuclicked('admin')">Departments</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/positions" ng-click="menuclicked('admin')">Positions</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/levels" ng-click="menuclicked('admin')">Levels</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/permissions" ng-click="menuclicked('admin')">Permissions</a></li>
+                        </ul>
+                    </li>
                     <!-- <li class="dropdown" ng-class="menu.manual">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manual<span class="caret"></span></a>
                         <ul class="dropdown-menu">
