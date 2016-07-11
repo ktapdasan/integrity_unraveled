@@ -5,6 +5,7 @@ app.controller('Timesheet', function(
                                         EmployeesFactory,
                                         TimelogFactory,
                                         ngDialog,
+                                        UINotification,
                                         md5
   									){
 
@@ -13,9 +14,6 @@ app.controller('Timesheet', function(
     $scope.timesheet_data = [];
     $scope.log = {};
     $scope.log.time_log = new Date;
-   /* $scope.selectedTimeAsNumber = 10 * 36e5 + 30 * 6e4 + 40 * 1e3;
-    $scope.selectedTimeAsString = '';
-    $scope.sharedDate = new Date(new Date().setMinutes(0, 0));*/
 
     init();
 
@@ -161,6 +159,9 @@ app.controller('Timesheet', function(
         
     $scope.open_manual_log = function(type, key){
 
+        $scope.log.reason = '';
+        $scope.log.time_log = new Date;
+
         $scope.log.date_log = $scope.timesheet_data[key].log_date;
         $scope.log.selectedTimeAsString;
         //$scope.employee = $scope.timesheet_data[key];
@@ -205,8 +206,27 @@ app.controller('Timesheet', function(
             $scope.log.time_log = H + ":" +M ;
           
             var promise = TimelogFactory.save_manual_log($scope.log);
-            console.log($scope.log);
-        });
+
+
+            UINotification.success({
+                                        message: 'You have successfully filed manual log', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to file manual log, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });  
+
+            
+        }); 
     }
 
 
