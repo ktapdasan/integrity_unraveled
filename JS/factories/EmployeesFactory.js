@@ -154,6 +154,7 @@ app.factory('EmployeesFactory', function($http){
         return promise;
     };
 
+    
     factory.submit_employee = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/submit_employee.php',
@@ -208,6 +209,23 @@ app.factory('EmployeesFactory', function($http){
     factory.edit_employees = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/edit_employees.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.get_supervisor = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_supervisor.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

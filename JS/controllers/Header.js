@@ -15,7 +15,8 @@ app.controller('Header', function(
         employees : '',
         timesheet : '',
         admin : '',
-        manual : ''
+        manual : '',
+        leave : ''
         
     }
 

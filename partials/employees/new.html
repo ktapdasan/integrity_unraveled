@@ -160,13 +160,21 @@
                             <!-- <option style="display:none">-- Please Select One --</option> -->
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
-
                                 {{v.title}}
-
                             </option>
 
                         </select>
                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.position.$error.required">Position is required.</span>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Supervisor:</label>
+                    </td>
+                    <td id="css">
+                    <select  ng-model="employee.supervisor" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5"><option ng-repeat="(k, v) in employees.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.supervisor}}
+                        </option>
+                    </select> 
+
                     </td>
                     <!-- <td>
                         <input required id="new_employee_position" ng-model="filter.searchstring" type="text" style="display: block; float: left; width:400px;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>

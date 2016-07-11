@@ -6,8 +6,8 @@ var app = angular.module('onload', [
                                     'isteven-multi-select',
                                     'ui-notification',
                                     'ngSanitize',
-                                    'mgcrea.ngStrap'
-                                    
+                                    'mgcrea.ngStrap',
+                                            
                                 ]);
 
 app.config(function($routeProvider){
@@ -56,6 +56,11 @@ app.config(function($routeProvider){
     {
         controller: 'Levels',
         templateUrl: 'partials/admin/levels/index.html'
+    })
+    .when('/management/leave',
+    {
+        controller: 'Leave',
+        templateUrl: 'partials/management/leave/index.html'
     })
     
     .otherwise(

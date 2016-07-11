@@ -24,6 +24,7 @@
         levels_pk:''
     };
 
+    $scope.employees = {};
     $scope.filter={};
 
     init();
@@ -37,6 +38,7 @@
             get_positions();
             get_department();
             get_levels();
+            employees();
 
             
         })
@@ -72,6 +74,20 @@
         })
         .then(null, function(data){
             
+        });
+    }
+
+    function employees(){
+        
+        $scope.filter.archived = 'false';
+
+        var promise = EmployeesFactory.fetch_all($scope.filter);
+        promise.then(function(data){
+            $scope.employees.status = true;
+            $scope.employees.data = data.data.result;
+        })
+        .then(null, function(data){
+            $scope.employees.status = false;
         });
     }
 

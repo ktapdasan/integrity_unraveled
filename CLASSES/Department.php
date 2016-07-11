@@ -45,6 +45,22 @@ EOT;
         return ClassParent::get($sql);
     }
 
+     public function get_departments(){
+        
+        $sql = <<<EOT
+                select 
+                    pk,
+                    department
+                from departments
+                where archived = false
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+
     public function deactivate(){
 
         $sql = <<<EOT

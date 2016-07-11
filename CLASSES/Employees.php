@@ -125,6 +125,9 @@ EOT;
                     last_name,
                     email_address,
                     business_email_address,
+                    groupings.supervisor_pk as supervisor_pk,
+                    (select first_name||' '||last_name from employees where pk = groupings.supervisor_pk)
+                    as supervisor,
                     titles_pk,
                     (select title from titles where pk = employees.titles_pk) as title,
                     levels_pk,
@@ -135,6 +138,7 @@ EOT;
                     date_created,
                     archived
                 from employees
+                left join groupings on (groupings.employees_pk = employees.pk)
                 where true
                 $where
                 order by date_created
@@ -585,11 +589,22 @@ EOT;
                 set archived = False
                 where pk = $this->pk;
 EOT;
-
         return ClassParent::update($sql);
     }
 
 
+    public function get_supervisor(){
+
+        $sql = <<<EOT
+            select distinct
+                first_name
+                as getsupervisor
+                from employees
+                ;
+EOT;
+
+        return ClassParent::update($sql);
+    }
 //      public function open_manual_log($data){
 //        foreach($data as $k=>$v){
 //             $data[$k] = pg_escape_string(trim(strip_tags($v)));

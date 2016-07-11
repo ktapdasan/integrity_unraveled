@@ -4,7 +4,8 @@ require_once('../../CLASSES/Levels.php');
 
 $filters = array(
 					'pk' => NULL,
-					'level_title' => NULL
+					'level_title' => NULL,
+					'archived' => NULL
 				);
 
 foreach($_POST as $k=>$v){
@@ -13,10 +14,11 @@ foreach($_POST as $k=>$v){
 
 $class = new Levels(
 						$filters['pk'], 
-						$filters['level_title']
+						$filters['level_title'],
+						$filters['archived']
 					);
 
-$data = $class->fetch();
+$data = $class->get_levels();
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){

@@ -46,6 +46,22 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_titles(){
+       /* $title = pg_escape_string(strip_tags(trim($post['get_positions'])));
+*/
+        $sql = <<<EOT
+                select
+                    pk, 
+                    title
+                from titles
+                where archived = false
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function deactivate(){
 
         $sql = <<<EOT

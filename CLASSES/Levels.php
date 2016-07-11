@@ -4,6 +4,7 @@ class Levels extends ClassParent {
 
     var $pk = NULL;
     var $level_title = NULL;
+    var $archived = NULL;
 
     public function __construct(
                                     $pk='',
@@ -34,6 +35,22 @@ class Levels extends ClassParent {
                     level_title
                 from levels
                 where archived = $this->archived
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_levels(){
+        /*$level_title = pg_escape_string(strip_tags(trim($post['get_levels'])));*/
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    level_title
+                from levels
+                where archived = false
                 order by pk
                 ;
 EOT;

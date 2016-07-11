@@ -1,12 +1,10 @@
 <?php
 require_once('../connect.php');
-require_once('../../CLASSES/Titles.php');
+require_once('../../CLASSES/Levels.php');
 
 $filters = array(
 					'pk' => NULL,
-					'title' => NULL,
-					'created_by' => NULL,
-					'date_created' => NULL,
+					'level_title' => NULL,
 					'archived' => NULL
 				);
 
@@ -14,15 +12,13 @@ foreach($_POST as $k=>$v){
 	$filters[$k] = $v;
 }
 
-$class = new Titles(
+$class = new Levels(
 						$filters['pk'], 
-						$filters['title'], 
-						$filters['created_by'], 
-						$filters['date_created'],
+						$filters['level_title'],
 						$filters['archived']
 					);
 
-$data = $class->get_titles();
+$data = $class->fetch();
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){

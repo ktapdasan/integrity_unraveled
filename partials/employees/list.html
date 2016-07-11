@@ -52,8 +52,8 @@
                         <th>First Name</th>
                         <th>Middle Name</th>
                         <th>Last Name</th>
-                        <th>E-mail Address</th>
-                        <th>Business E-mail Address</th>
+                        <th>E-mails</th>
+                        <th>Supervisor</th>
                         <th>Position</th>
                         <th>Level</th>
                         <th>Department</th>
@@ -66,8 +66,11 @@
                         <td>{{v.first_name}}</td>
                         <td>{{v.middle_name}}</td>
                         <td>{{v.last_name}}</td>
-                        <td>{{v.email_address}}</td>
-                        <td>{{v.business_email_address}}</td>
+                        <td>{{v.email_address}}</br> {{v.business_email_address}}</td>
+                        <td>
+                            {{v.supervisor}}
+                            <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
+                        </td>
                         <td>{{v.title}}</td>
                         <td>{{v.level}}</td> 
                         <td>{{v.department}}</td>

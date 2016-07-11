@@ -12,9 +12,11 @@ app.controller('Employees', function(
     $scope.filter = {};
     $scope.filter.status = 'Active';
 
+
     $scope.titles={};
     $scope.department={};
     $scope.level_title={};
+    $scope.groupings= {};
 
     $scope.employee={};
     $scope.employees={};
@@ -34,6 +36,7 @@ app.controller('Employees', function(
             get_positions();
             get_department();
             get_levels();
+            get_supervisor();
             
         })
         .then(null, function(data){
@@ -110,6 +113,16 @@ app.controller('Employees', function(
             
         });
     }
+
+    function get_supervisor(){
+        var promise = EmployeesFactory.get_supervisor();
+        promise.then(function(data){
+            $scope.employees.data = data.data.result;
+        })
+        .then(null, function(data){
+            
+        });
+    }
        
     $scope.export_employees = function(){
         window.open('./FUNCTIONS/Timelog/employees_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
@@ -148,6 +161,7 @@ app.controller('Employees', function(
                                         positionY: 'top', positionX: 'right'
                                     });
                 employees();
+                get_supervisor();
 
             })
             .then(null, function(data){
