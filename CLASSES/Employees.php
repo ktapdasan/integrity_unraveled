@@ -597,9 +597,9 @@ EOT;
 
         $sql = <<<EOT
             select distinct
-                first_name
-                as getsupervisor
+                first_name||''|| last_name as getsupervisor
                 from employees
+                where levels_pk > 3;
                 ;
 EOT;
 

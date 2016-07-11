@@ -6,7 +6,7 @@ var app = angular.module('onload', [
                                     'isteven-multi-select',
                                     'ui-notification',
                                     'ngSanitize',
-                                    'mgcrea.ngStrap',
+                                    'mgcrea.ngStrap'
                                             
                                 ]);
 

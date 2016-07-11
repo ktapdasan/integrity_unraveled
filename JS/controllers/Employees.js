@@ -60,15 +60,6 @@ app.controller('Employees', function(
 
        employees();
     }
-/*
-    $scope.search_employees = function () {
-        if ($scope.filter.searchstring.replace(/\s/g,'').length == 0){
-            employees();
-        }
-        else if ($scope.filter.searchstring.length > 1){
-            employees();
-        }
-    }*/
 
     function employees(){
         
