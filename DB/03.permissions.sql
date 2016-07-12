@@ -19,3 +19,60 @@ values
 		} 
 	}'
 );
+
+insert into employees_permissions
+(employees_pk,permission)
+values
+(
+	85,
+	'{ 
+		"employees" : {
+			"list" : true,
+			"employees" : true
+		} 
+	}'
+);
+
+update employees_permissions set
+	permission=
+	(
+	'{ 
+		"employees" : {
+			"list" : true,
+			"employees" : true
+		},	
+		"management" : {
+			"manual log" : true,
+			"leave" : true
+		}, 
+		"admin" : {
+			"departments" : true,
+			"positions" : true,
+			"levels" : true,
+			"permissions" : true
+		} 
+	}'
+	)
+	where employees_pk = 28;
+
+update employees_permissions set
+	permission=
+	(
+	'{ 
+		"employees" : {
+			"list" : true,
+			"employees" : true
+		},	
+		"management" : {
+			"manual log" : true,
+			"leave" : true
+		}, 
+		"admin" : {
+			"departments" : true,
+			"positions" : true,
+			"levels" : true,
+			"permissions" : true
+		} 
+	}'
+	)
+	where employees_pk = 85;
