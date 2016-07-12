@@ -36,7 +36,7 @@ app.controller('Employees', function(
             get_positions();
             get_department();
             get_levels();
-            get_supervisor();
+
             
         })
         .then(null, function(data){
@@ -105,10 +105,10 @@ app.controller('Employees', function(
         });
     }
 
-    function get_supervisor(){
-        var promise = EmployeesFactory.get_supervisor();
+    function get_supervisors(){
+        var promise = EmployeesFactory.get_supervisors();
         promise.then(function(data){
-            $scope.employees.data = data.data.result;
+            $scope.employees.supervisors = data.data.result;
         })
         .then(null, function(data){
             
@@ -219,8 +219,8 @@ app.controller('Employees', function(
     }
 
     $scope.edit_employees = function(k){
-        
-        
+        get_supervisors();
+
         $scope.employee = $scope.employees.data[k];
         $scope.modal = {
 

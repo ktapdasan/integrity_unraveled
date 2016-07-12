@@ -223,18 +223,10 @@ app.factory('EmployeesFactory', function($http){
         return promise;
     };
 
-    factory.get_supervisor = function(data){
+    factory.get_supervisors = function(){
         var promise = $http({
-            url:'./FUNCTIONS/Employees/get_supervisor.php',
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            data : data
+            url:'./FUNCTIONS/Employees/get_supervisors.php',
+            method: 'GET'         
         })
 
         return promise;

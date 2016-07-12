@@ -560,9 +560,9 @@ EOT;
                     '$this->last_name',
                     '$this->business_email_address',
                     '$this->email_address',
-                    $this->titles_pk,
+                    '$this->titles_pk',
                     '$this->department',
-                    $this->levels_pk
+                    '$this->levels_pk'
                 )
                 WHERE pk = $this->pk
                 ;
@@ -593,17 +593,20 @@ EOT;
     }
 
 
-    public function get_supervisor(){
+    public function get_supervisors(){
 
         $sql = <<<EOT
-            select distinct
-                first_name||''|| last_name as getsupervisor
-                from employees
-                where levels_pk > 3;
-                ;
+            select 
+                pk,
+                first_name||' '|| last_name as name
+            from employees
+            where levels_pk != 3 and
+                levels_pk != 7 and
+            left join groupings on (groupings.employees_pk = employees.pk)
+            ;
 EOT;
 
-        return ClassParent::update($sql);
+        return ClassParent::get($sql);
     }
 //      public function open_manual_log($data){
 //        foreach($data as $k=>$v){
