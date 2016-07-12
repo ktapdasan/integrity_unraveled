@@ -13,7 +13,7 @@
     <!-- plugins -->
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/simple-line-icons.css"/>
-    <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/>
+   <!--  <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/> -->
    <link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
 
     <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog.min.css" >
@@ -371,13 +371,7 @@
     <script src="./ASSETS/js/plugins/timepicker/angular-strap.tpl.js" data-semver="v2.3.8"></script>
     <script src="./ASSETS/js/plugins/timepicker/angular-strap.docs.tpl.js" data-semver="v2.3.8"></script>
 
-    <!--datepicker-->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-  
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>
 
@@ -837,8 +831,8 @@
                                     <td id="css">
                                         <select required ng-model="employee.supervisor" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
                                             <!-- <option style="display:none">-- Please Select One --</option> -->
-                                            <option ng-repeat="(k, v) in employees.data" style="cursor:pointer;" value="{{v.pk}}">
-                                                {{v.getsupervisor}}
+                                            <option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
+                                                {{v.name}}
                                             </option>
                                         </select>           
                                     </td>
@@ -991,13 +985,13 @@
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
     </script>
-
+<!--
     <script type="text/ng-template" id="SubmitLeaveModal">
         <div class="ngdialog-message" >
             <div>
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-            <div ng-class="{'has-error': datepickerForm.date.$invalid}">
+            <div>
             <table>
                 <tr>
                     <th>
@@ -1011,18 +1005,23 @@
                 </tr>
                 <tr>
                     <td>
+                    <div>
                         <label style= "font-size:20px; float: left;">Start Date:</label>
-                         <div class="col-md-6"><i class="fa fa-calendar" ></i>
-                              <input class="control-label" ng-model="modal.date_started" bs-datepicker />
-                        </div>
+                        <input type="text" size = "10" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date_started" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
+                    <div>
                         <label style= "font-size:20px; float: left;">End Date:</label>
-                        <div class="col-md-6"><i class="fa fa-calendar"></i>
-                              <input class="control-label" ng-model="modal.date_ended" bs-datepicker/>
-                          </div>
+                         <input type="text" size = "10" class="form-control" uib-datepicker-popup="{{format}}" ng-model= "date_ended" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </div>
                     </td>
                 </tr>
                 <tr>
@@ -1037,7 +1036,7 @@
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
-    </script>
+    </script> -->
   </body>
 </html>
 
