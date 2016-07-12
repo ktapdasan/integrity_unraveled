@@ -22,12 +22,7 @@ app.config(function($routeProvider){
         controller: 'Timesheet',
         templateUrl: 'partials/timesheet/index.html'
     })
-    .when('/timelogs',
-    {
-        controller: 'Timelogs',
-        templateUrl: 'partials/timelogs/index.html'
-    })
-    .when('/employees',
+    .when('/employees/list',
     {
         controller: 'Employees',
         templateUrl: 'partials/employees/list.html'
@@ -42,6 +37,11 @@ app.config(function($routeProvider){
         controller: 'Employees',
         templateUrl: 'partials/employees/edit.html'
     })
+    .when('/employees/timesheet',
+    {
+        controller: 'Timelogs',
+        templateUrl: 'partials/timelogs/index.html'
+    })
     .when('/admin/departments',
     {
         controller: 'Department',
@@ -51,6 +51,11 @@ app.config(function($routeProvider){
     {
         controller: 'Position',
         templateUrl: 'partials/admin/position/index.html'
+    })
+    .when('/employees/permissions',
+    {
+        controller: 'EmployeesPermissions',
+        templateUrl: 'partials/employees/permission.html'
     })
     .when('/admin/levels',
     {

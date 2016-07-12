@@ -156,9 +156,11 @@ EOT;
                     first_name,
                     middle_name,
                     last_name,
-                    email_address
+                    email_address,
+                    employees_permissions.permission
                 from employees
-                where archived = false
+                left join employees_permissions on (employees.pk = employees_permissions.employees_pk)
+                where employees.archived = false
                 and md5(pk::text) = '$this->pk'
                 ;
 EOT;

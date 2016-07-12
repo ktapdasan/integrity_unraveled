@@ -175,6 +175,7 @@
     <!-- start: Header -->
     <nav class="navbar navbar-default header navbar-fixed-top">
         <div class="col-md-12 nav-wrapper">
+            {{profile.permission}}
             <div class="navbar-header" style="width:100%;" ng-controller="Header">
                 <a href="#/" class="navbar-brand"> 
                     <b>Integrity</b>
@@ -187,17 +188,25 @@
                         <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a>
                     </li>
 
-                    <li ng-class="menu.timelogs">
+                    <!-- <li ng-class="menu.timelogs">
                         <a href="#/timelogs" ng-click="menuclicked('timelogs')">Time Logs</a>
+                    </li> -->
+                    <li ng-class="menu.employee" ng-if="profile.permission.employees">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/employees/list" ng-click="menuclicked('employees')">List</a></li>
+                            <li><a style="cursor:pointer;" href="#/employees/timesheet" ng-click="menuclicked('employees')">Timesheet</a></li>
+                        </ul>
+
                     </li>
-                    <li ng-class="menu.management">
+                    <li ng-class="menu.management" ng-if="profile.permission.management">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
                             <li><a style="cursor:pointer;" href="#/management/departments" ng-click="menuclicked('management')">Manual Logs</a></li>
                             <li><a style="cursor:pointer;" href="#/management/leave" ng-click="menuclicked('management')">Leaves</a></li>
                         </ul>
                     </li>
-                    <li ng-class="menu.admin">
+                    <li ng-class="menu.admin" ng-if="profile.permission.administration">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
                             <li><a style="cursor:pointer;" href="#/admin/departments" ng-click="menuclicked('admin')">Departments</a></li>
@@ -701,7 +710,20 @@
 
 
                 <div id="content2" style="margin: 20px; border:0px solid #f0f0f0;">
+                
                      <div>
+                        <div class="content-box-large">
+                            <div class="panel-title">
+                                <ul class="nav nav-tabs">
+                                    <li data-ng-class="{ 'active' : data.mainmenu == 'uoms' }">
+                                        <a style="cursor:pointer;" href="#/items/uoms">Personal Information</a>
+                                    </li>
+                                    <li data-ng-class="{ 'active' : data.mainmenu == 'suppliers' }" >
+                                        <a style="cursor:pointer;" href="#/items/suppliers">System Permissions</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <form name="myForm" novalidate>
                         <table>
                                 
