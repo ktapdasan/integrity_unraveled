@@ -9,3 +9,27 @@ create table notifications
 );
 
 alter table notifications owner to chrs;
+
+insert into notifications
+(
+	notifications,
+	table_from,
+	table_from_pk
+)
+values
+(
+	'Test notification 1',
+	'Employees',
+	1
+),
+(
+	'Test notification 2',
+	'Employees',
+	1
+),
+(
+	'Test notification 3',
+	'Employees',
+	1
+)
+;
