@@ -217,17 +217,14 @@ app.controller('Employees', function(
                             
         });
     }
-
+    
     $scope.edit_employees = function(k){
         get_supervisors();
-
         $scope.employee = $scope.employees.data[k];
         $scope.modal = {
-
-            title : 'Edit Employee Account',
+            title : 'Edit ' + $scope.employees.data[k].first_name,
             save : 'Apply Changes',
             close : 'Cancel',
-           
         };
 
         ngDialog.openConfirm({

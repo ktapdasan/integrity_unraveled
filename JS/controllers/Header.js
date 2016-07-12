@@ -26,8 +26,6 @@ app.controller('Header', function(
     $scope.modal = {};
 
     function init(){
-        
-
         var promise = SessionFactory.getsession();
         promise.then(function(data){
             var _id = md5.createHash('pk');
@@ -55,6 +53,8 @@ app.controller('Header', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+
+            $scope.profile.permission = JSON.parse(data.data.result[0].permission);
 
             menuselect($location.$$path.replace(/\//,''));
         })   
