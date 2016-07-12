@@ -217,7 +217,7 @@ app.controller('Employees', function(
                             
         });
     }
-    
+
     $scope.edit_employees = function(k){
         get_supervisors();
         $scope.employee = $scope.employees.data[k];

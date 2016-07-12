@@ -45,7 +45,7 @@ update employees_permissions set
 			"manual log" : true,
 			"leave" : true
 		}, 
-		"admin" : {
+		"administration" : {
 			"departments" : true,
 			"positions" : true,
 			"levels" : true,
@@ -67,7 +67,7 @@ update employees_permissions set
 			"manual log" : true,
 			"leave" : true
 		}, 
-		"admin" : {
+		"administration" : {
 			"departments" : true,
 			"positions" : true,
 			"levels" : true,

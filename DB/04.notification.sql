@@ -12,7 +12,7 @@ alter table notifications owner to chrs;
 
 insert into notifications
 (
-	notifications,
+	notification,
 	table_from,
 	table_from_pk
 )
