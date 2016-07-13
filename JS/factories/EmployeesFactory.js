@@ -208,7 +208,7 @@ app.factory('EmployeesFactory', function($http){
 
     factory.edit_employees = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Employees/edit_employees.php',
+            url:'./FUNCTIONS/Employees/update_employees.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

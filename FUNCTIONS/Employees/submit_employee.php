@@ -21,7 +21,7 @@ $class = new Employees(
 			);
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
 
-$data = $class-> create();
+$data = $class-> create($extra);
 
 setcookie('commented', 'commented', time()+43200000, '/');
 
