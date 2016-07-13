@@ -36,6 +36,7 @@ app.controller('Employees', function(
             get_positions();
             get_department();
             get_levels();
+            get_supervisors();
 
             
         })
@@ -253,6 +254,7 @@ app.controller('Employees', function(
         .then(function(value){
             return false;
         }, function(value){
+
             var promise = EmployeesFactory.edit_employees($scope.employees.data[k]);
             promise.then(function(data){
                 

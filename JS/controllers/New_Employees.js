@@ -39,6 +39,7 @@
             get_department();
             get_levels();
             employees();
+            get_supervisors();
 
             
         })
@@ -91,11 +92,21 @@
         });
     }
 
+    function get_supervisors(){
+        var promise = EmployeesFactory.get_supervisors();
+        promise.then(function(data){
+            $scope.employees.supervisors = data.data.result;
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
     $scope.submit_employee = function(){
 
         var promise = EmployeesFactory.submit_employee($scope.employee);
         promise.then(function(data){
-            
+        
 
             UINotification.success({
                                     message: 'You have successfully submitted a new employee.', 
@@ -126,7 +137,8 @@
                 business_email_address:'',
                 email_address:'',
                 departments_pk:'',
-                levels_pk:''
+                levels_pk:'',
+                supervisor_pk: ''
             };
     }
 

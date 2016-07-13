@@ -19,6 +19,7 @@ $class = new Employees(
                             NULL
 
 			);
+$extra['supervisor_pk'] = $_POST['supervisor_pk'];
 
 $data = $class-> create();
 

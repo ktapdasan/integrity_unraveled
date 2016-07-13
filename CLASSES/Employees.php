@@ -2,8 +2,6 @@
 require_once('../../CLASSES/ClassParent.php');
 class Employees extends ClassParent 
 {
-
-
     var $pk = NULL;
     var $employee_id = NULL;
     var $first_name = NULL;
@@ -491,6 +489,9 @@ EOT;
     }
 
     public function create($data){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
         $this->department = "{".$this->department."}";
 
         $sql = "begin;";
@@ -532,16 +533,35 @@ EOT;
                     md5('user123456')
                 );
 EOT;
+        $supervisor_pk = $extra['supervisor_pk'];
+        $sql .= <<<EOT
+                insert into groupings
+                (   
+                    employees_pk,
+                    supervisor_pk
+                )
+                values
+                (
+                    $this->pk,
+                    $supervisor_pk
+                )
+                ;
+EOT;
 
         $sql .= "commit;";
 
         return ClassParent::insert($sql);
     }
 
-    public function update_employees(){
-        $this->department = "{".$this->department."}";
+    public function update_employees($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
 
-        $sql = <<<EOT
+        $this->department = "{".$this->department."}";
+ 
+        $sql = "begin;";
+        $sql .= <<<EOT
                 UPDATE employees set
                 (
                     employee_id,
@@ -562,13 +582,36 @@ EOT;
                     '$this->last_name',
                     '$this->business_email_address',
                     '$this->email_address',
-                    '$this->titles_pk',
+                    $this->titles_pk,
                     '$this->department',
-                    '$this->levels_pk'
+                    $this->levels_pk
                 )
-                WHERE pk = $this->pk
+                where pk = $this->pk
+                ;
+
+EOT;
+        $sql .= <<<EOT
+                delete from groupings 
+                where employees_pk = $this->pk
                 ;
 EOT;
+
+        $supervisor_pk = $extra['supervisor_pk'];
+        $sql .= <<<EOT
+                insert into groupings
+                (   
+                    employees_pk,
+                    supervisor_pk
+                )
+                values
+                (
+                    $this->pk,
+                    $supervisor_pk
+                )
+                ;
+EOT;
+
+        $sql .= "commit;";
 
         return ClassParent::update($sql);
     }
@@ -603,8 +646,7 @@ EOT;
                 first_name||' '|| last_name as name
             from employees
             where levels_pk != 3 and
-                levels_pk != 7 and
-            left join groupings on (groupings.employees_pk = employees.pk)
+                levels_pk != 7
             ;
 EOT;
 

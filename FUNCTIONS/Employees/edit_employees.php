@@ -2,7 +2,7 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 
-$class = new Employees(
+$class =    new Employees(
 				$_POST['pk'],
                             $_POST['employee_id'],
                             $_POST['first_name'],
@@ -15,10 +15,12 @@ $class = new Employees(
                             $_POST['departments_pk'],
                             NULL,
                             NULL
-
 			);
 
-$data = $class-> update_employees();
+$extra['supervisor_pk'] = $_POST['supervisor_pk'];
+
+$data = $class -> update_employees($extra);
+
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
