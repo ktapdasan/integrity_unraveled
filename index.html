@@ -829,7 +829,7 @@
                                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Supervisor:</label>
                                     </td>
                                     <td id="css">
-                                        <select required ng-model="employee.supervisor" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                                        <select required ng-model="employee.supervisor_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
                                             <!-- <option style="display:none">-- Please Select One --</option> -->
                                             <option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
                                                 {{v.name}}
@@ -985,7 +985,7 @@
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
     </script>
-<!--
+
     <script type="text/ng-template" id="SubmitLeaveModal">
         <div class="ngdialog-message" >
             <div>
@@ -996,7 +996,7 @@
                 <tr>
                     <th>
                     <label style = "font-size:20px;">Type of leave</label>
-                        <select required ng-model="modal.leave_types.name" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
                             <option ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;" value="{{v.pk}}">
                                 {{v.name}}
                             </option>
@@ -1007,10 +1007,8 @@
                     <td>
                     <div>
                         <label style= "font-size:20px; float: left;">Start Date:</label>
-                        <input type="text" size = "10" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date_started" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                        <input type="date" class="form-control" ng-model="modal.date_started" ng-required="true" close-text="Close"/>
+                       
                     </div>
                     </td>
                 </tr>
@@ -1018,9 +1016,7 @@
                     <td>
                     <div>
                         <label style= "font-size:20px; float: left;">End Date:</label>
-                         <input type="text" size = "10" class="form-control" uib-datepicker-popup="{{format}}" ng-model= "date_ended" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                         <input type="date" size = "10" class="form-control" ng-model= "modal.date_ended"  ng-required="true" close-text="Close"/>
                     </div>
                     </td>
                 </tr>
@@ -1036,7 +1032,7 @@
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
-    </script> -->
+    </script> 
   </body>
 </html>
 

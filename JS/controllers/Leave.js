@@ -11,6 +11,7 @@ app.controller('Leave', function(
 
     $scope.pk='';
     $scope.leave_types={};
+    $scope.profile= {};
 
     $scope.filter= {};
     $scope.filter.status= "Active";
@@ -28,126 +29,30 @@ app.controller('Leave', function(
             $scope.pk = data.data[_id];
 
             leavetypes();
+            get_profile();
             
         });
     }
 
+    function get_profile(){
+        var filters = { 
+            'pk' : $scope.pk
+        };
 
-
-    $scope.edit_level = function(k){
-
-    $scope.modal = {
-
-        title : 'Edit Level',
-        save : 'Apply Changes',
-        close : 'Cancel',
-        fields : {
-                pk : $scope.level_title.data[k].pk,
-                level_title : $scope.level_title.data[k].level_title
-        }
-
-    };
-
-    ngDialog.openConfirm({
-        template: 'LevelModal',
-        className: 'ngdialog-theme-plain custom-widththreefifty',
-        preCloseCallback: function(value) {
-            var nestedConfirmDialog;
-
-            
-                nestedConfirmDialog = ngDialog.openConfirm({
-                    template:
-                            '<p></p>' +
-                            '<p>Are you sure you want to apply changes to this employee account?</p>' +
-                            '<div class="ngdialog-buttons">' +
-                                '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
-                                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
-                            '</button></div>',
-                    plain: true,
-                    className: 'ngdialog-theme-plain custom-widththreefifty'
-                });
-
-            return nestedConfirmDialog;
-        },
-        scope: $scope,
-        showClose: false
-    })
-    .then(function(value){
-        return false;
-    }, function(value){
-        var promise = LevelsFactory.update($scope.modal.fields);
+        var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
+            $scope.profile = data.data.result[0];
+        })   
+    } 
 
-            UINotification.success({
-                                    message: 'You have successfully applied changes.', 
-                                    title: 'SUCCESS', 
-                                    delay : 5000,
-                                    positionY: 'top', positionX: 'right'
-                                });
-            $scope.level_title.data[k].level_title =  $scope.modal.fields.level_title;
-        })
-        .then(null, function(data){
-            
-            UINotification.error({
-                                    message: 'An error occured, unable to save changes, please try again.', 
-                                    title: 'ERROR', 
-                                    delay : 5000,
-                                    positionY: 'top', positionX: 'right'
-                                });
-        });         
-
-                        
-    });
-}
-
-    $scope.delete_level = function(k){
        
-       $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to delete this level?',
-                save : 'Delete',
-                close : 'Cancel'
-            };
-       ngDialog.openConfirm({
-            template: 'ConfirmModal',
-            className: 'ngdialog-theme-plain',
-            
-            scope: $scope,
-            showClose: false
-        })
-        
-        .then(function(value){
-            return false;
-        }, function(value){
-            
-            var promise = LevelsFactory.delete_level($scope.level_title.data[k]);
-            promise.then(function(data){
-                
-                $scope.archived=true;
-
-                UINotification.success({
-                                        message: 'You have successfully deleted level', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-
-            })
-            .then(null, function(data){
-                
-                UINotification.error({
-                                        message: 'An error occured, unable to delete, please try again.', 
-                                        title: 'ERROR', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-            });         
-
-                            
-        });
-    }
 
     $scope.add_leave = function(k){
+
+    get_profile();
+    $scope.modal.reason = '';
+    $scope.modal.date_started = new Date;
+    $scope.modal.date_ended = new Date;
 
     $scope.modal = {
 
@@ -184,8 +89,24 @@ app.controller('Leave', function(
     .then(function(value){
         return false;
     }, function(value){
+
+        var date_started= new Date($scope.modal.date_started);
+            var dd = date_started.getDate();
+            var mm= date_started.getMonth();
+            var yyyy = date_started.getFullYear();
+        var date_ended= new Date($scope.modal.date_ended);
+            var DD= date_ended.getDate();
+            var MM = date_ended.getMonth(); 
+            var YYYY = date_ended.getFullYear(); 
+           
+        $scope.modal.date_started = yyyy+'-'+mm+'-'+dd;
+        $scope.modal.date_ended = YYYY+'-'+MM+'-'+DD;
+        $scope.modal["employees_pk"] = $scope.profile.pk;
+        
         var promise = LeaveFactory.add_leave($scope.modal);
-        promise.then(function(data){
+        console.log($scope.modal)
+
+        $scope.archived=true;
 
             UINotification.success({
                                     message: 'You have successfully added level.', 
@@ -206,7 +127,6 @@ app.controller('Leave', function(
         });         
 
                         
-    });
     }
 
     $scope.show_leavetypes = function(){
@@ -239,93 +159,5 @@ app.controller('Leave', function(
         });
     }
 
-        $scope.today = function() {
-            $scope.dt = new Date();
-          };
-        $scope.today();
-
-            $scope.clear = function() {
-            $scope.dt = null;
-          };
-
-        $scope.inlineOptions = {
-            customClass: getDayClass,
-            minDate: new Date(),
-            showWeeks: true
-          };
-
-        $scope.dateOptions = {
-            dateDisabled: disabled,
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-          };
-
-          // Disable weekend selection
-        function disabled(data) {
-            var date = data.date,
-              mode = data.mode;
-            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-          }
-
-        $scope.toggleMin = function() {
-            $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-            $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-          };
-
-        $scope.toggleMin();
-
-        $scope.open1 = function() {
-            $scope.popup1.opened = true;
-          };
-
-        $scope.open2 = function() {
-            $scope.popup2.opened = true;
-          };
-
-        $scope.setDate = function(year, month, day) {
-            $scope.dt = new Date(year, month, day);
-          };
-
-        $scope.popup1 = {
-        opened: false
-        };
-
-        $scope.popup2 = {
-        opened: false
-        };
-
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 1);
-        $scope.events = [
-        {
-          date: tomorrow,
-          status: 'full'
-        },
-        {
-          date: afterTomorrow,
-          status: 'partially'
-        }
-        ];
-
-        function getDayClass(data) {
-        var date = data.date,
-          mode = data.mode;
-        if (mode === 'day') {
-          var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-          for (var i = 0; i < $scope.events.length; i++) {
-            var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-            if (dayToCheck === currentDay) {
-              return $scope.events[i].status;
-            }
-          }
-        }
-
-        return '';
-        }
+       
 });

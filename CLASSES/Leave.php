@@ -1,4 +1,4 @@
-<?php
+33<?php
 require_once('../../CLASSES/ClassParent.php');
 class Leave extends ClassParent {
 
@@ -65,41 +65,24 @@ EOT;
     }
 
 
-    public function update(){
-        $level_title = $this->level_title;
-        
-
-
-        $sql = <<<EOT
-                UPDATE levels set
-                    level_title
-                =
-                    '$level_title'
-                WHERE pk = $this->pk
-                ;
-EOT;
-
-        return ClassParent::update($sql);
-    }
 
    public function add_leave(){
-      
+        
         $employees_pk = $this->employees_pk;
         $leave_types_pk= $this->leave_types_pk;
         $date_started = $this->date_started;
         $date_ended= $this->date_ended;
         $reason = $this->reason;
-        $archived = $this->archived;
+
         
         $sql = <<<EOT
                 insert into leave_filed
-                (
+                (      
                     employees_pk,
                     leave_types_pk,
                     date_started,
                     date_ended,
-                    reason,
-                    archived
+                    reason
                 )
                 values
                 (
@@ -107,10 +90,9 @@ EOT;
                     '$leave_types_pk',
                     '$date_started',
                     '$date_ended',
-                    '$reason',
-                    '$archived'
+                    '$reason'
                 )
-                where pk = $this->pk
+                returning pk
                 ;
 EOT;
         
