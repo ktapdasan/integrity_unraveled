@@ -15,9 +15,9 @@ class Groupings extends ClassParent {
         
     }
 
-     public function edit_supervisor(){
-        $this->department = "{".$this->department."}";
 
+    public function fetch(){
+        //This is a comment
         $sql = <<<EOT
                 UPDATE groupings set
                 (
