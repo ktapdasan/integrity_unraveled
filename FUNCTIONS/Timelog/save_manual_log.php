@@ -12,7 +12,9 @@ $class = new ManualLog(
 						NULL
 					);
 
-$data = $class->save_manual_log();
+$extra['supervisor_pk'] = $_POST['supervisor_pk'];
+$data = $class->save_manual_log($extra);
+
 
 
 $sclass = new Groupings(	

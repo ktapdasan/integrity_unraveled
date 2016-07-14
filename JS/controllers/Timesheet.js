@@ -158,7 +158,6 @@ app.controller('Timesheet', function(
 
         
     $scope.open_manual_log = function(type, key){
-
         $scope.log.reason = '';
         $scope.log.time_log = new Date;
 
@@ -203,16 +202,21 @@ app.controller('Timesheet', function(
             var M = a.getMinutes(); 
 
             $scope.log["employees_pk"] = $scope.profile.pk;
+            $scope.log["supervisor_pk"] = $scope.profile.supervisor_pk;
             $scope.log.time_log = H + ":" +M ;
           
             var promise = TimelogFactory.save_manual_log($scope.log);
+            promise.then(function(data){
+            
 
 
-            UINotification.success({
+                UINotification.success({
                                         message: 'You have successfully filed manual log', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
+
+                                    });
 
             })
             .then(null, function(data){

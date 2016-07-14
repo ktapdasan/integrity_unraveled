@@ -106,7 +106,8 @@
 
         var promise = EmployeesFactory.submit_employee($scope.employee);
         promise.then(function(data){
-        
+        console.log ($scope.employee);
+        return false;
 
             UINotification.success({
                                     message: 'You have successfully submitted a new employee.', 

@@ -155,7 +155,8 @@ EOT;
                     middle_name,
                     last_name,
                     email_address,
-                    employees_permissions.permission
+                    employees_permissions.permission,
+                    (select supervisor_pk from groupings where employees_pk = pk) as supervisor_pk
                 from employees
                 left join employees_permissions on (employees.pk = employees_permissions.employees_pk)
                 where employees.archived = false
@@ -245,6 +246,7 @@ EOT;
         $datefrom = $data['datefrom'];
         $dateto = $data['dateto'];
         $pk = $data['pk'];
+
 
         $sql = <<<EOT
                 with Q as
