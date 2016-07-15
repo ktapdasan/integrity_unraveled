@@ -1,4 +1,4 @@
-33<?php
+<?php
 require_once('../../CLASSES/ClassParent.php');
 class Leave extends ClassParent {
 
@@ -66,16 +66,18 @@ EOT;
 
 
 
-   public function add_leave(){
-        
+   public function add_leave($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }   
         $employees_pk = $this->employees_pk;
         $leave_types_pk= $this->leave_types_pk;
         $date_started = $this->date_started;
         $date_ended= $this->date_ended;
         $reason = $this->reason;
 
-        
-        $sql = <<<EOT
+        $sql = 'begin;';
+        $sql .= <<<EOT
                 insert into leave_filed
                 (      
                     employees_pk,
@@ -95,6 +97,25 @@ EOT;
                 returning pk
                 ;
 EOT;
+        $supervisor_pk = $extra['supervisor_pk'];
+        $sql .= <<<EOT
+                insert into notifications
+                (   
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk      
+                )
+                values
+                (    
+                    'New leave filed.',
+                    'leave_filed',
+                    currval('leave_filed_pk_seq'),
+                    $supervisor_pk
+                )
+                ;
+EOT;
+        $sql .= "commit;";
         
 
         return ClassParent::insert($sql);

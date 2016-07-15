@@ -139,7 +139,7 @@
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Level:</label>
                     </td>
                     <td id="css">
-                        <select name="level" required ng-model="employee.levels_pk" style="display: block; float: left; width:400px" tabindex="9">
+                        <select name="level" required ng-model="employee.levels_pk" style="display: block; float: left; margin-right: 10px" tabindex="9" ng-change = "level_changed()" ng-class = "level_class">
                             <!-- <option style="display:none">-- Please Select One --</option> -->
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}">
@@ -147,7 +147,9 @@
                                 {{v.level_title}}
 
                             </option>
+
                         </select>
+                            <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "8" ng-show="show_hours" required/>   
                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.level.$error.required">Level is required.</span>
                     </td>
                 </tr>
@@ -170,10 +172,13 @@
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Supervisor:</label>
                     </td>
                     <td id="css">
-                    <select  ng-model="employee.supervisor_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5"><option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
-                            {{v.name}}
-                        </option>
-                    </select> 
+                        <select name ="supervisor"  ng-model="employee.supervisor_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                            <option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
+                                {{v.name}}
+                            </option>
+                        </select> 
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.supervisor.$error.required">Supervisor is required.</span>
 
                     </td>
                     <!-- <td>
@@ -197,7 +202,7 @@
                             || myForm.department.$error && myForm.department.$invalid
                             || myForm.position.$error && myForm.position.$invalid
                             || myForm.level.$error && myForm.level.$invalid" class="btn btn-success2" value="Submit" ng-click="submit_employee()" tabindex="10"/>
-                             <input type="button" class="btn btn-success2" value="Clear" ng-click="clear_all()" tabindex="10"/>
+                             <input type="reset" class="btn btn-success2" value="Clear" tabindex="10"/>
 
                         </center>
                     </td>

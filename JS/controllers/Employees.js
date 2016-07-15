@@ -24,6 +24,9 @@ app.controller('Employees', function(
     
     $scope.modal = {};
 
+    $scope.level_class = 'orig_width';
+    $scope.show_hours = false;
+
     init();
 
     function init(){
@@ -37,6 +40,7 @@ app.controller('Employees', function(
             get_department();
             get_levels();
             get_supervisors();
+
 
             
         })
@@ -222,6 +226,7 @@ app.controller('Employees', function(
     $scope.edit_employees = function(k){
         get_supervisors();
         $scope.employee = $scope.employees.data[k];
+        level_changed();
         $scope.modal = {
             title : 'Edit ' + $scope.employees.data[k].first_name,
             save : 'Apply Changes',
@@ -286,6 +291,22 @@ app.controller('Employees', function(
     
     $scope.export_employeelist = function(){
         window.open('./FUNCTIONS/Employees/employeelist_export.php?');
+    }
+
+    $scope.level_changed = function(){
+        level_changed();
+    }
+
+    function level_changed(){
+        if ($scope.employee.levels_pk == 3) {
+            $scope.level_class = 'hours';
+            $scope.show_hours = true;
+        }
+        else{
+           $scope.level_class = 'orig_width';
+            $scope.show_hours = false;
+        }
+    
     }
 
 });

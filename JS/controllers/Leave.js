@@ -102,9 +102,11 @@ app.controller('Leave', function(
         $scope.modal.date_started = yyyy+'-'+mm+'-'+dd;
         $scope.modal.date_ended = YYYY+'-'+MM+'-'+DD;
         $scope.modal["employees_pk"] = $scope.profile.pk;
+        $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
+
         
         var promise = LeaveFactory.add_leave($scope.modal);
-        console.log($scope.modal)
+
 
         $scope.archived=true;
 

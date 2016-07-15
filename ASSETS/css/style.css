@@ -2739,6 +2739,13 @@ ul li a:focus {
   color: #918C8C;
 }
 
+.orig_width {
+  width: 320px;
+}
+
+.hours {
+  width: 200px;
+}
 
 .input-group-addon,
 .user-photo,
@@ -5835,6 +5842,7 @@ ul li a:focus {
 }
 
 
+
 /*=================Form===============*/
 
 .form-element .form-element-padding .form-group,
@@ -6352,6 +6360,8 @@ ul li a:focus {
   /*color:#fff;*/
   color:#918C8C;
   }
+
+
 }
 
 

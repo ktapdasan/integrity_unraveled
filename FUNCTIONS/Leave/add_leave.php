@@ -14,7 +14,8 @@ $class = new Leave(
                 NULL
 			);
 
-$data = $class-> add_leave();
+$extra['supervisor_pk'] = $_POST['supervisor_pk'];
+$data = $class-> add_leave($extra);
 
 setcookie('commented', 'commented', time()+43200000, '/');
 

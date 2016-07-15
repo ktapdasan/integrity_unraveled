@@ -27,6 +27,10 @@
     $scope.employees = {};
     $scope.filter={};
 
+    $scope.level_class = 'orig_width';
+    $scope.show_hours = false;
+
+
     init();
 
     function init(){
@@ -141,6 +145,22 @@
                 levels_pk:'',
                 supervisor_pk: ''
             };
+    }
+
+    $scope.level_changed = function(){
+        level_changed();
+    }
+
+    function level_changed(){
+        if ($scope.employee.levels_pk == 3) {
+            $scope.level_class = 'hours';
+            $scope.show_hours = true;
+        }
+        else{
+           $scope.level_class = 'orig_width';
+            $scope.show_hours = false;
+        }
+    
     }
 
 });
