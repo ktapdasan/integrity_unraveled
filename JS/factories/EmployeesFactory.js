@@ -250,4 +250,5 @@ app.factory('EmployeesFactory', function($http){
     };
     
     return factory;
+    
 });

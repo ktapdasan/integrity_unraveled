@@ -35,9 +35,53 @@
                         selection-mode="single"
                         style="width:295px; float:left;"
                         max-height="200px"
-                    >
+                            >
                     </div>
                 </div>
+
+
+                    <div
+                        isteven-multi-select
+                        input-model="department.data"
+                        output-model="filter.department"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:295px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+
+
+                    <div
+                        isteven-multi-select
+                        input-model="levels.data"
+                        output-model="filter.levels"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:295px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                        
+
+                    
+                        <div
+                        isteven-multi-select
+                        input-model="titles.data"
+                        output-model="filter.titles"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:295px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+
                 <div style="float:left;">
                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()">
                     <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_timesheet()">

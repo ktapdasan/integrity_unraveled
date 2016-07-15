@@ -325,6 +325,8 @@ EOT;
     } 
 
     public function timelogs($data){
+
+        print_r ($data);
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
@@ -333,6 +335,12 @@ EOT;
         if($data['employees_pk']){
             $where .= "and employees_pk = ". $data['employees_pk']; 
         }
+
+        /*
+        if($data['departments_pk']){
+            $where .= "and departments_pk = ". $data['departments_pk']; 
+        }
+        */
 
         $datefrom = $data['datefrom'];
         $dateto = $data['dateto'];
@@ -349,6 +357,7 @@ EOT;
                         time_log::time(0) as log_time,
                         date_created
                     from time_log
+                    left join employees on (employees.pk = time_log.employees_pk)
                     where time_log::date between '$datefrom' and '$dateto'
                     $where
                 )

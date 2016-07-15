@@ -12,6 +12,9 @@ app.controller('Timelogs', function(
     $scope.timesheet_data = [];
     $scope.employee = [];
     $scope.employeelist_data = [];
+    $scope.titles={};
+    $scope.department={};
+    $scope.levels={};
 
 
     init();
@@ -23,6 +26,11 @@ app.controller('Timelogs', function(
             $scope.pk = data.data[_id];
 
             get_profile();
+            get_positions();
+            get_department();
+            get_levels();
+
+
             
         })
         .then(null, function(data){
@@ -33,6 +41,7 @@ app.controller('Timelogs', function(
     function get_profile(){
         var filters = { 
             'pk' : $scope.pk
+
         };
 
         var promise = EmployeesFactory.profile(filters);
@@ -121,7 +130,23 @@ app.controller('Timelogs', function(
         if($scope.filter.employee.length > 0){
             $scope.filter.employees_pk = $scope.filter.employee[0].pk;
         }
-        
+
+        delete $scope.filter.departments_pk;
+        if($scope.filter.department.length > 0){
+            $scope.filter.departments_pk = $scope.filter.department[0].pk;
+        }
+
+        delete $scope.filter.titles_pk;
+        if($scope.filter.titles.length > 0){
+            $scope.filter.titles_pk = $scope.filter.titles[0].pk;
+        }
+
+        delete $scope.filter.levels_pk;
+        if($scope.filter.levels.length > 0){
+            $scope.filter.levels_pk = $scope.filter.levels[0].pk;
+        }
+
+        console.log ($scope.filter)
         var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
@@ -129,6 +154,10 @@ app.controller('Timelogs', function(
             
         })   
     }
+
+
+
+
 
     $scope.export_timesheet = function(){
         $scope.filter.pk = $scope.profile.pk;
@@ -142,9 +171,6 @@ app.controller('Timelogs', function(
 
         
     }
-
-
-
 
 
     $scope.show_employeelist = function(){
@@ -179,4 +205,65 @@ app.controller('Timelogs', function(
 
         
     }
+
+
+
+    function get_positions(){
+        var promise = TimelogFactory.get_positions();
+        promise.then(function(data){
+             var a = data.data.result;
+            $scope.titles.data=[];
+            for(var i in a){
+                $scope.titles.data.push({
+                                            pk: a[i].pk,
+                                            name: a[i].title,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
+    function get_department(){
+        var promise = TimelogFactory.get_department();
+        promise.then(function(data){
+            var a = data.data.result;
+            $scope.department.data=[];
+            for(var i in a){
+                $scope.department.data.push({
+                                            pk: a[i].pk,
+                                            name: a[i].department,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
+    function get_levels(){
+        var promise = TimelogFactory.get_levels();
+        promise.then(function(data){
+            var a = data.data.result;
+            $scope.levels.data=[];
+            for(var i in a){
+                $scope.levels.data.push({
+                                            pk: a[i].pk,
+                                            name: a[i].level_title,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
+
+    
+
+
 });

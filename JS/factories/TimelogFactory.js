@@ -104,5 +104,62 @@ app.factory('TimelogFactory', function($http){
 
         return promise;
     }
+
+        factory.get_positions = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/get_positions.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+        factory.get_department = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/get_department.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+
+
+    factory.get_levels = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/get_levels.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    
     return factory;
+
+
 });
