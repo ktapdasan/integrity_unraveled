@@ -3,6 +3,7 @@ app.controller('Dashboard', function(
                                         SessionFactory,
                                         TimelogFactory,
                                         EmployeesFactory,
+                                        NotificationsFactory,
                                         md5,
                                         $timeout,
                                         ngDialog,
@@ -14,7 +15,17 @@ app.controller('Dashboard', function(
     $scope.logtype = "login";
     $scope.lastlog = "";
     $scope.logbutton = false;
+
+    $scope.pk={};
+    $scope.notification = {};
+    $scope.filter = {};
+    $scope.result;
+    $scope.font;
+    $scope.read={};
+     $scope.headerBackground="stop";
+
     init();
+    get_notifs();
 
     function init(){
         var promise = SessionFactory.getsession();
@@ -220,5 +231,53 @@ app.controller('Dashboard', function(
         else {
             $scope.logtype = "logout";
         }
+    }
+
+    $scope.show_notifs = function(){
+            get_notifs();
+         }
+
+         function get_notifs(){
+        $scope.read=true;
+
+        $scope.notification.data='';
+        var promise = NotificationsFactory.get_notifs($scope.notification);
+        promise.then(function(data){
+            $scope.notification.data = data.data.result;
+        })
+        .then(null, function(data){
+        });
+    }
+
+     $scope.getState = function (number){
+
+      if(number === 0){
+               return '0s';
+      }else{
+        return '0.5s';
+      }
+
+    };
+
+
+    $scope.read_notification = function(k){
+        console.log($scope.notification.data)
+        var promise = NotificationsFactory.read_notifs($scope.notification.data[k]);
+        promise.then(function(data){
+            $scope.notification.data[k].read='t';
+            pending_notifs($scope.notification.data.length);
+        })
+    };
+
+    $scope.pending_notifs = function(number){
+        $scope.add=0;
+        $scope.num=0;
+        while($scope.num<(number)){
+            if($scope.notification.data[$scope.num].read==='f'){
+                $scope.add+=1;
+            }$scope.num+=1;
+        }
+        return $scope.add;
+        console.log($scope.add)
     }
 });
