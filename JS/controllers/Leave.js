@@ -17,6 +17,9 @@ app.controller('Leave', function(
     $scope.filter.status= "Active";
 
     $scope.modal = {};
+
+    $scope.leaves_filed = {};
+
    
 
 
@@ -30,6 +33,7 @@ app.controller('Leave', function(
 
             leavetypes();
             get_profile();
+            leaves_filed();
             
         });
     }
@@ -48,7 +52,7 @@ app.controller('Leave', function(
        
 
     $scope.add_leave = function(k){
-
+    leaves_filed();
     get_profile();
     $scope.modal.reason = '';
     $scope.modal.date_started = new Date;
@@ -117,6 +121,7 @@ app.controller('Leave', function(
                                     positionY: 'top', positionX: 'right'
                                 });
             leavetypes();
+            leaves_filed();
         })
         .then(null, function(data){
             
@@ -161,5 +166,27 @@ app.controller('Leave', function(
         });
     }
 
+    $scope.leave_filed = function (){
+        leaves_filed();
+    }
+
+    function leaves_filed () {
+
+        
+        $scope.leaves_filed.status = false;
+        $scope.leaves_filed.data= {};
+    
+        
+        var promise = LeaveFactory.leaves_filed($scope.filter);
+        promise.then(function(data){
+            $scope.leaves_filed.status = true;
+            $scope.leaves_filed.data = data.data.result;
+        })
+        .then(null, function(data){
+            $scope.leaves_filed.status = false;
+        });
+
+       
+    }
        
 });

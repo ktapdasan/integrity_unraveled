@@ -37,33 +37,25 @@ class Leave extends ClassParent {
         return(true);
     }
 
-    public function fetch(){
-       
 
+
+
+    public function leaves_filed(){
+        
         $sql = <<<EOT
                 select
                     pk, 
-                    level_title
-                from levels
-                where archived = $this->archived
-                order by pk
+                    (select name from leave_types where pk = leave_types_pk) as leave_type,
+                    date_created,
+                    date_started,
+                    date_ended
+                from leave_filed
+                where archived = false
                 ;
 EOT;
 
         return ClassParent::get($sql);
     }
-
-     public function deactivate(){
-
-        $sql = <<<EOT
-                update levels
-                set archived = True
-                where pk = $this->pk;
-EOT;
-
-          return ClassParent::update($sql);
-    }
-
 
 
    public function add_leave($extra){

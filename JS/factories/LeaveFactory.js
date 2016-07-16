@@ -35,7 +35,17 @@ app.factory('LeaveFactory', function($http){
         })
 
         return promise;
-    };    
+    }; 
+
+    factory.leaves_filed= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Leave/leaves_filed.php',
+            method: 'GET'
+            
+        })
+
+        return promise;
+    };       
 
     
     return factory;

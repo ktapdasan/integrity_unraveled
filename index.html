@@ -185,7 +185,13 @@
                         <a href="#/" ng-click="menuclicked('home')">Home</a>
                     </li>
                     <li ng-class="menu.timesheet">
-                        <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a>
+                       <!-- <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a> -->
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timesheet<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">  
+                            <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/leaves_filed" ng-click="menuclicked('timesheet')">Leaves Filed</a></li>
+                        </ul>
                     </li>
 
                     <!-- <li ng-class="menu.timelogs">

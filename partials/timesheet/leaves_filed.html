@@ -12,33 +12,37 @@
                 <h2 class="animated fadeInLeft">Leave</h2>
                 <p class="animated fadeInDown">
                     <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    <a href="#/timesheet">Timesheet</a> <span class="fa-angle-right fa"></span> 
                     Leave
                 </p>
             </div>
+        <div class="panel">
+            <div style="padding-left: 400px;">
+            <h3>
+                <input type="button" class="btn btn-add" value = "File Leave" alt="edit" ng-click="add_leave(k)" title="Edit" style = "float: right;"/>
+            </h3>
+            </div>
+    </div>
         </div>
     </div>
 
-    <div class="panel">
-        <div style="padding-left: 400px;"><h4>
-            <input type="button" class="btn btn-add" value = "File Leave" alt="edit" ng-click="add_leave(k)" title="Edit" style = "float: right;"/></h4>
-        </div>
-    </div>
+    
 
         <div class="responsive-table">
-            <table id="datatables-example" width="70%" cellspacing="0">
+            <table id="datatables-example" width="80%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th><font size = 4>Employee Name</font></th>
                         <th><font size = 4>Type of Leave</font></th>
+                        <th><font size = 4>Date Filed</font></th>
                         <th><font size = 4>Start Date</font></th>
                         <th><font size = 4>End Date</font></th>
                         <th><font size = 4>Status</font></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in leave_filed.data" style="cursor:pointer;">
-                        <td>{{v.leave_type_pk}}</td>
-                        <td>{{v.leave_type_pk}}</td>
+                    <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
+                        <td>{{v.leave_type}}</td>
+                        <td>{{v.date_created}}</td>
                         <td>{{v.date_started}}</td>
                         <td>{{v.date_ended}}</td>
                         <td>{{v.status}}</td>
