@@ -89,15 +89,6 @@
     filter:alpha(opacity=0);
 }
 
-.chat-box > label {
-    display:block;
-    height:34px;
-    line-height:24px;
-    background-color:#00709e;
-    color:white;
-    font-weight:bold;
-    padding:5px 1em 1px;
-}
 
 .chat-box > label:before {content:attr(data-collapsed)}
 
@@ -119,6 +110,53 @@
 
 .chat-box-content .chat-box-button {
     height: 40px;
+}
+
+.chat-box > label {
+    display:block;
+    height:34px;
+    line-height:24px;
+    background-color:#00709e;
+    color:white;
+    font-weight:bold;
+    padding:5px 1em 1px;
+    animation-name: blink;
+    animation-duration: 0.5.s;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+}
+
+.stop{
+    display:block;
+    height:34px;
+    line-height:24px;
+    color:white;
+    font-weight:bold;
+    padding:5px 1em 1px;
+    animation-name: stop;
+    animation-duration: 0s;
+    animation-iteration-count: 0;
+    animation-play-state: initial   ;  
+    background-color:#00709e;
+
+}
+@keyframes blink {
+    from {background-color: #00709e;}
+    to {background-color: #ff3333;}
+}
+
+@keyframes stop {
+     from {background-color: #00709e;}
+    to {background-color: #00709e;}
+}
+
+.no{
+
+    font-weight: bold;
+}
+.yes{
+
+    font-weight: normal ;
 }
 </style>
 <div class="dashboard">
@@ -155,12 +193,13 @@
         </li> -->
     </ul>
 </div>
-<div class="chat-box" ng-controller="Notifications">
-    <input type="checkbox" />
-    <label data-expanded="Hide Notifications" data-collapsed="Show Notifications">
-        <span id="cart-total">0 pending item(s)</span>
+<div class="chat-box" ng-model="filter.status">
+    <input type="checkbox"/>
+    <label data-expanded="Hide Notifications" data-collapsed="Show Notifications" ng-style="{ 'animation-duration': getState(pending_notifs(notification.data.length)) }">
+        <span id="cart-total">{{add}} pending item(s)</span>
     </label>
-    <div class="chat-box-content">
+
+   <div class="chat-box-content">
         <div class="chat-box-cart">
             <table class="row-border hover report table table-striped table-bordered" style="text-align: center;">
                 <thead>
@@ -168,9 +207,11 @@
                     <th style="text-align:center;">ITEM</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k,v) in notifications.list">
-                        <td>{{k + 1}}</td>
-                        <td>{{v.notification}}</td>
+                    <tr ng-repeat="(k,v) in notification.data" ng-click="read_notification(k)" style="cursor:pointer;">
+                        <td >{{k+1}}</td>
+                        <td  style="cursor:pointer;" ng-class="v.read === 't' && 'yes' || 'no'"
+                        >
+                        {{v.notification}}</td> 
                     </tr>
                 </tbody>
             </table>

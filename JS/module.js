@@ -67,7 +67,6 @@ app.config(function($routeProvider){
         controller: 'Leave',
         templateUrl: 'partials/management/leave/index.html'
     })
-    
     .otherwise(
     {
         redirectTo: '/'
