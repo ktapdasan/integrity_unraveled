@@ -2,6 +2,7 @@ app.controller('Employees', function(
   										$scope,
                                         SessionFactory,
                                         EmployeesFactory,
+                                        TimelogFactory,
                                         ngDialog,
                                         UINotification,
                                         md5
@@ -18,14 +19,13 @@ app.controller('Employees', function(
     $scope.level_title={};
     $scope.groupings= {};
 
-    $scope.employee={};
     $scope.employees={};
     $scope.timesheet_data = [];
     
     $scope.modal = {};
-
     $scope.level_class = 'orig_width';
     $scope.show_hours = false;
+
 
     init();
 
@@ -40,6 +40,10 @@ app.controller('Employees', function(
             get_department();
             get_levels();
             get_supervisors();
+            //select
+            fetch_department();
+            fetch_levels();
+            fetch_titles();
 
 
             
@@ -58,6 +62,9 @@ app.controller('Employees', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             employees();
+            //employees_fetch();
+            //list();
+            //employeelist();
         })   
     } 
 
@@ -108,6 +115,9 @@ app.controller('Employees', function(
         .then(null, function(data){
             
         });
+
+
+
     }
 
     function get_supervisors(){
@@ -307,6 +317,93 @@ app.controller('Employees', function(
             $scope.show_hours = false;
         }
     
+    }
+
+    function list(){
+        $scope.filter.pk = $scope.profile.pk;
+ /*       
+        delete $scope.filter.employees_pk;
+        if($scope.filter.employee.length > 0){
+            $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        }*/
+
+        delete $scope.filter.departments_pk;
+        if($scope.filter.department.length > 0){
+            $scope.filter.departments_pk = $scope.filter.department[0].pk;
+        }
+ 
+        delete $scope.filter.titles_pk;
+        if($scope.filter.titles.length > 0){
+            $scope.filter.titles_pk = $scope.filter.titles[0].pk;
+        }
+
+        delete $scope.filter.levels_pk;
+        if($scope.filter.level_title.length > 0){
+            $scope.filter.level_title_pk = $scope.filter.levels[0].pk;
+        }
+
+  /*      console.log ($scope.filter)
+        var promise = TimelogFactory.timelogs($scope.filter);
+        promise.then(function(data){
+            $scope.timesheet_data = data.data.result;
+
+            
+        })*/   
+    }
+    function fetch_department(){
+        var promise = TimelogFactory.get_department();
+        promise.then(function(data){
+            var a = data.data.result;
+            $scope.department.data=[];
+            for(var i in a){
+                $scope.department.data.push({
+                                            pk: a[i].pk,
+                                            name: a[i].department,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
+
+    function fetch_levels(){
+        var promise = TimelogFactory.get_levels();
+        promise.then(function(data){
+            var a = data.data.result;
+            $scope.level_title.data=[];
+            for(var i in a){
+                $scope.level_title.data.push({
+                                            pk: a[i].pk,
+                                            name: a[i].level_title,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
+
+    function fetch_titles(){
+        var promise = TimelogFactory.get_positions();
+        promise.then(function(data){
+             var a = data.data.result;
+            $scope.titles.data=[];
+            for(var i in a){
+                $scope.titles.data.push({
+                                            pk: a[i].pk,
+                                            name: a[i].title,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            
+        });
     }
 
 });

@@ -25,7 +25,7 @@
                   <option value="Date Received">Date Received</option>
                 </select>
             -->
-                <input ng-model="filter.searchstring" type="text" style="width:400px;" ng-change= "show_employees()"/>
+                <input ng-model="filter.searchstring" type="text" style="width:400px; margin-left:-20px;" ng-change= "show_employees()"/>
                 <select ng-model="filter.status" ng-change= "show_employees()">
                     <option>Active</option>
                     <option>Inactive</option>
@@ -35,8 +35,69 @@
             -->
                 <!-- <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_employees()"> -->
                 <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_employeelist()">
-                <a href = "#/employees/new"><input type="button" class="btn btn-add" value="ADD NEW EMPLOYEE" >
+                <a href = "#/employees/new"><input type="button" class="btn btn-add" value="ADD NEW EMPLOYEE" style="float: right;">
                 </a>
+
+                <div class="col-md-11" style="margin-top:20px; margin-bottom:20px;">
+
+                    <div style="float:left; margin-left: -40px;margin-top: 5px;margin-right: 20px;">
+                    <label style="float:left;font-size: 15px;">Select a Department</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="department.data"
+                        output-model="filter.department"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                    </div>
+                    <div style="float:left; margin-top: 5px;margin-right: 20px;">
+                    <label style="float:left;font-size: 15px;">Select a Level</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="level_title.data"
+                        output-model="filter.level_title"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br> 
+                    </div>
+
+
+                    <div style="float:left; margin-top: 5px;margin-right: 20px;">
+                    <label style="float:left;font-size: 15px;">Select a Position</label><br>
+                     <br>
+                        <div
+                        isteven-multi-select
+                        input-model="titles.data"
+                        output-model="filter.titles"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px;float:left; margin-top: -17px;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                    </br>
+                    </div>
+
+
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()" style="float:left; margin-top: 27px;">
+                </div>
+
+                </div> 
 
             <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
             </h4>
