@@ -237,7 +237,7 @@ app.controller('Dashboard', function(
             get_notifs();
          }
 
-         function get_notifs(){
+        function get_notifs(){
         $scope.read=true;
 
         $scope.notification.data='';
