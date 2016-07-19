@@ -188,9 +188,9 @@
                        <!-- <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a> -->
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Timesheet<span class="caret" ></span></a>
                         <ul class="dropdown-menu">  
-                            <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a></li>
-                            <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li>
-                            <li><a style="cursor:pointer;" href="#/timesheet/leaves_filed" ng-click="menuclicked('timesheet')">Leaves Filed</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')"> My Timesheet</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/manual_logs_filed" ng-click="menuclicked('timesheet')">Manual Logs</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/leaves_filed" ng-click="menuclicked('timesheet')">Leaves</a></li>
                         </ul>
                     </li>
 
@@ -203,7 +203,7 @@
                             
                             <li><a style="cursor:pointer;" href="#/employees/new" ng-click="menuclicked('employees')">New</a></li>
                             <li><a style="cursor:pointer;" href="#/employees/list" ng-click="menuclicked('employees')">List</a></li>
-                            <li><a style="cursor:pointer;" href="#/employees/timesheet" ng-click="menuclicked('employees')">Timesheet</a></li>
+                            <li><a style="cursor:pointer;" href="#/employees/timesheet" ng-click="menuclicked('employees')">Timelogs</a></li>
                         </ul>
 
                     </li>
@@ -211,7 +211,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
                             <li><a style="cursor:pointer;" href="#/management/manual_logs" ng-click="menuclicked('management')">Manual Logs</a></li>
-                            <li><a style="cursor:pointer;" href="#/management/leave" ng-click="menuclicked('management')">Leaves</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/leaves" ng-click="menuclicked('management')">Leaves</a></li>
                         </ul>
                     </li>
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
@@ -817,8 +817,6 @@
                                                 <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}" >
                                                     {{v.level_title}}
                                                 </option>
-
-
                                         </select>   
                                         <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "10" ng-show="show_hours" required/>   
                                     </td>

@@ -16,13 +16,13 @@
                     Leave
                 </p>
             </div>
-        <div class="panel">
+       
             <div style="padding-left: 400px;">
             <h3>
                 <input type="button" class="btn btn-add" value = "File Leave" alt="edit" ng-click="add_leave(k)" title="Edit" style = "float: right;"/>
             </h3>
             </div>
-    </div>
+      
         </div>
     </div>
 
@@ -42,9 +42,9 @@
                 <tbody>
                     <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
                         <td>{{v.leave_type}}</td>
-                        <td>{{v.date_created}}</td>
-                        <td>{{v.date_started}}</td>
-                        <td>{{v.date_ended}}</td>
+                        <td>{{v.datecreated}}</td>
+                        <td>{{v.datestarted}}</td>
+                        <td>{{v.dateended}}</td>
                         <td>{{v.status}}</td>
                     </tr>        
                 </tbody>

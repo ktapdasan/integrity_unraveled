@@ -8,6 +8,7 @@ class ManualLog extends ClassParent {
     var $reason = NULL;
     var $date_created = NULL;
     var $archived = NULL;
+    var $type = NULL;
     
 
     public function __construct(    
@@ -16,7 +17,9 @@ class ManualLog extends ClassParent {
                                     $time_log ,
                                     $reason,
                                     $date_created,
-                                    $archived
+                                    $archived,
+                                    $type
+                                   
                                 )
     {
         
@@ -33,6 +36,24 @@ class ManualLog extends ClassParent {
         return(true);
     }
 
+    public function fetch(){
+
+         $sql = <<<EOT
+                select
+                    pk, 
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    time_log :: time as time,
+                    date_created::date as datecreated,
+                    type
+                from manual_log
+                where archived = false
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+
+    }
+
     public function save_manual_log($extra){
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
@@ -40,6 +61,7 @@ class ManualLog extends ClassParent {
         $employees_pk = $this->employees_pk;
         $time_log = $this->time_log;
         $reason= $this->reason;
+        $type= $this->type;
        
 
         $sql = 'begin;';
@@ -48,14 +70,17 @@ class ManualLog extends ClassParent {
                 (
                     employees_pk,
                     time_log,
-                    reason
+                    reason,
+                    type
+              
                 
                 )
                 values
                 (    
                     $employees_pk,
                     '$time_log',
-                    '$reason' 
+                    '$reason',
+                    '$type'
                 )
                 returning pk
                 ;

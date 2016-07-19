@@ -1,0 +1,48 @@
+
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Manual Logs</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    <a href="#/timesheet">Timesheet</a> <span class="fa-angle-right fa"></span> 
+                    Manual Logs
+                </p>
+            </div>
+        </div>
+    </div>
+
+        <div class="responsive-table">
+            <table id="datatables-example" width="50%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th><font size = 4>Manual Log Type</font></th>
+                        <th><font size = 4>Date</font></th>
+                        <th><font size = 4>Time</font></th>
+                        <th><font size = 4>Status</font></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;">
+                        <td>{{v.type}}</td>
+                        <td>{{v.datecreated }}</td>
+                        <td>{{v.time}}</td>
+                        <td>{{v.status}}</td>
+                    </tr>        
+                </tbody>
+            </table>
+        </div>
+        <div style="height:50px; width:100%;">
+
+        </div>
+    </div>
+</div>
+
+
