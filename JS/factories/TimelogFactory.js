@@ -158,6 +158,15 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
+    factory.manual_logs= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/manual_logs.php',
+            method: 'GET'         
+        })
+
+        return promise;
+    };      
+
     
     return factory;
 

@@ -45,10 +45,11 @@ class Leave extends ClassParent {
         $sql = <<<EOT
                 select
                     pk, 
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
-                    date_created,
-                    date_started,
-                    date_ended
+                    date_created:: date as datecreated,
+                    date_started:: date as datestarted,
+                    date_ended:: date as dateended
                 from leave_filed
                 where archived = false
                 ;

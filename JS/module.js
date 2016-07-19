@@ -22,10 +22,10 @@ app.config(function($routeProvider){
         controller: 'Timesheet',
         templateUrl: 'partials/timesheet/index.html'
     })
-    .when('/timesheet/manual_logs',
+    .when('/timesheet/manual_logs_filed',
     {
         controller: 'Timesheet',
-        templateUrl: 'partials/timesheet/manual_logs.html'
+        templateUrl: 'partials/timesheet/manual_logs_filed.html'
     })
     .when('/timesheet/leaves_filed',
     {
@@ -72,15 +72,15 @@ app.config(function($routeProvider){
         controller: 'Levels',
         templateUrl: 'partials/admin/levels/index.html'
     })
-    .when('/management/leave',
+    .when('/management/leaves',
     {
         controller: 'Leave',
-        templateUrl: 'partials/management/leave/index.html'
+        templateUrl: 'partials/management/leaves.html'
     })
     .when('/management/manual_logs',
     {
-        controller: 'Leave',
-        templateUrl: 'partials/management/manual_logs/index.html'
+        controller: 'Timesheet',
+        templateUrl: 'partials/management/manual_logs.html'
     })
     .otherwise(
     {

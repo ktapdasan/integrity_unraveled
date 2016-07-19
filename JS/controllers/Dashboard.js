@@ -261,7 +261,6 @@ app.controller('Dashboard', function(
 
 
     $scope.read_notification = function(k){
-        console.log($scope.notification.data)
         var promise = NotificationsFactory.read_notifs($scope.notification.data[k]);
         promise.then(function(data){
             $scope.notification.data[k].read='t';
