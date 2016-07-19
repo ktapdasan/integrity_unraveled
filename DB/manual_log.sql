@@ -1,5 +1,5 @@
 create table manual_log_statuses (
-	pk serial primary key,
+	pk serial primary key references manual_log(pk),
 	status text not null,
 	archived boolean default false
 );

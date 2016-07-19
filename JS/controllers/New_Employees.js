@@ -21,7 +21,8 @@
         business_email_address:'',
         email_address:'',
         departments_pk:'',
-        levels_pk:''
+        levels_pk:'',
+        supervisor_pk:''
     };
 
     $scope.employees = {};

@@ -9,7 +9,8 @@ $class = new ManualLog(
 						$_POST["date_log"] ." ". $_POST["time_log"],
 						$_POST["reason"],
 						NULL,
-						NULL
+						NULL,
+						$_POST["type"]
 					);
 
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];

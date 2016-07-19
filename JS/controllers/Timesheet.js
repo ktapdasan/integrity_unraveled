@@ -15,6 +15,9 @@ app.controller('Timesheet', function(
     $scope.log = {};
     $scope.log.time_log = new Date;
 
+    $scope.manual_logs= {};
+    $scope.approve = false;
+
     init();
 
     function init(){
@@ -24,6 +27,9 @@ app.controller('Timesheet', function(
             $scope.pk = data.data[_id];
 
             get_profile();
+            manual_logs();
+            approve_leave();
+
             
         })
         .then(null, function(data){
@@ -204,11 +210,11 @@ app.controller('Timesheet', function(
             $scope.log["employees_pk"] = $scope.profile.pk;
             $scope.log["supervisor_pk"] = $scope.profile.supervisor_pk;
             $scope.log.time_log = H + ":" +M ;
-          
+            $scope.log.type = type;
+
+        
             var promise = TimelogFactory.save_manual_log($scope.log);
             promise.then(function(data){
-            
-
 
                 UINotification.success({
                                         message: 'You have successfully filed manual log', 
@@ -233,6 +239,28 @@ app.controller('Timesheet', function(
         }); 
     }
 
+    function manual_logs() {
+        $scope.manual_logs.status = false;
+        $scope.manual_logs.data= {};
+    
+        var promise = TimelogFactory.manual_logs($scope.filter);
+        promise.then(function(data){
+            $scope.manual_logs.status = true;
+            $scope.manual_logs.data = data.data.result;
+        }) 
+        .then(null, function(data){
+            $scope.manual_logs.status = false;
+        });
+    
+    }
 
+    $scope.approve_leave = function(){
+        
+            $scope.approve = true;
+            $scope.show_rejected = false;
+    
+    }
+
+    
 
 });

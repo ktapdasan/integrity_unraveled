@@ -20,6 +20,8 @@ app.controller('Leave', function(
 
     $scope.leaves_filed = {};
 
+    $scope.show_approved = null;
+    $scope.show_rejected = null;
    
 
 
@@ -34,6 +36,9 @@ app.controller('Leave', function(
             leavetypes();
             get_profile();
             leaves_filed();
+            approve_leave()
+
+
             
         });
     }
@@ -111,16 +116,15 @@ app.controller('Leave', function(
         
         var promise = LeaveFactory.add_leave($scope.modal);
 
-
         $scope.archived=true;
 
             UINotification.success({
-                                    message: 'You have successfully added level.', 
+                                    message: 'You have successfully filed leave.', 
                                     title: 'SUCCESS', 
                                     delay : 5000,
                                     positionY: 'top', positionX: 'right'
                                 });
-            leavetypes();
+           
             leaves_filed();
         })
         .then(null, function(data){
@@ -166,13 +170,9 @@ app.controller('Leave', function(
         });
     }
 
-    $scope.leave_filed = function (){
-        leaves_filed();
-    }
 
-    function leaves_filed () {
+    function leaves_filed() {
 
-        
         $scope.leaves_filed.status = false;
         $scope.leaves_filed.data= {};
     
@@ -184,9 +184,16 @@ app.controller('Leave', function(
         })
         .then(null, function(data){
             $scope.leaves_filed.status = false;
-        });
+        }); 
+    }
 
+    function approve_leave(){
+        
+            $scope.show_approved = true;
        
+       
+            $scope.show_approved = false;
+         
     }
        
 });

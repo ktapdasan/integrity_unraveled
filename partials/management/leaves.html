@@ -36,12 +36,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in leave_filed.data" style="cursor:pointer;">
-                        <td>{{v.leave_type_pk}}</td>
-                        <td>{{v.leave_type_pk}}</td>
-                        <td>{{v.date_started}}</td>
-                        <td>{{v.date_ended}}</td>
-                        <td>{{v.status}}</td>
+                    <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
+                        <td>{{v.name}}</td>
+                        <td>{{v.leave_type}}</td>
+                        <td>{{v.datestarted}}</td>
+                        <td>{{v.dateended}}</td>
+                        <td> 
+                            <input type = "button" value = "Approve" ng-click = "approve_leave()"/>
+                            <input type = "button" value = "Reject" ng-model= "reject" ng-click = "reject_leave()"/>
+                            <div ng-show = "approve"> Approved </div>
+                            <div ng-show = "reject"> Rejected </div>
+
+                        </td>
                     </tr>        
                 </tbody>
             </table>
