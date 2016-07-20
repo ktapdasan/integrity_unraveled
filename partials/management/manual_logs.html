@@ -3,6 +3,14 @@
 .red {
     color: #ff0000;
 }
+
+.display {
+
+}
+
+.hide {
+visibility: hidden;
+}
 </style>
 
 <div id="content2">
@@ -32,14 +40,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;">
+                    <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;" value = "{{v.pk}}">
                         <td>{{v.name}}</td>
                         <td>Log {{v.type}}</td>                       
                         <td>{{v.datecreated}}</td>
                         <td>{{v.time}}</td>
                         <td>
-                            <input type = "button" value = "Approve" ng-click = "approve_manuallog()"/>
-                            <input type = "button" value = "Reject" ng-click = "reject_manuallog()"/>
+                            <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                                {{v.status}} 
+                            </div>
+                            <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                                <input type= "button" ng-click = "show_approve(k)" value = "Approve" /> 
+                                <input type= "button" ng-hide = "rejected" ng-click = "show_disapprove(k)" value = "Disapprove"/> 
+                            </div>
                         </td>
                     </tr>        
                 </tbody>

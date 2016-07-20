@@ -62,6 +62,11 @@ app.config(function($routeProvider){
         controller: 'Position',
         templateUrl: 'partials/admin/position/index.html'
     })
+    .when('/admin/cutoff',
+    {
+        controller: 'Cutoff',
+        templateUrl: 'partials/admin/cutoff/index.html'
+    })
     .when('/employees/permissions',
     {
         controller: 'EmployeesPermissions',

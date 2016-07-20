@@ -18,41 +18,37 @@
         </div>
     </div>
 
-    <div class="panel">
-        <div style="padding-left: 400px;"><h4>
-            <input type="button" class="btn btn-add" value = "File Leave" alt="edit" ng-click="add_leave(k)" title="Edit" style = "float: right;"/></h4>
-        </div>
+    <div class="responsive-table">
+        <table id="datatables-example" width="70%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th><font size = 4>Employee Name</font></th>
+                    <th><font size = 4>Type of Leave</font></th>
+                    <th><font size = 4>Start Date</font></th>
+                    <th><font size = 4>End Date</font></th>
+                    <th><font size = 4>Status</font></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
+                    <td>{{v.name}}</td>
+                    <td>{{v.leave_type}}</td>
+                    <td>{{v.datestarted}}</td>
+                    <td>{{v.dateended}}</td>
+                    <td> 
+                        <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                        {{v.status}} 
+                        </div>
+                        <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                            <input type= "button" ng-click = "show_approve(k)" value = "Approve" /> 
+                            <input type= "button" ng-hide = "rejected" ng-click = "show_disapprove(k)" value = "Disapprove"/> 
+                        </div>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
     </div>
-
-        <div class="responsive-table">
-            <table id="datatables-example" width="70%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th><font size = 4>Employee Name</font></th>
-                        <th><font size = 4>Type of Leave</font></th>
-                        <th><font size = 4>Start Date</font></th>
-                        <th><font size = 4>End Date</font></th>
-                        <th><font size = 4>Status</font></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
-                        <td>{{v.name}}</td>
-                        <td>{{v.leave_type}}</td>
-                        <td>{{v.datestarted}}</td>
-                        <td>{{v.dateended}}</td>
-                        <td> 
-                            <input type = "button" value = "Approve" ng-click = "approve_leave()"/>
-                            <input type = "button" value = "Reject" ng-model= "reject" ng-click = "reject_leave()"/>
-                            <div ng-show = "approve"> Approved </div>
-                            <div ng-show = "reject"> Rejected </div>
-
-                        </td>
-                    </tr>        
-                </tbody>
-            </table>
-        </div>
-        <div style="height:50px; width:100%;">
+    <div style="height:50px; width:100%;">
 
         </div>
     </div>

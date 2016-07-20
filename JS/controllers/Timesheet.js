@@ -16,7 +16,10 @@ app.controller('Timesheet', function(
     $scope.log.time_log = new Date;
 
     $scope.manual_logs= {};
-    $scope.approve = false;
+
+
+    $scope.modal ={};
+
 
     init();
 
@@ -28,7 +31,6 @@ app.controller('Timesheet', function(
 
             get_profile();
             manual_logs();
-            approve_leave();
 
             
         })
@@ -223,7 +225,7 @@ app.controller('Timesheet', function(
                                         positionY: 'top', positionX: 'right'
 
                                     });
-
+            
             })
             .then(null, function(data){
                 
@@ -254,13 +256,110 @@ app.controller('Timesheet', function(
     
     }
 
-    $scope.approve_leave = function(){
+
+    $scope.show_approve = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to approve manual log?',
+                save : 'Yes',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
         
-            $scope.approve = true;
-            $scope.show_rejected = false;
-    
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            $scope.manual_logs.status = "Approved";
+            $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
+
+            
+            var promise = TimelogFactory.approve($scope.manual_logs);
+            promise.then(function(data){
+            
+           
+
+                UINotification.success({
+                                        message: 'You have successfully approve manual log', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+                manual_logs();
+                       
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to approve, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });                                  
+        });
     }
 
-    
+    $scope.show_disapprove = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to disapprove manual log?',
+                save : 'Yes',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            $scope.manual_logs.status = "Disapproved";
+            $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
+
+            
+            var promise = TimelogFactory.disapprove($scope.manual_logs);
+            promise.then(function(data){
+            
+           
+
+                UINotification.success({
+                                        message: 'You have successfully diapproved manual log', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+                manual_logs();
+                     
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to disapprove, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });                                  
+        });
+    }
+
 
 });

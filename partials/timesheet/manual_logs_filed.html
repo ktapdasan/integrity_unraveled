@@ -17,10 +17,10 @@
                 </p>
             </div>
         </div>
-    </div>
 
         <div class="responsive-table">
             <table id="datatables-example" width="50%" cellspacing="0">
+                
                 <thead>
                     <tr>
                         <th><font size = 4>Manual Log Type</font></th>
@@ -31,11 +31,11 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;">
-                        <td>{{v.type}}</td>
+                        <td>Log {{v.type}}</td>
                         <td>{{v.datecreated }}</td>
                         <td>{{v.time}}</td>
                         <td>{{v.status}}</td>
-                    </tr>        
+                    </tr> 
                 </tbody>
             </table>
         </div>

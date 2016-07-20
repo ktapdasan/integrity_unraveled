@@ -44,13 +44,37 @@ class ManualLog extends ClassParent {
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     time_log :: time as time,
                     date_created::date as datecreated,
-                    type
+                    type,
+                    (select status from manual_log_statuses where pk = manual_log.pk) as status
                 from manual_log
                 where archived = false
                 ;
 EOT;
 
         return ClassParent::get($sql);
+
+    }
+
+    public function update($extra){
+    foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+    $pk = $extra['pk'];
+    $status = $extra['status'];
+
+
+         $sql = <<<EOT
+                update manual_log_statuses set
+                
+                    status
+                =
+                    '$status'
+                
+                where pk = $pk;
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
 
     }
 
@@ -62,7 +86,6 @@ EOT;
         $time_log = $this->time_log;
         $reason= $this->reason;
         $type= $this->type;
-       
 
         $sql = 'begin;';
         $sql .= <<<EOT
@@ -72,8 +95,6 @@ EOT;
                     time_log,
                     reason,
                     type
-              
-                
                 )
                 values
                 (    
@@ -85,6 +106,7 @@ EOT;
                 returning pk
                 ;
 EOT;
+        
         $supervisor_pk = $extra['supervisor_pk'];
         $sql .= <<<EOT
                 insert into notifications
@@ -104,11 +126,28 @@ EOT;
                 )
                 ;
 EOT;
+        $sql .= <<<EOT
+                insert into manual_log_statuses
+                (
+                    pk,
+                    status          
+                )
+                values
+                (    
+                    currval('manual_log_pk_seq'),
+                    'Pending'
+                )
+                ;
+EOT;
         $sql .= "commit;";
+
+
 
         return ClassParent::insert($sql);   
 
     }
+
+
 }
 
 ?>

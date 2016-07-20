@@ -20,8 +20,7 @@ app.controller('Leave', function(
 
     $scope.leaves_filed = {};
 
-    $scope.show_approved = null;
-    $scope.show_rejected = null;
+   
    
 
 
@@ -36,7 +35,6 @@ app.controller('Leave', function(
             leavetypes();
             get_profile();
             leaves_filed();
-            approve_leave()
 
 
             
@@ -115,9 +113,7 @@ app.controller('Leave', function(
 
         
         var promise = LeaveFactory.add_leave($scope.modal);
-
-        $scope.archived=true;
-
+        promise.then(function(data){
             UINotification.success({
                                     message: 'You have successfully filed leave.', 
                                     title: 'SUCCESS', 
@@ -137,7 +133,7 @@ app.controller('Leave', function(
                                 });
         });         
 
-                        
+       });                   
     }
 
     $scope.show_leavetypes = function(){
@@ -187,13 +183,101 @@ app.controller('Leave', function(
         }); 
     }
 
-    function approve_leave(){
+    
+    $scope.show_approve = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to approve leave filed?',
+                save : 'Yes',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
         
-            $scope.show_approved = true;
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            $scope.leaves_filed.status = "Approved";
+            $scope.leaves_filed.pk =  $scope.leaves_filed.data[k].pk;
+  
+            var promise = LeaveFactory.approve($scope.leaves_filed);
+            promise.then(function(data){
+
+                UINotification.success({
+                                        message: 'You have successfully approve manual log.', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+                leaves_filed();    
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to approve, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });                                  
+        });
+    }
+
+    $scope.show_disapprove = function(k){
        
-       
-            $scope.show_approved = false;
-         
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to disapprove leave filed?',
+                save : 'Yes',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            $scope.leaves_filed.status = "Disapproved";
+            $scope.leaves_filed.pk =  $scope.leaves_filed.data[k].pk;
+
+            
+            var promise = LeaveFactory.disapprove($scope.leaves_filed);
+            promise.then(function(data){
+
+                UINotification.success({
+                                        message: 'You have successfully diapproved leave filed.', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+                leaves_filed();
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to disapprove, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });                                  
+        });
     }
        
 });

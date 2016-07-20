@@ -38,8 +38,6 @@ class Leave extends ClassParent {
     }
 
 
-
-
     public function leaves_filed(){
         
         $sql = <<<EOT
@@ -49,7 +47,8 @@ class Leave extends ClassParent {
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
                     date_created:: date as datecreated,
                     date_started:: date as datestarted,
-                    date_ended:: date as dateended
+                    date_ended:: date as dateended,
+                    (select status from leave_statuses where pk = leave_filed.pk) as status
                 from leave_filed
                 where archived = false
                 ;
@@ -58,8 +57,29 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function update($extra){
+    foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+    $pk = $extra['pk'];
+    $status = $extra['status'];
 
-   public function add_leave($extra){
+
+         $sql = <<<EOT
+                update leave_statuses set
+                    status
+                =
+                    '$status'
+                where pk = $pk;
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+
+    }
+
+
+    public function add_leave($extra){
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }   
@@ -105,6 +125,20 @@ EOT;
                     'leave_filed',
                     currval('leave_filed_pk_seq'),
                     $supervisor_pk
+                )
+                ;
+EOT;
+
+        $sql .= <<<EOT
+                insert into leave_statuses
+                (
+                    pk,
+                    status          
+                )
+                values
+                (    
+                    currval('leave_filed_pk_seq'),
+                    'Pending'
                 )
                 ;
 EOT;
