@@ -20,7 +20,8 @@ app.controller('Employees', function(
     $scope.groupings= {};
 
     $scope.employees={};
-    $scope.timesheet_data = [];
+    $scope.employees.filters={};
+    $scope.employeesheet_data = [];
     
     $scope.modal = {};
     $scope.level_class = 'orig_width';
@@ -64,7 +65,6 @@ app.controller('Employees', function(
             employees();
             //employees_fetch();
             //list();
-            //employeelist();
         })   
     } 
 
@@ -77,6 +77,7 @@ app.controller('Employees', function(
         
         $scope.filter.archived = 'false';
 
+
         var promise = EmployeesFactory.fetch_all($scope.filter);
         promise.then(function(data){
             $scope.employees.status = true;
@@ -85,6 +86,8 @@ app.controller('Employees', function(
         .then(null, function(data){
             $scope.employees.status = false;
         });
+
+        console.log($scope.filter);
     }
 
     function get_positions(){
@@ -115,9 +118,6 @@ app.controller('Employees', function(
         .then(null, function(data){
             
         });
-
-
-
     }
 
     function get_supervisors(){
@@ -300,7 +300,29 @@ app.controller('Employees', function(
     }
     
     $scope.export_employeelist = function(){
-        window.open('./FUNCTIONS/Employees/employeelist_export.php?');
+        var flag = true;
+        $scope.url ="./FUNCTIONS/Employees/employeelist_export.php?&status=Active";
+        if($scope.filter.department.length > 0){
+            $scope.url += "&departments_pk="+$scope.filter.department[0].pk;
+            flag=false;  
+        }
+        if($scope.filter.titles.length > 0){
+            if(flag === false) {
+                $scope.url += "+";
+            }
+            $scope.url += "&titles_pk="+$scope.filter.titles[0].pk;
+            if(flag === true) {
+                flag = false;
+            }
+        }
+        if($scope.filter.level_title.length > 0){
+            if(flag === false) {
+                $scope.url += "+";
+            }
+            $scope.url += "&levels_pk="+$scope.filter.level_title[0].pk;
+        }
+        window.open($scope.url);
+        console.log($scope.url);
     }
 
     $scope.level_changed = function(){
@@ -319,6 +341,10 @@ app.controller('Employees', function(
     
     }
 
+    $scope.show_list = function(){
+        list();        
+    }
+
     function list(){
         $scope.filter.pk = $scope.profile.pk;
  /*       
@@ -326,10 +352,10 @@ app.controller('Employees', function(
         if($scope.filter.employee.length > 0){
             $scope.filter.employees_pk = $scope.filter.employee[0].pk;
         }*/
-
+        
         delete $scope.filter.departments_pk;
         if($scope.filter.department.length > 0){
-            $scope.filter.departments_pk = $scope.filter.department[0].pk;
+            $scope.filter.departments_pk = $scope.filter.department[0].pk;  
         }
  
         delete $scope.filter.titles_pk;
@@ -339,29 +365,24 @@ app.controller('Employees', function(
 
         delete $scope.filter.levels_pk;
         if($scope.filter.level_title.length > 0){
-            $scope.filter.level_title_pk = $scope.filter.levels[0].pk;
+            $scope.filter.levels_pk = $scope.filter.level_title[0].pk;
         }
-
-  /*      console.log ($scope.filter)
-        var promise = TimelogFactory.timelogs($scope.filter);
-        promise.then(function(data){
-            $scope.timesheet_data = data.data.result;
-
-            
-        })*/   
+        
+        employees();
     }
     function fetch_department(){
-        var promise = TimelogFactory.get_department();
+        var promise = EmployeesFactory.get_department();
         promise.then(function(data){
             var a = data.data.result;
-            $scope.department.data=[];
+            $scope.employees.filters.department=[];
             for(var i in a){
-                $scope.department.data.push({
+                $scope.employees.filters.department.push({
                                             pk: a[i].pk,
                                             name: a[i].department,
                                             ticked: false
                                         });
             }
+
         })
         .then(null, function(data){
             
@@ -370,12 +391,12 @@ app.controller('Employees', function(
 
 
     function fetch_levels(){
-        var promise = TimelogFactory.get_levels();
+        var promise = EmployeesFactory.get_levels();
         promise.then(function(data){
             var a = data.data.result;
-            $scope.level_title.data=[];
+            $scope.employees.filters.level_title=[];
             for(var i in a){
-                $scope.level_title.data.push({
+                $scope.employees.filters.level_title.push({
                                             pk: a[i].pk,
                                             name: a[i].level_title,
                                             ticked: false
@@ -389,12 +410,12 @@ app.controller('Employees', function(
 
 
     function fetch_titles(){
-        var promise = TimelogFactory.get_positions();
+        var promise = EmployeesFactory.get_positions();
         promise.then(function(data){
              var a = data.data.result;
-            $scope.titles.data=[];
+            $scope.employees.filters.titles=[];
             for(var i in a){
-                $scope.titles.data.push({
+                $scope.employees.filters.titles.push({
                                             pk: a[i].pk,
                                             name: a[i].title,
                                             ticked: false

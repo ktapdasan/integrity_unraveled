@@ -44,7 +44,7 @@
                     <label style="float:left;font-size: 15px;">Select a Department</label><br>
                     <div
                         isteven-multi-select
-                        input-model="department.data"
+                        input-model="employees.filters.department"
                         output-model="filter.department"
                         button-label="icon name"
                         item-label="icon name maker"
@@ -60,7 +60,7 @@
                     <label style="float:left;font-size: 15px;">Select a Level</label><br>
                     <div
                         isteven-multi-select
-                        input-model="level_title.data"
+                        input-model="employees.filters.level_title"
                         output-model="filter.level_title"
                         button-label="icon name"
                         item-label="icon name maker"
@@ -79,7 +79,7 @@
                      <br>
                         <div
                         isteven-multi-select
-                        input-model="titles.data"
+                        input-model="employees.filters.titles"
                         output-model="filter.titles"
                         button-label="icon name"
                         item-label="icon name maker"
@@ -94,7 +94,7 @@
                     </div>
 
 
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()" style="float:left; margin-top: 27px;">
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_list()" style="float:left; margin-top: 27px;">
                 </div>
 
                 </div> 
@@ -150,6 +150,7 @@
                     <tr ng-if="!employees.status">
                         <td colspan = "9">No Employees Found</td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
