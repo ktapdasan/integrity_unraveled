@@ -87,7 +87,6 @@ app.controller('Employees', function(
             $scope.employees.status = false;
         });
 
-        console.log($scope.filter);
     }
 
     function get_positions(){
@@ -322,7 +321,6 @@ app.controller('Employees', function(
             $scope.url += "&levels_pk="+$scope.filter.level_title[0].pk;
         }
         window.open($scope.url);
-        console.log($scope.url);
     }
 
     $scope.level_changed = function(){

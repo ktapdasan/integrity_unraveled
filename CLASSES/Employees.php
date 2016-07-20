@@ -430,17 +430,17 @@ EOT;
                 OR last_name ILIKE '$str%' OR employee_id ILIKE '$str%' )";
         }
 
-        if($lvl !== null){
+        if($lvl){
             $where.=" AND levels_pk = '$lvl'";
         }else{
             $where.="";
         }
-        if($dept !== null){
+        if($dept){
             $where.=" AND department = '{{$dept}}'";
         }else{
             $where.="";
         }
-        if($posi !== null){
+        if($posi){
             $where.=" AND titles_pk = '$posi'";
         }else{
             $where.="";
