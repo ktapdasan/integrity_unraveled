@@ -5,6 +5,7 @@ create table cutoff_types (
 	archived boolean default false
 );
 alter table cutoff_types owner to chrs;
+create unique index cutoff_types_idx on cutoff_types(type);
 
 create table cutoff_dates (
 	cutoff_types_pk int references cutoff_types(pk),
