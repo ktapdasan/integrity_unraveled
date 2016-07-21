@@ -26,8 +26,17 @@ class Levels extends ClassParent {
         return(true);
     }
 
-    public function fetch(){
+    public function fetch($data){
         /*$level_title = pg_escape_string(strip_tags(trim($post['get_levels'])));*/
+
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $str=$data['searchstring'];
+
+        if ($str){
+            $where = " AND (level_title ILIKE '$str%')";
+        }
 
         $sql = <<<EOT
                 select
@@ -35,6 +44,7 @@ class Levels extends ClassParent {
                     level_title
                 from levels
                 where archived = $this->archived
+                $where
                 order by pk
                 ;
 EOT;

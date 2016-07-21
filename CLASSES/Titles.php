@@ -30,15 +30,25 @@ class Titles extends ClassParent {
         return(true);
     }
 
-    public function fetch(){
+    public function fetch($data){
        /* $title = pg_escape_string(strip_tags(trim($post['get_positions'])));
 */
+       foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $str=$data['searchstring'];
+
+        if ($str){
+            $where = " AND (title ILIKE '$str%')";
+        }
+
         $sql = <<<EOT
                 select
                     pk, 
                     title
                 from titles
                 where archived = $this->archived
+                $where
                 order by pk
                 ;
 EOT;

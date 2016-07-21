@@ -20,11 +20,15 @@
     </div>
 
     <div class="panel">
-        <div style="padding-left: 500px;"><h4>
+        <div style="padding-left: 20px;"><h4>
+
+                             <input ng-model="filter.searchstring" type="text" style="width:400px; margin-left:-20px;" ng-change= "show_departments()"/>
+
                             <select ng-model="filter.status" ng-change= "show_departments()">
                                 <option>Active</option>
                                 <option>Inactive</option>
                             </select>
+
                             <input type="button" class="btn btn-add" value = "Add New Department" alt="edit"ng-click="add_department(k)" title="Edit" style = "float: right;"/></h4> 
         </div>
     </div>
