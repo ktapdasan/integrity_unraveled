@@ -1,0 +1,54 @@
+
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Leave Types</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Leave Types
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div>         
+         <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="edit" ng-click="add_leave_type(k)" title="Edit" style = "float: right;"/> 
+    </div>
+    
+
+    <div class="responsive-table">
+        <table id="datatables-example" width="50%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th><font size = 4>Leave Types</font></th>
+                    <th><font size = 4>Days</font></th>
+                    <th><font size = 4>Options</font></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;">
+                    <td>{{v.name}}</td>
+                    <td>{{v.leave_type}}</td>
+                    <td><center>
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_level(k)" title="Edit">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_level(k)" title="Delete">
+                        </center>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
+    </div>
+    <div style="height:50px; width:100%;">
+
+        </div>
+    </div>
+</div>
+
+

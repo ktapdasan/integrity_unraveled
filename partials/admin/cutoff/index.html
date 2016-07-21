@@ -1,0 +1,70 @@
+<style type="text/css">
+.display {
+}
+.hide{
+    visibility: hidden;
+}
+
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Cut Off</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Cut Off
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel">
+        <div style="padding-left: 100px;"><h4>
+                <select ng-model="filter.status" ng-change= "show_type(k)">
+                    <option ng-repeat="(k, v) in cutofftypes.data" style="cursor:pointer;" value="{{v.pk}}">
+                    {{v.type}}
+                    </option>
+                 </select>
+        </div>
+        <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayM"><h4>
+                <table>
+                    <tr>
+                        <th> Start Date: </th>
+                        <th> End Date: </th>
+                    </tr>
+                    <tr>
+                        <td> <input type = "date" ng-model = "filter.start_m" required/> </td>
+                        <td> <input type = "date" ng-model = "filter.end_m" required/> 
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayB"><h4>
+                <table>
+                    <tr>
+                        <th> Start Date: </th>
+                        <th> End Date: </th>
+                    </tr>
+                    <tr>
+                        <td> <input type = "date" ng-model = "filter.start_bf" required/> </td>
+                        <td> <input type = "date" ng-model = "filter.end_bf" required/> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <input type = "date" ng-model = "filter.start_bs" required/> </td>
+                        <td> <input type = "date" ng-model = "filter.end_bs" required/> 
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        <div style="padding-left: 100px; margin-top: 20px;">
+                <button ng-click = "save()" class=" btn btn-add"><h5> Save </h5></button>
+        </div>
+
+
+    </div>
+
+
