@@ -19,7 +19,7 @@
     </div>
 
     <div>         
-         <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="edit" ng-click="add_leave_type(k)" title="Edit" style = "float: right;"/> 
+         <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="edit" ng-click="add_leavetype(k)" title="Edit" style = "float: right;"/> 
     </div>
     
 
@@ -35,10 +35,10 @@
             <tbody>
                 <tr ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;">
                     <td>{{v.name}}</td>
-                    <td>{{v.leave_type}}</td>
+                    <td>{{v.days}}</td>
                     <td><center>
-                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_level(k)" title="Edit">
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_level(k)" title="Delete">
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_leavetype(k)" title="Edit">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_leavetype(k)" title="Delete">
                         </center>
                     </td>
                 </tr>        

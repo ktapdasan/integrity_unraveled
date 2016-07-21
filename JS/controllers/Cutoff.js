@@ -12,7 +12,6 @@ app.controller('Cutoff', function(
   $scope.level_title={};
 
   $scope.filter= {};
-  $scope.filter.status= 1;
 
   $scope.type = '';
 

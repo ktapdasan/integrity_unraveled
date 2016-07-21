@@ -279,5 +279,183 @@ app.controller('Leave', function(
             });                                  
         });
     }
+
+    $scope.edit_leavetype = function(k){
+
+    $scope.modal = {
+
+        title : 'Edit Leave Type',
+        save : 'Apply Changes',
+        close : 'Cancel',
+            name: $scope.leave_types.data[k].name,
+            days: $scope.leave_types.data[k].days,
+            code: $scope.leave_types.data[k].code,
+            pk: $scope.leave_types.data[k].pk
+    };
+
+    ngDialog.openConfirm({
+        template: 'LeaveTypeModal',
+        className: 'ngdialog-theme-plain custom-widththreefifty',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+
+            
+                nestedConfirmDialog = ngDialog.openConfirm({
+                    template:
+                            '<p></p>' +
+                            '<p>Are you sure you want to apply changes to this leave type?</p>' +
+                            '<div class="ngdialog-buttons">' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                            '</button></div>',
+                    plain: true,
+                    className: 'ngdialog-theme-plain custom-widththreefifty'
+                });
+
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+    .then(function(value){
+        return false;
+    }, function(value){
+        var promise = LeaveFactory.edit($scope.modal);
+        promise.then(function(data){
+
+            UINotification.success({
+                                    message: 'You have successfully applied changes.', 
+                                    title: 'SUCCESS', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+            $scope.leave_types.data[k].name =  $scope.modal.name;
+            $scope.leave_types.data[k].days =  $scope.modal.days;
+            $scope.leave_types.data[k].code =  $scope.modal.code;
+        })
+
+        .then(null, function(data){
+            
+            UINotification.error({
+                                    message: 'An error occured, unable to save changes, please try again.', 
+                                    title: 'ERROR', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+        });         
+
+                        
+    });
+}
+    $scope.delete_leavetype = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to delete this leave type?',
+                save : 'Delete',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            
+            var promise = LeaveFactory.delete($scope.leave_types.data[k]);
+            promise.then(function(data){
+                
+                $scope.archived=true;
+
+                UINotification.success({
+                                        message: 'You have successfully deleted leave type', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                leavetypes();
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to delete, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+
+    
+    $scope.add_leavetype = function(k){
+
+    $scope.modal = {
+
+        title : 'Add New Leave Type',
+        save : 'Save',
+        close : 'Cancel'
+
+    };
+
+    ngDialog.openConfirm({
+        template: 'LeaveTypeNewModal',
+        className: 'ngdialog-theme-plain custom-widththreefifty',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+
+            
+                nestedConfirmDialog = ngDialog.openConfirm({
+                    template:
+                            '<p></p>' +
+                            '<p>Are you sure you want add this leave type?</p>' +
+                            '<div class="ngdialog-buttons">' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                            '</button></div>',
+                    plain: true,
+                    className: 'ngdialog-theme-plain custom-widththreefifty'
+                });
+
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+    .then(function(value){
+        return false;
+    }, function(value){
+        var promise = LeaveFactory.add_leavetype($scope.modal);
+        promise.then(function(data){
+
+            UINotification.success({
+                                    message: 'You have successfully added leave type.', 
+                                    title: 'SUCCESS', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+            leavetypes();
+            
+        })
+        .then(null, function(data){
+            
+            UINotification.error({
+                                    message: 'An error occured, unable to save changes, please try again.', 
+                                    title: 'ERROR', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+        });         
+
+                        
+    });
+    }
        
 });

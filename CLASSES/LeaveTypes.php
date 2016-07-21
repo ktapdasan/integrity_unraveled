@@ -6,12 +6,14 @@ class LeaveTypes extends ClassParent {
     var $name = NULL;
     var $code = NULL;
     var $archived = NULL;
+    var $days= NULL;
 
     public function __construct(
                                 $pk='',
                                 $name='',
                                 $code='',
-                                $archived = ''
+                                $archived = '',
+                                $days= ''
                                 )
         {
         
@@ -35,7 +37,9 @@ class LeaveTypes extends ClassParent {
         $sql = <<<EOT
                 select
                     pk, 
-                    name
+                    name,
+                    code,
+                    days
                 from leave_types
                 where archived = false
                 order by pk
@@ -45,11 +49,38 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function edit(){
+        $name = $this->name;
+        $days = $this->days;
+        $code = $this->code;
+        $pk = $this->pk;
+
+         $sql = <<<EOT
+                update leave_types set
+                (   
+                    name,
+                    code,
+                    days
+                )
+                =
+                (   
+                    '$name',
+                    '$code',
+                    $days
+                )
+                where pk = $pk
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+
+    }
+
      public function deactivate(){
 
         $sql = <<<EOT
-                update levels
-                set archived = True
+                update leave_types 
+                set archived = true
                 where pk = $this->pk;
 EOT;
 
@@ -57,17 +88,24 @@ EOT;
     }
 
 
-    public function update(){
-        $level_title = $this->level_title;
-        
-
+    public function add(){
+        $name = $this->name;
+        $days = $this->days;
+        $code = $this->code;
 
         $sql = <<<EOT
-                UPDATE levels set
-                    level_title
-                =
-                    '$level_title'
-                WHERE pk = $this->pk
+                insert into leave_types
+                (   
+                    name,
+                    code,
+                    days
+                )
+                values
+                (
+                    '$name',
+                    '$code',
+                    $days
+                )
                 ;
 EOT;
 

@@ -23,7 +23,7 @@
 
     <div class="panel">
         <div style="padding-left: 100px;"><h4>
-                <select ng-model="filter.status" ng-change= "show_type(k)">
+                <select ng-model="filter.status" ng-change= "show_type()">
                     <option ng-repeat="(k, v) in cutofftypes.data" style="cursor:pointer;" value="{{v.pk}}">
                     {{v.type}}
                     </option>

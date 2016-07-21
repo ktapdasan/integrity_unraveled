@@ -82,6 +82,56 @@ app.factory('LeaveFactory', function($http){
         return promise;
     };
 
+    factory.edit = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Leave/edit.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.delete = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Leave/delete.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.add_leavetype = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Leave/add_leavetype.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
     
     return factory;
 });

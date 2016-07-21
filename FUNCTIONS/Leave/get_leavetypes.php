@@ -5,6 +5,7 @@ require_once('../../CLASSES/LeaveTypes.php');
 $filters = array(
 					'pk' => NULL,
 					'name' => NULL,
+					'code' => NULL,
 					'archived' => NULL
 				);
 
@@ -15,6 +16,7 @@ foreach($_POST as $k=>$v){
 $class = new LeaveTypes(
 						$filters['pk'], 
 						$filters['name'],
+						$filters['code'],
 						$filters['archived']
 					);
 
