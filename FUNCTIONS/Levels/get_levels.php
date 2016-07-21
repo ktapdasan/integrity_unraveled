@@ -18,7 +18,7 @@ $class = new Levels(
 						$filters['archived']
 					);
 
-$data = $class->fetch();
+$data = $class->fetch($_POST);
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){
