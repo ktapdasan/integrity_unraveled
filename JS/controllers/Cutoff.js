@@ -87,18 +87,18 @@ app.controller('Cutoff', function(
 		type();
     var startm = new Date($scope.filter.start_m);
     var endm = new Date($scope.filter.end_m);
-      var ddsm = startm.getDate();
-      var ddem = endm.getDate();
+        var b = startm.getDate();
+        var c = endm.getDate();
       
-      var startbf = new Date($scope.filter.start_bf);
+    var startbf = new Date($scope.filter.start_bf);
     var endbf = new Date($scope.filter.end_bf);
-      var dsbf = startbf.getDate();
-      var debf = endbf.getDate();
+        var d = startbf.getDate();
+        var e = endbf.getDate();
 
     var startbs = new Date($scope.filter.start_bs);
     var endbs = new Date($scope.filter.end_bs);
-      var dsbs = startbs.getDate();
-      var debs = endbs.getDate();
+        var f = startbs.getDate();
+        var g = endbs.getDate();
     $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to save cutoff dates?',
@@ -118,30 +118,22 @@ app.controller('Cutoff', function(
             return false;
         }, function(value){
 
-   		// $scope.filter["start_m"] = ddsm;
-   		// $scope.filter["end_m"] = ddem;
-   		// $scope.filter["start_bf"] = dsbf;
-   		// $scope.filter["end_bf"] = debf;
-   		// $scope.filter["start_bs"] = dsbs;
-   		// $scope.filter["end_bs"] = debs;
-     //    $scope.filter["pk"] = $scope.filter.status;
-
         var new_cutoff={};
         if($scope.filter.status == 1){
             new_cutoff = {
-                'from' : ddsm,
-                'to' : ddem
+                'from' : b,
+                'to' : c
             };
         }
         else {
             new_cutoff = {
                 'first' : {
-                    'from' : dsbf,
-                    'to' : debf
+                    'from' : d,
+                    'to' : e
                 },
                 'second' : {
-                    'from' : dsbs,
-                    'to' : debs
+                    'from' : f,
+                    'to' : g
                 }
             };
         }
