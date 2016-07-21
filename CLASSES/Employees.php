@@ -94,12 +94,25 @@ EOT;
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-
         $str=$data['searchstring'];
+        $lvl=$data[levels_pk];
+        $dept=$data[departments_pk];
+        $posi=$data[titles_pk];
         $where = "";
+
         if ($str){
             $where .= " AND (first_name ILIKE '$str%' OR middle_name ILIKE '$str%' 
                 OR last_name ILIKE '$str%' OR employee_id ILIKE '$str%' )";
+        }
+
+        if($lvl){
+            $where.=" AND levels_pk = '$lvl'";
+        }
+        if($dept){
+            $where.=" AND department = '{{$dept}}'";
+        }
+        if($posi){
+            $where.=" AND titles_pk = '$posi'";
         }
 
         $status = $data['status'];
@@ -112,7 +125,7 @@ EOT;
             }
             $where .= " AND archived = $status";
         }
-    
+
 
         $sql = <<<EOT
                 select 
@@ -336,11 +349,11 @@ EOT;
             $where .= "and employees_pk = ". $data['employees_pk']; 
         }
 
-        /*
+        
         if($data['departments_pk']){
             $where .= "and departments_pk = ". $data['departments_pk']; 
         }
-        */
+        
 
         $datefrom = $data['datefrom'];
         $dateto = $data['dateto'];
@@ -403,16 +416,36 @@ EOT;
 
   
     public function employeelist($data){
-        foreach($data as $k=>$v){
+       foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
         $str=$data['searchstring'];
+        $lvl=$data[levels_pk];
+        $dept=$data[departments_pk];
+        $posi=$data[titles_pk];
         $where = "";
         if ($str){
             $where .= " AND (first_name ILIKE '$str%' OR middle_name ILIKE '$str%' 
                 OR last_name ILIKE '$str%' OR employee_id ILIKE '$str%' )";
         }
+
+        if($lvl){
+            $where.=" AND levels_pk = '$lvl'";
+        }else{
+            $where.="";
+        }
+        if($dept){
+            $where.=" AND department = '{{$dept}}'";
+        }else{
+            $where.="";
+        }
+        if($posi){
+            $where.=" AND titles_pk = '$posi'";
+        }else{
+            $where.="";
+        }
+
 
         $status = $data['status'];
         if ($status){
