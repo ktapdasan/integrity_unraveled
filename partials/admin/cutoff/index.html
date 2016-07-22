@@ -30,37 +30,67 @@
                  </select>
         </div>
         <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayM"><h4>
-                <table>
+                <table cellspacing="10">
                     <tr>
-                        <th> Start Date: </th>
-                        <th> End Date: </th>
+                        <th style = 'padding-right: 50px'> Start Day: </th>
+                        <th style = 'padding-right: 50px'> End Day: </th>
                     </tr>
                     <tr>
-                        <td> <input type = "date" ng-model = "filter.start_m" required/> </td>
-                        <td> <input type = "date" ng-model = "filter.end_m" required/> 
+                        <td>
+                            <select ng-model = "filter.start_m">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
+                                    {{k}}
+                                </option>
+                            </select>
                         </td>
+                        <td> 
+                            <select ng-model = "filter.end_m">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
+                                    {{k}}
+                                </option>
+                            </select>
                     </tr>
                 </table>
         </div>
         <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayB"><h4>
-                <table>
+                <table cellspacing="10">
                     <tr>
-                        <th> Start Date: </th>
-                        <th> End Date: </th>
+                        <th style = 'padding-right: 50px'> Start Day: </th>
+                        <th style = 'padding-right: 50px'> End Day: </th>
                     </tr>
                     <tr>
-                        <td> <input type = "date" ng-model = "filter.start_bf" required/> </td>
-                        <td> <input type = "date" ng-model = "filter.end_bf" required/> 
+                        <td>
+                            <select ng-model = "filter.start_bf">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
+                                    {{k}}
+                                </option>
+                            </select>
                         </td>
+                        <td> 
+                            <select ng-model = "filter.end_bf">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
+                                    {{k}}
+                                </option>
+                            </select>
                     </tr>
                     <tr>
-                        <td> <input type = "date" ng-model = "filter.start_bs" required/> </td>
-                        <td> <input type = "date" ng-model = "filter.end_bs" required/> 
+                        <td>
+                            <select ng-model = "filter.start_bs">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
+                                    {{k}}
+                                </option>
+                            </select>
                         </td>
+                        <td> 
+                            <select ng-model = "filter.end_bs">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
+                                    {{k}}
+                                </option>
+                            </select>
                     </tr>
                 </table>
         </div>
-        <div style="padding-left: 100px; margin-top: 20px;">
+        <div style="padding-left: 75px; margin-top: 20px;">
                 <button ng-click = "save()" class=" btn btn-add"><h5> Save </h5></button>
         </div>
 

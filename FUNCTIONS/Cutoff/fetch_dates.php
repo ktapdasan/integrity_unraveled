@@ -2,48 +2,22 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Cutoff.php');
 
+
 $class = new Cutoff(
-				$_POST['pk'],
-                Null,
-                Null
-			);
+						NULL,
+                        NULL,
+                        NULL
+					);
 
-$pk = $_POST['status'];
-$a = json_decode($_POST['new_cutoff']);
-//print_r($a->first->from);
-
-$cutoff=array();
-
-$b = $a->from;
-$c = $a->to;
-$d = $a->first->from;
-$e = $a->first->to;
-$f =$a->second->from;
-$g = $a->second->to;
-
-if($pk == 1){
-	$cutoff['cutoff'][0]['from'] = $b;
-	$cutoff['cutoff'][0]['to'] = $c;
-}
-else {
-	$cutoff['cutoff'][0]['from'] = $d;
-	$cutoff['cutoff'][0]['to'] = $e;
-	$cutoff['cutoff'][1]['from'] = $f;
-	$cutoff['cutoff'][1]['to'] = $g;	
-}
+$data = $class-> fetch_dates();
 
 
-$extra['cutoffdate'] = $cutoff;
-$extra['pk'] = $pk;
 
-//print_r($extra['cutoffdate']);
-
-$data = $class-> submit_type($extra);
-
+setcookie('commented', 'commented', time()+43200000, '/');
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
-       header("HTTP/1.0 200 OK");
+	header("HTTP/1.0 200 OK");
  }                  
 
 header('Content-Type: application/json');

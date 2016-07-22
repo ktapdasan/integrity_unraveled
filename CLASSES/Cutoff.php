@@ -27,7 +27,7 @@ class Cutoff extends ClassParent {
         return(true);
     }
 
-    public function fetch(){
+    public function fetch_types(){
        
 
         $sql = <<<EOT
@@ -43,6 +43,18 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function fetch_dates(){
+
+        $sql = <<<EOT
+                select
+                    cutoff_types_pk, 
+                    dates
+                from cutoff_dates
+                ;
+EOT;
+        return ClassParent::get($sql);
+
+    }
 
 
     public function submit_type($extra){

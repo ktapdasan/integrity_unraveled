@@ -9,24 +9,19 @@ app.controller('Cutoff', function(
                                     ){
 
 	$scope.pk='';
-  $scope.level_title={};
 
-  $scope.filter= {};
 
-  $scope.type = '';
+    $scope.filter= {};
 
-  $scope.modal = {};
-  $scope.levels = {};
+    $scope.type = '';
 
-	$scope.filter.start_m = new Date();
-	$scope.filter.start_bf = new Date();
-	$scope.filter.start_bs = new Date();
+    $scope.modal = {};
+    $scope.levels = {};
 
-	$scope.filter.end_m = new Date();
-	$scope.filter.end_bf = new Date();
-	$scope.filter.end_bs = new Date();
+    $scope.cutofftypes = {};
+    $scope.cutoffdates = {};
 
-  $scope.cutofftypes = {};
+    $scope.days ={};
 
     init();
 
@@ -36,8 +31,9 @@ app.controller('Cutoff', function(
             var _id = md5.createHash('pk');
             $scope.pk = data.data[_id];
 
-            type();
+            
             cutofftypes();
+            show();
             
         });
     }
@@ -48,24 +44,24 @@ app.controller('Cutoff', function(
         $scope.cutofftypes.status = false;
         $scope.cutofftypes.data= '';
         
-        var promise = CutoffFactory.cutofftypes();
+        var promise = CutoffFactory.fetch_types();
         promise.then(function(data){
             $scope.cutofftypes.status = true;
             $scope.cutofftypes.data = data.data.result;
-
+            
         })
         .then(null, function(data){
             $scope.cutofftypes.status = false;
         });
     }
 
-    $scope.show_type = function(k){
+    $scope.show_type = function(){
     	type();
-      cutofftypes();
+        
     }
 
    	function type(){
-   		
+   		console.log($scope.filter.status);
    		if ($scope.filter.status == 1)
    		{
    			$scope.displayM = true;
@@ -77,35 +73,34 @@ app.controller('Cutoff', function(
    			$scope.displayB = true;
    			$scope.displayM = false;
    			
-   		}
+   		}   		
+    }
 
-   		
-}
 
-	$scope.save = function(){
+	$scope.save = function(){  
 		type();
-    var startm = new Date($scope.filter.start_m);
-    var endm = new Date($scope.filter.end_m);
-        var b = startm.getDate();
-        var c = endm.getDate();
+
+    //monthly
+        var b = $scope.filter.start_m;
+        var c = $scope.filter.end_m;
       
-    var startbf = new Date($scope.filter.start_bf);
-    var endbf = new Date($scope.filter.end_bf);
-        var d = startbf.getDate();
-        var e = endbf.getDate();
+    //bi-monthly
+        //first-half
+        var d = $scope.filter.start_bf;
+        var e = $scope.filter.end_bf;
+        //second-half
+        var f = $scope.filter.start_bs;
+        var g = $scope.filter.end_bs;
 
-    var startbs = new Date($scope.filter.start_bs);
-    var endbs = new Date($scope.filter.end_bs);
-        var f = startbs.getDate();
-        var g = endbs.getDate();
-    $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to save cutoff dates?',
-                save : 'Yes',
-                close : 'Cancel'
+        $scope.modal = {
+            title : '',
+            message: 'Are you sure you want to save cutoff days?',
+            save : 'Yes',
+            close : 'Cancel'
 
-            };
-    ngDialog.openConfirm({
+        };
+        
+        ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
             
@@ -117,49 +112,94 @@ app.controller('Cutoff', function(
             return false;
         }, function(value){
 
-        var new_cutoff={};
-        if($scope.filter.status == 1){
-            new_cutoff = {
-                'from' : b,
-                'to' : c
-            };
-        }
-        else {
-            new_cutoff = {
-                'first' : {
-                    'from' : d,
-                    'to' : e
-                },
-                'second' : {
-                    'from' : f,
-                    'to' : g
-                }
-            };
-        }
+            var new_cutoff={};
+            if($scope.filter.status == 1){
+                new_cutoff = {
+                    'from' : b,
+                    'to' : c
+                };
+            }
+            else {
+                new_cutoff = {
+                    'first' : {
+                        'from' : d,
+                        'to' : e
+                    },
+                    'second' : {
+                        'from' : f,
+                        'to' : g
+                    }
+                };
+            }
 
-        $scope.filter.new_cutoff = JSON.stringify(new_cutoff);
+   
+            $scope.filter.new_cutoff = JSON.stringify(new_cutoff);
 
-   		var promise = CutoffFactory.submit_type($scope.filter);
-   		promise.then(function(data){
+   		   var promise = CutoffFactory.submit_type($scope.filter);
+   		   promise.then(function(data){
 
-        UINotification.success({
-                                        message: 'You have successfully saved cutoff dates.', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });  
+                UINotification.success({
+                                                message: 'You have successfully saved cutoff days.', 
+                                                title: 'SUCCESS', 
+                                                delay : 5000,
+                                                positionY: 'top', positionX: 'right'
+                                            });  
 
-        })
-        .then(null, function(data){
+            })
+            .then(null, function(data){
 
-          UINotification.error({
-                                        message: 'An error occured, unable to save cutoff dates, please try again.', 
+                UINotification.error({
+                                        message: 'An error occured, unable to save, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
+            });
+	   });
+       
+    }
+
+    function fetch_dates(){
+        
+        var promise = CutoffFactory.fetch_dates();
+        promise.then(function(data){
+            $scope.cutoffdates.data = data.data.result;
+         
+            $scope.cutoffdates.data[0].dates = JSON.parse($scope.cutoffdates.data[0].dates);
+            
+            $scope.filter.status = $scope.cutoffdates.data[0].cutoff_types_pk;
+
+            if ($scope.filter.status == 1){
+                $scope.filter.start_m = $scope.cutoffdates.data[0].dates.cutoff[0].from;
+                $scope.filter.end_m = $scope.cutoffdates.data[0].dates.cutoff[0].to;
+            }
+            else{
+                $scope.filter.start_bf = $scope.cutoffdates.data[0].dates.cutoff[0].from;
+                $scope.filter.end_bf = $scope.cutoffdates.data[0].dates.cutoff[0].to;
+
+                $scope.filter.start_bs = $scope.cutoffdates.data[0].dates.cutoff[1].from;
+                $scope.filter.end_bs = $scope.cutoffdates.data[0].dates.cutoff[1].to;
+            }
+
+
+            type();
+        })
+        .then(null, function(data){
+
         });
-	});
-}
+    }
+
+    $scope.show_days = function(){
+        show();
+    }
+
+    function show() {
+        for(var i=1;i<32;i++){
+            $scope.days[i] = i;      
+        };
+
+        fetch_dates();
+       
+    }
 
 });

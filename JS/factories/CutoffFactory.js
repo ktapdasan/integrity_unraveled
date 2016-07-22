@@ -20,7 +20,7 @@ app.factory('CutoffFactory', function($http){
 
     };
 
-    factory.cutofftypes = function(data){
+    factory.fetch_types = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Cutoff/cutofftypes.php',
             method: 'GET'
@@ -28,6 +28,15 @@ app.factory('CutoffFactory', function($http){
 
         return promise;
 
+    };
+
+    factory.fetch_dates = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Cutoff/fetch_dates.php',
+            method: 'GET'
+        })
+
+        return promise;
     };
 
     factory.read_notifs = function(data){

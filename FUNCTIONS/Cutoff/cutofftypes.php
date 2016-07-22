@@ -18,7 +18,7 @@ $class = new Cutoff(
 						$filters['archived']
 					);
 
-$data = $class->fetch();
+$data = $class->fetch_types();
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){
