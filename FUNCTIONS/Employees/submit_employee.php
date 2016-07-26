@@ -1,11 +1,11 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
-require_once('../../CLASSES/PHPMailerAutoload.php');
+//require_once('../../CLASSES/PHPMailerAutoload.php');
 
 
 $class = new Employees(
-				NULL,
+				            NULL,
                             $_POST['employee_id'],
                             $_POST['first_name'],
                             $_POST['middle_name'],
@@ -16,9 +16,23 @@ $class = new Employees(
                             $_POST['levels_pk'],
                             $_POST['departments_pk'],
                             NULL,
+                            NULL,
                             NULL
 
 			);
+
+
+$details = array();
+if ($_POST['levels_pk'] == 3){
+    $details['company']['levels_pk']    = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
+    $details['company']['hours']        = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
+}
+else{
+    $details['company']['levels_pk']    = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
+}
+
+
+$extra['details'] = $details;
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
 
 $data = $class-> create($extra);
@@ -28,7 +42,7 @@ setcookie('commented', 'commented', time()+43200000, '/');
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
 	header("HTTP/1.0 200 OK");
-
+/*
         $mail = new PHPMailer;
 
         //$mail->SMTPDebug = 3;                               // Enable verbose debug output
@@ -63,7 +77,7 @@ if($data['status']==true){
         } else {
             header('Content-Type: application/json');
             print(json_encode($data));
-       }
+       }*/
 }                  
 
 header('Content-Type: application/json');

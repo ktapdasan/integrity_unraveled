@@ -15,6 +15,7 @@ $filters = array(
 					'levels_pk' => NULL,
 					'department' => NULL,
 					'date_created' => NULL,
+					'details' => NULL,
 					'archived' => NULL
 				);
 
@@ -34,7 +35,8 @@ $class = new Employees(
 						$filters['level'],
 						$filters['levels_pk'], 
 						$filters['department'], 
-						$filters['date_created'], 
+						$filters['date_created'],
+						$filters['details'],
 						$filters['archived']
 					);
 

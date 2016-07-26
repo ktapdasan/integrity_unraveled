@@ -19,6 +19,7 @@ app.controller('Employees', function(
     $scope.level_title={};
     $scope.groupings= {};
 
+    $scope.employee = {};
     $scope.employees={};
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
@@ -81,7 +82,15 @@ app.controller('Employees', function(
         var promise = EmployeesFactory.fetch_all($scope.filter);
         promise.then(function(data){
             $scope.employees.status = true;
-            $scope.employees.data = data.data.result;
+            //$scope.employees.data = data.data.result;
+            
+            //$scope.employees.data
+            var a = data.data.result;
+            for(var i in a){
+                a[i].details = JSON.parse(a[i].details);
+            }
+
+            $scope.employees.data = a;
         })
         .then(null, function(data){
             $scope.employees.status = false;
@@ -234,7 +243,10 @@ app.controller('Employees', function(
 
     $scope.edit_employees = function(k){
         get_supervisors();
+
         $scope.employee = $scope.employees.data[k];
+        
+        
         level_changed();
         $scope.modal = {
             title : 'Edit ' + $scope.employees.data[k].first_name,
@@ -247,7 +259,6 @@ app.controller('Employees', function(
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
 
-                
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
@@ -268,7 +279,8 @@ app.controller('Employees', function(
         .then(function(value){
             return false;
         }, function(value){
-
+            
+            console.log($scope.employees.data[k]);
             var promise = EmployeesFactory.edit_employees($scope.employees.data[k]);
             promise.then(function(data){
                 
@@ -282,6 +294,7 @@ app.controller('Employees', function(
                                         positionY: 'top', positionX: 'right'
                                     });
                 employees();
+
 
             })
             .then(null, function(data){

@@ -109,11 +109,11 @@
 
     $scope.submit_employee = function(){
 
+        get_supervisors();
+        
         var promise = EmployeesFactory.submit_employee($scope.employee);
         promise.then(function(data){
-        console.log ($scope.employee);
-        return false;
-
+       
             UINotification.success({
                                     message: 'You have successfully submitted a new employee.', 
                                     title: 'SUCCESS', 
@@ -131,8 +131,6 @@
                                     positionY: 'top', positionX: 'right'
                                 });
         });
-
-        
 
             $scope.employee={
                 employee_id:'',

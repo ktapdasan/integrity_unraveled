@@ -149,7 +149,7 @@
                             </option>
 
                         </select>
-                            <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "8" ng-show="show_hours" required/>   
+                            <input type="text" placeholder = 'no. of hours' ng-model = 'employee.intern_hours' is-number maxlength = "3" size = "8" ng-show="show_hours" required/>   
                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.level.$error.required">Level is required.</span>
                     </td>
                 </tr>

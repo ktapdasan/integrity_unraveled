@@ -147,6 +147,7 @@ EOT;
                     department as departments_pk_arr,
                     (select array_to_string(array_agg(department), ', ') from departments where pk = any(employees.department)) as department,
                     date_created,
+                    details, 
                     archived
                 from employees
                 left join groupings on (groupings.employees_pk = employees.pk)
@@ -339,7 +340,7 @@ EOT;
 
     public function timelogs($data){
 
-        print_r ($data);
+      
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
@@ -474,7 +475,8 @@ EOT;
                     (select level_title from levels where pk = employees.levels_pk) as level,
                     array_to_string(department, ',') as departments_pk,
                     department as departments_pk_arr,
-                    (select array_to_string(array_agg(department), ' & ') from departments where pk = any(employees.department)) as department
+                    (select array_to_string(array_agg(department), ' & ') from departments where pk = any(employees.department)) as department,
+
                     
                 from employees
                 where true
@@ -532,11 +534,20 @@ EOT;
         return ClassParent::insert($sql);
     }
 
-    public function create($data){
+    public function create($extra){
         foreach($extra as $k=>$v){
-            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+            if(is_string($v)){
+                $extra[$k] = pg_escape_string(trim(strip_tags($v)));    
+            }
+            else {
+                $extra[$k] = $v;
+            }
         }
+
         $this->department = "{".$this->department."}";
+
+        $array = $extra['details'];
+        $details = json_encode($array);
 
         $sql = "begin;";
         $sql .= <<<EOT
@@ -550,7 +561,8 @@ EOT;
                     email_address,
                     titles_pk,
                     department,
-                    levels_pk
+                    levels_pk,
+                    details
                 )
                 values
                 (
@@ -562,7 +574,9 @@ EOT;
                     '$this->email_address',
                     '$this->titles_pk',
                     '$this->department',
-                    '$this->levels_pk'
+                    '$this->levels_pk',
+                    '$details'
+
                 );
 EOT;
         $sql .= <<<EOT
@@ -586,7 +600,7 @@ EOT;
                 )
                 values
                 (
-                    $this->pk,
+                    currval('employees_pk_seq'),
                     $supervisor_pk
                 )
                 ;
@@ -599,11 +613,17 @@ EOT;
 
     public function update_employees($extra){
         foreach($extra as $k=>$v){
-            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+            if(is_string($v)){
+                $extra[$k] = pg_escape_string(trim(strip_tags($v)));    
+            }
+            else {
+                $extra[$k] = $v;
+            }
         }
-
-        $this->department = "{".$this->department."}";
  
+        $department = '{' . $this->department . '}';
+        $company = json_encode($extra['company']);
+
         $sql = "begin;";
         $sql .= <<<EOT
                 UPDATE employees set
@@ -616,7 +636,8 @@ EOT;
                     email_address,
                     titles_pk,
                     department,
-                    levels_pk
+                    levels_pk,
+                    details
                 )
                 =
                 (
@@ -627,8 +648,10 @@ EOT;
                     '$this->business_email_address',
                     '$this->email_address',
                     $this->titles_pk,
-                    '$this->department',
-                    $this->levels_pk
+                    '$department',
+                    $this->levels_pk,
+                    jsonb_set(details, '{company}', '$company'::jsonb, true)
+
                 )
                 where pk = $this->pk
                 ;

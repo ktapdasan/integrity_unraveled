@@ -821,8 +821,9 @@
                                                 <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}" >
                                                     {{v.level_title}}
                                                 </option>
-                                        </select>   
-                                        <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "10" ng-show="show_hours" required/>   
+                                        </select> 
+
+                                        <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "10" ng-model = "employee.details.company.hours"  ng-show="show_hours" required/>   
                                     </td>
                                 </tr>
                                 <tr>
