@@ -120,7 +120,7 @@ app.controller('Timelogs', function(
     }
 
     $scope.show_timesheet = function(){
-        timesheet();        
+        timesheet();    
     }
 
     function timesheet(){
@@ -146,14 +146,18 @@ app.controller('Timelogs', function(
             $scope.filter.levels_pk = $scope.filter.levels[0].pk;
         }
 
-        console.log ($scope.filter)
         var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
+            $scope.timesheet_data.status = true;
 
+        })  
+        .then(null, function(data){
+            $scope.timesheet_data.status = false;
             
-        })   
+        });
     }
+
 
 
 

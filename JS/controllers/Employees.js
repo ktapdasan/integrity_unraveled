@@ -143,6 +143,7 @@ app.controller('Employees', function(
     }
 
     $scope.delete_employees = function(k){
+
        
        $scope.modal = {
                 title : '',
@@ -165,7 +166,6 @@ app.controller('Employees', function(
             var promise = EmployeesFactory.delete_employees($scope.employees.data[k]);
             promise.then(function(data){
                 
-
                 $scope.archived=true;
 
                 UINotification.success({
@@ -175,7 +175,6 @@ app.controller('Employees', function(
                                         positionY: 'top', positionX: 'right'
                                     });
                 employees();
-                get_supervisor();
 
             })
             .then(null, function(data){
@@ -215,7 +214,6 @@ app.controller('Employees', function(
             var promise = EmployeesFactory.activate_employees($scope.employees.data[k]);
             promise.then(function(data){
                 
-
                 $scope.archived=true;
 
                 UINotification.success({
@@ -380,9 +378,11 @@ app.controller('Employees', function(
         if($scope.filter.level_title.length > 0){
             $scope.filter.levels_pk = $scope.filter.level_title[0].pk;
         }
+
         
         employees();
     }
+    
     function fetch_department(){
         var promise = EmployeesFactory.get_department();
         promise.then(function(data){

@@ -339,25 +339,44 @@ EOT;
     } 
 
     public function timelogs($data){
-
-      
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
-        $where='';
+
+        $lvl=$data[levels_pk];
+        $dept=$data[departments_pk];
+        $posi=$data[titles_pk];
+        $where = "";
+
         if($data['employees_pk']){
             $where .= "and employees_pk = ". $data['employees_pk']; 
         }
 
         
-        if($data['departments_pk']){
+        /* if($data['departments_pk']){
             $where .= "and departments_pk = ". $data['departments_pk']; 
+        }*/
+        if($lvl){
+            $where.=" AND levels_pk = '$lvl'";
+        }else{
+            $where.="";
         }
-        
+        if($dept){
+            $where.=" AND department = '{{$dept}}'";
+        }else{
+            $where.="";
+        }
+        if($posi){
+            $where.=" AND titles_pk = '$posi'";
+        }else{
+            $where.="";
+        }
 
         $datefrom = $data['datefrom'];
         $dateto = $data['dateto'];
+
+
 
         $sql = <<<EOT
                 with Q as
@@ -368,8 +387,8 @@ EOT;
                         (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
                         type,
                         time_log::date as log_date,
-                        time_log::time(0) as log_time,
-                        date_created
+                        time_log::time(0) as log_time
+                        
                     from time_log
                     left join employees on (employees.pk = time_log.employees_pk)
                     where time_log::date between '$datefrom' and '$dateto'
@@ -622,7 +641,8 @@ EOT;
         }
  
         $department = '{' . $this->department . '}';
-        $company = json_encode($extra['company']);
+        $details = json_encode($extra['details']);
+        //$personal = json_encode($extra['personal']);
 
         $sql = "begin;";
         $sql .= <<<EOT
@@ -650,8 +670,7 @@ EOT;
                     $this->titles_pk,
                     '$department',
                     $this->levels_pk,
-                    jsonb_set(details, '{company}', '$company'::jsonb, true)
-
+                    '$details'
                 )
                 where pk = $this->pk
                 ;
