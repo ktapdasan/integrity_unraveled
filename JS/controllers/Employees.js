@@ -20,7 +20,6 @@ app.controller('Employees', function(
     $scope.groupings= {};
 
     $scope.employee = {};
-    $scope.employee.intern_hours = '';
     $scope.employees={};
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
@@ -245,11 +244,11 @@ app.controller('Employees', function(
     $scope.edit_employees = function(k){
         get_supervisors();
 
+       
 
-    
         $scope.employee = $scope.employees.data[k];
-        $scope.employees.data[k].details.company.hours =$scope.employee.intern_hours;
-        
+        $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;
+
         level_changed();
         $scope.modal = {
             title : 'Edit ' + $scope.employees.data[k].first_name,
@@ -283,7 +282,7 @@ app.controller('Employees', function(
             return false;
         }, function(value){
             
-            console.log($scope.employees.data[k]);
+        
             var promise = EmployeesFactory.edit_employees($scope.employees.data[k]);
             promise.then(function(data){
                 
