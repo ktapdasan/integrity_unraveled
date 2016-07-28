@@ -1,3 +1,4 @@
+
 CREATE TABLE levels (
 	pk serial PRIMARY KEY,
 	levels varchar NOT NULL,
