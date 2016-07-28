@@ -63,9 +63,10 @@ EOT;
         }
     $pk = $extra['pk'];
     $status = $extra['status'];
+    $employees_pk=$extra['employees_pk'];
 
-
-         $sql = <<<EOT
+        $sql = 'begin;';
+        $sql .= <<<EOT
                 update leave_statuses set
                     status
                 =
@@ -73,7 +74,25 @@ EOT;
                 where pk = $pk;
                 ;
 EOT;
-
+       
+        $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk        
+                )
+                values
+                (    
+                    'Leave $status',
+                    'leave_filed',
+                    $pk,
+                    $employees_pk
+                )
+                ;
+EOT;
+        $sql .= "commit;";
         return ClassParent::insert($sql);
 
     }

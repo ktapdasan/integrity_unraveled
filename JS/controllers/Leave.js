@@ -185,7 +185,7 @@ app.controller('Leave', function(
 
     
     $scope.show_approve = function(k){
-       
+       $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to approve leave filed?',
@@ -233,8 +233,8 @@ app.controller('Leave', function(
     }
 
     $scope.show_disapprove = function(k){
-       
-       $scope.modal = {
+        $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
+        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to disapprove leave filed?',
                 save : 'Yes',

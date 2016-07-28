@@ -71,9 +71,8 @@ app.controller('Timelogs', function(
 
         today = yyyy+'-'+mm+'-'+dd;
 
-        //$scope.filter.datefrom = getMonday(new Date());
-        $scope.filter.datefrom = yyyy+'-'+mm+'-01';
-        $scope.filter.dateto = today;
+        $scope.filter.datefrom = new Date(yyyy+'-'+mm+'-01'); //getMonday(new Date());
+        $scope.filter.dateto = new Date();
 
     }
 
@@ -124,6 +123,24 @@ app.controller('Timelogs', function(
     }
 
     function timesheet(){
+
+
+
+        var datefrom = new Date($scope.filter.datefrom);
+        var dd = datefrom.getDate();
+        var mm = datefrom.getMonth()+1; //January is 0!
+        var yyyy = datefrom.getFullYear();
+
+        $scope.filter.newdatefrom=yyyy+'-'+mm+'-01';
+
+        var dateto = new Date($scope.filter.dateto);
+        var Dd = dateto.getDate();
+        var Mm = dateto.getMonth()+1; //January is 0!
+        var Yyyy = dateto.getFullYear();
+
+        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+
+
         $scope.filter.pk = $scope.profile.pk;
         
         delete $scope.filter.employees_pk;

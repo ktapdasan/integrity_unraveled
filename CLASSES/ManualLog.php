@@ -61,9 +61,10 @@ EOT;
         }
     $pk = $extra['pk'];
     $status = $extra['status'];
+    $employees_pk=$extra['employees_pk'];
 
-
-         $sql = <<<EOT
+         $sql = 'begin;';
+         $sql .= <<<EOT
                 update manual_log_statuses set
                 
                     status
@@ -74,6 +75,24 @@ EOT;
                 ;
 EOT;
 
+         $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk        
+                )
+                values
+                (    
+                    'Manual log filed $status',
+                    'manual_log',
+                    $pk,
+                    $employees_pk
+                )
+                ;
+EOT;
+        $sql .= "commit;";
         return ClassParent::insert($sql);
 
     }

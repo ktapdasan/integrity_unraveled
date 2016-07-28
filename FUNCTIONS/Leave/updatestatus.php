@@ -15,6 +15,7 @@ $class = new Leave(
 
 $extra['pk'] = $_POST['pk'];
 $extra['status'] = $_POST['status'];
+$extra['employees_pk'] = $_POST['employees_pk'];
 $data = $class->update($extra);
 
 

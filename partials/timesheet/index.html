@@ -12,6 +12,7 @@
                 <h3 class="animated fadeInLeft">Timesheet</h3>
                 <p class="animated fadeInDown">
                     <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    <a href="#/timesheet">My Timesheet</a> <span class="fa-angle-right fa"></span> 
                     Timesheet
                 </p>
             </div>
@@ -24,8 +25,8 @@
                     <option value="Date Submitted">Date Submitted</option>
                     <option value="Date Received">Date Received</option>
                 </select>
-                Date From: <input ng-model="filter.datefrom" type="text" id="datefrom" style="width:120px;"/>
-                Date To: <input ng-model="filter.dateto" type="text" id="dateto" style="width:120px;"/>
+                Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
 
                 <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()">
                 <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_timesheet()">
@@ -68,7 +69,12 @@
                                 {{v.logout}}
                             </span>
                         </td>
-                        <td>{{v.hrs}}</td>                
+                        <td>{{v.hrs}}</td> 
+                        <tr ng-if="!timesheet_data.status" style= "text-align: center;">
+                        <td colspan = "9">No Data Found</td>
+                    </tr>
+   
+                    </tr>               
                     </tr>
                 </tbody>
             </table>

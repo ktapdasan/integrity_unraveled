@@ -280,8 +280,8 @@ EOT;
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
-        $datefrom = $data['datefrom'];
-        $dateto = $data['dateto'];
+        $datefrom = $data['newdatefrom'];
+        $dateto = $data['newdateto'];
         $pk = $data['pk'];
 
 
@@ -396,8 +396,8 @@ EOT;
             $where.="";
         }
 
-        $datefrom = $data['datefrom'];
-        $dateto = $data['dateto'];
+        $datefrom = $data['newdatefrom'];
+        $dateto = $data['newdateto'];
 
 
 

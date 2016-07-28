@@ -72,8 +72,8 @@ app.controller('Timesheet', function(
 
         today = yyyy+'-'+mm+'-'+dd;
 
-        $scope.filter.datefrom = yyyy+'-'+mm+'-01'; //getMonday(new Date());
-        $scope.filter.dateto = today;
+        $scope.filter.datefrom = new Date(yyyy+'-'+mm+'-01'); //getMonday(new Date());
+        $scope.filter.dateto = new Date();
 
     }
 
@@ -143,12 +143,38 @@ app.controller('Timesheet', function(
     }
 
     function timesheet(){
+
+
+        var datefrom = new Date($scope.filter.datefrom);
+        var dd = datefrom.getDate();
+        var mm = datefrom.getMonth()+1; //January is 0!
+        var yyyy = datefrom.getFullYear();
+
+        $scope.filter.newdatefrom=yyyy+'-'+mm+'-01';
+
+        var dateto = new Date($scope.filter.dateto);
+        var Dd = dateto.getDate();
+        var Mm = dateto.getMonth()+1; //January is 0!
+        var Yyyy = dateto.getFullYear();
+
+        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+
         $scope.filter.pk = $scope.profile.pk;
 
         var promise = TimelogFactory.timesheet($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
-        })
+            $scope.timesheet_data.status = true;
+
+        })  
+        .then(null, function(data){
+            $scope.timesheet_data.status = false;
+            
+        });
+
+       
+
+
     }
 
     $scope.export_timesheet = function(){
@@ -297,7 +323,7 @@ app.controller('Timesheet', function(
 
 
     $scope.show_approve = function(k){
-       
+        $scope.manual_logs["employees_pk"] = $scope.profile.pk;
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to approve manual log?',
@@ -349,7 +375,7 @@ app.controller('Timesheet', function(
     }
 
     $scope.show_disapprove = function(k){
-       
+        $scope.manual_logs["employees_pk"] = $scope.profile.pk; 
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to disapprove manual log?',
