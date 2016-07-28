@@ -46,11 +46,10 @@ app.controller('Department', function(
     } 
 
 
-
    /* function get_department(){
         var promise = DepartmentsFactory.get_department();
         promise.then(function(data){
-            $scope.department.data = data.data.result;
+            $scope.departments.data = data.data.result;
         })
         .then(null, function(data){
             
@@ -60,16 +59,16 @@ app.controller('Department', function(
     
     $scope.edit_department = function(k){
         //$scope.employee = $scope.employees.data[k];
-
+        
         $scope.modal = {
 
             title : 'Edit Department',
             save : 'Apply Changes',
             close : 'Cancel',
-            department : $scope.department.data[k].department,
-            code : $scope.department.data[k].code,
-            archived : $scope.department.data[k].archived,
-            pk: $scope.department.data[k].pk
+            department : $scope.departments.data[k].department,
+            code : $scope.departments.data[k].code,
+            archived : $scope.departments.data[k].archived,
+            pk: $scope.departments.data[k].pk
         };
 
         ngDialog.openConfirm({
@@ -108,8 +107,8 @@ app.controller('Department', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                $scope.department.data[k].department =  $scope.modal.department;
-                $scope.department.data[k].code = $scope.modal.code;
+                $scope.departments.data[k].department =  $scope.modal.department;
+                $scope.departments.data[k].code = $scope.modal.code;
             })
             .then(null, function(data){
                 
@@ -144,7 +143,7 @@ app.controller('Department', function(
         .then(function(value){
             return false;
         }, function(value){
-            var promise = DepartmentsFactory.delete_department($scope.department.data[k]);
+            var promise = DepartmentsFactory.delete_department($scope.departments.data[k]);
             promise.then(function(data){
                 
 

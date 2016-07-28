@@ -98,7 +98,7 @@ app.controller('Dashboard', function(
             
             if(log.type == 'In'){
                 $scope.logtype = "logout";
-
+                $scope.random_hash = log.random_hash;
                 $scope.lastlog = "Your last log in was today " + log.time;
             }
             else {
@@ -114,7 +114,6 @@ app.controller('Dashboard', function(
 
     $scope.submitlog = function(type){
         
-
         var filter = {
             'type' : type,
             'employees_pk' : $scope.profile.pk
@@ -139,6 +138,7 @@ app.controller('Dashboard', function(
                 return false;
             }, function(value){
                 $scope.logbutton = true;
+                filter.random_hash = $scope.random_hash;
                 var promise = TimelogFactory.submit_log(filter);
                 promise.then(function(data){
                     get_last_log_today();
@@ -235,9 +235,9 @@ app.controller('Dashboard', function(
 
     $scope.show_notifs = function(){
             get_notifs();
-         }
+    }
 
-        function get_notifs(){
+    function get_notifs(){
         $scope.read=true;
 
         $scope.notification.data='';
@@ -250,13 +250,11 @@ app.controller('Dashboard', function(
     }
 
      $scope.getState = function (number){
-
-      if(number === 0){
-               return '0s';
-      }else{
-        return '0.5s';
-      }
-
+        if(number === 0){
+            return '0s';
+        }else{
+            return '0.5s';
+        }
     };
 
 

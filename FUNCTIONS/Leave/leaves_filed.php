@@ -30,7 +30,7 @@ $class = new Leave(
 
 $data = $class->leaves_filed();
 
-header("HTTP/1.0 404 User .");
+header("HTTP/1.0 404 Internal Error");
 if($data['status']){
 	header("HTTP/1.0 200 OK");
 }

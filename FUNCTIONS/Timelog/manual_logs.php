@@ -30,7 +30,7 @@ $class = new ManualLog(
 
 $data = $class-> fetch();
 
-header("HTTP/1.0 404 User .");
+header("HTTP/1.0 404 User Internal Server Error");
 if($data['status']){
 	header("HTTP/1.0 200 OK");
 }

@@ -5,15 +5,15 @@ class LeaveTypes extends ClassParent {
     var $pk = NULL;
     var $name = NULL;
     var $code = NULL;
-    var $archived = NULL;
     var $days= NULL;
+    var $archived = NULL;
 
     public function __construct(
-                                $pk='',
-                                $name='',
-                                $code='',
-                                $archived = '',
-                                $days= ''
+                                    $pk,
+                                    $name,
+                                    $code,
+                                    $days,
+                                    $archived
                                 )
         {
         

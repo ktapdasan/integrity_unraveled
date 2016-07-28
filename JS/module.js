@@ -22,12 +22,12 @@ app.config(function($routeProvider){
         controller: 'Timesheet',
         templateUrl: 'partials/timesheet/index.html'
     })
-    .when('/timesheet/manual_logs_filed',
+    .when('/timesheet/manual_logs',
     {
         controller: 'Timesheet',
         templateUrl: 'partials/timesheet/manual_logs_filed.html'
     })
-    .when('/timesheet/leaves_filed',
+    .when('/timesheet/leaves',
     {
         controller: 'Leave',
         templateUrl: 'partials/timesheet/leaves_filed.html'

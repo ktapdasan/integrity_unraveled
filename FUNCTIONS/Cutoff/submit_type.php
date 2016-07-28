@@ -8,38 +8,27 @@ $class = new Cutoff(
                 Null
 			);
 
-$pk = $_POST['status'];
-$a = json_decode($_POST['new_cutoff']);
-//print_r($a->first->from);
-
-$cutoff=array();
-
-$b = $a->from;
-$c = $a->to;
-$d = $a->first->from;
-$e = $a->first->to;
-$f =$a->second->from;
-$g = $a->second->to;
-
-if($pk == 1){
-	$cutoff['cutoff'][0]['from'] = $b;
-	$cutoff['cutoff'][0]['to'] = $c;
+$extra['pk'] = $_POST['status'];
+if($_POST['status'] == 1){
+	$extra['cutoffdate'] = array(
+									"from" => $_POST['start_m'],
+									"to" => $_POST['end_m']
+								);
 }
 else {
-	$cutoff['cutoff'][0]['from'] = $d;
-	$cutoff['cutoff'][0]['to'] = $e;
-	$cutoff['cutoff'][1]['from'] = $f;
-	$cutoff['cutoff'][1]['to'] = $g;	
+	$extra['cutoffdate'] = array(
+									"first" => array(
+														"from" => $_POST['start_bf'],
+														"to" => $_POST['end_bf']
+													),
+									"second" => array(
+														"from" => $_POST['start_bs'],
+														"to" => $_POST['end_bs']
+													)
+								);
 }
 
-
-$extra['cutoffdate'] = $cutoff;
-$extra['pk'] = $pk;
-
-//print_r($extra['cutoffdate']);
-
 $data = $class-> submit_type($extra);
-
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){

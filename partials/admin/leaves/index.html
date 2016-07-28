@@ -28,13 +28,15 @@
             <thead>
                 <tr>
                     <th><font size = 4>Leave Types</font></th>
-                    <th><font size = 4>Days</font></th>
+                    <th><font size = 4>Code</font></th>
+                    <th><font size = 4>Total No. of Days</font></th>
                     <th><font size = 4>Options</font></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;">
                     <td>{{v.name}}</td>
+                    <td>{{v.code}}</td>
                     <td>{{v.days}}</td>
                     <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_leavetype(k)" title="Edit">

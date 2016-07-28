@@ -6,6 +6,7 @@ app.controller('Timesheet', function(
                                         TimelogFactory,
                                         ngDialog,
                                         UINotification,
+                                        CutoffFactory,
                                         md5
   									){
 
@@ -15,10 +16,11 @@ app.controller('Timesheet', function(
     $scope.log = {};
     $scope.log.time_log = new Date;
 
-    $scope.manual_logs= {};
+    $scope.manual_logs = {};
 
+    $scope.cutoff = {};
 
-    $scope.modal ={};
+    $scope.modal = {};
 
 
     init();
@@ -48,6 +50,7 @@ app.controller('Timesheet', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
+            
             timesheet();
         })   
     } 
@@ -97,6 +100,44 @@ app.controller('Timesheet', function(
         return monday;
     }
 
+    // function fetch_cutoff(){  
+    //     var promise = CutoffFactory.fetch_dates();
+    //     promise.then(function(data){
+    //         $scope.cutoff.data = data.data.result[0];
+    //         $scope.cutoff.data.dates = JSON.parse($scope.cutoff.data.dates);
+    //         console.log($scope.cutoff.data);
+
+    //         var new_date = new Date();
+    //         var dd = new_date.getDate();
+    //         var mm = new_date.getMonth()+1; //January is 0!
+    //         var yyyy = new_date.getFullYear();
+
+    //         if($scope.cutoff.data.cutoff_types_pk == "1"){
+    //             // if(){
+                
+    //             // }
+    //             // $scope.filter.datefrom = yyyy+'-'+mm+'-'+
+    //         }
+    //         else {
+    //             if(dd > parseInt($scope.cutoff.data.dates.first.from) && dd < parseInt($scope.cutoff.data.dates.first.from)){
+    //                 console.log($scope.cutoff.data.dates.first);
+    //                 $scope.filter.datefrom = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.first.from);
+    //                 $scope.filter.dateto = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.first.to);
+    //             }
+    //             else {
+    //                 $scope.filter.datefrom = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.second.from);
+    //                 $scope.filter.dateto = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.second.to);
+    //             }
+    //         }
+         
+    //         timesheet();
+    //     })
+    //     .then(null, function(data){
+
+    //         timesheet();
+    //     });
+    // }
+
     $scope.show_timesheet = function(){
         timesheet();
     }
@@ -116,13 +157,14 @@ app.controller('Timesheet', function(
 
     $scope.savelog = function(k){
        
-       $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to deactivate this employee?',
-                save : 'Deactivate',
-                close : 'Cancel'
-            };
-       ngDialog.openConfirm({
+        $scope.modal = {
+                        title : '',
+                        message: 'Are you sure you want to deactivate this employee?',
+                        save : 'Deactivate',
+                        close : 'Cancel'
+                    };
+       
+        ngDialog.openConfirm({
             template: 'ConfirmLogModal',
             className: 'ngdialog-theme-plain',
             
@@ -157,13 +199,9 @@ app.controller('Timesheet', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-            });         
-
-                            
+            });                 
         });
     }
-
-
         
     $scope.open_manual_log = function(type, key){
         $scope.log.reason = '';
@@ -249,6 +287,7 @@ app.controller('Timesheet', function(
         promise.then(function(data){
             $scope.manual_logs.status = true;
             $scope.manual_logs.data = data.data.result;
+            console.log($scope.manual_logs.data);
         }) 
         .then(null, function(data){
             $scope.manual_logs.status = false;

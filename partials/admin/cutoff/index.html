@@ -24,9 +24,7 @@
     <div class="panel">
         <div style="padding-left: 100px;"><h4>
                 <select ng-model="filter.status" ng-change= "show_type()">
-                    <option ng-repeat="(k, v) in cutofftypes.data" style="cursor:pointer;" value="{{v.pk}}">
-                    {{v.type}}
-                    </option>
+                    <option ng-repeat="(k, v) in cutofftypes.data" style="cursor:pointer;" value="{{v.pk}}">{{v.type}}</option>
                  </select>
         </div>
         <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayM"><h4>
@@ -38,16 +36,12 @@
                     <tr>
                         <td>
                             <select ng-model = "filter.start_m">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
-                                    {{k}}
-                                </option>
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
                         </td>
                         <td> 
                             <select ng-model = "filter.end_m">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
-                                    {{k}}
-                                </option>
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
                     </tr>
                 </table>
@@ -61,31 +55,23 @@
                     <tr>
                         <td>
                             <select ng-model = "filter.start_bf">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
-                                    {{k}}
-                                </option>
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
                         </td>
                         <td> 
                             <select ng-model = "filter.end_bf">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
-                                    {{k}}
-                                </option>
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
                     </tr>
                     <tr>
                         <td>
                             <select ng-model = "filter.start_bs">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
-                                    {{k}}
-                                </option>
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
                         </td>
                         <td> 
                             <select ng-model = "filter.end_bs">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;">
-                                    {{k}}
-                                </option>
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
                     </tr>
                 </table>

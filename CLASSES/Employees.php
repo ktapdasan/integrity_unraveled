@@ -216,7 +216,8 @@ EOT;
                     type,
                     time_log::date as date,
                     time_log::time(0) as time,
-                    date_created
+                    date_created,
+                    random_hash
                 from time_log
                 where employees_pk = $pk
                 and time_log::date = '$today'
@@ -232,6 +233,14 @@ EOT;
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
+        if($data['type'] == 'In'){
+            $random_hash = $this->generateRandomString(50);    
+        }
+        else {
+            $random_hash = $data['random_hash'];
+        }
+        
+
         $pk = $data['employees_pk'];
         $type = $data['type'];
 
@@ -239,17 +248,31 @@ EOT;
                 insert into time_log
                 (
                     employees_pk,
-                    type
+                    type,
+                    random_hash
                 )
                 values
                 (
                     $pk,
-                    '$type'
+                    '$type',
+                    '$random_hash'
                 )
                 ;
 EOT;
 
-        return ClassParent::insert($sql);   
+        return ClassParent::insert($sql);
+    }
+
+    private function generateRandomString($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ_-';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 
     public function timesheet($data){

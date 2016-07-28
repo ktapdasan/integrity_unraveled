@@ -63,10 +63,11 @@ EOT;
                $extra[$k] = $v;
             }
             else{
-                    $extra[$k] = pg_escape_string(trim(strip_tags($v)));
-                }
+                $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+            }
         }
-
+        
+        $dates = json_decode($extra['cutoffdate']);
         $sql = 'begin;';
         
         $sql .=<<<EOT

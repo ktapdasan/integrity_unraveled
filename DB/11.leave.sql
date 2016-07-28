@@ -19,22 +19,22 @@ CREATE TABLE leave_types(
 );
 
 INSERT into leave_types 
-(name, code)
+(name, code, days)
 VALUES
 
-('Home Based', 'HB'),
+('Home Based', 'HB', 7),
 
-('Paid Time off', 'PTO'),
+('Paid Time off', 'PTO', 7),
 
-('Birthday Leave', 'BL'),
+('Birthday Leave', 'BL', 7),
 
-('Emergency Leave', 'BL'),
+('Emergency Leave', 'BL', 7),
 
-('Leave Without Pay','LWOP'),
+('Leave Without Pay','LWOP', 7),
 
-('Compensatory Time Off', 'CTO'),
+('Compensatory Time Off', 'CTO', 7),
 
-('Under Time' , 'UT');
+('Under Time' , 'UT', 7);
 
 
 

@@ -7,15 +7,11 @@ $class = new LeaveTypes(
                 Null,
                 $_POST['name'],
                 $_POST['code'],
-                Null,
-                $_POST['days']
-                
+                $_POST['days'],
+                Null
 			);
 
-
 $data = $class-> add();
-
-setcookie('commented', 'commented', time()+43200000, '/');
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
