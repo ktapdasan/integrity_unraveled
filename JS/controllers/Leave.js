@@ -20,7 +20,7 @@ app.controller('Leave', function(
 
     $scope.leaves_filed = {};
 
-   
+    $scope.myemployees={};
    
 
 
@@ -35,6 +35,8 @@ app.controller('Leave', function(
             leavetypes();
             get_profile();
             leaves_filed();
+            
+           
 
 
             
@@ -49,11 +51,15 @@ app.controller('Leave', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
-        })   
+            DEFAULTDATES();
+            fetch_myemployees(); 
+        })  
+
+         
     } 
 
-       
 
+    
     $scope.add_leave = function(k){
     leaves_filed();
     get_profile();
@@ -143,6 +149,8 @@ app.controller('Leave', function(
 
     function leavetypes(){
 
+
+
         $scope.leave_types.status = false;
         $scope.leave_types.data= '';
         
@@ -167,12 +175,55 @@ app.controller('Leave', function(
     }
 
 
+    function DEFAULTDATES(){
+        var today = new Date();
+
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today = yyyy+'-'+mm+'-'+dd;
+
+        
+        $scope.filter.datecreated = new Date();
+
+    }
+
+    function getMonday(d) {
+        var d = new Date(d);
+        var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+
+        var new_date = new Date(d.setDate(diff));
+        var dd = new_date.getDate();
+        var mm = new_date.getMonth()+1; //January is 0!
+        var yyyy = new_date.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        var monday = yyyy+'-'+mm+'-'+dd;
+
+        return monday;
+    }
+
+
     function leaves_filed() {
 
-        $scope.leaves_filed.status = false;
-        $scope.leaves_filed.data= {};
-    
-        
+       
         var promise = LeaveFactory.leaves_filed($scope.filter);
         promise.then(function(data){
             $scope.leaves_filed.status = true;
@@ -457,5 +508,112 @@ app.controller('Leave', function(
                         
     });
     }
+
+
+     function fetch_myemployees(){
+        var filter={
+            pk:$scope.profile.pk
+        }
+
+        
+
+        var promise = LeaveFactory.get_myemployees(filter);
+            promise.then(function(data){
+
+                var a = data.data.result;
+                $scope.myemployees=[];
+                for(var i in a){
+                    $scope.myemployees.push({
+                                                pk: a[i].pk,
+                                                name: a[i].myemployees,
+                                                ticked: false
+                                            });
+                }
+                
+
+            })
+
+        .then(null, function(data){
+            
+        });
+    }
        
+
+    $scope.show_myemployees = function(){
+        list();        
+    }
+
+    function list(){
+       var filter={};
+
+
+       // $scope.leaves_filed.status = false;
+       //  $scope.leaves_filed.data= {};
+
+       //  var datecreated = new Date($scope.filter.datecreated);
+       //  var dd = datecreated.getDate();
+       //  var mm = datecreated.getMonth()+1; //January is 0!
+       //  var yyyy = datecreated.getFullYear();
+
+       //  $scope.filter.newdatecreated=yyyy+'-'+mm+'-01';
+
+       
+
+       //  $scope.leaves_filed.status = false;
+       //  $scope.leaves_filed.data= {};
+       
+
+       if($scope.filter.myemployees!== 'undefined'){
+        filter.employees_pk= $scope.filter.myemployees[0].pk
+       }
+
+       
+
+       var promise = LeaveFactory.myemployees(filter);
+
+       promise.then(function(data){
+
+            $scope.leaves_filed.data=data.data.result;
+            $scope.leaves_filed.status=true;
+
+
+       })
+        .then(null,function(data){
+            $scope.leaves_filed.status=false;
+        });
+
+
+        
+    }
+
+
+   
+   
+
+    // $scope.show_myemployees = function(){
+
+    //    myemployees();
+    // }
+
+    // function myemployees(){
+        
+    //     $scope.filter.archived = 'false';
+
+    //          $scope.myemployees.status = false;
+    //           $scope.myemployees.data = {};
+
+    //     var promise = LeaveFactory.myemployees($scope.filter);
+    //     promise.then(function(data){
+    //         $scope.myemployees.status = true;
+    //         $scope.myemployees.data = data.data.result;
+            
+    //     })
+    //     .then(null, function(data){
+    //         $scope.myemployees.status = false;
+    //     });
+
+    // }
+
+
+
 });

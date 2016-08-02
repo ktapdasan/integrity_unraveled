@@ -19,6 +19,30 @@
         </div>
     </div>
 
+                <h4>
+
+                Date Created: <input ng-model="filter.datecreated" type="date" id="datecreated" style="width:165px;"/>
+
+                <br>
+
+                   <label style="float:left;font-size: 15px;">Select an Employee</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="myemployees"
+                        output-model="filter.myemployees"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px; float:left;"
+                        max-height="200px" 
+
+                            >
+                    </div>
+                    
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="margin-left:-110px;margin-top: 48px;">
+                </h4>
+
     <div class="responsive-table">
         <table id="datatables-example" width="70%" cellspacing="0">
             <thead>
@@ -45,7 +69,10 @@
                             <input type= "button" ng-hide = "rejected" ng-click = "show_disapprove(k)" value = "Disapprove"/> 
                         </div>
                     </td>
-                </tr>        
+                </tr> 
+                <tr ng-if="!leaves_filed.status" style= "text-align: center;">
+                        <td colspan = "9">No Data Found</td>
+                    </tr>       
             </tbody>
         </table>
     </div>

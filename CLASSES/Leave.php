@@ -10,6 +10,7 @@ class Leave extends ClassParent {
     var $date_created = NULL;
     var $reason = NULL;
     var $archived = NULL;
+    var $employees = NULL;
 
     public function __construct(
                                 $pk='',
@@ -19,7 +20,8 @@ class Leave extends ClassParent {
                                 $date_ended= '',
                                 $date_created = '',
                                 $reason = '',
-                                $archived = ''
+                                $archived = '',
+                                $employees=''
                                 )
         {
         
@@ -168,6 +170,58 @@ EOT;
 
         return ClassParent::insert($sql);
     }
+
+
+    public function get_myemployees($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $pk=$data['pk'];
+
+       
+        
+        $sql = <<<EOT
+                select 
+                    employees_pk as pk,
+                (select first_name||' '||last_name from employees where pk = groupings.employees_pk) as myemployees
+                from groupings
+                where supervisor_pk = $pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+
+    public function myemployees($data){
+        $where="";
+        
+        if($_POST['employees_pk']){
+            $where .="where employees_pk=".$_POST['employees_pk'];
+        }
+        
+        $sql = <<<EOT
+                select 
+                (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                (select name from leave_types where pk = leave_types_pk) as leave_type,
+                (select status from leave_statuses where pk = leave_filed.pk) as status,
+                date_created:: date as datecreated,
+                date_started:: date as datestarted,
+                date_ended:: date as dateended
+                
+                from leave_filed
+                $where
+                ;
+
+
+                
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+
+
 }
 
 ?>
