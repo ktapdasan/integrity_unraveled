@@ -201,6 +201,57 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
+    factory.show_managementmanuallogs = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/managementmanuallogs.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.get_myemployees = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/get_myemployees.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.myemployees_manual_logs= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/myemployees_manual_logs.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     return factory;
 
 

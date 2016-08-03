@@ -126,6 +126,30 @@ EOT;
 
         return ClassParent::insert($sql);
     }
+
+    public function get_mydepartment($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $str=$data['searchstring'];
+
+        if ($str){
+            $where = " AND (department ILIKE '$str%')";
+        }
+        
+        $sql = <<<EOT
+                select 
+                    pk,
+                    department
+                from departments
+                where archived = false
+                $where 
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
 }
 
 ?>
