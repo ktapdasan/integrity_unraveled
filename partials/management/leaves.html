@@ -57,7 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
+                <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;" ng-if="leaves_filed.status">
                     <td>{{v.name}}</td>
                     <td>{{v.leave_type}}</td>
                     <td>{{v.datestarted}}</td>
@@ -75,7 +75,7 @@
                 </tr> 
                 <tr ng-if="!leaves_filed.status" style= "text-align: center;">
                         <td colspan = "9">No Data Found</td>
-                    </tr>       
+                    </tr> 
             </tbody>
         </table>
     </div>

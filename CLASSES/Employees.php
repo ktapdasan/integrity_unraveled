@@ -798,4 +798,5 @@ select
                         and Q.log_date = logs.log_date and Q.type = 'In'
                     ) as log_time,
 */
+
 ?>

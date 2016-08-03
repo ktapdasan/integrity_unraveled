@@ -89,7 +89,7 @@ app.config(function($routeProvider){
     })
     .when('/management/manual_logs',
     {
-        controller: 'Timesheet',
+        controller: 'Management_manual_logs',
         templateUrl: 'partials/management/manual_logs.html'
     })
     .otherwise(

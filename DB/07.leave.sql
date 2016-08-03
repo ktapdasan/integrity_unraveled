@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream:DB/07.leave.sql
 create table leave_types
 (
+=======
+CREATE TABLE leave_types(
+>>>>>>> Stashed changes:DB/11.leave.sql
 	pk serial primary key,
 	name text not null,
 	code text not null,
@@ -25,6 +29,21 @@ VALUES
 ('Compensatory Time Off', 'CTO', 7),
 
 ('Under Time' , 'UT', 7);
+
+CREATE TABLE leave_filed (
+	pk serial primary key,
+	employees_pk int references employees(pk),
+	leave_types_pk int references leave_types(pk),
+	date_started timestamptz NOT NULL,
+	date_ended timestamptz NOT NULL,
+	date_created timestamptz default now(),
+	reason text NOT NULL,
+	archived boolean default false
+);
+
+ALTER TABLE leave_filed owner to chrs;
+
+
 
 
 CREATE TABLE leave_filed (

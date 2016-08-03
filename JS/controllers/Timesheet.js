@@ -15,7 +15,7 @@ app.controller('Timesheet', function(
     $scope.timesheet_data = [];
     $scope.log = {};
     $scope.log.time_log = new Date;
-
+   
     $scope.manual_logs = {};
 
     $scope.cutoff = {};
@@ -33,6 +33,7 @@ app.controller('Timesheet', function(
 
             get_profile();
             manual_logs();
+            
 
             
         })
@@ -45,15 +46,39 @@ app.controller('Timesheet', function(
         var filters = { 
             'pk' : $scope.pk
         };
-
+        
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
-            
+            fetch_myemployees();
             timesheet();
         })   
     } 
+    function fetch_myemployees(){
+       $scope.filter.pk = $scope.profile.pk;
+        console.log($scope.filter);
+        var promise = TimelogFactory.get_myemployees($scope.filter);
+        promise.then(function(data){
+        
+            var a = data.data.result;
+            $scope.myemployees=[];
+            for(var i in a){
+                $scope.myemployees.push({
+                                            pk: a[i].pk,
+                                            name: a[i].myemployees,
+                                            ticked: false
+                                        });
+            }
+            console.log($scope.myemployees);
+        })
+        
+
+        .then(null, function(data){
+            
+        });
+    }
+
 
     function DEFAULTDATES(){
         var today = new Date();
@@ -176,6 +201,27 @@ app.controller('Timesheet', function(
 
 
     }
+
+    $scope.show_myemployees = function(){
+        myemployees();    
+    }
+
+    function myemployees() {
+        $scope.manual_logs.status = false;
+        $scope.manual_logs.data= {};
+        
+    
+        var promise = TimelogFactory.myemployees($scope.filter);
+        promise.then(function(data){
+            $scope.manual_logs.data = data.data.result;
+            $scope.manual_logs.status = true;
+        }) 
+        .then(null, function(data){
+            $scope.manual_logs.status = false;
+        });
+    
+    }
+
 
     $scope.export_timesheet = function(){
         window.open('./FUNCTIONS/Timelog/timesheet_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
@@ -313,7 +359,6 @@ app.controller('Timesheet', function(
         promise.then(function(data){
             $scope.manual_logs.status = true;
             $scope.manual_logs.data = data.data.result;
-            console.log($scope.manual_logs.data);
         }) 
         .then(null, function(data){
             $scope.manual_logs.status = false;
@@ -425,6 +470,5 @@ app.controller('Timesheet', function(
             });                                  
         });
     }
-
-
+    
 });

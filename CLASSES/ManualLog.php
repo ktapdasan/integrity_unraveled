@@ -13,7 +13,7 @@ class ManualLog extends ClassParent {
 
     public function __construct(    
                                     $pk ,
-                                    $employees_pk ,
+                                    $employees_pk,
                                     $time_log ,
                                     $reason,
                                     $date_created,
@@ -165,6 +165,54 @@ EOT;
         return ClassParent::insert($sql);   
 
     }
+
+    public function employees_manual_logs($data)
+    {
+        $where = "";
+        if($this->employees_pk){
+            $where .= "and employees_pk = ".$this->employees_pk;
+        }
+        $datefrom = $data['datefrom'];
+        $dateto = $data['dateto'];
+        $sql = <<<EOT
+                select
+                    pk, 
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    time_log :: time as time,
+                    date_created::date as datecreated,
+                    type,
+                    (select status from manual_log_statuses where pk = manual_log.pk) as status
+                from manual_log
+                where date_created::date between '$datefrom' and '$dateto'
+                $where
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+
+    }
+
+    public function get_myemployees($extra){
+        foreach($data as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $pk = $extra['pk'];
+
+        $sql = <<<EOT
+                select
+                    employees_pk as pk,
+                    (select first_name||' '||last_name from employees where pk = groupings.employees_pk) as myemployees
+                    from groupings
+                    where supervisor_pk = $pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+  
+
 
 
 }

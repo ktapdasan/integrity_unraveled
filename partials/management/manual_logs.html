@@ -16,6 +16,7 @@ visibility: hidden;
 <div id="content2">
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
+
             <div class="col-md-12">
                 <h2 class="animated fadeInLeft">Manual Logs</h2>
                 <p class="animated fadeInDown">
@@ -26,8 +27,35 @@ visibility: hidden;
             </div>
         </div>
     </div>
+    <div class="panel">
+        <div style="padding-left: 20px; padding-top:20px;">
+            <div style="font-size: 18px;">
+                <div style="margin-left:-20px;float:left; margin-right:10px;">
+                    Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                </div>
+                <div style="float:left; margin-right:10px;">
+                    Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
+                </div>
+ <div class="col-md-11" style="padding-top:30px;">
+                 <div style="float:left; margin-top: -10px;margin-right:10px;">
+                    <label style="float:left;font-size: 15px;">Select an Employee</label>
+                    <div
+                        isteven-multi-select
+                        input-model="myemployees"
+                        output-model="filter.myemployees"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px; float:left;"
+                        max-height="200px" 
 
-
+                            >
+                    </div>
+                    </div>
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="float:left;margin:-1.5% 0 0 6%;">
+</div>
+</div>
         <div class="responsive-table">
             <table id="datatables-example" width="80%" cellspacing="0">
                 <thead>
@@ -40,7 +68,7 @@ visibility: hidden;
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;" value = "{{v.pk}}">
+                    <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;" value = "{{v.pk}}" ng-if="manual_logs.status">
                         <td>{{v.name}}</td>
                         <td>Log {{v.type}}</td>                       
                         <td>{{v.datecreated}}</td>
@@ -50,11 +78,14 @@ visibility: hidden;
                                 {{v.status}} 
                             </div>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                <input type= "button" ng-click = "show_approve(k)" value = "Approve" /> 
-                                <input type= "button" ng-hide = "rejected" ng-click = "show_disapprove(k)" value = "Disapprove"/> 
+                                <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
+                                <input type= "button" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
                             </div>
                         </td>
-                    </tr>        
+                    </tr> 
+                    <tr ng-if="!manual_logs.status" style = "text-align: center;">
+                        <td colspan = "10">No Data Found</td>
+                    </tr>       
                 </tbody>
             </table>
         </div>
