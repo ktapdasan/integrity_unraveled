@@ -175,50 +175,7 @@ app.controller('Leave', function(
     }
 
 
-    function DEFAULTDATES(){
-        var today = new Date();
-
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        if(dd<10) {
-            dd='0'+dd
-        } 
-
-        if(mm<10) {
-            mm='0'+mm
-        } 
-
-        today = yyyy+'-'+mm+'-'+dd;
-
-        
-        $scope.filter.datecreated = new Date();
-
-    }
-
-    function getMonday(d) {
-        var d = new Date(d);
-        var day = d.getDay(),
-            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-
-        var new_date = new Date(d.setDate(diff));
-        var dd = new_date.getDate();
-        var mm = new_date.getMonth()+1; //January is 0!
-        var yyyy = new_date.getFullYear();
-
-        if(dd<10) {
-            dd='0'+dd
-        } 
-
-        if(mm<10) {
-            mm='0'+mm
-        } 
-
-        var monday = yyyy+'-'+mm+'-'+dd;
-
-        return monday;
-    }
+    
 
 
     function leaves_filed() {
@@ -539,28 +496,73 @@ app.controller('Leave', function(
     }
        
 
+
+    function DEFAULTDATES(){
+        var today = new Date();
+
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today = yyyy+'-'+mm+'-'+dd;
+
+        
+        $scope.filter.datecreated = new Date();
+
+    }
+
+    function getMonday(d) {
+        var d = new Date(d);
+        var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+
+        var new_date = new Date(d.setDate(diff));
+        var dd = new_date.getDate();
+        var mm = new_date.getMonth()+1; //January is 0!
+        var yyyy = new_date.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        var monday = yyyy+'-'+mm+'-'+dd;
+
+        return monday;
+    }
+
+
+
     $scope.show_myemployees = function(){
         list();        
     }
 
     function list(){
-       var filter={};
+        var filter ={};
 
-
-       // $scope.leaves_filed.status = false;
-       //  $scope.leaves_filed.data= {};
-
-       //  var datecreated = new Date($scope.filter.datecreated);
-       //  var dd = datecreated.getDate();
-       //  var mm = datecreated.getMonth()+1; //January is 0!
-       //  var yyyy = datecreated.getFullYear();
-
-       //  $scope.filter.newdatecreated=yyyy+'-'+mm+'-01';
-
+        $scope.leaves_filed.status = false;
+         $scope.leaves_filed.data={};
        
 
-       //  $scope.leaves_filed.status = false;
-       //  $scope.leaves_filed.data= {};
+
+            // var datecreated = new Date($scope.filter.datecreated);
+            // var dd = datecreated.getDate();
+            // var mm = datecreated.getMonth()+1; //January is 0!
+            // var yyyy = datecreated.getFullYear();
+
+            // $scope.filter.newdatecreated=yyyy+'-'+mm+'-01';
+
        
 
        if($scope.filter.myemployees!== 'undefined'){
