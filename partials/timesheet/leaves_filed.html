@@ -46,7 +46,10 @@
                         <td>{{v.datestarted}}</td>
                         <td>{{v.dateended}}</td>
                         <td>{{v.status}}</td>
-                    </tr>        
+                    </tr>  
+                    <tr ng-if="!leaves_filed.status" style= "text-align: center;">
+                        <td colspan = "9">No Data Found</td>
+                    </tr>         
                 </tbody>
             </table>
         </div>

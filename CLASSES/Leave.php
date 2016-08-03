@@ -194,14 +194,22 @@ EOT;
 
 
     public function myemployees($data){
-        $where="";
-        
-        if($_POST['employees_pk']){
-            $where .="where employees_pk=".$_POST['employees_pk'];
+         foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-        
-        $sql = <<<EOT
+
+        $where="";
+       
+        if($this->employees_pk){
+            $where .="where employees_pk=".$this->employees_pk ;
+        }
+
+        $datefrom = $data['datefrom'];
+         $dateto = $data['dateto'];
+    
+         $sql = <<<EOT
                 select 
+                pk,
                 (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                 (select name from leave_types where pk = leave_types_pk) as leave_type,
                 (select status from leave_statuses where pk = leave_filed.pk) as status,
@@ -210,7 +218,10 @@ EOT;
                 date_ended:: date as dateended
                 
                 from leave_filed
+                
+                
                 $where
+                and date_created::date between '$datefrom' and '$dateto'
                 ;
 
 

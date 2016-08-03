@@ -514,8 +514,8 @@ app.controller('Leave', function(
 
         today = yyyy+'-'+mm+'-'+dd;
 
-        
-        $scope.filter.datecreated = new Date();
+        $scope.filter.datefrom = new Date(yyyy+'-'+mm+'-01'); 
+        $scope.filter.dateto = new Date();
 
     }
 
@@ -556,22 +556,34 @@ app.controller('Leave', function(
        
 
 
-            // var datecreated = new Date($scope.filter.datecreated);
-            // var dd = datecreated.getDate();
-            // var mm = datecreated.getMonth()+1; //January is 0!
-            // var yyyy = datecreated.getFullYear();
+            var datefrom = new Date($scope.filter.datefrom);
+            var dd = datefrom.getDate();
+            var mm = datefrom.getMonth()+1; //January is 0!
+            var yyyy = datefrom.getFullYear();
 
-            // $scope.filter.newdatecreated=yyyy+'-'+mm+'-01';
+            $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
 
-       
+             
+
+            var dateto = new Date($scope.filter.dateto);
+            var dd = dateto.getDate();
+            var mm = dateto.getMonth()+1; //January is 0!
+            var yyyy = dateto.getFullYear();
+
+            $scope.filter.newdateto=yyyy+'-'+mm+'-'+dd;
+
+      
 
        if($scope.filter.myemployees!== 'undefined'){
         filter.employees_pk= $scope.filter.myemployees[0].pk
+        filter.datefrom=$scope.filter.newdatefrom
+        filter.dateto= $scope.filter.newdateto
        }
 
        
 
        var promise = LeaveFactory.myemployees(filter);
+       
 
        promise.then(function(data){
 

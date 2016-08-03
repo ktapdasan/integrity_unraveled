@@ -21,7 +21,8 @@
 
                 <h4>
 
-                Date Created: <input ng-model="filter.datecreated" type="date" id="datecreated" style="width:165px;"/>
+                Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
 
                 <br>
 
@@ -51,6 +52,7 @@
                     <th><font size = 4>Type of Leave</font></th>
                     <th><font size = 4>Start Date</font></th>
                     <th><font size = 4>End Date</font></th>
+                     <th><font size = 4>Created</font></th>
                     <th><font size = 4>Status</font></th>
                 </tr>
             </thead>
@@ -60,6 +62,7 @@
                     <td>{{v.leave_type}}</td>
                     <td>{{v.datestarted}}</td>
                     <td>{{v.dateended}}</td>
+                    <td>{{v.datecreated}}</td>
                     <td> 
                         <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                         {{v.status}} 

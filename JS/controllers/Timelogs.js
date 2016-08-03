@@ -164,6 +164,7 @@ app.controller('Timelogs', function(
         }
 
         var promise = TimelogFactory.timelogs($scope.filter);
+         console.log($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
             $scope.timesheet_data.status = true;
