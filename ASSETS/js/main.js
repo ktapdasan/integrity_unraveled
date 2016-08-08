@@ -333,7 +333,7 @@
         datetime = $('.time h1');
         datetime2 = $('.time p');
         update();
-        setInterval(update, 1000);
+        //setInterval(update, 1000);
     });
 
 

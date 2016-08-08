@@ -14,8 +14,11 @@ $class = new Leave(
 					);
 
 $extra['pk'] = $_POST['pk'];
-$extra['status'] = $_POST['status'];
+//$extra['reason'] = $_POST['reason'];
 $extra['employees_pk'] = $_POST['employees_pk'];
+$extra['created_by'] = $_POST['created_by'];
+$extra['status'] = $_POST['status'];
+
 $data = $class->update($extra);
 
 

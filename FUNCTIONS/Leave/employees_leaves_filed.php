@@ -13,7 +13,7 @@ $class = new Leave(
 						NULL
 					);
 
-$data = $class->leaves_filed();
+$data = $class->employees_leaves_filed($_POST['supervisor_pk']);
 
 header("HTTP/1.0 404 Internal Error");
 if($data['status']){

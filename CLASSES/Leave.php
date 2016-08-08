@@ -10,18 +10,16 @@ class Leave extends ClassParent {
     var $date_created = NULL;
     var $reason = NULL;
     var $archived = NULL;
-    var $employees = NULL;
 
     public function __construct(
-                                $pk='',
-                                $employees_pk = '',
-                                $leave_types_pk= '',
-                                $date_started = '',
-                                $date_ended= '',
-                                $date_created = '',
-                                $reason = '',
-                                $archived = '',
-                                $employees=''
+                                    $pk,
+                                    $employees_pk,
+                                    $leave_types_pk,
+                                    $date_started,
+                                    $date_ended,
+                                    $date_created,
+                                    $reason,
+                                    $archived
                                 )
         {
         
@@ -41,18 +39,70 @@ class Leave extends ClassParent {
 
 
     public function leaves_filed(){
+
+        $where = "";
+        if($this->employees_pk && $this->employees_pk != 'null'){
+            $where .= "and employees_pk = '$this->employees_pk'";
+        }
+
+        if($this->leave_types_pk && $this->leave_types_pk != 'null'){
+            $where .= "and leave_types_pk = '$this->leave_types_pk'";
+        }  
         
         $sql = <<<EOT
                 select
                     pk, 
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
-                    date_created:: date as datecreated,
-                    date_started:: date as datestarted,
-                    date_ended:: date as dateended,
-                    (select status from leave_statuses where pk = leave_filed.pk) as status
+                    date_created::timestamp(0) as date_created,
+                    date_started:: date as date_started,
+                    date_ended:: date as date_ended,
+                    (
+                        select status from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
+                    ) as status
                 from leave_filed
                 where archived = false
+                and date_created::date between '$this->date_started' and '$this->date_ended'
+                $where 
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function employees_leaves_filed($supervisor_pk){
+        $supervisor_pk = pg_escape_string(strip_tags(trim($supervisor_pk)));
+
+        $where = "";
+        if($this->employees_pk && $this->employees_pk != 'null'){
+            $where .= "and employees_pk = '$this->employees_pk'";
+        }
+
+        if($this->leave_types_pk && $this->leave_types_pk != 'null'){
+            $where .= "and leave_types_pk = '$this->leave_types_pk'";
+        }
+
+        $where .= "and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')";
+        
+        $sql = <<<EOT
+                select
+                    pk, 
+                    employees_pk,
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    (select name from leave_types where pk = leave_types_pk) as leave_type,
+                    date_created::timestamp(0) as date_created,
+                    date_started:: date as date_started,
+                    date_ended:: date as date_ended,
+                    (
+                        select status from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
+                    ) as status,
+                    (
+                        select remarks from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
+                    ) as reason
+                from leave_filed
+                where archived = false
+                and date_created::date between '$this->date_started' and '$this->date_ended'
+                $where 
                 ;
 EOT;
 
@@ -60,20 +110,32 @@ EOT;
     }
 
     public function update($extra){
-    foreach($extra as $k=>$v){
+        foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-    $pk = $extra['pk'];
-    $status = $extra['status'];
-    $employees_pk=$extra['employees_pk'];
+
+        $pk             = $extra['pk'];
+        $status         = $extra['status'];
+        $employees_pk   = $extra['employees_pk'];
+        $created_by     = $extra['created_by'];
+        $status         = $extra['status'];
 
         $sql = 'begin;';
         $sql .= <<<EOT
-                update leave_statuses set
-                    status
-                =
-                    '$status'
-                where pk = $pk;
+                insert into leave_status
+                (
+                    leave_filed_pk,
+                    status,
+                    created_by,
+                    remarks
+                )
+                values
+                (    
+                    $pk,
+                    '$status',
+                    $created_by,
+                    'REPLACE THIS BY REASON'
+                )
                 ;
 EOT;
        
@@ -106,6 +168,7 @@ EOT;
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }   
+        
         $employees_pk = $this->employees_pk;
         $leave_types_pk= $this->leave_types_pk;
         $date_started = $this->date_started;
@@ -119,20 +182,34 @@ EOT;
                     employees_pk,
                     leave_types_pk,
                     date_started,
-                    date_ended,
-                    reason
+                    date_ended
                 )
                 values
                 (
-                    '$employees_pk',
-                    '$leave_types_pk',
+                    $employees_pk,
+                    $leave_types_pk,
                     '$date_started',
-                    '$date_ended',
-                    '$reason'
+                    '$date_ended'   
                 )
                 returning pk
                 ;
 EOT;
+        $sql .= <<<EOT
+                insert into leave_status
+                (
+                    leave_filed_pk,
+                    created_by,
+                    remarks
+                )
+                values
+                (    
+                    currval('leave_filed_pk_seq'),
+                    $employees_pk,
+                    '$reason'
+                )
+                ;
+EOT;
+
         $supervisor_pk = $extra['supervisor_pk'];
         $sql .= <<<EOT
                 insert into notifications
@@ -151,20 +228,7 @@ EOT;
                 )
                 ;
 EOT;
-
-        $sql .= <<<EOT
-                insert into leave_statuses
-                (
-                    pk,
-                    status          
-                )
-                values
-                (    
-                    currval('leave_filed_pk_seq'),
-                    'Pending'
-                )
-                ;
-EOT;
+        
         $sql .= "commit;";
         
 

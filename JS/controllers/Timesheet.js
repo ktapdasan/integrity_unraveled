@@ -16,7 +16,7 @@ app.controller('Timesheet', function(
     $scope.log = {};
     $scope.log.time_log = new Date;
    
-    $scope.manual_logs = {};
+    
 
     $scope.cutoff = {};
 
@@ -32,7 +32,7 @@ app.controller('Timesheet', function(
             $scope.pk = data.data[_id];
 
             get_profile();
-            manual_logs();
+            
             
 
             
@@ -351,20 +351,7 @@ app.controller('Timesheet', function(
         }); 
     }
 
-    function manual_logs() {
-        $scope.manual_logs.status = false;
-        $scope.manual_logs.data= {};
     
-        var promise = TimelogFactory.manual_logs($scope.filter);
-        promise.then(function(data){
-            $scope.manual_logs.status = true;
-            $scope.manual_logs.data = data.data.result;
-        }) 
-        .then(null, function(data){
-            $scope.manual_logs.status = false;
-        });
-    
-    }
 
 
     $scope.show_approve = function(k){

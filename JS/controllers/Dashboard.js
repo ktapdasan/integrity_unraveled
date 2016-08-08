@@ -10,6 +10,10 @@ app.controller('Dashboard', function(
                                         UINotification
   									){
 
+
+    $scope.switcher = {};
+    $scope.switcher.main = "";
+
     $scope.profile = {};
     $scope.greetings = "Good Morning";
     $scope.logtype = "login";
@@ -39,6 +43,17 @@ app.controller('Dashboard', function(
         .then(null, function(data){
             window.location = './login.html';
         });
+    }
+
+    $scope.toggle_switcher = function(){
+        if($scope.switcher.main == ""){
+            $scope.switcher.main = "open";
+            $scope.switcher.content = true;
+        }
+        else {
+            $scope.switcher.main = "";   
+            $scope.switcher.content = false;
+        }
     }
 
     function get_profile(){

@@ -123,9 +123,6 @@ app.controller('Timelogs', function(
     }
 
     function timesheet(){
-
-
-
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();
         var mm = datefrom.getMonth()+1; //January is 0!

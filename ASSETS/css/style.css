@@ -1095,7 +1095,7 @@ ul li a:focus {
   .label-add,
   .alert-add,
   .badge-add {
-    margin-left: 350px !important;
+    /*margin-left: 350px !important;*/
     color: #fff !important;
     border: none !important;
     background-color: #f0022a !important;

@@ -242,10 +242,11 @@ app.controller('Employees', function(
     $scope.edit_employees = function(k){
         get_supervisors();
 
-       
-
         $scope.employee = $scope.employees.data[k];
-        $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;
+
+        if($scope.employees.data[k].details){
+            $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;    
+        }
 
         level_changed();
         $scope.modal = {

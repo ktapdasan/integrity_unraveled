@@ -2,7 +2,7 @@ app.factory('LeaveFactory', function($http){
     var factory = {};           
     
     
-    factory.get_leavetypes = function(data){
+    factory.get_leave_types = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Leave/get_leavetypes.php',
             method: 'POST',
@@ -40,8 +40,32 @@ app.factory('LeaveFactory', function($http){
     factory.leaves_filed= function(data){
         var promise = $http({
             url:'./FUNCTIONS/Leave/leaves_filed.php',
-            method: 'GET'
-            
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.employees_leaves_filed= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Leave/employees_leaves_filed.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
         })
 
         return promise;
@@ -134,22 +158,7 @@ app.factory('LeaveFactory', function($http){
     };
 
 
-    factory.get_myemployees = function(data){
-        var promise = $http({
-            url:'./FUNCTIONS/Leave/get_myemployees.php',
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            data : data
-        })
-
-        return promise;
-    };
+    
 
     factory.myemployees = function(data){
         var promise = $http({

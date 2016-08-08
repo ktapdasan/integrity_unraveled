@@ -11,40 +11,58 @@
             <div class="col-md-12">
                 <h2 class="animated fadeInLeft">Leave</h2>
                 <p class="animated fadeInDown">
-                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
                     Management <span class="fa-angle-right fa"></span> 
                     Leave
                 </p>
             </div>
         </div>
     </div>
+    <div style="font-size: 16px; font-weight: bold;">
+        <div style="float:left;">
+            Date From: <input ng-model="filter.date_from" type="date" id="datefrom" style="width:150px; height: 34px;"/>
+            Date To: <input ng-model="filter.date_to" type="date" id="dateto" style="width:150px; height: 34px;"/>
+            
+        </div>
+        <div style="float:left; margin-left:10px;">
+            <div style="float:left; padding-top:5px;">Employees: </div>
+            <div
+                isteven-multi-select
+                input-model="myemployees"
+                output-model="filter.myemployees"
+                button-label="icon name"
+                item-label="icon name maker"
+                tick-property="ticked"
+                selection-mode="single"
+                style="width:250px; float:left;"
+                max-height="200px" 
+                >
+            </div>
+            <div style="clear:both;"></div>
+        </div>
 
-                <h4>
-
-                Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
-                Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
-
-                <br>
-
-                   <label style="float:left;font-size: 15px;">Select an Employee</label><br>
-                    <div
-                        isteven-multi-select
-                        input-model="myemployees"
-                        output-model="filter.myemployees"
-                        button-label="icon name"
-                        item-label="icon name maker"
-                        tick-property="ticked"
-                        selection-mode="single"
-                        style="width:250px; float:left;"
-                        max-height="200px" 
-
-                            >
-                    </div>
-                    
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="margin-left:-110px;margin-top: 48px;">
-                </h4>
-
-    <div class="responsive-table">
+        <div style="float:left; margin-left:10px;">
+            <div style="float:left; padding-top:5px;">Leave Type: </div>
+            <div
+                isteven-multi-select
+                input-model="leave_types"
+                output-model="filter.leave_type"
+                button-label="icon name"
+                item-label="icon name maker"
+                tick-property="ticked"
+                selection-mode="single"
+                style="width:200px; float:left;"
+                max-height="200px" 
+                >
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        
+        <div style="float:left; margin-left:10px;">
+            <input type="button" class="btn btn-primary" value="SEARCH" ng-click="leaves_filed()" />
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="responsive-table" style="margin-top:20px;">
         <table id="datatables-example" width="70%" cellspacing="0">
             <thead>
                 <tr>
@@ -52,7 +70,7 @@
                     <th><font size = 4>Type of Leave</font></th>
                     <th><font size = 4>Start Date</font></th>
                     <th><font size = 4>End Date</font></th>
-                     <th><font size = 4>Created</font></th>
+                    <th><font size = 4>Reason</font></th>
                     <th><font size = 4>Status</font></th>
                 </tr>
             </thead>
@@ -60,16 +78,16 @@
                 <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;" ng-if="leaves_filed.status">
                     <td>{{v.name}}</td>
                     <td>{{v.leave_type}}</td>
-                    <td>{{v.datestarted}}</td>
-                    <td>{{v.dateended}}</td>
-                    <td>{{v.datecreated}}</td>
+                    <td>{{v.date_started}}</td>
+                    <td>{{v.date_ended}}</td>
+                    <td>{{v.reason}}</td>
                     <td> 
                         <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                         {{v.status}} 
                         </div>
                         <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                            <input type= "button" ng-click = "show_approve(k)" value = "Approve" /> 
-                            <input type= "button" ng-hide = "rejected" ng-click = "show_disapprove(k)" value = "Disapprove"/> 
+                            <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
+                            <input type= "button" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
                         </div>
                     </td>
                 </tr> 

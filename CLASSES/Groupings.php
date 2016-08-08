@@ -36,5 +36,18 @@ class Groupings extends ClassParent {
 EOT;
         return ClassParent::get($sql);
     }
+
+    public function fetch_group(){
+        $sql = <<<EOT
+                select
+                    employees_pk,
+                    employees.first_name||' '||employees.last_name as name
+                from groupings
+                left join employees on (groupings.employees_pk = employees.pk)
+                where supervisor_pk = $this->supervisor_pk
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
 }
 ?>
