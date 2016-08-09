@@ -254,7 +254,7 @@ app.controller('Employees', function(
             };
     
        ngDialog.openConfirm({
-            template: 'ConfirmModal',
+            template: 'DeactivateModal',
             className: 'ngdialog-theme-plain',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
