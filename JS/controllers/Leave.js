@@ -22,9 +22,7 @@ app.controller('Leave', function(
 
     $scope.myemployees={};
 
-    $scope.option = {};
-    $scope.option.leaves_interval = {};
-    $scope.option.leaves_interval.type = "Months";
+    
 
     init();
 
@@ -188,6 +186,8 @@ app.controller('Leave', function(
         {
             $scope.filter.archived = 'true';   
         }
+
+        $scope.filter.employees_pk = $scope.profile.pk;
         
         var promise = LeaveFactory.get_leave_types($scope.filter);
         promise.then(function(data){
@@ -210,6 +210,7 @@ app.controller('Leave', function(
     }
 
     $scope.leaves_filed = function(){
+        leave_types();
         leaves_filed();        
     }
 

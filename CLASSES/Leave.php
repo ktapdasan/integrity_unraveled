@@ -31,7 +31,15 @@ class Leave extends ClassParent {
 
         //sanitize
         foreach($fields as $k=>$v){
-            $this->$k = pg_escape_string(trim(strip_tags($v)));
+            if(is_array($v)){
+                foreach($v as $key=>$value){
+                    $v[$key] = pg_escape_string(trim(strip_tags($value)));
+                }
+                $this->$k = $v;
+            }
+            else {
+                $this->$k = pg_escape_string(trim(strip_tags($v)));    
+            }
         }
 
         return(true);
