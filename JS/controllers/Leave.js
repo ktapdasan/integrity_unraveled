@@ -209,7 +209,7 @@ app.controller('Leave', function(
         });
     }
 
-    $scope.delete = function(pk){
+    $scope.delete = function(k){
        
        $scope.modal = {
                 title : '',
@@ -229,10 +229,12 @@ app.controller('Leave', function(
         .then(function(value){
             return false;
         }, function(value){
-            $scope.del_pk = {
-                pkey : pk
+            var filter = {
+                leave_filed_pk : $scope.leaves_filed.data[k].pk,
+                created_by : $scope.profile.pk
             };
-            var promise = LeaveFactory.delete($scope.del_pk);
+
+            var promise = LeaveFactory.delete(filter);
             promise.then(function(data){
                 
                 $scope.archived=false;

@@ -303,6 +303,41 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function delete($info){
+
+        $leave_filed_pk = $info['leave_filed_pk'];
+        $created_by = $info['created_by'];
+
+        $sql = 'begin;';
+        $sql .= <<<EOT
+                UPDATE  leave_filed
+                set archived = True
+                where pk = $this->pk;
+EOT;
+
+        $sql .= <<<EOT
+                insert into leave_status
+                (
+                    leave_filed_pk,
+                    status,
+                    created_by,
+                    remarks
+                )
+                values
+                (
+                    $leave_filed_pk,
+                    'Deleted',
+                    $created_by,
+                    'DELETED'
+                )
+                ;
+EOT;
+
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
+
+    }
+
 
 
 }
