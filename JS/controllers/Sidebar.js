@@ -5,7 +5,7 @@ app.controller('Sidebar', function(
 
     $scope.switcher = {};
     $scope.switcher.main = "";
-
+ 
 
 
     $scope.toggle_switcher = function(){

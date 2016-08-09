@@ -19,7 +19,7 @@
 }
 .selector-toggle {
     position: relative;
-
+ 
 
 }
 
@@ -50,38 +50,28 @@
 
   animation: thumb 1s linear infinite;
   transform-origin: 50% 50%;
-  
-
-
-
 }
 @-webkit-keyframes thumb {
-    /*0%, 100% {-webkit-transform: translateX(0);}
-    10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-8px);}
-    20%, 40%, 60%, 80% {-webkit-transform: translateX(5px);}
-    */
+
+ 
   0% { transform:rotate(-0deg) }
-  5.16149% { transform:rotate(30pxdeg) }
-  6.45161% { transform:rotate(30pxdeg) }
-  11.6149% { transform:rotate(-30pxdeg) }
-  14.90323% { transform:rotate(-30pxdeg) }
-  18.06451% { transform:rotate(30pxdeg) }
-  19.35484% { transform:rotate(30pxdeg) }
-  14.51613% { transform:rotate(-30pxdeg) }
-  25.80645% { transform:rotate(-30pxdeg) }
-  30.96774% { transform:rotate(30pxdeg) }
-  32.25807% { transform:rotate(30pxdeg) }
-  37.41935% { transform:rotate(-30pxdeg) }
-  38.70968% { transform:rotate(-30pxdeg) }
-  43.87097% { transform:rotate(30pxdeg) }
-  48.3871% { transform:rotate(30pxdeg) }
+  5.16149% { transform:rotate(30deg) }
+  6.45161% { transform:rotate(30deg) }
+  11.6149% { transform:rotate(-30deg) }
+  14.90323% { transform:rotate(-30deg) }
+  18.06451% { transform:rotate(30deg) }
+  19.35484% { transform:rotate(30deg) }
+  14.51613% { transform:rotate(-30deg) }
+  25.80645% { transform:rotate(-30deg) }
+  30.96774% { transform:rotate(30deg) }
+  32.25807% { transform:rotate(30deg) }
+  37.41935% { transform:rotate(-30deg) }
+  38.70968% { transform:rotate(-30deg) }
+  43.87097% { transform:rotate(30deg) }
+  48.3871% { transform:rotate(30deg) }
   50% { transform:rotate(0deg) }
   100% { transform:rotate(0deg) }
-/*
-     0%, 100% {-webkit-transform: rotateX(0);}
-    10%, 30%, 50%, 70%, 90% {-webkit-transform: rotate(-10deg);}
-    20%, 40%, 60%, 80% {-webkit-transform: rotate(30pxdeg);}
-      88%,94%      { -webkit-transform: rotateX(0deg); } */
+
     from{color:red;}
     to{color:#3FB6ED;}
        
