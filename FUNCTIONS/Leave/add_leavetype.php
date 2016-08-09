@@ -2,14 +2,19 @@
 require_once('../connect.php');
 require_once('../../CLASSES/LeaveTypes.php');
 
+$details = array(
+					"regularization" => $_POST['regularization'],
+					"staggered" => $_POST['staggered']
+				);
+
 $class = new LeaveTypes(
-	
-                Null,
-                $_POST['name'],
-                $_POST['code'],
-                $_POST['days'],
-                Null
-			);
+			                NULL,
+			                $_POST['name'],
+			                $_POST['code'],
+			                $_POST['days'],
+			                $details,
+			                NULL
+						);
 
 $data = $class-> add();
 

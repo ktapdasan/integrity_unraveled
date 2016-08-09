@@ -69,7 +69,7 @@ app.config(function($routeProvider){
     })
     .when('/admin/leaves',
     {
-        controller: 'Leave',
+        controller: 'Admin_leave',
         templateUrl: 'partials/admin/leaves/index.html'
     })
     .when('/admin/permissions',

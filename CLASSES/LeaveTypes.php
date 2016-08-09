@@ -6,6 +6,7 @@ class LeaveTypes extends ClassParent {
     var $name = NULL;
     var $code = NULL;
     var $days= NULL;
+    var $details = NULL;
     var $archived = NULL;
 
     public function __construct(
@@ -13,6 +14,7 @@ class LeaveTypes extends ClassParent {
                                     $name,
                                     $code,
                                     $days,
+                                    $details,
                                     $archived
                                 )
         {
@@ -25,23 +27,40 @@ class LeaveTypes extends ClassParent {
 
         //sanitize
         foreach($fields as $k=>$v){
-            $this->$k = pg_escape_string(trim(strip_tags($v)));
+            if(is_array($v)){
+                foreach($v as $key=>$value){
+                    $v[$key] = pg_escape_string(trim(strip_tags($value)));
+                }
+                $this->$k = $v;
+            }
+            else {
+                $this->$k = pg_escape_string(trim(strip_tags($v)));    
+            }
         }
 
         return(true);
     }
 
-    public function fetch(){
-       
+    public function fetch($employees_pk){
+        $employees_pk = pg_escape_string(strip_tags(trim($employees_pk)));
 
         $sql = <<<EOT
                 select
                     pk, 
                     name,
                     code,
-                    days
+                    days,
+                    details,
+                    (
+                        select 
+                            count(*) 
+                        from leave_filed 
+                        where leave_filed.leave_types_pk = leave_types.pk 
+                            and leave_filed.employees_pk = $employees_pk
+                            and 'Approved' in (select status from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1)
+                    ) as count
                 from leave_types
-                where archived = false
+                where archived = '$this->archived'
                 order by pk
                 ;
 EOT;
@@ -55,25 +74,28 @@ EOT;
         $code = $this->code;
         $pk = $this->pk;
 
-         $sql = <<<EOT
+        $details = json_encode($this->details);
+
+        $sql = <<<EOT
                 update leave_types set
                 (   
                     name,
                     code,
-                    days
+                    days,
+                    details
                 )
                 =
                 (   
                     '$name',
                     '$code',
-                    $days
+                    $days,
+                    '$details'
                 )
                 where pk = $pk
                 ;
 EOT;
 
         return ClassParent::insert($sql);
-
     }
 
      public function deactivate(){
@@ -93,18 +115,22 @@ EOT;
         $days = $this->days;
         $code = $this->code;
 
+        $details = json_encode($this->details);
+
         $sql = <<<EOT
                 insert into leave_types
                 (   
                     name,
                     code,
-                    days
+                    days,
+                    details
                 )
                 values
                 (
                     '$name',
                     '$code',
-                    $days
+                    $days,
+                    '$details'
                 )
                 ;
 EOT;

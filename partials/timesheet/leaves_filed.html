@@ -3,6 +3,31 @@
 .red {
     color: #ff0000;
 }
+
+.leave-square {
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+
+.leave-square .leave-circle {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #CCC;
+    border-radius: 50%;
+
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    margin-left: 40px;
+    color: #e30000;
+}
+
+.leave-square label {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
 </style>
 
 <div id="content2">
@@ -56,6 +81,13 @@
     <div style="width:100%; height:30px;"></div>
 
     <div class="responsive-table">
+        <div style="width:100%; height:auto;">
+            <div class="leave-square" ng-repeat="(k, v) in leave_types.data">
+                <div class="leave-circle">{{v.days}}</div>
+                <label>{{v.name}}</label>
+            </div> 
+            <div style="clear:both;"></div>
+        </div>
         <table id="datatables-example" width="80%" cellspacing="0">
             <thead>
                 <tr>

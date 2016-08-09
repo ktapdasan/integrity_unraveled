@@ -2731,7 +2731,7 @@ ul li a:focus {
 
 #content2 {
   margin: 0 auto;
-  margin-top: 51px;
+  /*margin-top: 51px;*/
   padding: 0px;
   padding-bottom: 10px;
   /*padding-left: 230px;*/

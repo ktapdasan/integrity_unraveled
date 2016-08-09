@@ -9,3 +9,7 @@
 .ngdialog.ngdialog-theme-plain.custom-widththreefifty .ngdialog-content {
     width: 350px;
 }
+
+.ngdialog.ngdialog-theme-plain.custom-widtheightfifty .ngdialog-content {
+    width: 850px;
+}

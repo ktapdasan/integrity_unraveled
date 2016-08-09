@@ -407,6 +407,7 @@
                             <option name="navigation-side" value="rightside">Right</option>
                         </select>
                     </li>
+                </ul>
             </div>
                 
         </div>
@@ -471,6 +472,7 @@
     <script src="./JS/controllers/Management_leave.js"></script>
     <script src="./JS/controllers/EmployeesPermissions.js"></script>
     <script src="./JS/controllers/Sidebar.js"></script>
+    <script src="./JS/controllers/Admin_leave.js"></script>
     
 
 
@@ -1153,6 +1155,16 @@
                     </th>
                 </tr>
                 <tr>
+                    <td><label style= "font-size:20px;">Duration:</label></td>
+                    <td>
+                        <select>
+                            <option>Whole Day</option>
+                            <option>First Half</option>
+                            <option>Second Half</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         <label style= "font-size:20px; float: left;">Start Date:</label>
                     </td>
@@ -1166,6 +1178,15 @@
                     </td>
                     <td>
                         <input type="date" size = "10" class="form-control" ng-model= "modal.date_ended"  ng-required="true" close-text="Close"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style= "font-size:20px;">Category:</label></td>
+                    <td>
+                        <select>
+                            <option>Paid</option>
+                            <option>Non-paid</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
