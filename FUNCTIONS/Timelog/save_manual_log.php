@@ -2,11 +2,11 @@
 require_once('../connect.php');
 require_once('../../CLASSES/ManualLog.php');
 require_once('../../CLASSES/Groupings.php');
-
+print_r($_POST);
 $class = new ManualLog(	
 						NULL,	
 						$_POST["employees_pk"],
-						$_POST["date_log"] ." ". $_POST["time_log"],
+						$_POST["time_log"],
 						$_POST["reason"],
 						NULL,
 						NULL,
@@ -24,6 +24,7 @@ $sclass = new Groupings(
 					);
 
 $supervisor = $sclass->fetch();
+setcookie('commented', 'commented', time()+43200000, '/');
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){

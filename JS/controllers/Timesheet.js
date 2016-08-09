@@ -275,7 +275,7 @@ app.controller('Timesheet', function(
         });
     }
         
-    $scope.open_manual_log = function(type, key){
+    $scope.add_manual_logs = function(k){
         $scope.log.reason = '';
         $scope.log.time_log = new Date;
 
