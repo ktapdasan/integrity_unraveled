@@ -209,6 +209,57 @@ app.controller('Leave', function(
         });
     }
 
+    $scope.delete = function(pk){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to delete your request',
+                save : 'Delete',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            $scope.del_pk = {
+                pkey : pk
+            };
+            var promise = LeaveFactory.delete($scope.del_pk);
+            promise.then(function(data){
+                
+                $scope.archived=false;
+
+                UINotification.success({
+                                        message: 'You have successfully Deleted your request', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to Delete, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+
+
     $scope.leaves_filed = function(){
         leave_types();
         leaves_filed();        

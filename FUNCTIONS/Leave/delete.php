@@ -1,17 +1,18 @@
 <?php
 require_once('../connect.php');
-require_once('../../CLASSES/LeaveTypes.php');
-
+require_once('../../CLASSES/Leave.php');
 
 $class = new LeaveTypes(
-						$_POST['pk'],
+						$_POST['pkey'],
                         NULL,
                         NULL,
                         NULL,
-                        NULL
+                        NULL,
+                        $_POST['leave_filed_pk'],
+                        $_POST['created_by']
 					);
 
-$data = $class-> deactivate();
+$data = $class-> delete();
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){

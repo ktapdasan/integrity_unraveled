@@ -100,12 +100,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;">
+                <tr ng-repeat="(k, v) in leaves_filed.data track by $index" style="cursor:pointer;">
                     <td>{{v.leave_type}}</td>
                     <td>{{v.date_created}}</td>
                     <td>{{v.date_started}}</td>
                     <td>{{v.date_ended}}</td>
                     <td>{{v.status}}</td>
+                    <td><button ng-click="delete(v.pk)" class="btn btn-primary">Delete</button></td>
                     <td></td>
                 </tr>  
                 <tr ng-if="!leaves_filed.status" style= "text-align: center;">

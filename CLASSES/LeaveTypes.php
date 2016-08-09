@@ -98,17 +98,40 @@ EOT;
         return ClassParent::insert($sql);
     }
 
-     public function deactivate(){
+     public function delete(){
+        $leave_filed_pk = $this->leave_filed_pk;
+        $created_by = $this->created_by;
 
-        $sql = <<<EOT
-                update leave_types 
-                set archived = true
+ 
+$sql = 'begin;';
+         $sql .= <<<EOT
+                update leave_filed 
+                set archived = True
                 where pk = $this->pk;
 EOT;
+       
+        $sql .= <<<EOT
+                 
+        
+        $sql = <<<EOT
+                insert into leave_status
+                (
+                    leave_filed_pk,
+                    created_by
+                )
+                values
+                (
+                    '$leave_filed_pk',
+                    '$created_by'
+                    
+                )
+                where pk = $this->pk
+                ;
+EOT;
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
 
-          return ClassParent::update($sql);
     }
-
 
     public function add(){
         $name = $this->name;
