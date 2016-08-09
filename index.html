@@ -13,7 +13,7 @@
     <!-- plugins -->
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/simple-line-icons.css"/>
-   <!--  <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/> -->
+    <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/>
    <link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
 
     <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog.min.css" >
@@ -190,7 +190,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Timesheet<span class="caret" ></span></a>
                         <ul class="dropdown-menu">  
                             <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')"> Timesheet</a></li>
-                            <!-- <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li> -->
+                            <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li>
                             <li><a style="cursor:pointer;" href="#/timesheet/leaves" ng-click="menuclicked('timesheet')">Leaves</a></li>
                         </ul>
                     </li>
@@ -295,9 +295,11 @@
 
     <div ng-controller="Sidebar">
         <div id="styleSelector" class="{{switcher.main}}">
+            
             <div class="selector-toggle">
-                <a href="javascript:void(0)" ng-click="toggle_switcher()"></a>
-            </div>
+                 
+                <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } "></a>
+                
             <div ng-show="switcher.content">
                 <ul class="nav nav-tabs">
                     <li>
@@ -490,7 +492,6 @@
     <script src="./JS/factories/LevelsFactory.js"></script>  
     <script src="./JS/factories/LeaveFactory.js"></script>  
     <script src="./JS/factories/CutoffFactory.js"></script>  
-    <script src="./JS/factories/ManualLogFactory.js"></script>  
 
 
     <!-- DIRECTIVES -->
@@ -620,49 +621,17 @@
     </script>
 
     <script type="text/ng-template" id="ManualLogModal">
-        <div class="ngdialog-message" >
-            <div>
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-            <div>
-            <table>
-                <tr>
-                <th>
-                    <label style = "font-size:20px;">Type of Manual Log:</label>
-                    <select style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                            <option value="IN"></option>
-                            <option value="IN">IN</option>
-                            <option value="OUT">OUT</option>
-                        </select>
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    <div>
-                        <label style= "font-size:20px; float: left;">Date:</label>
-                        <input type="date" class="form-control" ng-model="log.time.log" ng-required="true" close-text="Close"/>
-                       
-                    </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    <div>
-                    <div label="form-group" ng-class="{'has-error': timepickerForm.time.$invalid}" > 
-                    <label style= "font-size:20px; float: left;">Time:</label>
-                    <input type="text" class="form-control" size="8" ng-model="log.time_log" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/>
-                    </div>
-                    </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style = "font-size:20px;">Reason:</label> 
-                        <textarea ng-model="log.reason" rows ='6' cols ='32' tabindex="1" autofocus required/>
-                    </td>
-                </tr>
-            </table>
+            <div label="form-group" ng-class="{'has-error': timepickerForm.time.$invalid}" > 
+                <label style= "font-size:20px; float: left;">Time:</label>
+                <input type="text" class="form-control" size="8" ng-model="log.time_log" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/>           
+                <label style = "font-size:20px;">Reason:</label> 
+                <textarea ng-model="log.reason" rows ='6' cols ='32' tabindex="1" autofocus required/>
             </div>
+        </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
@@ -1235,24 +1204,20 @@
                 </tr>
                 <tr>
                     <td>
-                     
                         <label style= "font-size:20px; float: left;">Start Date:</label>
                     </td>
                     <td>
                         <input type="date" class="form-control" ng-model="modal.date_started" ng-required="true" close-text="Close"/>
                     </td>
                 </tr>
-                
                 <tr>
                     <td>
-                    
                         <label style= "font-size:20px; float: left;">End Date:</label>
                     </td>
                     <td>
                         <input type="date" size = "10" class="form-control" ng-model= "modal.date_ended"  ng-required="true" close-text="Close"/>
                     </td>
                 </tr>
-                
                 <tr>
                     <td><label style= "font-size:20px;">Category:</label></td>
                     <td>
@@ -1277,7 +1242,6 @@
     </script>
 </body>
 </html>
-
 
 
 
