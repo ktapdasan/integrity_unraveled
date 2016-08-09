@@ -3,7 +3,7 @@ create table attritions (
 	employees_pk int references employees(pk),
 	hr_details jsonb not null,
 	supervisor_details jsonb,
-	created_by int references employees_pk(pk),
+	created_by int references employees(pk),
 	date_created timestamptz default now(),
 	archived boolean default false
 );
@@ -15,8 +15,7 @@ sample hr_details
 {
 	"last_day" : "",
 	"effective_date_of_resignation" : "",
-	"employee_reason" : "",
-	"supervisor_reason" : ""
+	"employee_reason" : ""
 }
 
 sample supervisor_details

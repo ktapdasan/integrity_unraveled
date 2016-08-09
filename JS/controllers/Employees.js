@@ -63,11 +63,60 @@ app.controller('Employees', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+            DEFAULTDATES();
             employees();
             //employees_fetch();
             //list();
         })   
     } 
+
+
+     function DEFAULTDATES(){
+        var today = new Date();
+
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today = yyyy+'-'+mm+'-'+dd;
+
+        $scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
+        $scope.filter.date_to = new Date();
+
+    }
+
+    function getMonday(d) {
+        var d = new Date(d);
+        var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+
+        var new_date = new Date(d.setDate(diff));
+        var dd = new_date.getDate();
+        var mm = new_date.getMonth()+1; //January is 0!
+        var yyyy = new_date.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        var monday = yyyy+'-'+mm+'-'+dd;
+
+        return monday;
+    }
+
+
 
     $scope.show_employees = function(){
 
@@ -142,27 +191,111 @@ app.controller('Employees', function(
         window.open('./FUNCTIONS/Timelog/employees_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
     }
 
+    // $scope.delete_employees = function(k){
+
+       
+    //    $scope.modal = {
+    //             title : '',
+    //             message: 'Are you sure you want to deactivate this employee?',
+    //             save : 'Deactivate',
+    //             close : 'Cancel'
+    //         };
+    //    ngDialog.openConfirm({
+    //         template: 'ConfirmModal',
+    //         className: 'ngdialog-theme-plain',
+            
+    //         scope: $scope,
+    //         showClose: false
+    //     })
+
+        
+    //     .then(function(value){
+    //         return false;
+    //     }, function(value){
+    //         var promise = EmployeesFactory.delete_employees($scope.employees.data[k]);
+    //         promise.then(function(data){
+                
+    //             $scope.archived=true;
+
+    //             UINotification.success({
+    //                                     message: 'You have successfully deactivated an employees account.', 
+    //                                     title: 'SUCCESS', 
+    //                                     delay : 5000,
+    //                                     positionY: 'top', positionX: 'right'
+    //                                 });
+    //             employees();
+
+    //         })
+    //         .then(null, function(data){
+                
+    //             UINotification.error({
+    //                                     message: 'An error occured, unable to deactivate, please try again.', 
+    //                                     title: 'ERROR', 
+    //                                     delay : 5000,
+    //                                     positionY: 'top', positionX: 'right'
+    //                                 });
+    //         });         
+
+                            
+    //     });
+    // }
+
+
+
+
     $scope.delete_employees = function(k){
 
        
        $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to deactivate this employee?',
+                message: 'Deactivate Accounts',
                 save : 'Deactivate',
                 close : 'Cancel'
             };
+    
        ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
-            
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Are you sure you want deactivate?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
             scope: $scope,
             showClose: false
         })
 
         
-        .then(function(value){
+         .then(function(value){
             return false;
         }, function(value){
+            var last_day_work= new Date($scope.modal.last_day_work);
+                var dd = last_day_work.getDate();
+                var mm= last_day_work.getMonth();
+                var yyyy = last_day_work.getFullYear();
+            var effective_date= new Date($scope.modal.effective_date);
+                var DD= effective_date.getDate();
+                var MM = effective_date.getMonth(); 
+                var YYYY = effective_date.getFullYear(); 
+               
+            $scope.modal.last_day_work = yyyy+'-'+mm+'-'+dd;
+            $scope.modal.effective_date = YYYY+'-'+MM+'-'+DD;
+            $scope.modal["pk"] = $scope.profile.pk;
+            $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
+
+            
             var promise = EmployeesFactory.delete_employees($scope.employees.data[k]);
             promise.then(function(data){
                 
@@ -185,11 +318,16 @@ app.controller('Employees', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-            });         
-
+            });             
                             
         });
     }
+
+
+
+
+
+
 
     $scope.activate_employees = function(k){
        

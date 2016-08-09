@@ -518,6 +518,22 @@
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>
 
+    <!-- <script type="text/ng-template" id="ConfirmModal">
+    //     <div class="ngdialog-message" style="width: 100%;">
+    //         <div style="margin-top: -15px;">
+    //             <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+    //         </div>
+    //         <div>
+    //             <h4>{{ modal.message }}</h4>
+    //         </div>
+    //     </div>
+    //     <div class="ngdialog-buttons">
+    //         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+    //         <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+    //     </div>
+       </script>-->
+
+
     <script type="text/ng-template" id="ConfirmModal">
         <div class="ngdialog-message" style="width: 100%;">
             <div style="margin-top: -15px;">
@@ -525,6 +541,33 @@
             </div>
             <div>
                 <h4>{{ modal.message }}</h4>
+
+                <table>
+                <tr>
+                    <td>
+                        <label style= "font-size:20px; float: left;">Last day of Work</label>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" ng-model="modal.last_day_work" ng-required="true" close-text="Close"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style= "font-size:20px; float: left;">Effective Date of Resignation</label>
+                    </td>
+                    <td>
+                        <input type="date" size = "10" class="form-control" ng-model= "modal.effective_date"  ng-required="true" close-text="Close"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style = "font-size:20px;">Reason:</label> 
+                        <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
+                    </td>
+                </tr>
+            </table>
+
+
             </div>
         </div>
         <div class="ngdialog-buttons">
@@ -1161,14 +1204,7 @@
 
     
 
-    <!--
-    -------------------------------------------
-    -------------------------------------------
-    -------------------------------------------
-    -------------------------------------------
-    -------------------------------------------
-    -------------------------------------------
-    -->`
+    
 
     <script type="text/ng-template" id="LeaveModal">
         <div class="ngdialog-message" >
