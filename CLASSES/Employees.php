@@ -725,13 +725,45 @@ EOT;
         return ClassParent::update($sql);
     }
 
-    public function deactivate(){
+    public function deactivate($info,$extra){
 
-        $sql = <<<EOT
-                update employees
-                set archived = True
-                where pk = $this->pk;
+        $hr=json_encode($info);
+        
+        $sql = 'begin;';
+
+        $sql .=<<<EOT
+                insert into attritions
+                (
+                    employees_pk,
+                    hr_details
+                )
+                values
+                (
+                    $this->pk,
+                    '$hr'
+                );
 EOT;
+
+       $supervisor_pk = $extra['supervisor_pk'];
+        $sql .= <<<EOT
+                insert into notifications
+                (   
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk      
+                )
+                values
+                (    
+                    'New attritions filed.',
+                    'attritions',
+                    currval('attritions_pk_seq'),
+                    $supervisor_pk
+                )
+                ;
+EOT;
+
+        $sql .= "commit;";
 
         return ClassParent::update($sql);
     }
