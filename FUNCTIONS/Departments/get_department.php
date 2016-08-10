@@ -20,7 +20,9 @@ $class = new Department(
 						$filters['archived']
 					);
 
-$data = $class->fetch();
+$data = $class->get_departments($_POST);
+print_r($_POST);
+
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){
