@@ -29,8 +29,10 @@ class Department extends ClassParent {
     }
 
     public function fetch(){
-        $department = pg_escape_string(strip_tags(trim($post['get_department'])));
+        //$department = pg_escape_string(strip_tags(trim($post['get_department'])));
 
+        
+        
         $sql = <<<EOT
                 select 
                     pk,
@@ -60,7 +62,7 @@ EOT;
                     pk,
                     department
                 from departments
-                where archived = false
+                where archived = $this->archived
                 $where 
                 order by pk
                 ;

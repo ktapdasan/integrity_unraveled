@@ -8,9 +8,9 @@ app.controller('Department', function(
                                         md5
   									){
 
+    $scope.pk='';
     $scope.filter= {};
     $scope.filter.status= 'Active';
-
     $scope.department={};
     $scope.departments={};
     $scope.modal = {};
@@ -243,12 +243,16 @@ app.controller('Department', function(
 
         $scope.departments.status = false;
         $scope.departments.data= '';
-        if ($scope.filter.status == 'Active'){
+
+        if ($scope.filter.status == 'Active')
+        {
             $scope.filter.archived = 'false';  
         }
-        else {
+        else 
+        {
             $scope.filter.archived = 'true';   
         }
+        console.log($scope.filter);
        
         var promise = DepartmentsFactory.get_department($scope.filter);
         promise.then(function(data){
