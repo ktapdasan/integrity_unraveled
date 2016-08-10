@@ -31,6 +31,8 @@ CREATE TABLE leave_filed (
 	pk serial primary key,
 	employees_pk int references employees(pk),
 	leave_types_pk int references leave_types(pk),
+	duration text not null,
+	category text not null,
 	date_started timestamptz NOT NULL,
 	date_ended timestamptz NOT NULL,
 	date_created timestamptz default now(),
