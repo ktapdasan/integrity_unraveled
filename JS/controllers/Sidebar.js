@@ -5,8 +5,8 @@ app.controller('Sidebar', function(
 
     $scope.switcher = {};
     $scope.switcher.main = "";
- 
 
+    //$scope.stop = true; //how to stop the shaking
 
     $scope.toggle_switcher = function(){
         if($scope.switcher.main == ""){
