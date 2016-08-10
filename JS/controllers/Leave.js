@@ -231,12 +231,15 @@ app.controller('Leave', function(
         }, function(value){
             var filter = {
                 leave_filed_pk : $scope.leaves_filed.data[k].pk,
-                created_by : $scope.profile.pk
+                created_by : $scope.profile.pk,
+                
+
             };
 
             var promise = LeaveFactory.delete(filter);
             promise.then(function(data){
-                
+                $scope.leaves_filed.status = true;
+                $scope.leaves_filed.data = data.data.result;
                 $scope.archived=false;
 
                 UINotification.success({
@@ -245,10 +248,11 @@ app.controller('Leave', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
+                leaves_filed();
 
             })
             .then(null, function(data){
-                
+                $scope.leaves_filed.status = false;
                 UINotification.error({
                                         message: 'An error occured, unable to Delete, please try again.', 
                                         title: 'ERROR', 

@@ -329,7 +329,7 @@ EOT;
                     'Deleted',
                     $created_by,
                     'DELETED'
-                )
+                ) 
                 ;
 EOT;
 

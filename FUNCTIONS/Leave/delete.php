@@ -3,7 +3,7 @@ require_once('../connect.php');
 require_once('../../CLASSES/Leave.php');
 
 $class = new Leave(
-						$_POST['leave_filed_pk'],
+			$_POST['leave_filed_pk'],
                         NULL,
                         NULL,
                         NULL,
@@ -11,11 +11,11 @@ $class = new Leave(
                         NULL,
                         NULL,
                         NULL
-					);
+		);
 $info = array(
-					"leave_filed_pk" => $_POST['leave_filed_pk'],
-					"created_by" => $_POST['created_by']
-				);
+		"leave_filed_pk" => $_POST['leave_filed_pk'],
+		"created_by" => $_POST['created_by']
+		);
 
 $data = $class-> delete($info);
 

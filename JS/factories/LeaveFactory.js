@@ -56,7 +56,7 @@ app.factory('LeaveFactory', function($http){
 
     factory.delete = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Leave/delete.php',
+            url:'./FUNCTIONS/Leave/delete.php', 
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

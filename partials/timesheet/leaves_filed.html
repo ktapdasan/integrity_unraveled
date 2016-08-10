@@ -100,15 +100,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="(k, v) in leaves_filed.data track by $index" style="cursor:pointer;">
+                <tr ng-repeat="(k, v) in leaves_filed.data track by $index" style="cursor:pointer;" ng-if="leaves_filed.status">
                     <td>{{v.leave_type}}</td>
                     <td>{{v.date_created}}</td>
                     <td>{{v.date_started}}</td>
                     <td>{{v.date_ended}}</td>
                     <td>{{v.status}}</td>
-                    <td><button ng-click="delete(k)" class="btn btn-primary">Delete</button></td>
-                    <td></td>
+                    <td>
+                    <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                        {{v.status}} 
+                        </div>
+                        <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                            <button ng-click="delete(k)" class="btn btn-primary">Delete</button> 
+                        </div></td>
                 </tr>  
+
                 <tr ng-if="!leaves_filed.status" style= "text-align: center;">
                     <td colspan = "9">No Data Found</td>
                 </tr>         
