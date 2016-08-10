@@ -23,7 +23,7 @@ app.config(function($routeProvider){
         templateUrl: 'partials/timesheet/index.html'
     })
     /*.when('/timesheet/manual_logs',
-    {
+    { 
         controller: 'Manual_logs',
         templateUrl: 'partials/timesheet/manual_logs_filed.html'
     })*/
