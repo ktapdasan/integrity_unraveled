@@ -63,23 +63,27 @@
         <div style="clear:both;"></div>
     </div>
     <div class="responsive-table" style="margin-top:20px;">
-        <table id="datatables-example" width="70%" cellspacing="0">
+        <table id="datatables-example" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th><font size = 4>Employee Name</font></th>
+                    <th><font size = 4 >Employee Name</font></th>
                     <th><font size = 4>Type of Leave</font></th>
                     <th><font size = 4>Start Date</font></th>
                     <th><font size = 4>End Date</font></th>
+                    <th><font size = 4>Duration</font></th>
+                    <th><font size = 4>Category</font></th>
                     <th><font size = 4>Reason</font></th>
                     <th><font size = 4>Status</font></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;" ng-if="leaves_filed.status">
+                <tr style="width:20px;" ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;" ng-if="leaves_filed.status">
                     <td>{{v.name}}</td>
                     <td>{{v.leave_type}}</td>
                     <td>{{v.date_started}}</td>
                     <td>{{v.date_ended}}</td>
+                    <td>{{v.duration}}</td>
+                    <td>{{v.category}}</td>
                     <td>{{v.reason}}</td>
                     <td> 
                         <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">

@@ -95,6 +95,8 @@
                     <th><font size = 4>Date Filed</font></th>
                     <th><font size = 4>Start Date</font></th>
                     <th><font size = 4>End Date</font></th>
+                    <th><font size = 4>Duration</font></th>
+                    <th><font size = 4>Category</font></th>
                     <th><font size = 4>Status</font></th>
                     <th><font size = 4>Options</font></th>
                 </tr>
@@ -105,6 +107,8 @@
                     <td>{{v.date_created}}</td>
                     <td>{{v.date_started}}</td>
                     <td>{{v.date_ended}}</td>
+                    <td>{{v.duration}}</td>
+                    <td>{{v.category}}</td>
                     <td>{{v.status}}</td>
                     <td>
                     <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
