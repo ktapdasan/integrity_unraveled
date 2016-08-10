@@ -2,9 +2,9 @@ app.factory('NotificationsFactory', function($http){
     var factory = {};           
     
     
-    factory.get_notifs = function(data){
+    factory.get_notifications = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Notifications/get_notifs.php',
+            url:'./FUNCTIONS/Notifications/get_notifications.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -22,7 +22,7 @@ app.factory('NotificationsFactory', function($http){
 
     factory.read_notifs = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Notifications/read_notifs.php',
+            url:'./FUNCTIONS/Notifications/read_notifications.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

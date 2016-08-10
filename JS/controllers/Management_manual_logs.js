@@ -146,7 +146,7 @@ app.controller('Management_manual_logs', function(
         
         var filter = {};
 
-        if($scope.filter.myemployees !== 'undefined'){
+        if($scope.filter.myemployees && $scope.filter.myemployees !== 'undefined'){
             filter.employees_pk = $scope.filter.myemployees[0].pk
             filter.datefrom = $scope.filter.newdatefrom
             filter.dateto = $scope.filter.newdateto

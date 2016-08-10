@@ -3,6 +3,7 @@ require_once('../../CLASSES/ClassParent.php');
 class Notifications extends ClassParent {
 	
     var $pk = NULL;
+    var $employees_pk = NULL;
 	var $notification = NULL;
 	var $table_from = NULL;
 	var $table_from_pk = NULL;
@@ -10,12 +11,13 @@ class Notifications extends ClassParent {
 	var $archived= NULL;
 
 	 public function __construct(
-                                    $pk='',
-                                    $notification='',
-                                    $table_from = '',
-									$table_from_pk = '',
-									$read= '',
-									$archived=''
+                                    $pk,
+                                    $employees_pk,
+                                    $notification,
+                                    $table_from,
+									$table_from_pk,
+									$read,
+									$archived
                                 ){
         
         $fields = get_defined_vars();
@@ -33,14 +35,16 @@ class Notifications extends ClassParent {
     }
 
 	public function fetch(){
-
         $sql = <<<EOT
                 select
                     pk, 
                     notification,
+                    table_from,
+                    table_from_pk,
                     read
-                    from notifications
-                    order by pk
+                from notifications
+                where employees_pk = $this->employees_pk
+                order by pk desc
                 ;
 EOT;
 
@@ -50,7 +54,7 @@ EOT;
     public function read(){  
         $read = $this->read;
         $sql = <<<EOT
-                UPDATE  notifications
+                UPDATE notifications
                 set read = true
                 where pk = $this->pk;
 EOT;

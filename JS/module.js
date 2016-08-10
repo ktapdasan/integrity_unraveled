@@ -6,8 +6,8 @@ var app = angular.module('onload', [
                                     'isteven-multi-select',
                                     'ui-notification',
                                     'ngSanitize',
-                                    'mgcrea.ngStrap'
-                                            
+                                    'mgcrea.ngStrap',
+                                    'angularFileUpload'
                                 ]);
 
 app.config(function($routeProvider){
@@ -91,6 +91,11 @@ app.config(function($routeProvider){
     {
         controller: 'Management_manual_logs',
         templateUrl: 'partials/management/manual_logs.html'
+    })
+    .when('/management/attrition',
+    {
+        controller: 'Management_manual_logs',
+        templateUrl: 'partials/management/attrition.html'
     })
     .otherwise(
     {

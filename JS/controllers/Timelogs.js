@@ -4,7 +4,9 @@ app.controller('Timelogs', function(
                                         EmployeesFactory,
                                         TimelogFactory,
                                         md5,
-                                        UINotification
+                                        UINotification,
+                                        ngDialog,
+                                        FileUploader
   									){
 
     $scope.profile = {};
@@ -16,6 +18,8 @@ app.controller('Timelogs', function(
     $scope.department={};
     $scope.levels={};
 
+    $scope.uploader = {};
+    $scope.uploader.queue = {};
 
     init();
 
@@ -29,7 +33,7 @@ app.controller('Timelogs', function(
             get_positions();
             get_department();
             get_levels();
-
+            employees();
 
             
         })
@@ -48,9 +52,10 @@ app.controller('Timelogs', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
-            employees();
+            employeelist();
+            
             timesheet();
-            employee_list();
+            
         })   
     } 
 
@@ -141,27 +146,26 @@ app.controller('Timelogs', function(
         $scope.filter.pk = $scope.profile.pk;
         
         delete $scope.filter.employees_pk;
-        if($scope.filter.employee.length > 0){
+        if($scope.filter.employee && $scope.filter.employee.length > 0){
             $scope.filter.employees_pk = $scope.filter.employee[0].pk;
         }
 
         delete $scope.filter.departments_pk;
-        if($scope.filter.department.length > 0){
+        if($scope.filter.department && $scope.filter.department.length > 0){
             $scope.filter.departments_pk = $scope.filter.department[0].pk;
         }
 
         delete $scope.filter.titles_pk;
-        if($scope.filter.titles.length > 0){
+        if($scope.filter.titles && $scope.filter.titles.length > 0){
             $scope.filter.titles_pk = $scope.filter.titles[0].pk;
         }
 
         delete $scope.filter.levels_pk;
-        if($scope.filter.levels.length > 0){
+        if($scope.filter.levels && $scope.filter.levels.length > 0){
             $scope.filter.levels_pk = $scope.filter.levels[0].pk;
         }
 
         var promise = TimelogFactory.timelogs($scope.filter);
-         console.log($scope.filter);
         promise.then(function(data){
             $scope.timesheet_data = data.data.result;
             $scope.timesheet_data.status = true;
@@ -172,10 +176,6 @@ app.controller('Timelogs', function(
             
         });
     }
-
-
-
-
 
 
     $scope.export_timesheet = function(){
@@ -200,7 +200,7 @@ app.controller('Timelogs', function(
         $scope.filter.pk = $scope.profile.pk;
         
         delete $scope.filter.employees_pk;
-        if($scope.filter.employee.length > 0){
+        if($scope.filter.employee && $scope.filter.employee.length > 0){
             $scope.filter.employees_pk = $scope.filter.employee[0].pk;
         }
         
@@ -246,7 +246,11 @@ app.controller('Timelogs', function(
     }
 
     function get_department(){
-        var promise = TimelogFactory.get_department();
+        var filter = {
+            archived : 'false'
+        };
+
+        var promise = TimelogFactory.get_department(filter);
         promise.then(function(data){
             var a = data.data.result;
             $scope.department.data=[];
@@ -281,8 +285,121 @@ app.controller('Timelogs', function(
         });
     }
 
+    $scope.upload_excel = function(){
+        $scope.modal = {
+            title : 'Upload Employees Timesheet',
+            save : 'Apply Changes',
+            close : 'Cancel',
+        };
 
-    
+        ngDialog.openConfirm({
+            template: 'UploadModal',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Are you sure you want to apply changes to this employee account?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain'
+                    });
+
+                return nestedConfirmDialog;
+            },
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+            
+        
+            var promise = EmployeesFactory.edit_employees($scope.employees.data[k]);
+            promise.then(function(data){
+                
+
+                $scope.archived=true;
+
+                UINotification.success({
+                                        message: 'You have successfully applied changes to this employee account.', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                employees();
+
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to save changes, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+
+
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'FUNCTIONS/Timelog/upload_employee_time.php'
+    });
+
+    // FILTERS
+
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function(item /*{File|FileLikeObject}*/, options) {
+            return this.queue.length < 10;
+        }
+    });
+
+    // CALLBACKS
+
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        //console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    uploader.onAfterAddingFile = function(fileItem) {
+        //console.info('onAfterAddingFile', fileItem);
+    };
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        //console.info('onAfterAddingAll', addedFileItems);
+    };
+    uploader.onBeforeUploadItem = function(item) {
+        //console.info('onBeforeUploadItem', item);
+    };
+    uploader.onProgressItem = function(fileItem, progress) {
+        //console.info('onProgressItem', fileItem, progress);
+    };
+    uploader.onProgressAll = function(progress) {
+        //console.info('onProgressAll', progress);
+    };
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        //console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+        //console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    uploader.onCancelItem = function(fileItem, response, status, headers) {
+        //console.info('onCancelItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        //console.info('onCompleteItem', fileItem, respsonse, status, headers);
+        //$scope.data.quotationmodal.attachment = response.file;
+        console.log(response);
+    };
+    uploader.onCompleteAll = function() {
+        console.info('onCompleteAll');
+    };
 
 
 });

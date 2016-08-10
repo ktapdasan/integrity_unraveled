@@ -170,7 +170,9 @@ EOT;
                     last_name,
                     email_address,
                     employees_permissions.permission,
-                    (select supervisor_pk from groupings where employees_pk = pk) as supervisor_pk
+                    (select supervisor_pk from groupings where employees_pk = pk) as supervisor_pk,
+                    details,
+                    leave_balances
                 from employees
                 left join employees_permissions on (employees.pk = employees_permissions.employees_pk)
                 where employees.archived = false
@@ -755,7 +757,7 @@ EOT;
                 )
                 values
                 (    
-                    'New attritions filed.',
+                    'New attrition filed.',
                     'attritions',
                     currval('attritions_pk_seq'),
                     $supervisor_pk

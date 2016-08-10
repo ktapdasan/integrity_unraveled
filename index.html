@@ -96,6 +96,27 @@
     .div1 textarea {
         font-size: 15px;
     }
+
+    .sidebar {
+
+    }
+
+    .sidebar .notification_data {
+        max-height: 500px;
+        height: auto;
+        overflow-y: auto; 
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin: 0px;
+    }
+
+    .sidebar ul li{
+        padding: 10px 2px;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    }
     </style>
 
 </head>
@@ -213,6 +234,7 @@
                         <ul class="dropdown-menu">
                             <li><a style="cursor:pointer;" href="#/management/manual_logs" ng-click="menuclicked('management')">Manual Logs</a></li>
                             <li><a style="cursor:pointer;" href="#/management/leaves" ng-click="menuclicked('management')">Leaves</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li>
                         </ul>
                     </li>
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
@@ -297,119 +319,36 @@
         <div id="styleSelector" class="{{switcher.main}}">
             
             <div class="selector-toggle">
-                 
                 <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } "></a>
-                
-            <div ng-show="switcher.content">
-                <ul class="nav nav-tabs">
-                    <li>
-                        <a ng-click="change_menu('inbox')">
-                            <img src="./ASSETS/img/feedback.png" style="height:30px;"/>
-                        </a>
-                    </li>
-                    <li>
-                        <a ng-click="change_menu('sent')">
-                            <img src="./ASSETS/img/message.png" style="height:30px;"/>
-                        </a>
-                    </li>
-                    <li>
-                        <a ng-click="change_menu('sent')">
-                            <img src="./ASSETS/img/phone.png" style="height:30px;"/>
-                        </a>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <p class="selector-title">Style Selector</p>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Header BG Color Option</span>
-                        <div id="theme-color">
-                            <a href="#" class="header-bg" hoe-color-type="header-bg1">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg2">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg3">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg4">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg5">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg6">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg7">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg8">&nbsp;</a>
-                            <a href="#" class="header-bg" hoe-color-type="header-bg9">&nbsp;</a>
-                        </div>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Left Panel BG Color Option</span>
-                        <div id="theme-color">
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg1">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg2">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg3">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg4">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg5">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg6">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg7">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg8">&nbsp;</a>
-                            <a href="#" class="lpanel-bg" hoe-color-type="lpanel-bg9">&nbsp;</a>
-                        </div>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Logo Color BG Option</span>
-                        <div id="theme-color">
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg1">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg2">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg3">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg4">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg5">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg6">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg7">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg8">&nbsp;</a>
-                            <a href="#" class="logo-bg" hoe-color-type="logo-bg9">&nbsp;</a>
-                        </div>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Theme Background BG Option</span>
-                        <div id="theme-color">
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg1">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg2">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg3">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg4">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg5">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg6">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg7">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg8">&nbsp;</a>
-                            <a href="#" class="theme-bg" hoe-themebg-type="bg9">&nbsp;</a>
-                        </div>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Theme Layout</span>
-                        <select id="theme-layout" class="form-control minimal input-sm">
-                            <option name="theme-layout" value="wide-layout">Wide Layout</option>
-                            <option name="theme-layout" value="box-layout">Boxed Layout</option> 
-                        </select>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">SideBar Effect</span>
-                        <select id="leftpanel-effect" class="form-control minimal input-sm">
-                            <option name="lpanel-effect" value="shrink">Default</option>
-                            <option name="lpanel-effect" value="overlay">Overlay</option>
-                            <option name="lpanel-effect" value="push">Push</option>
-                        </select>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Navigation Type</span>
-                        <select id="navigation-type" class="form-control minimal input-sm">
-                            <option name="navigation-type" value="vertical">Vertical</option>
-                            <option name="navigation-type" value="vertical-compact">Vertical Compact</option>
-                            <option name="navigation-type" value="horizontal">Horizontal</option>
-                            <option name="navigation-type" value="horizontal-compact">Horizontal compact</option>
-                        </select>
-                    </li>
-                    <li class="theme-option">
-                        <span class="sub-title">Navigation Side</span>
-                        <select id="navigation-side" class="form-control minimal input-sm">
-                            <option name="navigation-side" value="leftside">Left</option>
-                            <option name="navigation-side" value="rightside">Right</option>
-                        </select>
-                    </li>
-                </ul>
+            </div>
+            <div ng-show="switcher.content" class="sidebar">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a ng-click="change_menu('inbox')">
+                                <img src="./ASSETS/img/feedback.png" style="height:30px;"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="change_menu('sent')">
+                                <img src="./ASSETS/img/message.png" style="height:30px;"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="change_menu('sent')">
+                                <img src="./ASSETS/img/phone.png" style="height:30px;"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="notification_data">
+                    <ul class="nav">
+                        <li ng-repeat="(k,v) in notifications.data">
+                            <a ng-click="goto(k)">{{v.notification}}</a>
+                        </li>
+                    </ul>
+                </div>
+                    
             </div>
                 
         </div>
@@ -505,6 +444,7 @@
     <script src="./ASSETS/js/plugins/dialog/ngDialog.js"></script>
     <script src="./ASSETS/js/plugins/dropdown/isteven-multi-select.js"></script>
     <script src="./ASSETS/js/plugins/notification/angular-ui-notification.min.js"></script>
+    <script src="./ASSETS/js/plugins/uploader/angular-file-upload.min.js"></script>
 
 
     <!--timepicker-->
@@ -1153,7 +1093,7 @@
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
         </div>
     </script>
- <script type="text/ng-template" id="LevelNewModal">
+    <script type="text/ng-template" id="LevelNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>

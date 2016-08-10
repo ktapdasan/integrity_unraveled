@@ -45,9 +45,7 @@ class Leave extends ClassParent {
         return(true);
     }
 
-
     public function leaves_filed(){
-
         $where = "";
         if($this->employees_pk && $this->employees_pk != 'null'){
             $where .= "and employees_pk = '$this->employees_pk'";
@@ -166,22 +164,30 @@ EOT;
 EOT;
         $sql .= "commit;";
         return ClassParent::insert($sql);
-
     }
-
-    
-
 
     public function add_leave($extra){
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }   
-        
+
         $employees_pk = $this->employees_pk;
         $leave_types_pk= $this->leave_types_pk;
         $date_started = $this->date_started;
         $date_ended= $this->date_ended;
         $reason = $this->reason;
+
+        $a = $this->get_leave_balances($employees_pk);
+
+        $balances = json_decode($a['result'][0]['leave_balances']);
+        $balances = (array) $balances;
+
+        $new_balances = array();
+        foreach($balances as $k=>$v){
+            $new_balances[(int)$k] = (int)$v;
+        }
+
+        $new_balances[$leave_types_pk] = $new_balances[$leave_types_pk] - 1;
 
         $sql = 'begin;';
         $sql .= <<<EOT
@@ -218,6 +224,12 @@ EOT;
                 ;
 EOT;
 
+        $leave_balances = json_encode($new_balances);
+        $sql .= <<<EOT
+                update employees set leave_balances = '$leave_balances'
+                where pk = $employees_pk;
+EOT;
+
         $supervisor_pk = $extra['supervisor_pk'];
         $sql .= <<<EOT
                 insert into notifications
@@ -241,6 +253,18 @@ EOT;
         
 
         return ClassParent::insert($sql);
+    }
+
+    private function get_leave_balances($employees_pk){
+        $sql = <<<EOT
+                select
+                    leave_balances
+                from employees
+                where pk = $employees_pk
+                ;
+EOT;
+    
+        return ClassParent::get($sql);
     }
 
 
@@ -294,10 +318,7 @@ EOT;
                 
                 $where
                 and date_created::date between '$datefrom' and '$dateto'
-                ;
-
-
-                
+                ;                
 EOT;
 
         return ClassParent::get($sql);
@@ -337,9 +358,6 @@ EOT;
         return ClassParent::insert($sql);
 
     }
-
-
-
 }
 
 ?>

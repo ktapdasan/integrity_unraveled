@@ -523,7 +523,11 @@ app.controller('Employees', function(
     }
     
     function fetch_department(){
-        var promise = EmployeesFactory.get_department();
+        var filter = {
+            archived : false
+        }
+
+        var promise = EmployeesFactory.get_department(filter);
         promise.then(function(data){
             var a = data.data.result;
             $scope.employees.filters.department=[];

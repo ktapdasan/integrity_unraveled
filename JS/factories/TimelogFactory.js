@@ -105,7 +105,7 @@ app.factory('TimelogFactory', function($http){
         return promise;
     }
 
-        factory.get_positions = function(data){
+    factory.get_positions = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/get_positions.php',
             method: 'POST',
@@ -122,7 +122,7 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
-        factory.get_department = function(data){
+    factory.get_department = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/get_department.php',
             method: 'POST',

@@ -252,7 +252,6 @@ app.controller('Department', function(
         {
             $scope.filter.archived = 'true';   
         }
-        console.log($scope.filter);
        
         var promise = DepartmentsFactory.get_department($scope.filter);
         promise.then(function(data){

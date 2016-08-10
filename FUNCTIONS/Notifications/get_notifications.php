@@ -4,6 +4,7 @@ require_once('../../CLASSES/Notifications.php');
 
 $filters = array(
 					'pk' => NULL,
+					'employees_pk' -> NULL,
 					'notification' => NULL,
 					'table_from' => NULL,
 					'table_from_pk'=> NULL,
@@ -17,6 +18,7 @@ foreach($_POST as $k=>$v){
 
 $class = new Notifications(
 						$filters['pk'], 
+						$filters['employees_pk'],
 						$filters['notification'],
 						$filters['table_from'],
 						$filters['table_from_pk'],
