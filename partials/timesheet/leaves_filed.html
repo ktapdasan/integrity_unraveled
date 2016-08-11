@@ -73,7 +73,7 @@
         </div>
 
         <div style="float:left; margin-left:10px;">
-            <input type="button" class="btn btn-add" value="File Leave" ng-click="add_leave(k)" />
+            <input type="button" class="btn btn-add" value="File Leave" ng-click="add_leave()" />
         </div>
         <div style="clear:both;"></div>
     </div>
@@ -82,9 +82,9 @@
 
     <div class="responsive-table">
         <div style="width:100%; height:auto;">
-            <div class="leave-square" ng-repeat="(k, v) in leave_types.data">
-                <div class="leave-circle">{{v.days}}</div>
-                <label>{{v.name}}</label>
+            <div class="leave-square" ng-repeat="(k, v) in leave_balances">
+                <div class="leave-circle">{{v}}</div>
+                <label>{{k}}</label>
             </div> 
             <div style="clear:both;"></div>
         </div>

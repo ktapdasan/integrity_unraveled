@@ -14,6 +14,8 @@ app.controller('Sidebar', function(
 
     $scope.notifications = {};
 
+    $scope.stop = false; //how to stop the shaking
+
     init();
 
     function init(){
@@ -39,24 +41,32 @@ app.controller('Sidebar', function(
         })   
     } 
 
-    //$scope.stop = true; //how to stop the shaking
-
     $scope.toggle_switcher = function(){
         if($scope.switcher.main == ""){
             $scope.switcher.main = "open";
             $scope.switcher.content = true;
+
             $scope.stop = true;    
         }
         else {
             $scope.switcher.main = "";   
             $scope.switcher.content = false;
+
             $scope.stop = false;
-            
         }
     }
 
     $scope.getStop = function(){
         if($scope.stop == true){
+            $scope.stop = false;  
+        }
+
+
+    }
+
+    $scope.getStop = function(){
+        if($scope.stop == true)
+        {
             return '0s';
         }
         else {
@@ -80,8 +90,6 @@ app.controller('Sidebar', function(
     }
 
     $scope.goto = function(k){
-        console.log($scope.notifications.data[k]);
-
         var location="";
         if($scope.notifications.data[k].table_from == "attritions"){
             location = "#/management/attrition";

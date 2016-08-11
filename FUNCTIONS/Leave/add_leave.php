@@ -1,7 +1,8 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Leave.php');
-
+print_r($_POST);
+return false;
 $class = new Leave(
 	
 				null,

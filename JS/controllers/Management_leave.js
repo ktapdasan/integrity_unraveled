@@ -169,12 +169,11 @@ app.controller('Management_leave', function(
         }); 
     }
 
-    
-    $scope.approve = function(k){
+    $scope.respond = function(k, type){
        $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
        $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to approve this leave?',
+                message: 'Are you sure you want to '+type+' this leave?',
                 save : 'Yes',
                 close : 'Cancel'
 
@@ -191,13 +190,19 @@ app.controller('Management_leave', function(
             return false;
         }, function(value){
 
-            //$scope.leaves_filed.reason = "Approved";
             $scope.leaves_filed["employees_pk"] = $scope.leaves_filed.data[k].employees_pk;
             $scope.leaves_filed.pk =  $scope.leaves_filed.data[k].pk;
             $scope.leaves_filed.created_by = $scope.profile.pk;
-            $scope.leaves_filed.status = 'Approved';
+
+            if(type == "approve"){
+                $scope.leaves_filed.status = 'Approved';
+            }
+            else {
+                $scope.leaves_filed.status = 'Disapproved';
+            }
+            
   
-            var promise = LeaveFactory.approve($scope.leaves_filed);
+            var promise = LeaveFactory.leave_respond($scope.leaves_filed);
             promise.then(function(data){
 
                 UINotification.success({
@@ -221,62 +226,14 @@ app.controller('Management_leave', function(
         });
     }
 
-    $scope.disapprove = function(k){
-        $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to disapprove this leave?',
-                save : 'Yes',
-                close : 'Cancel'
-            };
-        
-        ngDialog.openConfirm({
-            template: 'ConfirmModal',
-            className: 'ngdialog-theme-plain',
-            
-            scope: $scope,
-            showClose: false
-        })        
-        .then(function(value){
-            return false;
-        }, function(value){
-
-            //$scope.leaves_filed.reason = "Disapproved";
-            $scope.leaves_filed["employees_pk"] = $scope.leaves_filed.data[k].employees_pk;
-            $scope.leaves_filed.pk =  $scope.leaves_filed.data[k].pk;
-            $scope.leaves_filed.created_by = $scope.profile.pk;
-            $scope.leaves_filed.status = 'Disapproved';
-            
-            var promise = LeaveFactory.disapprove($scope.leaves_filed);
-            promise.then(function(data){
-
-                UINotification.success({
-                                        message: 'You have successfully diapproved filed leave.', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });  
-                leaves_filed();
-            })
-            .then(null, function(data){
-                
-                UINotification.error({
-                                        message: 'An error occured, unable to disapprove, please try again.', 
-                                        title: 'ERROR', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-            });                                  
-        });
-    }
-
     function fetch_myemployees(){
         var filter  = {
             pk : $scope.profile.pk
         }
         
+        $scope.myemployees=[];
         var promise = EmployeesFactory.get_myemployees(filter);
         promise.then(function(data){
-        
             var a = data.data.result;
             $scope.myemployees=[];
             for(var i in a){
@@ -287,10 +244,8 @@ app.controller('Management_leave', function(
                                         });
             }
         })
-        
-
         .then(null, function(data){
-            
+            $scope.myemployees = [];
         });
     }
 });

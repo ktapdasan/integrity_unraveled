@@ -11,6 +11,7 @@ app.controller('Leave', function(
 
     //$scope.pk='';
     $scope.leave_types={};
+    $scope.leave_balances={};
     $scope.profile= {};
 
     $scope.filter= {};
@@ -47,6 +48,8 @@ app.controller('Leave', function(
             DEFAULTDATES();
             leave_types();
             leaves_filed();
+
+
             //fetch_myemployees(); 
         })         
     } 
@@ -96,17 +99,60 @@ app.controller('Leave', function(
         return monday;
     }
 
-    $scope.add_leave = function(k){
+    $scope.check_balance = function(){
+        var leave_name="";
+        for(var i in $scope.leave_types.data){
+            if($scope.leave_types.data[i].pk == $scope.modal.leave_types_pk){
+                leave_name = $scope.leave_types.data[i].name;
+            }
+        }
+
+        if($scope.modal.category == "Paid"){
+            if(parseInt($scope.leave_balances[leave_name]) > 0){
+                
+                $scope.modal.save_status = false;
+                $scope.modal.save_class = 'ngdialog-button-primary'; //modal_save_disabled
+                $scope.modal.remaining = {
+                    status : true,
+                    count : $scope.leave_balances[leave_name]
+                }
+            }
+            else {
+                
+                $scope.modal.save_status = true;
+                $scope.modal.save_class = 'modal_save_disabled';// 'ngdialog-button-primary'; //modal_save_disabled
+                $scope.modal.remaining = {
+                    status : true,
+                    count : $scope.leave_balances[leave_name]
+                }
+            }
+        }
+        else {
+            $scope.modal.save_status = false;
+            $scope.modal.save_class = 'ngdialog-button-primary'; //modal_save_disabled
+            $scope.modal.remaining = {
+                status : true,
+                count : $scope.leave_balances[leave_name]
+            }
+        }
+    }
+
+    $scope.add_leave = function(){
         $scope.modal.reason = '';
         $scope.modal.date_started = new Date;
         $scope.modal.date_ended = new Date;
 
         $scope.modal = {
-
             title : 'File a Leave',
             save : 'Submit',
-            close : 'Cancel'
-
+            close : 'Cancel',
+            save_status : false,
+            save_class : 'ngdialog-button-primary', //modal_save_disabled
+            category : "Paid",
+            remaining : {
+                status : false,
+                count : 0
+            }
         };
 
         ngDialog.openConfirm({
@@ -135,6 +181,8 @@ app.controller('Leave', function(
         .then(function(value){
             return false;
         }, function(value){
+            
+
             var date_started= new Date($scope.modal.date_started);
                 var dd = date_started.getDate();
                 var mm= date_started.getMonth();
@@ -149,7 +197,8 @@ app.controller('Leave', function(
             $scope.modal["employees_pk"] = $scope.profile.pk;
             $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
 
-            
+
+
             var promise = LeaveFactory.add_leave($scope.modal);
             promise.then(function(data){
                 UINotification.success({
@@ -193,15 +242,23 @@ app.controller('Leave', function(
         promise.then(function(data){
             $scope.leave_types.status = true;
             $scope.leave_types.data = data.data.result;
-            
+
+            var leave_obj = {};
             var a = data.data.result;
             $scope.leave_types.obj=[];
             for(var i in a){
+                leave_obj[a[i].pk] = a[i].name;
                 $scope.leave_types.obj.push({
                                             pk: a[i].pk,
                                             name: a[i].name,
                                             ticked: false
                                         });
+            }
+
+            var a = JSON.parse($scope.profile.leave_balances);
+
+            for(var i in a){
+                $scope.leave_balances[leave_obj[i]] = a[i];
             }
         })
         .then(null, function(data){
