@@ -1,8 +1,7 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Leave.php');
-print_r($_POST);
-return false;
+
 $class = new Leave(
 	
 				null,
@@ -17,6 +16,11 @@ $class = new Leave(
 			);
 
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
+$extra['category'] = $_POST['category'];
+$extra['duration'] = $_POST['duration'];
+$extra['reason'] = $_POST['reason'];
+$extra['remaining'] = $_POST['leave_balance'] - $_POST['total_days'];
+
 $data = $class-> add_leave($extra);
 
 setcookie('commented', 'commented', time()+43200000, '/');
