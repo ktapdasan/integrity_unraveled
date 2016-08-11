@@ -141,6 +141,8 @@ app.controller('Leave', function(
         $scope.modal.reason = '';
         $scope.modal.date_started = new Date;
         $scope.modal.date_ended = new Date;
+        $scope.modal.duration = '';
+        $scope.modal.category = '';
 
         $scope.modal = {
             title : 'File a Leave',
@@ -345,6 +347,8 @@ app.controller('Leave', function(
         filter.date_from = fromy +"-"+ fromm +"-"+ fromd;
         filter.date_to = toy +"-"+ tom +"-"+ tod;
         filter.status = $scope.filter.status;
+        filter.duration = $scope.filter.duration;
+        filter.category = $scope.filter.category;
 
         if($scope.filter.leave_type && $scope.filter.leave_type[0]){
             filter.leave_types_pk = $scope.filter.leave_type[0].pk;

@@ -135,6 +135,8 @@ app.controller('Management_leave', function(
         filter.employees_pk = $scope.filter.employees_pk;
         filter.status = $scope.filter.status;
         filter.supervisor_pk = $scope.profile.pk;
+        filter.duration = $scope.filter.duration;
+        filter.category = $scope.filter.category;
 
         var from_date = new Date($scope.filter.date_from);
         var fromd = from_date.getDate();

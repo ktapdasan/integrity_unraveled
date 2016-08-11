@@ -6,6 +6,8 @@ $class = new Leave(
 						NULL, 
 						$_POST['employees_pk'],
 						$_POST['leave_types_pk'],
+						$_POST['duration'],
+						$_POST['category'],
 						$_POST['date_from'],
 						$_POST['date_to'],
 						NULL,

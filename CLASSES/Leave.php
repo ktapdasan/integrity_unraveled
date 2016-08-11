@@ -5,20 +5,22 @@ class Leave extends ClassParent {
     var $pk = NULL;
     var $employees_pk = NULL;
     var $leave_types_pk= NULL;
+    var $duration = NULL;
+    var $category = NULL;
     var $date_started = NULL;
     var $date_ended= NULL;
     var $date_created = NULL;
-    var $reason = NULL;
     var $archived = NULL;
 
     public function __construct(
                                     $pk,
                                     $employees_pk,
                                     $leave_types_pk,
+                                    $duration,
+                                    $category,
                                     $date_started,
                                     $date_ended,
                                     $date_created,
-                                    $reason,
                                     $archived
                                 )
         {
@@ -57,7 +59,9 @@ class Leave extends ClassParent {
         
         $sql = <<<EOT
                 select
-                    pk, 
+                    pk,
+                    duration,
+                    category,
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
                     date_created::timestamp(0) as date_created,
@@ -94,6 +98,8 @@ EOT;
                 select
                     pk, 
                     employees_pk,
+                    duration,
+                    category,
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
                     date_created::timestamp(0) as date_created,
@@ -173,6 +179,8 @@ EOT;
 
         $employees_pk = $this->employees_pk;
         $leave_types_pk= $this->leave_types_pk;
+        $duration= $this->duration;
+        $category= $this->category;
         $date_started = $this->date_started;
         $date_ended= $this->date_ended;
         $reason = $this->reason;
@@ -195,6 +203,8 @@ EOT;
                 (      
                     employees_pk,
                     leave_types_pk,
+                    duration,
+                    category,
                     date_started,
                     date_ended
                 )
@@ -202,6 +212,8 @@ EOT;
                 (
                     $employees_pk,
                     $leave_types_pk,
+                    '$duration',
+                    '$category',
                     '$date_started',
                     '$date_ended'   
                 )
