@@ -70,7 +70,7 @@ app.controller('Sidebar', function(
             return '0s';
         }
         else {
-            return '1s';
+            return '2.6s';
         }
     }
 
