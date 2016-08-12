@@ -141,7 +141,7 @@ EOT;
                 ;
 EOT;
         $sql .= <<<EOT
-                insert into manual_log_statuses
+                insert into manual_log_status
                 (
                     pk,
                     status          

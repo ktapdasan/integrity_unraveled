@@ -223,11 +223,15 @@ app.controller('Admin_leave', function(
         .then(function(value){
             return false;
         }, function(value){
+            var filter = {
+                leave_types_pk : $scope.leave_types.data[k].pk,
+            };
             
-            var promise = LeaveFactory.delete($scope.leave_types.data[k]);
+            var promise = LeaveFactory.admin_leave_delete(filter);
             promise.then(function(data){
-                
-                $scope.archived=true;
+                $scope.leave_types.status = true;
+                $scope.leave_types.data = data.data.result;
+                $scope.archived=false;
 
                 UINotification.success({
                                         message: 'You have successfully deleted leave type', 
@@ -238,7 +242,7 @@ app.controller('Admin_leave', function(
                 leave_types();
             })
             .then(null, function(data){
-                
+                $scope.leave_types.status = false;
                 UINotification.error({
                                         message: 'An error occured, unable to delete, please try again.', 
                                         title: 'ERROR', 

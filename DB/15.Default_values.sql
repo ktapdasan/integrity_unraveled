@@ -33,3 +33,16 @@ update leave_types set details = '{
 		"regularization" : 180,
 		"staggered" : "Staggered monthly"
 	}'::jsonb;
+
+insert into default_values
+(
+	name,
+	details
+)
+values
+(
+	'work_days',
+	'{
+		"days" : ["Monday","Tuesday"]
+	}'::jsonb
+);
