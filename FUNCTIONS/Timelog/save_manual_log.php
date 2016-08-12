@@ -16,7 +16,7 @@ $class = new ManualLog(
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
 $data = $class->save_manual_log($extra);
 
-
+print_r($_POST);
 
 $sclass = new Groupings(	
 						$_POST["employees_pk"],

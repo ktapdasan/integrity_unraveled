@@ -57,7 +57,7 @@ app.controller('Timesheet', function(
 
     function fetch_myemployees(){
        $scope.filter.pk = $scope.profile.pk;
-        
+
         var promise = TimelogFactory.get_myemployees($scope.filter);
         promise.then(function(data){
         
@@ -70,6 +70,7 @@ app.controller('Timesheet', function(
                                             ticked: false
                                         });
             }
+
         })
         .then(null, function(data){
             
@@ -541,7 +542,7 @@ app.controller('Timesheet', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Are you sure you want to apply changes to this employee account?</p>' +
+                                '<p>Apply Manual Log?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -559,14 +560,18 @@ app.controller('Timesheet', function(
             return false;
         }, function(value){
             var a = new Date($scope.log.time_log);
+            var Y = a.getFullYear();
+            var month = a.getMonth();
+            var day = a.getDay();
             var H = a.getHours();
             var M = a.getMinutes(); 
 
             $scope.log["employees_pk"] = $scope.profile.pk;
             $scope.log["supervisor_pk"] = $scope.profile.supervisor_pk;
-            $scope.log.time_log = H + ":" +M ;
+            $scope.log.time_log = Y + "-" + month + "-" + day + " " + H + ":" + M ;
             $scope.log.type = type;
 
+            
         
             var promise = TimelogFactory.save_manual_log($scope.log);
             promise.then(function(data){
@@ -578,6 +583,7 @@ app.controller('Timesheet', function(
                                         positionY: 'top', positionX: 'right'
 
                                     });
+                manual_logs();
             
             })
             .then(null, function(data){
