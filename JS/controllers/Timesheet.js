@@ -213,10 +213,8 @@ app.controller('Timesheet', function(
 
             var new_timesheet=[];
             for(var i in a){
-                var Dd = a[i].getDate();
-                var Mm = a[i].getMonth()+1; //January is 0!
-                var Yyyy = a[i].getFullYear();
-                var date2 = Yyyy +"-"+ Mm +"-"+ Dd;
+                mm = a[i].getMonth()+1;
+                date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
 
                 new_timesheet.push({
                                 employee: "",
@@ -229,6 +227,7 @@ app.controller('Timesheet', function(
                                 logout : "None"
                             });
             }            
+            
             $scope.timesheet.data = new_timesheet;
         });
 

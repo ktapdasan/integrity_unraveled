@@ -48,13 +48,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in timesheet.data" style="cursor:pointer;">
+                    <tr ng-repeat="(k, v) in timesheet.data">
                         <td>{{v.log_date}}</td>
                         <td>{{v.log_day}}</td>
                         <td ng-class="(v.login == 'None')?'':''">
                             <span ng-if = "v.login == 'None'">
-                                <span ng-click="open_manual_log('In', k)">
-                                    <font color="red" title = "File Manual Log"><u>None</u></font></span>
+                                <a ng-click="open_manual_log('In', k)">
+                                    <font color="red" title = "File Manual Log"><u>None</u></font>
+                                </a>
                             </span>
                             <span ng-if = 'v.login != "None"'>
                                 {{v.login}}
@@ -62,8 +63,9 @@
                         </td>
                         <td ng-class="(v.logout == 'None')?'':''">
                             <span ng-if="v.logout == 'None'">
-                                <span ng-click="open_manual_log('Out', k)">
-                                    <font color="red" title = "File Manual Log"><u>None</u></font></span>
+                                <a ng-click="open_manual_log('Out', k)">
+                                    <font color="red" title = "File Manual Log"><u>None</u></font>
+                                </a>
                             </span>
                             <span ng-if="v.logout != 'None'">
                                 {{v.logout}}
@@ -71,9 +73,9 @@
                         </td>
                         <td>{{v.hrs}}</td> 
                     </tr>               
-                    <tr ng-if="!timesheet.status" style= "text-align: center;">
+                    <!-- <tr ng-if="!timesheet.status" style= "text-align: center;">
                         <td colspan="9" style="text-align:center;">No Data Found</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

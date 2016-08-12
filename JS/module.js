@@ -94,7 +94,7 @@ app.config(function($routeProvider){
     })
     .when('/management/attrition',
     {
-        controller: 'Management_manual_logs',
+        controller: 'Attritions',
         templateUrl: 'partials/management/attrition.html'
     })
     .otherwise(
