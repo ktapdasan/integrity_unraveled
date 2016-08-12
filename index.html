@@ -197,7 +197,7 @@
         </div>
         <!-- END: Actual animated container. -->
     </div>
-    <!-- END: App-Loading Screen. -->
+    <!-- END: App-Loading Screen. --> 
 
     <!-- start: Header -->
     <nav class="navbar navbar-default header navbar-fixed-top">
@@ -322,10 +322,17 @@
 
     <div ng-controller="Sidebar">
         <div id="styleSelector" class="{{switcher.main}}">
-            
+          
             <div class="selector-toggle">
-                <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } "></a>
+                <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } ">
+                </a>
+
+               <span class="tooltiptext"><i class="fa fa-angle-double-right"></i> </span>
+               <span class="tooltiptext1"><i class="fa fa-angle-double-up"></i> </span>
+               <span class="tooltiptext2"><i class="fa fa-angle-double-down"></i> </span>
             </div>
+
+
             <div ng-show="switcher.content" class="sidebar">
                 <div>
                     <ul class="nav nav-tabs">
@@ -358,6 +365,7 @@
                 
         </div>
     </div>
+
 
      <!--<footer >
         <div class="footer-main" ng-controller="Footer">
