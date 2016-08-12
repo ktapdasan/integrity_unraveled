@@ -5,15 +5,21 @@ class ManualLog extends ClassParent {
     var $pk = NULL;
     var $employees_pk = NULL;
     var $time_log = NULL;
+    var $reason = NULL;
     var $date_created = NULL;
     var $archived = NULL;
+    var $type = NULL;
     
+
     public function __construct(    
                                     $pk ,
                                     $employees_pk,
                                     $time_log ,
+                                    $reason,
                                     $date_created,
-                                    $archived
+                                    $archived,
+                                    $type
+                                   
                                 )
     {
         
@@ -39,10 +45,9 @@ class ManualLog extends ClassParent {
                     time_log :: time as time,
                     date_created::date as datecreated,
                     type,
-                    (select status from manual_log_status where pk = manual_log.pk) as status
-                from manual_logs
-                left join manual_logs_status on (manual_logs.pk = manual_logs_status.manual_logs_pk)
-                where manual_logs.archived = false
+                    (select status from manual_log_statuses where pk = manual_log.pk) as status
+                from manual_log
+                where archived = false
                 ;
 EOT;
 
