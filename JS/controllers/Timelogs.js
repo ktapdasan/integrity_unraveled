@@ -289,7 +289,7 @@ app.controller('Timelogs', function(
         $scope.modal = {
             title : 'Upload Employees Timesheet',
             save : 'Apply Changes',
-            close : 'Cancel',
+            close : 'CLOSE',
         };
 
         ngDialog.openConfirm({

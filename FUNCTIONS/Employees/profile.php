@@ -2,28 +2,19 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 
-$filters = array(
-					'pk' => NULL,
-					'employee_id' => NULL,
-					'first_name' => NULL,
-					'middle_name' => NULL,
-					'last_name' => NULL,
-					'email_address' => NULL,
-					'archived' => NULL
-				);
-
-foreach($_POST as $k=>$v){
-	$filters[$k] = $v;
-}
-
 $class = new Employees(
-						$filters['pk'], 
-						$filters['employee_id'], 
-						$filters['first_name'], 
-						$filters['middle_name'], 
-						$filters['last_name'], 
-						$filters['email_address'], 
-						$filters['archived']
+						$_POST['pk'], 
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL,
+						NULL
 					);
 
 $data = $class->profile();

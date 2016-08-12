@@ -48,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in timesheet_data" style="cursor:pointer;">
+                    <tr ng-repeat="(k, v) in timesheet.data" style="cursor:pointer;">
                         <td>{{v.log_date}}</td>
                         <td>{{v.log_day}}</td>
                         <td ng-class="(v.login == 'None')?'':''">
@@ -70,11 +70,9 @@
                             </span>
                         </td>
                         <td>{{v.hrs}}</td> 
-                        <tr ng-if="!timesheet_data.status" style= "text-align: center;">
-                        <td colspan = "9">No Data Found</td>
-                    </tr>
-   
                     </tr>               
+                    <tr ng-if="!timesheet.status" style= "text-align: center;">
+                        <td colspan="9" style="text-align:center;">No Data Found</td>
                     </tr>
                 </tbody>
             </table>
