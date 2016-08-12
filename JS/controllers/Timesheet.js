@@ -12,7 +12,7 @@ app.controller('Timesheet', function(
 
     $scope.profile = {};
     $scope.filter = {};
-    $scope.timesheet_data = [];
+    $scope.timesheet = {};
     $scope.log = {};
     $scope.log.time_log = new Date;
 
@@ -20,6 +20,7 @@ app.controller('Timesheet', function(
 
     $scope.modal = {};
 
+    $scope.date_list = [];
 
     init();
 
@@ -48,14 +49,15 @@ app.controller('Timesheet', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
-            DEFAULTDATES();
-            fetch_myemployees();
-            timesheet();
+            
+            fetch_cutoff();
+            
         })   
     } 
+
     function fetch_myemployees(){
        $scope.filter.pk = $scope.profile.pk;
-        console.log($scope.filter);
+        
         var promise = TimelogFactory.get_myemployees($scope.filter);
         promise.then(function(data){
         
@@ -68,136 +70,196 @@ app.controller('Timesheet', function(
                                             ticked: false
                                         });
             }
-            console.log($scope.myemployees);
         })
-        
-
         .then(null, function(data){
             
         });
     }
 
+    function fetch_cutoff(){  
+        var promise = CutoffFactory.fetch_dates();
+        promise.then(function(data){
+            var a = data.data.result[0];
+            a.dates = JSON.parse(a.dates);
+            
+            var new_date = new Date();
+            var dd = new_date.getDate();
+            var mm = new_date.getMonth()+1; //January is 0!
+            var yyyy = new_date.getFullYear();
 
-    function DEFAULTDATES(){
-        var today = new Date();
-
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        if(dd<10) {
-            dd='0'+dd
-        } 
-
-        if(mm<10) {
-            mm='0'+mm
-        } 
-
-        today = yyyy+'-'+mm+'-'+dd;
-
-        $scope.filter.datefrom = new Date(yyyy+'-'+mm+'-01'); //getMonday(new Date());
-        $scope.filter.dateto = new Date();
-
-    }
-
-    function getMonday(d) {
-        var d = new Date(d);
-        var day = d.getDay(),
-            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-
-        var new_date = new Date(d.setDate(diff));
-        var dd = new_date.getDate();
-        var mm = new_date.getMonth()+1; //January is 0!
-        var yyyy = new_date.getFullYear();
-
-        if(dd<10) {
-            dd='0'+dd
-        } 
-
-        if(mm<10) {
-            mm='0'+mm
-        } 
-
-        var monday = yyyy+'-'+mm+'-'+dd;
-
-        return monday;
-    }
-
-    // function fetch_cutoff(){  
-    //     var promise = CutoffFactory.fetch_dates();
-    //     promise.then(function(data){
-    //         $scope.cutoff.data = data.data.result[0];
-    //         $scope.cutoff.data.dates = JSON.parse($scope.cutoff.data.dates);
-    //         console.log($scope.cutoff.data);
-
-    //         var new_date = new Date();
-    //         var dd = new_date.getDate();
-    //         var mm = new_date.getMonth()+1; //January is 0!
-    //         var yyyy = new_date.getFullYear();
-
-    //         if($scope.cutoff.data.cutoff_types_pk == "1"){
-    //             // if(){
+            if(a.cutoff_types_pk == "2"){ //bimonthly
+                var first = a.dates.first;
+                var second = a.dates.second;
                 
-    //             // }
-    //             // $scope.filter.datefrom = yyyy+'-'+mm+'-'+
-    //         }
-    //         else {
-    //             if(dd > parseInt($scope.cutoff.data.dates.first.from) && dd < parseInt($scope.cutoff.data.dates.first.from)){
-    //                 console.log($scope.cutoff.data.dates.first);
-    //                 $scope.filter.datefrom = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.first.from);
-    //                 $scope.filter.dateto = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.first.to);
-    //             }
-    //             else {
-    //                 $scope.filter.datefrom = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.second.from);
-    //                 $scope.filter.dateto = yyyy+'-'+mm+'-'+parseInt($scope.cutoff.data.dates.second.to);
-    //             }
-    //         }
-         
-    //         timesheet();
-    //     })
-    //     .then(null, function(data){
+                if(dd >= parseInt(second.from)){
+                    $scope.filter.datefrom = new Date(mm+"/"+second.from+"/"+yyyy);
+                    $scope.filter.dateto = new Date(mm+"/"+second.to+"/"+yyyy);
+                }
+                else {
+                    $scope.filter.datefrom = new Date(mm+"/"+first.from+"/"+yyyy);
+                    $scope.filter.dateto = new Date(mm+"/"+first.to+"/"+yyyy);   
+                }
+            }
+            else { //monthly
+                $scope.filter.datefrom = new Date(mm+"/"+a.dates.from+"/"+yyyy);
+                $scope.filter.dateto = new Date(mm+"/"+a.dates.to+"/"+yyyy);
+            }
 
-    //         timesheet();
-    //     });
-    // }
+            //fetch_myemployees();
+            timesheet();
+        })
+        .then(null, function(data){
+
+            //timesheet();
+        });
+    }
+
+    function getDates( d1, d2 ){
+        var oneDay = 24*3600*1000;
+        for (var d=[],ms=d1*1,last=d2*1;ms<last;ms+=oneDay){
+            d.push( new Date(ms) );
+        }
+        return d;
+    }
 
     $scope.show_timesheet = function(){
         timesheet();
     }
 
     function timesheet(){
-
-
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();
         var mm = datefrom.getMonth()+1; //January is 0!
         var yyyy = datefrom.getFullYear();
-
-        $scope.filter.newdatefrom=yyyy+'-'+mm+'-01';
 
         var dateto = new Date($scope.filter.dateto);
         var Dd = dateto.getDate();
         var Mm = dateto.getMonth()+1; //January is 0!
         var Yyyy = dateto.getFullYear();
 
+        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
         $scope.filter.pk = $scope.profile.pk;
 
+        $scope.timesheet.data = [];
         var promise = TimelogFactory.timesheet($scope.filter);
         promise.then(function(data){
-            $scope.timesheet_data = data.data.result;
-            $scope.timesheet_data.status = true;
+            $scope.timesheet.data = data.data.result;
+            $scope.timesheet.status = true;
+            
+            
+            var a = getDates( datefrom, dateto );
+            
+            var new_timesheet=[];
+            for(var i in a){
+                
+                mm = a[i].getMonth()+1;
+                date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
 
+                //console.log(date);
+                var done = false;
+                for(var j in $scope.timesheet.data){
+                    //console.log($scope.timesheet.data[j]);
+
+                    var timesheet_date = new Date($scope.timesheet.data[j].log_date);
+                    var dd = timesheet_date.getDate();
+                    var mm = timesheet_date.getMonth()+1; //January is 0!
+                    var yyyy = timesheet_date.getFullYear();
+                    var date1 = yyyy +"-"+ mm +"-"+ dd;
+
+                    var Dd = a[i].getDate();
+                    var Mm = a[i].getMonth()+1; //January is 0!
+                    var Yyyy = a[i].getFullYear();
+                    var date2 = Yyyy +"-"+ Mm +"-"+ Dd;
+
+                    if(date1 == date2){
+                        new_timesheet.push({
+                            employee: $scope.timesheet.data[j].employee,
+                            employee_id : $scope.timesheet.data[j].employee_id,
+                            employees_pk : $scope.timesheet.data[j].employees_pk,
+                            hrs : $scope.timesheet.data[j].hrs,
+                            log_date : $scope.timesheet.data[j].log_date,
+                            log_day : $scope.timesheet.data[j].log_day,
+                            login : $scope.timesheet.data[j].login,
+                            logout : $scope.timesheet.data[j].logout
+                        });
+                        done = true;
+                    }
+                    
+                }
+
+                if(done == false){
+                    new_timesheet.push({
+                            employee: "",
+                            employee_id : "",
+                            employees_pk : "",
+                            hrs : "N/A",
+                            log_date : date,
+                            log_day : dayofweek(a[i].getDay()),
+                            login : "None",
+                            logout : "None"
+                        });
+                }
+
+
+            }
+            
+            $scope.timesheet.data = new_timesheet;
         })  
         .then(null, function(data){
-            $scope.timesheet_data.status = false;
+            //$scope.timesheet.status = false;
+            var a = getDates( datefrom, dateto );
+
+            var new_timesheet=[];
+            for(var i in a){
+                mm = a[i].getMonth()+1;
+                date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
+
+                new_timesheet.push({
+                                employee: "",
+                                employee_id : "",
+                                employees_pk : "",
+                                hrs : "N/A",
+                                log_date : date,
+                                log_day : dayofweek(a[i].getDay()),
+                                login : "None",
+                                logout : "None"
+                            });
+            }            
             
+            $scope.timesheet.data = new_timesheet;
         });
 
        
 
 
+    }
+
+    function dayofweek(num){
+        var day = "";
+        if(num == 1){
+            day = 'Monday';
+        }
+        else if(num == 2){
+            day = 'Tuesday';
+        }
+        else if(num == 3){
+            day = 'Wednesday';
+        }
+        else if(num == 4){
+            day = 'Thursday';
+        }
+        else if(num == 5){
+            day = 'Friday';
+        }
+        else if(num == 6){
+            day = 'Saturday';
+        }
+        else if(num == 0){
+            day = 'Sunday';
+        }
+        return day;
     }
 
     $scope.show_myemployees = function(){
@@ -277,9 +339,9 @@ app.controller('Timesheet', function(
         $scope.log.reason = '';
         $scope.log.time_log = new Date;
 
-        $scope.log.date_log = $scope.timesheet_data[key].log_date;
+        $scope.log.date_log = $scope.timesheet.data[key].log_date;
         $scope.log.selectedTimeAsString;
-        //$scope.employee = $scope.timesheet_data[key];
+        //$scope.employee = $scope.timesheet.data[key];
         $scope.modal = {
 
             title : 'Manual Log ' + type,
@@ -460,9 +522,9 @@ app.controller('Timesheet', function(
         $scope.log.reason = '';
         $scope.log.time_log = new Date;
 
-        $scope.log.date_log = $scope.timesheet_data[key].log_date;
+        $scope.log.date_log = $scope.timesheet.data[key].log_date;
         $scope.log.selectedTimeAsString;
-        //$scope.employee = $scope.timesheet_data[key];
+        //$scope.employee = $scope.timesheet.data[key];
         $scope.modal = {
 
             title : 'Manual Log ' + type,

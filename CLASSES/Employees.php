@@ -16,18 +16,18 @@ class Employees extends ClassParent
     var $archived = NULL;
 
     public function __construct(
-                                    $pk='',
-                                    $employee_id='',
-                                    $first_name='',
-                                    $middle_name='',
-                                    $last_name='',
-                                    $email_address='',
-                                    $business_email_address='',
-                                    $titles_pk='',
-                                    $levels_pk='',
-                                    $department='',
-                                    $date_created='',
-                                    $archived=''
+                                    $pk,
+                                    $employee_id,
+                                    $first_name,
+                                    $middle_name,
+                                    $last_name,
+                                    $email_address,
+                                    $business_email_address,
+                                    $titles_pk,
+                                    $levels_pk,
+                                    $department,
+                                    $date_created,
+                                    $archived
                                 )
     {
         
@@ -286,7 +286,6 @@ EOT;
         $dateto = $data['newdateto'];
         $pk = $data['pk'];
 
-
         $sql = <<<EOT
                 with Q as
                 (
@@ -341,7 +340,7 @@ EOT;
         return ClassParent::get($sql);
     }
 
-       public function employees($data){
+    public function employees($data){
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }

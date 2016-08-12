@@ -4,7 +4,7 @@ require_once('../../CLASSES/Notifications.php');
 
 $filters = array(
 					'pk' => NULL,
-					'employees_pk' -> NULL,
+					'employees_pk' => NULL,
 					'notification' => NULL,
 					'table_from' => NULL,
 					'table_from_pk'=> NULL,

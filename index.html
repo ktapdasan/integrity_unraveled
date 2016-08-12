@@ -332,7 +332,7 @@
                     <ul class="nav nav-tabs">
                         <li>
                             <a ng-click="change_menu('inbox')">
-                                <img src="./ASSETS/img/feedback.png" style="height:30px;"/>
+                                <img src="./ASSETS/img/bell.png" style="height:30px;"/>
                             </a>
                         </li>
                         <li>
@@ -342,7 +342,7 @@
                         </li>
                         <li>
                             <a ng-click="change_menu('sent')">
-                                <img src="./ASSETS/img/phone.png" style="height:30px;"/>
+                                <img src="./ASSETS/img/clipboard.png" style="height:30px;"/>
                             </a>
                         </li>
                     </ul>
@@ -1141,7 +1141,7 @@
                 <tr>
                     <td><label style= "font-size:20px;">Duration:</label></td>
                     <td>
-                        <select ng-model="modal.duration">
+                        <select ng-model="modal.duration" ng-change="duration_changed(); check_leave_count();">
                             <option>Whole Day</option>
                             <option>First Half</option>
                             <option>Second Half</option>
@@ -1156,7 +1156,7 @@
                         <input type="date" class="form-control" ng-model="modal.date_started" ng-required="true" close-text="Close" ng-change="check_leave_count()" ng-keyup="check_leave_count()" />
                     </td>
                 </tr>
-                <tr>
+                <tr ng-show="isEndDate">
                     <td>
                         <label style= "font-size:20px; float: left;">End Date:</label>
                     </td>
