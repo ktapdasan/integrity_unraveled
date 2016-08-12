@@ -23,7 +23,17 @@ app.controller('Leave', function(
 
     $scope.myemployees={};
 
-    
+    $scope.modal.remaining = {
+        status : false,
+        count : 0
+    }
+
+    $scope.modal.total = {
+        status : false,
+        count : 0   
+    }
+
+    $scope.isEndDate = false;
 
     init();
 
@@ -45,6 +55,7 @@ app.controller('Leave', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+
             DEFAULTDATES();
             leave_types();
             leaves_filed();
@@ -118,7 +129,6 @@ app.controller('Leave', function(
                 }
             }
             else {
-                
                 $scope.modal.save_status = true;
                 $scope.modal.save_class = 'modal_save_disabled';// 'ngdialog-button-primary'; //modal_save_disabled
                 $scope.modal.remaining = {
@@ -137,10 +147,54 @@ app.controller('Leave', function(
         }
     }
 
+    $scope.check_leave_count = function(){
+        $scope.modal.total = {};
+        var date_started= new Date($scope.modal.date_started);
+        var date_ended= new Date($scope.modal.date_ended);
+
+        $scope.modal.total.status = false;
+        $scope.modal.total.count = 0;
+
+        if($scope.modal.category == "Paid"){
+            $scope.modal.total.count = countCertainDays([1,2,3,4,5],date_started,date_ended); 
+
+            if($scope.modal.duration != "Whole Day"){
+                $scope.modal.total.count = .5;
+            }   
+        }
+        else {
+            $scope.modal.total.count = 0;   
+        }
+
+        if(isNaN($scope.modal.total.count)){
+            $scope.modal.total.count = 0;            
+        }
+    }
+
+    $scope.duration_changed = function(){
+        if($scope.modal.duration == "Whole Day"){
+            $scope.isEndDate = true;
+        }
+        else {
+            $scope.isEndDate = false;
+
+            $scope.modal.date_ended = $scope.modal.date_started;
+        }
+    }
+
+    function countCertainDays( days, d0, d1 ) {
+        var ndays = 1 + Math.round((d1-d0)/(24*3600*1000));
+        var sum = function(a,b) {
+            return a + Math.floor( ( ndays + (d0.getDay()+6-b) % 7 ) / 7 ); 
+        };
+
+        return days.reduce(sum,0);
+    }
+
     $scope.add_leave = function(){
         $scope.modal.reason = '';
-        $scope.modal.date_started = new Date;
-        $scope.modal.date_ended = new Date;
+        $scope.modal.date_started = new Date();
+        $scope.modal.date_ended = new Date();
         $scope.modal.duration = '';
         $scope.modal.category = '';
 
@@ -161,19 +215,24 @@ app.controller('Leave', function(
             template: 'LeaveModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
+                if($scope.modal.total.count > $scope.modal.remaining.count){
+                    alert("You don't have enough balance to file this leave.");
+                    return false;
+                }
+                
                 var nestedConfirmDialog;
                 
-                    nestedConfirmDialog = ngDialog.openConfirm({
-                        template:
-                                '<p></p>' +
-                                '<p>Are you sure you want file leave?</p>' +
-                                '<div class="ngdialog-buttons">' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
-                                '</button></div>',
-                        plain: true,
-                        className: 'ngdialog-theme-plain custom-widththreefifty'
-                    });
+                nestedConfirmDialog = ngDialog.openConfirm({
+                    template:
+                            '<p></p>' +
+                            '<p>Are you sure you want file leave?</p>' +
+                            '<div class="ngdialog-buttons">' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                            '</button></div>',
+                    plain: true,
+                    className: 'ngdialog-theme-plain custom-widththreefifty'
+                });
 
                 return nestedConfirmDialog;
             },
@@ -183,7 +242,8 @@ app.controller('Leave', function(
         .then(function(value){
             return false;
         }, function(value){
-            
+
+
 
             var date_started= new Date($scope.modal.date_started);
                 var dd = date_started.getDate();
@@ -196,10 +256,23 @@ app.controller('Leave', function(
                
             $scope.modal.date_started = yyyy+'-'+mm+'-'+dd;
             $scope.modal.date_ended = YYYY+'-'+MM+'-'+DD;
-            $scope.modal["employees_pk"] = $scope.profile.pk;
-            $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
+            $scope.modal.employees_pk = $scope.profile.pk;
+            $scope.modal.supervisor_pk = $scope.profile.supervisor_pk;
+            $scope.modal.leave_balance = $scope.modal.remaining.count;
+            $scope.modal.total_days = $scope.modal.total.count;
 
+            // var workdays = countCertainDays([1,2,3,4,5],date_started,date_ended);
+            // console.log($scope.modal.remaining.count);
+            // console.log(satsun);
+            //return false;
 
+            // if($scope.modal.category == "Paid"){
+            //     if($scope.modal.duration == "Whole Day"){
+            //         if(workdays > $scope.modal.remaining.count){
+
+            //         }
+            //     }
+            // }
 
             var promise = LeaveFactory.add_leave($scope.modal);
             promise.then(function(data){
@@ -209,8 +282,18 @@ app.controller('Leave', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-               
-                leaves_filed();
+
+                var filters = { 
+                    'pk' : $scope.pk
+                };
+                var promise = EmployeesFactory.profile(filters);
+                promise.then(function(data){
+                    $scope.profile = data.data.result[0];
+
+                    $scope.leave_balances = JSON.parse(data.data.result[0].leave_balances);
+                    leaves_filed();
+                    leave_types();
+                })
             })
             .then(null, function(data){
                 
@@ -225,22 +308,14 @@ app.controller('Leave', function(
         });                   
     }
 
-    function leave_types(){
-        $scope.leave_types.status = false;
-        $scope.leave_types.data= '';
+    function leave_types(){  
+        var filter = {
+            archived : false,
+            employees_pk : $scope.profile.pk
+        };
         
-        if ($scope.filter.status == 'Active')
-        {
-            $scope.filter.archived = 'false';
-        }
-        else 
-        {
-            $scope.filter.archived = 'true';   
-        }
-
-        $scope.filter.employees_pk = $scope.profile.pk;
-        
-        var promise = LeaveFactory.get_leave_types($scope.filter);
+        $scope.leave_types.data = [];
+        var promise = LeaveFactory.get_leave_types(filter);
         promise.then(function(data){
             $scope.leave_types.status = true;
             $scope.leave_types.data = data.data.result;
@@ -258,9 +333,10 @@ app.controller('Leave', function(
             }
 
             var a = JSON.parse($scope.profile.leave_balances);
-
-            for(var i in a){
-                $scope.leave_balances[leave_obj[i]] = a[i];
+            
+            $scope.leave_balances = {};
+            for(var i in $scope.leave_types.data){
+                $scope.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
             }
         })
         .then(null, function(data){
@@ -290,9 +366,7 @@ app.controller('Leave', function(
         }, function(value){
             var filter = {
                 leave_filed_pk : $scope.leaves_filed.data[k].pk,
-                created_by : $scope.profile.pk,
-                
-
+                created_by : $scope.profile.pk
             };
 
             var promise = LeaveFactory.delete(filter);

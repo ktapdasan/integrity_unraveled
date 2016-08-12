@@ -183,19 +183,26 @@ EOT;
         $category= $this->category;
         $date_started = $this->date_started;
         $date_ended= $this->date_ended;
-        $reason = $this->reason;
+        $reason = $extra['reason'];
 
         $a = $this->get_leave_balances($employees_pk);
 
         $balances = json_decode($a['result'][0]['leave_balances']);
         $balances = (array) $balances;
 
+        //$new_balances[(int)$extra['leave_types_pk']] = $extra['remaining'];
         $new_balances = array();
         foreach($balances as $k=>$v){
-            $new_balances[(int)$k] = (int)$v;
+            if($k == $this->leave_types_pk){
+                $v = $extra['remaining'];
+            }
+
+            $new_balances[$k] = $v;
         }
 
-        $new_balances[$leave_types_pk] = $new_balances[$leave_types_pk] - 1;
+        if($extra['duration'] != "Whole Day"){
+            $date_ended = $date_started;
+        }
 
         $sql = 'begin;';
         $sql .= <<<EOT
@@ -236,10 +243,31 @@ EOT;
                 ;
 EOT;
 
+//         if($extra['category'] == "Paid"){
+//             if($extra['duration'] == "Whole Day"){
+//                 if($this->date_started == $this->date_ended){
+//                     $new_balances[$leave_types_pk] = $new_balances[$leave_types_pk] - 1;    
+//                 }
+//                 else {
+//                     $new_balances[$leave_types_pk] = $new_balances[$leave_types_pk] - 1;
+//                 }
+//             }
+//             else {
+
+//             }
+
+//             $leave_balances = json_encode($new_balances);
+//             $sql .= <<<EOT
+//                     update employees set leave_balances = '$leave_balances'
+//                     where pk = $employees_pk;
+// EOT;
+//         }
+
+        //print_r($leave_balances);
         $leave_balances = json_encode($new_balances);
         $sql .= <<<EOT
-                update employees set leave_balances = '$leave_balances'
-                where pk = $employees_pk;
+                    update employees set leave_balances = '$leave_balances'
+                    where pk = $employees_pk;
 EOT;
 
         $supervisor_pk = $extra['supervisor_pk'];
