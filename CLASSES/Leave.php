@@ -233,8 +233,8 @@ EOT;
                 )
                 ;
 EOT;
-        echo $sql .= "commit;";
-        //return ClassParent::insert($sql);
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
     }
 
     public function add_leave($extra){

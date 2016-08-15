@@ -10,6 +10,7 @@ $class = new Leave(
 						NULL,
 						NULL,
 						NULL,
+						NULL,
 						NULL
 					);
 
