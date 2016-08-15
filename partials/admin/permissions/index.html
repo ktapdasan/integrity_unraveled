@@ -131,7 +131,7 @@
                         <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
                         <td>{{v.department}}</td>
                         <td>
-                            <button ng-click="update_access()">Update Access</button>
+                            <button ng-click="update_access(k)">Update Access</button>
                         </td>
                     </tr>
                     <tr ng-if="!employees.status" style = "text-align: center;">
@@ -146,3 +146,134 @@
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="PermissionModal">
+    <div class="ngdialog-message">
+        <div>
+            <div>
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span> </h2>
+            </div>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Home</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.home.timeinout" /> Time In/Out
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </td>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>My Timesheet</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.mytimesheet.timesheet" /> Timesheet
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.mytimesheet.leaves" /> Leaves
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Employee List</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.employees.new" /> Add New
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.employees.list" /> View List
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.employees.timelogs" /> Time Logs
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Management</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.management.manuallogs" /> Manual Logs
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.management.leaves" /> Leaves
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.management.attrition" /> Attrition
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Administration</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.departments" /> Departments
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.positions" /> Positions
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.levels" /> Levels
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" /ng-model="permissions.administration.permissions" > Permissions
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.cutoff" /> Cutoff
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.leaves" /> Leaves
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+    </div>
+</script>
