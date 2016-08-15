@@ -171,15 +171,26 @@ app.controller('Management_leave', function(
         }); 
     }
 
+    function countCertainDays( days, d0, d1 ) {
+        var ndays = 1 + Math.round((d1-d0)/(24*3600*1000));
+        var sum = function(a,b) {
+            return a + Math.floor( ( ndays + (d0.getDay()+6-b) % 7 ) / 7 ); 
+        };
+
+        return days.reduce(sum,0);
+    }
+
     $scope.respond = function(k, type){
-       $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
-       $scope.modal = {
+        check_filed_leave(k);
+        
+        $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
+        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to '+type+' this leave?',
                 save : 'Yes',
                 close : 'Cancel'
-
             };
+
         ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
@@ -187,37 +198,39 @@ app.controller('Management_leave', function(
             scope: $scope,
             showClose: false
         })
-        
         .then(function(value){
             return false;
         }, function(value){
-
-            $scope.leaves_filed["employees_pk"] = $scope.leaves_filed.data[k].employees_pk;
-            $scope.leaves_filed.pk =  $scope.leaves_filed.data[k].pk;
-            $scope.leaves_filed.created_by = $scope.profile.pk;
+            var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
+            
+            var leaves_filed = {
+                pk              : $scope.leaves_filed.data[k].pk,
+                employees_pk    : $scope.leaves_filed.data[k].employees_pk,
+                duration        : $scope.leaves_filed.data[k].duration,
+                category        : $scope.leaves_filed.data[k].category,
+                leave_types_pk  : $scope.leaves_filed.data[k].leave_types_pk,
+                created_by      : $scope.profile.pk,
+                workdays        : workdays
+            };
 
             if(type == "approve"){
-                $scope.leaves_filed.status = 'Approved';
+                leaves_filed.status = 'Approved';
             }
             else {
-                $scope.leaves_filed.status = 'Disapproved';
+                leaves_filed.status = 'Disapproved';
             }
             
-  
-            var promise = LeaveFactory.leave_respond($scope.leaves_filed);
+            var promise = LeaveFactory.leave_respond(leaves_filed);
             promise.then(function(data){
-
                 UINotification.success({
                                         message: 'You have successfully approved filed leave.', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
-                                    });  
-                leaves_filed();    
-
+                                    });
+                leaves_filed();
             })
             .then(null, function(data){
-                
                 UINotification.error({
                                         message: 'An error occured, unable to approve, please try again.', 
                                         title: 'ERROR', 
@@ -226,6 +239,31 @@ app.controller('Management_leave', function(
                                     });
             });                                  
         });
+    }
+
+    function check_filed_leave(k){
+        var filter = {
+            pk : $scope.leaves_filed.data[k].pk
+        };
+
+        var promise = LeaveFactory.get_filed_leave(filter);
+        promise.then(function(data){
+            var a = data.data.result[0];
+            
+            if(a.archived == 't'){
+                UINotification.error({
+                                        message: 'Apologies. An error occurred because the request has already been deleted by ' + a.name, 
+                                        title: 'ERROR', 
+                                        delay : 10000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+
+                $scope.leaves_filed.data[k].status = a.status;   
+
+                $scope.leaves_filed.data.splice(k, 1);
+                return false;
+            }
+        })
     }
 
     function fetch_myemployees(){

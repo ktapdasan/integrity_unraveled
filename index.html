@@ -197,7 +197,7 @@
         </div>
         <!-- END: Actual animated container. -->
     </div>
-    <!-- END: App-Loading Screen. -->
+    <!-- END: App-Loading Screen. --> 
 
     <!-- start: Header -->
     <nav class="navbar navbar-default header navbar-fixed-top">
@@ -271,13 +271,13 @@
                     <li class="dropdown avatar-dropdown">
                         <img src="./ASSETS/img/LogoRGB_254.png" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu user-dropdown">
-                            <!-- <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
+                            <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
                             <li><a href="#"><span class="fa fa-calendar"></span> My Calendar</a></li>
-                            <li role="separator" class="divider"></li> -->
+                            <li role="separator" class="divider"></li>
                             <li class="more">
                                 <ul>
-                               <li><a href=""><span class="fa fa-cogs"></span></a></li>
-                                    <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li>
+                                    <!-- <li><a href=""><span class="fa fa-cogs"></span></a></li>
+                                    <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li> -->
                                     <li alt="Log out"><a href="" ng-click="logout()"><span class="fa fa-power-off"></span></a></li>
                                 </ul>
                             </li>
@@ -323,10 +323,17 @@
 
     <div ng-controller="Sidebar">
         <div id="styleSelector" class="{{switcher.main}}">
-            
+          
             <div class="selector-toggle">
-                <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } "></a>
+                <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } ">
+                </a>
+
+               <span class="tooltiptext"><i class="fa fa-angle-double-right"></i> </span>
+               <span class="tooltiptext1"><i class="fa fa-angle-double-up"></i> </span>
+               <span class="tooltiptext2"><i class="fa fa-angle-double-down"></i> </span>
             </div>
+
+
             <div ng-show="switcher.content" class="sidebar">
                 <div>
                     <ul class="nav nav-tabs">
@@ -359,6 +366,7 @@
                 
         </div>
     </div>
+
 
      <!--<footer >
         <div class="footer-main" ng-controller="Footer">

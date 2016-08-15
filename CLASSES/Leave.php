@@ -47,6 +47,32 @@ class Leave extends ClassParent {
         return(true);
     }
 
+    public function fetch(){        
+        $sql = <<<EOT
+                select
+                    pk,
+                    duration,
+                    category,
+                    employees_pk,
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    leave_types_pk,
+                    (select name from leave_types where pk = leave_types_pk) as leave_type,
+                    date_created::timestamp(0) as date_created,
+                    date_started:: date as date_started,
+                    date_ended:: date as date_ended,
+                    (
+                        select status from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
+                    ) as status,
+                    archived
+                from leave_filed
+                where archived = false
+                and pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function leaves_filed(){
         $where = "";
         if($this->employees_pk && $this->employees_pk != 'null'){
@@ -62,7 +88,9 @@ class Leave extends ClassParent {
                     pk,
                     duration,
                     category,
+                    employees_pk,
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    leave_types_pk,
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
                     date_created::timestamp(0) as date_created,
                     date_started:: date as date_started,
@@ -101,6 +129,7 @@ EOT;
                     duration,
                     category,
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    leave_types_pk,
                     (select name from leave_types where pk = leave_types_pk) as leave_type,
                     date_created::timestamp(0) as date_created,
                     date_started:: date as date_started,
@@ -125,14 +154,50 @@ EOT;
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-
-        $pk             = $extra['pk'];
+        
         $status         = $extra['status'];
         $employees_pk   = $extra['employees_pk'];
         $created_by     = $extra['created_by'];
         $status         = $extra['status'];
+        $category       = $extra['category'];
+        $duration       = $extra['duration'];
+        $workdays       = $extra['workdays'];
+        $leave_types_pk = $extra['leave_types_pk'];
 
         $sql = 'begin;';
+
+        if($status == "Disapproved"){
+            $a = $this->get_leave_balances($employees_pk);
+
+            $balances = json_decode($a['result'][0]['leave_balances']);
+            $balances = (array) $balances;
+            
+            $amount = $workdays;
+            if($duration != "Whole Day"){
+                $amount=0.5;    
+            }
+
+            if($category != "Paid"){
+                $amount = 0;
+            }
+
+            $new_balances=array();
+            foreach($balances as $k=>$v){
+                if($k == $leave_types_pk){
+                    $new_balances[$k] = $v + $amount;
+                }
+                else {
+                    $new_balances[$k] = $v;   
+                }
+            }
+
+            $new_balances = json_encode($new_balances);
+            $sql .= <<<EOT
+                    update employees set leave_balances = '$new_balances'
+                    where pk = $employees_pk;
+EOT;
+        }
+        
         $sql .= <<<EOT
                 insert into leave_status
                 (
@@ -143,7 +208,7 @@ EOT;
                 )
                 values
                 (    
-                    $pk,
+                    $this->pk,
                     '$status',
                     $created_by,
                     'REPLACE THIS BY REASON'
@@ -163,13 +228,13 @@ EOT;
                 (    
                     'Leave $status',
                     'leave_filed',
-                    $pk,
+                    $this->pk,
                     $employees_pk
                 )
                 ;
 EOT;
-        $sql .= "commit;";
-        return ClassParent::insert($sql);
+        echo $sql .= "commit;";
+        //return ClassParent::insert($sql);
     }
 
     public function add_leave($extra){
@@ -365,15 +430,37 @@ EOT;
     }
 
     public function delete($info){
-
+        $info['leave_balances'] = (array) json_decode($info['leave_balances']);
+        
+        $new_balances=array();
+        foreach($info['leave_balances'] as $k=>$v){
+            if($k == $info['leave_types_pk'] && $info['category'] == "Paid"){
+                
+                if($info['duration'] == "Whole Day"){
+                    $new_balances[$k] = $v + $info['workdays'];
+                }
+                else {
+                    $new_balances[$k] = $v + 0.5;
+                }
+            }
+            else {
+                $new_balances[$k] = $v;
+            }
+        }
+        
         $leave_filed_pk = $info['leave_filed_pk'];
         $created_by = $info['created_by'];
+        $leave_balances = json_encode($new_balances);
 
         $sql = 'begin;';
         $sql .= <<<EOT
                 UPDATE  leave_filed
                 set archived = True
                 where pk = $this->pk;
+EOT;
+
+        $sql .= <<<EOT
+                update employees set leave_balances = '$leave_balances' where pk = $created_by;
 EOT;
 
         $sql .= <<<EOT
@@ -396,7 +483,6 @@ EOT;
 
         $sql .= "commit;";
         return ClassParent::insert($sql);
-
     }
 
 
