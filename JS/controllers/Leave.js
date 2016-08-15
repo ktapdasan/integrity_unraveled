@@ -33,7 +33,7 @@ app.controller('Leave', function(
         count : 0   
     }
 
-    $scope.isEndDate = false;
+    $scope.isEndDate = true;
 
     init();
 
@@ -85,6 +85,7 @@ app.controller('Leave', function(
         $scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
         $scope.filter.date_to = new Date();
 
+        $scope.modal.date_started = new Date(yyyy+'-'+mm+'-'+dd); 
     }
 
     function getMonday(d) {
@@ -148,15 +149,17 @@ app.controller('Leave', function(
     }
 
     $scope.check_leave_count = function(){
-        $scope.modal.total = {};
+        
         var date_started= new Date($scope.modal.date_started);
         var date_ended= new Date($scope.modal.date_ended);
 
-        $scope.modal.total.status = false;
-        $scope.modal.total.count = 0;
-
+        // $scope.modal.total.status = false;
+        // $scope.modal.total.count = 0;
+        
         if($scope.modal.category == "Paid"){
-            $scope.modal.total.count = countCertainDays([1,2,3,4,5],date_started,date_ended); 
+            var d = countCertainDays([1,2,3,4,5],date_started,date_ended); //CODE_0001
+
+            $scope.modal.total.count = d;
 
             if($scope.modal.duration != "Whole Day"){
                 $scope.modal.total.count = .5;
@@ -192,29 +195,29 @@ app.controller('Leave', function(
     }
 
     $scope.add_leave = function(){
+
+        $scope.modal.total.status = false;
+        $scope.modal.total.count = 0;
+
+        $scope.modal.title = 'File a Leave';
+        $scope.modal.save = 'Submit';
+        $scope.modal.close = 'Cancel';
+        $scope.modal.save_status = false;
+        $scope.modal.save_class = 'ngdialog-button-primary'; //modal_save_disabled
+        $scope.modal.category = "Paid";
+        $scope.modal.duration = "Whole Day";
         $scope.modal.reason = '';
         $scope.modal.date_started = new Date();
         $scope.modal.date_ended = new Date();
-        $scope.modal.duration = '';
-        $scope.modal.category = '';
-
-        $scope.modal = {
-            title : 'File a Leave',
-            save : 'Submit',
-            close : 'Cancel',
-            save_status : false,
-            save_class : 'ngdialog-button-primary', //modal_save_disabled
-            category : "Paid",
-            remaining : {
-                status : false,
-                count : 0
-            }
-        };
 
         ngDialog.openConfirm({
             template: 'LeaveModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
+                
+                $scope.duration_changed();
+                $scope.check_leave_count();
+                
                 if($scope.modal.total.count > $scope.modal.remaining.count){
                     alert("You don't have enough balance to file this leave.");
                     return false;
@@ -242,16 +245,13 @@ app.controller('Leave', function(
         .then(function(value){
             return false;
         }, function(value){
-
-
-
             var date_started= new Date($scope.modal.date_started);
                 var dd = date_started.getDate();
-                var mm= date_started.getMonth();
+                var mm= date_started.getMonth()+1;
                 var yyyy = date_started.getFullYear();
             var date_ended= new Date($scope.modal.date_ended);
                 var DD= date_ended.getDate();
-                var MM = date_ended.getMonth(); 
+                var MM = date_ended.getMonth()+1; 
                 var YYYY = date_ended.getFullYear(); 
                
             $scope.modal.date_started = yyyy+'-'+mm+'-'+dd;
@@ -261,7 +261,7 @@ app.controller('Leave', function(
             $scope.modal.leave_balance = $scope.modal.remaining.count;
             $scope.modal.total_days = $scope.modal.total.count;
 
-            // var workdays = countCertainDays([1,2,3,4,5],date_started,date_ended);
+            // var workdays = countCertainDays([1,2,3,4,5],date_started,date_ended); //CODE_0001
             // console.log($scope.modal.remaining.count);
             // console.log(satsun);
             //return false;
@@ -345,14 +345,21 @@ app.controller('Leave', function(
     }
 
     $scope.delete = function(k){
+        check_filed_leave(k);
+
+        var date1 = new Date($scope.leaves_filed.data[k].date_started);
+        var date2 = new Date($scope.leaves_filed.data[k].date_ended);
+
+        var workdays = countCertainDays([1,2,3,4,5],date1,date2); //CODE_0001
        
-       $scope.modal = {
+        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to delete your request',
                 save : 'Delete',
                 close : 'Cancel'
             };
-       ngDialog.openConfirm({
+        
+        ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
             
@@ -364,9 +371,17 @@ app.controller('Leave', function(
         .then(function(value){
             return false;
         }, function(value){
+
             var filter = {
                 leave_filed_pk : $scope.leaves_filed.data[k].pk,
-                created_by : $scope.profile.pk
+                created_by : $scope.profile.pk,
+                employees_pk : $scope.leaves_filed.data[k].employees_pk,
+                workdays : workdays,
+                leave_types_pk : $scope.leaves_filed.data[k].leave_types_pk,
+                leave_type : $scope.leaves_filed.data[k].leave_type,
+                leave_balances : $scope.profile.leave_balances,
+                duration : $scope.leaves_filed.data[k].duration,
+                category : $scope.leaves_filed.data[k].category
             };
 
             var promise = LeaveFactory.delete(filter);
@@ -381,8 +396,17 @@ app.controller('Leave', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                leaves_filed();
+                var filters = { 
+                    'pk' : $scope.pk
+                };
+                var promise = EmployeesFactory.profile(filters);
+                promise.then(function(data){
+                    $scope.profile = data.data.result[0];
 
+                    $scope.leave_balances = JSON.parse(data.data.result[0].leave_balances);
+                    leaves_filed();
+                    leave_types();
+                })
             })
             .then(null, function(data){
                 $scope.leaves_filed.status = false;
@@ -398,6 +422,27 @@ app.controller('Leave', function(
         });
     }
 
+    function check_filed_leave(k){
+        var filter = {
+            pk : $scope.leaves_filed.data[k].pk
+        };
+        var promise = LeaveFactory.get_filed_leave(filter);
+        promise.then(function(data){
+            var a = data.data.result[0];
+
+            if(a.status != "Pending"){
+                UINotification.error({
+                                        message: 'You are no longer allowed to delete your request because it has already been ' + a.status, 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+
+                $scope.leaves_filed.data[k].status = a.status;   
+                return false;
+            }
+        })
+    }
 
     $scope.leaves_filed = function(){
         leave_types();

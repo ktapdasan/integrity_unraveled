@@ -39,7 +39,15 @@ class Employees extends ClassParent
 
         //sanitize
         foreach($fields as $k=>$v){
-            $this->$k = pg_escape_string(trim(strip_tags($v)));
+            if(is_array($v)){
+                foreach($v as $key=>$value){
+                    $v[$key] = pg_escape_string(trim(strip_tags($value)));
+                }
+                $this->$k = $v;
+            }
+            else {
+                $this->$k = pg_escape_string(trim(strip_tags($v)));    
+            }
         }
 
         return(true);
@@ -123,9 +131,8 @@ EOT;
             else {
                 $status = 'true';
             }
-            $where .= " AND archived = $status";
+            $where .= " AND employees.archived = $status";
         }
-
 
         $sql = <<<EOT
                 select 
@@ -148,9 +155,11 @@ EOT;
                     (select array_to_string(array_agg(department), ', ') from departments where pk = any(employees.department)) as department,
                     date_created,
                     details, 
-                    archived
+                    employees.archived,
+                    employees_permissions.permission
                 from employees
                 left join groupings on (groupings.employees_pk = employees.pk)
+                left join employees_permissions on (employees_permissions.employees_pk = employees.pk)
                 where true
                 $where
                 order by date_created
@@ -793,6 +802,53 @@ EOT;
 EOT;
 
         return ClassParent::get($sql);
+    }
+
+    public function get_permissions(){
+        $sql = <<<EOT
+                select 
+                    permission 
+                from where employees_pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function update_permissions($data){
+        foreach($data as $k=>$v){
+            if(is_array($v)){
+                foreach($v as $key=>$value){
+                    $v[$key] = pg_escape_string(trim(strip_tags($value)));
+                }
+                $data[$k] = $v;
+            }
+            else {
+                $data[$k] = pg_escape_string(trim(strip_tags($v)));
+            }
+        }
+
+        $data = json_encode($data);
+        $sql = "begin;";
+        $sql .= <<<EOT
+                delete from employees_permissions where employees_pk = $this->pk;
+EOT;
+
+        $sql .= <<<EOT
+                insert into employees_permissions
+                (
+                    employees_pk,
+                    permission
+                ) 
+                values
+                (
+                    $this->pk,
+                    '$data'
+                );
+EOT;
+        $sql .= "commit;";
+
+        return ClassParent::update($sql);
     }
 //      public function open_manual_log($data){
 //        foreach($data as $k=>$v){

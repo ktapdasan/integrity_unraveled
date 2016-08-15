@@ -1,29 +1,30 @@
 <?php
 require_once('../connect.php');
-require_once('../../CLASSES/Leave.php');
+require_once('../../CLASSES/Employees.php');
 
-$class = new Leave(
-                    $_POST['leave_filed_pk'],
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL,
-                    NULL
-                );
+$class =    new Employees(
+                            $_POST['employees_pk'],
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL,
+                            NULL
+                        );
 
-$info = array(
-        		"leave_filed_pk" => $_POST['leave_filed_pk'],
-        		"created_by" => $_POST['created_by'],
-                "workdays" => $_POST['workdays'],
-                "leave_types_pk" => $_POST['leave_types_pk'],
-                "leave_balances" => $_POST['leave_balances'],
-                "duration" => $_POST['duration'],
-                "category" => $_POST['category']
-    		);
+$permissions = json_decode($_POST['data']);
 
-$data = $class-> delete($info);
+$new_permissions = array();
+foreach($permissions as $k=>$v){
+    $new_permissions[$k] = (array) $v;
+}
+
+$data = $class->update_permissions($new_permissions);
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){

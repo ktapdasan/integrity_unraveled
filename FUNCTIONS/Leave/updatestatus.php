@@ -3,7 +3,7 @@ require_once('../connect.php');
 require_once('../../CLASSES/Leave.php');
 
 $class = new Leave(	
-						NULL,	
+						$_POST['pk'],	
 						NULL,
 						NULL,
 						NULL,
@@ -13,11 +13,13 @@ $class = new Leave(
 						NULL
 					);
 
-$extra['pk'] = $_POST['pk'];
-//$extra['reason'] = $_POST['reason'];
-$extra['employees_pk'] = $_POST['employees_pk'];
-$extra['created_by'] = $_POST['created_by'];
-$extra['status'] = $_POST['status'];
+$extra['employees_pk'] 		= $_POST['employees_pk'];
+$extra['created_by'] 		= $_POST['created_by'];
+$extra['status'] 			= $_POST['status'];
+$extra['category'] 			= $_POST['category'];
+$extra['duration'] 			= $_POST['duration'];
+$extra['leave_types_pk'] 	= $_POST['leave_types_pk'];
+$extra['workdays'] 			= $_POST['workdays'];
 
 $data = $class->update($extra);
 
