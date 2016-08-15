@@ -50,6 +50,25 @@ class LeaveTypes extends ClassParent {
                     name,
                     code,
                     days,
+                    details
+                from leave_types
+                where archived = '$this->archived'
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function fetch_count($employees_pk){
+        $employees_pk = pg_escape_string(strip_tags(trim($employees_pk)));
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    name,
+                    code,
+                    days,
                     details,
                     (
                         select 
