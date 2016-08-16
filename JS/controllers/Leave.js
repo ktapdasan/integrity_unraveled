@@ -195,6 +195,8 @@ app.controller('Leave', function(
     }
 
     $scope.add_leave = function(){
+        $scope.modal.leave_types_pk = '';
+        $scope.modal.remaining.status = false;
 
         $scope.modal.total.status = false;
         $scope.modal.total.count = 0;
@@ -209,6 +211,8 @@ app.controller('Leave', function(
         $scope.modal.reason = '';
         $scope.modal.date_started = new Date();
         $scope.modal.date_ended = new Date();
+
+        
 
         ngDialog.openConfirm({
             template: 'LeaveModal',

@@ -163,6 +163,8 @@ EOT;
         $duration       = $extra['duration'];
         $workdays       = $extra['workdays'];
         $leave_types_pk = $extra['leave_types_pk'];
+        $remarks = $extra['remarks'];
+
 
         $sql = 'begin;';
 
@@ -197,6 +199,12 @@ EOT;
                     where pk = $employees_pk;
 EOT;
         }
+
+        if($status == "Approved"){
+
+            $remarks="Approved";
+        }
+
         
         $sql .= <<<EOT
                 insert into leave_status
@@ -211,7 +219,7 @@ EOT;
                     $this->pk,
                     '$status',
                     $created_by,
-                    'REPLACE THIS BY REASON'
+                    '$remarks'
                 )
                 ;
 EOT;
@@ -233,8 +241,8 @@ EOT;
                 )
                 ;
 EOT;
-        echo $sql .= "commit;";
-        //return ClassParent::insert($sql);
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
     }
 
     public function add_leave($extra){

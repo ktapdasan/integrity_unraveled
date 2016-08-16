@@ -11,7 +11,7 @@ $class = new LeaveTypes(
 							$_POST['archived']
 						);
 
-$data = $class->fetch($_POST['employees_pk']);
+$data = $class->fetch();
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){

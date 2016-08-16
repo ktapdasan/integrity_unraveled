@@ -41,8 +41,7 @@ class LeaveTypes extends ClassParent {
         return(true);
     }
 
-    public function fetch($employees_pk){
-        $employees_pk = pg_escape_string(strip_tags(trim($employees_pk)));
+    public function fetch(){
 
         $sql = <<<EOT
                 select

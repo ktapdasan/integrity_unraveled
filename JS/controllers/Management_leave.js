@@ -180,66 +180,208 @@ app.controller('Management_leave', function(
         return days.reduce(sum,0);
     }
 
-    $scope.respond = function(k, type){
-        check_filed_leave(k);
+    // $scope.respond = function(k, type){
+    //     check_filed_leave(k);
         
-        $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
-        $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to '+type+' this leave?',
-                save : 'Yes',
-                close : 'Cancel'
-            };
+    //     $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
+    //     $scope.modal = {
+    //             title : '',
+    //             message: 'Are you sure you want to '+type+' this leave?',
+    //             save : 'Yes',
+    //             close : 'Cancel'
+    //         };
 
-        ngDialog.openConfirm({
-            template: 'ConfirmModal',
-            className: 'ngdialog-theme-plain',
+    //     ngDialog.openConfirm({
+    //         template: 'ConfirmModal',
+    //         className: 'ngdialog-theme-plain',
             
-            scope: $scope,
-            showClose: false
-        })
-        .then(function(value){
-            return false;
-        }, function(value){
-            var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
+    //         scope: $scope,
+    //         showClose: false
+    //     })
+    //     .then(function(value){
+    //         return false;
+    //     }, function(value){
+    //         var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
             
-            var leaves_filed = {
-                pk              : $scope.leaves_filed.data[k].pk,
-                employees_pk    : $scope.leaves_filed.data[k].employees_pk,
-                duration        : $scope.leaves_filed.data[k].duration,
-                category        : $scope.leaves_filed.data[k].category,
-                leave_types_pk  : $scope.leaves_filed.data[k].leave_types_pk,
-                created_by      : $scope.profile.pk,
-                workdays        : workdays
-            };
+    //         var leaves_filed = {
+    //             pk              : $scope.leaves_filed.data[k].pk,
+    //             employees_pk    : $scope.leaves_filed.data[k].employees_pk,
+    //             duration        : $scope.leaves_filed.data[k].duration,
+    //             category        : $scope.leaves_filed.data[k].category,
+    //             leave_types_pk  : $scope.leaves_filed.data[k].leave_types_pk,
+    //             created_by      : $scope.profile.pk,
+    //             workdays        : workdays
+    //         };
 
-            if(type == "approve"){
-                leaves_filed.status = 'Approved';
-            }
-            else {
-                leaves_filed.status = 'Disapproved';
-            }
+    //         if(type == "approve"){
+    //             leaves_filed.status = 'Approved';
+    //         }
+    //         else {
+    //             leaves_filed.status = 'Disapproved';
+    //         }
             
-            var promise = LeaveFactory.leave_respond(leaves_filed);
-            promise.then(function(data){
-                UINotification.success({
-                                        message: 'You have successfully approved filed leave.', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-                leaves_filed();
+    //         var promise = LeaveFactory.leave_respond(leaves_filed);
+    //         promise.then(function(data){
+    //             UINotification.success({
+    //                                     message: 'You have successfully approved filed leave.', 
+    //                                     title: 'SUCCESS', 
+    //                                     delay : 5000,
+    //                                     positionY: 'top', positionX: 'right'
+    //                                 });
+    //             leaves_filed();
+    //         })
+    //         .then(null, function(data){
+    //             UINotification.error({
+    //                                     message: 'An error occured, unable to approve, please try again.', 
+    //                                     title: 'ERROR', 
+    //                                     delay : 5000,
+    //                                     positionY: 'top', positionX: 'right'
+    //                                 });
+    //         });                                  
+    //     });
+    // }
+
+
+
+
+
+
+
+    $scope.respond = function(k, type){
+
+        if(type == "approve"){
+
+            check_filed_leave(k);
+            
+            $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
+            $scope.modal = {
+                    title : '',
+                    message: 'Are you sure you want to '+type+' this leave?',
+                    save : 'Yes',
+                    close : 'Cancel'
+                };
+
+            ngDialog.openConfirm({
+                template: 'ConfirmModal',
+                className: 'ngdialog-theme-plain',
+                
+                scope: $scope,
+                showClose: false
             })
-            .then(null, function(data){
-                UINotification.error({
-                                        message: 'An error occured, unable to approve, please try again.', 
-                                        title: 'ERROR', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-            });                                  
-        });
+            .then(function(value){
+                return false;
+            }, function(value){
+                var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
+                
+                var leaves_filed = {
+                    pk              : $scope.leaves_filed.data[k].pk,
+                    employees_pk    : $scope.leaves_filed.data[k].employees_pk,
+                    duration        : $scope.leaves_filed.data[k].duration,
+                    category        : $scope.leaves_filed.data[k].category,
+                    leave_types_pk  : $scope.leaves_filed.data[k].leave_types_pk,
+                    created_by      : $scope.profile.pk,
+                    workdays        : workdays
+                };
+
+                leaves_filed.status = 'Approved';
+                
+                var promise = LeaveFactory.leave_respond(leaves_filed);
+                promise.then(function(data){
+                    UINotification.success({
+                                            message: 'You have successfully approved filed leave.', 
+                                            title: 'SUCCESS', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                    leaves_filed();
+                })
+                .then(null, function(data){
+                    UINotification.error({
+                                            message: 'An error occured, unable to approve, please try again.', 
+                                            title: 'ERROR', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                });                                  
+            });
+        }
+
+
+        else {
+
+                check_filed_leave(k);
+            
+                $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
+                $scope.modal = {
+                    title : '',
+                    message: 'Are you sure you want to '+type+' this leave?',
+                    save : 'Disapproved',
+                    close : 'Cancel'
+                };
+
+                ngDialog.openConfirm({
+                template: 'DisapprovedModal',
+                className: 'ngdialog-theme-plain',
+                
+                    scope: $scope,
+                    showClose: false
+                })
+
+                    .then(function(value){
+                    return false;
+                }, function(value){
+                    var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
+                    
+                    var leaves_filed = {
+                        pk              : $scope.leaves_filed.data[k].pk,
+                        employees_pk    : $scope.leaves_filed.data[k].employees_pk,
+                        duration        : $scope.leaves_filed.data[k].duration,
+                        category        : $scope.leaves_filed.data[k].category,
+                        leave_types_pk  : $scope.leaves_filed.data[k].leave_types_pk,
+                        created_by      : $scope.profile.pk,
+                        workdays        : workdays
+                    };
+
+                leaves_filed.status = 'Disapproved';
+                leaves_filed.remarks=$scope.modal.remarks;
+                
+                console.log(leaves_filed);
+
+                var promise = LeaveFactory.leave_respond(leaves_filed);
+                promise.then(function(data){
+                    UINotification.success({
+                                            message: 'You have successfully approved filed leave.', 
+                                            title: 'SUCCESS', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                    leaves_filed();
+                })
+                .then(null, function(data){
+                    UINotification.error({
+                                            message: 'An error occured, unable to approve, please try again.', 
+                                            title: 'ERROR', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                });                                  
+            });
+       
+               
+        }
+
+
+            
     }
+
+
+
+
+
+
+
+
+
 
     function check_filed_leave(k){
         var filter = {
