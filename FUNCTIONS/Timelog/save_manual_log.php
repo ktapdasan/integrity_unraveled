@@ -2,11 +2,11 @@
 require_once('../connect.php');
 require_once('../../CLASSES/ManualLog.php');
 require_once('../../CLASSES/Groupings.php');
-print_r($_POST);
+
 $class = new ManualLog(	
 						NULL,	
 						$_POST["employees_pk"],
-						$_POST["time_log"],
+						$_POST["date_log"] ." ". $_POST["time_log"],
 						$_POST["reason"],
 						NULL,
 						NULL,
@@ -15,8 +15,6 @@ $class = new ManualLog(
 
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
 $data = $class->save_manual_log($extra);
-
-print_r($_POST);
 
 $sclass = new Groupings(	
 						$_POST["employees_pk"],

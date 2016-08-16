@@ -239,6 +239,38 @@ EOT;
         return ClassParent::get($sql);   
     }
 
+    public function manual_log($data)
+    {
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+       
+        $time_log=$data['time_log'];
+        $reason=$data['reason'];
+        $date_log=$data['date_log'];
+        $employees_pk=$data['employees_pk'];
+        $supervisor_pk=$data['supervisor_pk'];
+        $type=$data['type'];
+
+        $sql = "begin;";
+        $sql .= <<<EOT
+                insert into manual_logs(
+                    employees_pk,
+                    time_log,
+                    date_created
+                )
+                values
+                (
+                    $employees_pk,
+                    $time_log,
+                    $date_log
+                )
+EOT;
+
+
+    }
+
     public function submit_log($data){
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));

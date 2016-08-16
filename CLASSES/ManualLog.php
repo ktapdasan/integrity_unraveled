@@ -62,17 +62,40 @@ EOT;
     $pk = $extra['pk'];
     $status = $extra['status'];
     $employees_pk=$extra['employees_pk'];
-
+    $manual_logs_pk=$extra['manual_logs_pk'];
+    $remarks=strtoupper($extra['remarks']);
+    
          $sql = 'begin;';
          $sql .= <<<EOT
-                update manual_log_statuses set
+                update manual_logs_status set
                 
                     status
                 =
                     '$status'
                 
-                where pk = $pk;
+               where manual_logs_pk = $pk
                 ;
+EOT;
+        $sql .= <<<EOT
+                        update manual_logs_status set
+                        
+                            remarks
+                        =
+                            '$remarks'
+                        
+                       where manual_logs_pk = $pk
+                        ;
+EOT;
+
+        $sql .= <<<EOT
+                        update manual_logs_status set
+                        
+                            created_by
+                        =
+                            $employees_pk
+                        
+                       where manual_logs_pk = $pk
+                        ;
 EOT;
 
          $sql .= <<<EOT
@@ -81,7 +104,7 @@ EOT;
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk        
+                    employees_pk           
                 )
                 values
                 (    
@@ -101,6 +124,7 @@ EOT;
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }
+
         $employees_pk = $this->employees_pk;
         $time_log = $this->time_log;
         $reason= $this->reason;
@@ -108,24 +132,40 @@ EOT;
 
         $sql = 'begin;';
         $sql .= <<<EOT
-                insert into manual_log
+                insert into manual_logs
                 (
                     employees_pk,
                     time_log,
-                    reason,
                     type
                 )
                 values
                 (    
                     $employees_pk,
                     '$time_log',
-                    '$reason',
                     '$type'
                 )
                 returning pk
                 ;
 EOT;
         
+        $sql .= <<<EOT
+                insert into manual_logs_status
+                (
+                    manual_logs_pk,
+                    status,
+                    created_by,
+                    remarks          
+                )
+                values
+                (    
+                    currval('manual_logs_pk_seq'),
+                    'Pending',
+                    $employees_pk,
+                    '$reason'
+                )
+                ;
+EOT;
+
         $supervisor_pk = $extra['supervisor_pk'];
         $sql .= <<<EOT
                 insert into notifications
@@ -140,25 +180,13 @@ EOT;
                 (    
                     'New manual log filed.',
                     'manual_log',
-                    currval('manual_log_pk_seq'),
+                    currval('manual_logs_pk_seq'),
                     $supervisor_pk
                 )
                 ;
 EOT;
-        $sql .= <<<EOT
-                insert into manual_log_statuses
-                (
-                    pk,
-                    status          
-                )
-                values
-                (    
-                    currval('manual_log_pk_seq'),
-                    'Pending'
-                )
-                ;
-EOT;
-        $sql .= "commit;";
+
+         $sql .= "commit;";
 
 
 
@@ -172,17 +200,17 @@ EOT;
         if($this->employees_pk){
             $where .= "and employees_pk = ".$this->employees_pk;
         }
-        $datefrom = $data['datefrom'];
+        $datefrom = $data['datefrom'] ;
         $dateto = $data['dateto'];
-        $sql = <<<EOT
+       $sql = <<<EOT
                 select
                     pk, 
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     time_log :: time as time,
                     date_created::date as datecreated,
                     type,
-                    (select status from manual_log_statuses where pk = manual_log.pk) as status
-                from manual_log
+                    (select status from manual_logs_status where pk = manual_logs_pk) as status
+                from manual_logs
                 where date_created::date between '$datefrom' and '$dateto'
                 $where
                 ;
