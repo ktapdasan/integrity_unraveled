@@ -158,10 +158,9 @@ app.controller('Timesheet', function(
                 mm = a[i].getMonth()+1;
                 date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
 
-                //console.log(date);
+
                 var done = false;
                 for(var j in $scope.timesheet.data){
-                    //console.log($scope.timesheet.data[j]);
 
                     var timesheet_date = new Date($scope.timesheet.data[j].log_date);
                     var dd = timesheet_date.getDate();
@@ -451,7 +450,7 @@ app.controller('Timesheet', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                manual_logs();
+                timesheet();
                        
 
             })
@@ -503,7 +502,7 @@ app.controller('Timesheet', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                manual_logs();
+                timesheet();
                      
 
             })
@@ -568,10 +567,9 @@ app.controller('Timesheet', function(
 
             $scope.log["employees_pk"] = $scope.profile.pk;
             $scope.log["supervisor_pk"] = $scope.profile.supervisor_pk;
-            $scope.log.time_log = Y + "-" + month + "-" + day + " " + H + ":" + M ;
+            $scope.log.time_log = H + ":" + M ;
             $scope.log.type = type;
 
-            
         
             var promise = TimelogFactory.save_manual_log($scope.log);
             promise.then(function(data){
@@ -583,7 +581,9 @@ app.controller('Timesheet', function(
                                         positionY: 'top', positionX: 'right'
 
                                     });
-                manual_logs();
+
+
+                timesheet();
             
             })
             .then(null, function(data){

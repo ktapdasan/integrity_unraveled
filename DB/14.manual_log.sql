@@ -17,4 +17,4 @@ create table manual_logs_status (
 	remarks text not null,
 	archived boolean default false
 );
-ALTER TABLE leave_status owner to chrs;
+ALTER TABLE manual_logs_status owner to chrs;

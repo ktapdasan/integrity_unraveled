@@ -206,7 +206,7 @@ EOT;
                 select
                     pk, 
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
-                    time_log :: time as time,
+                    time_log :: timestamp as time,
                     date_created::date as datecreated,
                     type,
                     (select status from manual_logs_status where pk = manual_logs_pk) as status
