@@ -1,7 +1,8 @@
 CREATE TABLE manual_logs (
 	pk serial primary key,
 	employees_pk int references employees(pk),
-	time_log time NOT NULL,
+	type text not null,
+	time_log timestamptz NOT NULL,
 	date_created timestamptz default now(),
 	archived boolean default false
 );

@@ -36,9 +36,9 @@ visibility: hidden;
                 <div style="float:left; margin-right:10px;">
                     Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
                 </div>
- <div class="col-md-11" style="padding-top:30px;">
-                 <div style="float:left; margin-top: -10px;margin-right:10px;">
-                    <label style="float:left;font-size: 15px;">Select an Employee</label>
+ <div class="col-md-6" style="padding-top:0px;">
+                 <div style="float:left; margin-top: -10px;">
+                    <label style="float:left;font-size: 15px; padding-right:10px;">Select an Employee</label>
                     <div
                         isteven-multi-select
                         input-model="myemployees"
@@ -68,7 +68,7 @@ visibility: hidden;
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in manual_logs.data" style="cursor:pointer;" value = "{{v.pk}}" ng-if="manual_logs.status">
+                    <tr ng-repeat="(k, v) in manual_logs.data track by $index" style="cursor:pointer;" value = "{{v.pk}}" ng-if="manual_logs.status">
                         <td>{{v.name}}</td>
                         <td>Log {{v.type}}</td>                       
                         <td>{{v.datecreated}}</td>

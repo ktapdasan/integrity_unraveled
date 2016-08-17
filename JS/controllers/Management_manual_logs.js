@@ -47,7 +47,6 @@ app.controller('Management_manual_logs', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
-            
             DEFAULTDATES();
             fetch_myemployees();
             employees_manual_logs();
@@ -99,75 +98,50 @@ app.controller('Management_manual_logs', function(
         return monday;
     }
 
-    function fetch_myemployees(){
-        var filter  = {
-            pk : $scope.profile.pk 
-        }
-        
-        var promise = TimelogFactory.get_myemployees(filter);
-        promise.then(function(data){
-        
-            var a = data.data.result;
-            $scope.myemployees=[];
-            for(var i in a){
-                $scope.myemployees.push({
-                                            pk: a[i].pk,
-                                            name: a[i].myemployees,
-                                            ticked: false
-                                        });
-            }
-        })
-        
-
-        .then(null, function(data){
-            
-        });
-    }
 
     $scope.show_myemployees = function(){
         employees_manual_logs();
     }
 
     function employees_manual_logs() {
+        var filter = {};
 
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();
         var mm = datefrom.getMonth()+1; //January is 0!
         var yyyy = datefrom.getFullYear();
 
-        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
+        filter.datefrom=yyyy+'-'+mm+'-'+dd;
 
         var dateto = new Date($scope.filter.dateto);
         var Dd = dateto.getDate();
         var Mm = dateto.getMonth()+1; //January is 0!
         var Yyyy = dateto.getFullYear();
 
-        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+       
+        filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
         
-        var filter = {};
-
-        if($scope.filter.myemployees && $scope.filter.myemployees !== 'undefined'){
-            filter.employees_pk = $scope.filter.myemployees[0].pk
-            filter.datefrom = $scope.filter.newdatefrom
-            filter.dateto = $scope.filter.newdateto
+        delete $scope.filter.myemployees_pk;
+        if($scope.filter.myemployees && $scope.filter.myemployees.length > 0){
+            filter.employees_pk = $scope.filter.myemployees[0].pk;
         }
-
         var promise = TimelogFactory.myemployees_manual_logs(filter);
         promise.then(function(data){
             $scope.manual_logs.data = data.data.result;
             $scope.manual_logs.status = true;
+              
         }) 
         .then(null, function(data){
             $scope.manual_logs.status = false;
         });
-    
+     
     }
 
     $scope.approve = function(k){
         $scope.manual_logs["employees_pk"] = $scope.profile.pk;
        $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to approve manual log?',
+                message: 'Are you sure you want to approve manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?',
                 save : 'Yes',
                 close : 'Cancel'
 
@@ -186,7 +160,7 @@ app.controller('Management_manual_logs', function(
 
             $scope.manual_logs.status = "Approved";
             $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-
+            $scope.manual_logs.remarks= "APPROVED";
             
             var promise = TimelogFactory.approve($scope.manual_logs);
             promise.then(function(data){
@@ -199,7 +173,7 @@ app.controller('Management_manual_logs', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                manual_logs();
+                employees_manual_logs();
                        
 
             })
@@ -217,16 +191,33 @@ app.controller('Management_manual_logs', function(
 
     $scope.disapprove = function(k){
         $scope.manual_logs["employees_pk"] = $scope.profile.pk; 
+        $scope.log.remarks = '';
+
        $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to disapprove manual log?',
-                save : 'Yes',
+                title : 'Disapprove Log ' + $scope.manual_logs.data[k].type,
+                save : 'Disapprove',
                 close : 'Cancel'
 
             };
         ngDialog.openConfirm({
-            template: 'ConfirmModal',
-            className: 'ngdialog-theme-plain',
+            template: 'DisapproveModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+             preCloseCallback: function(value) {
+                var nestedConfirmDialog;                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Disapprove manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
             
             scope: $scope,
             showClose: false
@@ -238,8 +229,9 @@ app.controller('Management_manual_logs', function(
 
             $scope.manual_logs.status = "Disapproved";
             $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
+            $scope.manual_logs.remarks =  $scope.log.remarks;
 
-            
+
             var promise = TimelogFactory.disapprove($scope.manual_logs);
             promise.then(function(data){
             
@@ -251,7 +243,7 @@ app.controller('Management_manual_logs', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                manual_logs();
+                employees_manual_logs();
                      
 
             })
@@ -264,6 +256,29 @@ app.controller('Management_manual_logs', function(
                                         positionY: 'top', positionX: 'right'
                                     });
             });                                  
+        });
+    }
+
+        function fetch_myemployees(){
+        var filter  = {
+            pk : $scope.profile.pk
+        }
+        
+        $scope.myemployees=[];
+        var promise = EmployeesFactory.get_myemployees(filter);
+        promise.then(function(data){
+            var a = data.data.result;
+            $scope.myemployees.data=[];
+            for(var i in a){
+                $scope.myemployees.push({
+                                            pk: a[i].employees_pk,
+                                            name: a[i].name,
+                                            ticked: false
+                                        });
+            }
+        })
+        .then(null, function(data){
+            $scope.myemployees = [];
         });
     }
     

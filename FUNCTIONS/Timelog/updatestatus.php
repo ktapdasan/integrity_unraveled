@@ -12,10 +12,8 @@ $class = new ManualLog(
 						NULL
 					);
 
-$extra['pk'] = $_POST['pk'];
-$extra['status'] = $_POST['status'];
-$extra['employees_pk'] = $_POST['employees_pk'];
-$data = $class->update($extra);
+
+$data = $class->update($_POST);
 
 
 header("HTTP/1.0 404 User Not Found");

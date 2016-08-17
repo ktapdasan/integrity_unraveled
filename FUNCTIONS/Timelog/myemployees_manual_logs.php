@@ -11,6 +11,7 @@ $class = new ManualLog(
 							NULL
 						);
 
+
 $data = $class->employees_manual_logs($_POST);
 
 header("HTTP/1.0 404 User Internal Server Error");
