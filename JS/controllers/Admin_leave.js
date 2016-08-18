@@ -147,6 +147,7 @@ app.controller('Admin_leave', function(
             pk: $scope.leave_types.data[k].pk,
             regularization: JSON.parse($scope.leave_types.data[k].details).regularization,
             staggered: JSON.parse($scope.leave_types.data[k].details).staggered
+            
         };
 
         ngDialog.openConfirm({
@@ -264,6 +265,7 @@ app.controller('Admin_leave', function(
             $scope.leave_default.data.details = JSON.parse($scope.leave_default.data.details);
             $scope.leave_default.data.regularization = $scope.leave_default.data.details.regularization
             $scope.leave_default.data.staggered = $scope.leave_default.data.details.staggered;
+            $scope.leave_default.data.carry_over = $scope.leave_default.data.details.carry_over
         })
         .then(null, function(data){
             $scope.leave_default.status = false;
@@ -290,7 +292,7 @@ app.controller('Admin_leave', function(
         }, function(value){
             
             $scope.leave_default.data.employees_pk = $scope.profile.pk;
-
+            console.log($scope.leave_default.data);
             var promise = LeaveFactory.update_default_values($scope.leave_default.data);
             promise.then(function(data){
                 
@@ -322,10 +324,13 @@ app.controller('Admin_leave', function(
         if($scope.modal.default_checkbox){
             $scope.modal.regularization = $scope.leave_default.data.regularization;
             $scope.modal.staggered = $scope.leave_default.data.staggered;
+            $scope.leave_default.data.carry_over = $scope.leave_default.data.details.carry_over
+        
         }
         else {
             $scope.modal.regularization = "";
             $scope.modal.staggered = "";
+            $scope.modal.carry_over = "";
         }
     }
 });
