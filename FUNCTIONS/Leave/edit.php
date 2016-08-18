@@ -4,7 +4,8 @@ require_once('../../CLASSES/LeaveTypes.php');
 
 $details = array(
 					"regularization" => $_POST['regularization'],
-					"staggered" => $_POST['staggered']
+					"staggered" => $_POST['staggered'],
+					"carry_over" => $_POST['carry_over']
 				);
 
 $class = new LeaveTypes(
