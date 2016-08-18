@@ -26,7 +26,7 @@
                     <option>Inactive</option>
                 </select>
 
-                <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="edit" ng-click="add_leavetype(k)" title="Edit" style = "float: right;"/> 
+                <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="add" ng-click="add_leavetype(k)" title="add" style = "float: right;"/> 
             </div>
 
             <div class="responsive-table" style="margin-top:50px;">
@@ -156,7 +156,7 @@
                         <tr style="cursor:pointer;">
                             <td>How many leaves will be carried-over:</td>
                             <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.carry_over" />
+                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="modal.carry_over" />
                             </td>
                         </tr> 
                     </tbody>
