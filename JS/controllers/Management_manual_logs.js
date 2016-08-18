@@ -161,6 +161,8 @@ app.controller('Management_manual_logs', function(
             $scope.manual_logs.status = "Approved";
             $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
             $scope.manual_logs.remarks= "APPROVED";
+            $scope.manual_logs.type= $scope.manual_logs.data[k].type;
+            $scope.manual_logs.time_log=$scope.manual_logs.data[k].time;
             
             var promise = TimelogFactory.approve($scope.manual_logs);
             promise.then(function(data){

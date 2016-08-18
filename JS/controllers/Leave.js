@@ -265,6 +265,7 @@ app.controller('Leave', function(
             $scope.modal.leave_balance = $scope.modal.remaining.count;
             $scope.modal.total_days = $scope.modal.total.count;
 
+
             // var workdays = countCertainDays([1,2,3,4,5],date_started,date_ended); //CODE_0001
             // console.log($scope.modal.remaining.count);
             // console.log(satsun);
@@ -477,6 +478,7 @@ app.controller('Leave', function(
             filter.leave_types_pk = $scope.filter.leave_type[0].pk;
         }
 
+        
         var promise = LeaveFactory.leaves_filed(filter);
         promise.then(function(data){
             $scope.leaves_filed.status = true;

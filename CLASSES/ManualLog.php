@@ -63,6 +63,9 @@ EOT;
     $status = $extra['status'];
     $employees_pk=$extra['employees_pk'];
     $manual_logs_pk=$extra['manual_logs_pk'];
+    $type = $extra['type'];
+    $time_log= $extra['time_log'];
+
     $remarks=strtoupper($extra['remarks']);
     
          $sql = 'begin;';
@@ -115,6 +118,47 @@ EOT;
                 )
                 ;
 EOT;
+        if($status=='Approved'){
+        if($type=='In'){
+            $random_hash = $this->generateRandomString(50);
+              $sql .= <<<EOT
+                insert into time_log
+                (   
+                    employees_pk,
+                    type,
+                    time_log,
+                    random_hash         
+                )
+                values
+                (    
+                    $employees_pk,
+                    '$type',
+                    '$time_log',
+                    '$random_hash'
+                )
+                ;
+EOT;
+        }else{
+             $sql .= <<<EOT
+                insert into time_log
+                (   
+                    employees_pk,
+                    type,
+                    time_log,
+                    random_hash         
+                )
+                values
+                (    
+                    
+                    $employees_pk,
+                    '$type',
+                    '$time_log',
+                    (select random_hash from time_log where time_log:: date = '$time_log')
+                )
+                ;
+EOT;
+        }
+        }
         $sql .= "commit;";
         return ClassParent::insert($sql);
 
@@ -217,7 +261,7 @@ EOT;
                 select
                     pk, 
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
-                    time_log :: time as time,
+                    time_log :: timestamp as time,
                     date_created::date as datecreated,
                     type,
                     (select status from manual_logs_status where pk = manual_logs_pk) as status
@@ -248,6 +292,18 @@ EOT;
 EOT;
 
         return ClassParent::get($sql);
+    }
+
+    private function generateRandomString($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ_-';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 
   
