@@ -68,14 +68,9 @@ th {
                     <tr ng-repeat="(k, v) in level_title.data" style="cursor:pointer;">
                         <td>{{v.level_title}}</td>
                         <td><center>
-<<<<<<< Updated upstream
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:14px; height:14px" ng-click="edit_level(k)" title="Edit">
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_level(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_level(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
-=======
-                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_level(k)" title="Edit">
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_level(k)" title="Delete">                        
->>>>>>> Stashed changes
                         </center>
                         </td>
                     </tr>        
