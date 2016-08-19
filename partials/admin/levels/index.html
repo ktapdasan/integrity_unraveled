@@ -3,6 +3,9 @@
 .red {
     color: #ff0000;
 }
+.hide {
+    display:none;
+}
 </style>
 
 <div id="content2">
@@ -44,7 +47,8 @@
                         <td>{{v.level_title}}</td>
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_level(k)" title="Edit">
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_level(k)" title="Delete">                        
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_level(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="restore_level(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
                         </center>
                         </td>
                     </tr>        

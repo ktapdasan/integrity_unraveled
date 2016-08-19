@@ -130,7 +130,7 @@ app.controller('Levels', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-
+                $scope.level_title.data.splice(k,1);
             })
             .then(null, function(data){
                 
@@ -146,6 +146,52 @@ app.controller('Levels', function(
         });
     }
 
+$scope.restore_level = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to restore this level?',
+                save : 'Restore',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            
+            var promise = LevelsFactory.restore_level($scope.level_title.data[k]);
+            promise.then(function(data){
+                
+                $scope.archived=false;
+
+                UINotification.success({
+                                        message: 'You have successfully restored level', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                $scope.level_title.data.splice(k,1);
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to restore, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
     $scope.add_level = function(k){
 
     $scope.modal = {

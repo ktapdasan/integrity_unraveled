@@ -83,6 +83,17 @@ EOT;
           return ClassParent::update($sql);
     }
 
+    public function reactivate(){
+
+        $sql = <<<EOT
+                update titles
+                set archived = false
+                where pk = $this->pk;
+EOT;
+
+          return ClassParent::update($sql);
+    }
+
 
     public function update(){
         $title = $this->title;

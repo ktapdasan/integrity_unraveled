@@ -159,11 +159,62 @@ app.controller('Position', function(
                                         positionY: 'top', positionX: 'right'
                                     });
 
+                $scope.titles.data.splice(k,1);
+
             })
             .then(null, function(data){
                 
                 UINotification.error({
                                         message: 'An error occured, unable to delete, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+
+    $scope.restore_position = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to restore this position?',
+                save : 'Restore',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            var promise = TitlesFactory.restore_position($scope.titles.data[k]);
+            promise.then(function(data){
+                
+
+                $scope.archived=false;
+
+                UINotification.success({
+                                        message: 'You have successfully restored a position', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+
+                $scope.titles.data.splice(k,1);
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to restore, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'

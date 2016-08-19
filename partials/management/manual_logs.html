@@ -74,12 +74,12 @@ visibility: hidden;
                         <td>{{v.datecreated}}</td>
                         <td>{{v.time}}</td>
                         <td>
-                            <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
-                                {{v.status}} 
-                            </div>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
                                 <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
                                 <input type= "button" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
+                            </div>
+                            <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                                {{v.status}} 
                             </div>
                         </td>
                     </tr> 

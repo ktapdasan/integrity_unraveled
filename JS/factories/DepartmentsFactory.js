@@ -52,6 +52,23 @@ app.factory('DepartmentsFactory', function($http){
         return promise;
     };
 
+ factory.restore_department = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Departments/restore_department.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     factory.add_department = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Departments/add_department.php',

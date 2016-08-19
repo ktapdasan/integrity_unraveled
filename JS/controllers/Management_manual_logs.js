@@ -163,20 +163,20 @@ app.controller('Management_manual_logs', function(
             $scope.manual_logs.remarks= "APPROVED";
             $scope.manual_logs.type= $scope.manual_logs.data[k].type;
             $scope.manual_logs.time_log=$scope.manual_logs.data[k].time;
+            console.log( $scope.manual_logs.data[k].status);
             
             var promise = TimelogFactory.approve($scope.manual_logs);
             promise.then(function(data){
             
            
-
+               
                 UINotification.success({
                                         message: 'You have successfully approve manual log', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                employees_manual_logs();
-                       
+                $scope.manual_logs.data[k].status = "Approved";
 
             })
             .then(null, function(data){
@@ -245,7 +245,7 @@ app.controller('Management_manual_logs', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                employees_manual_logs();
+                $scope.manual_logs.data[k].status = "Disapproved";
                      
 
             })

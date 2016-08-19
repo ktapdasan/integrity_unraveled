@@ -52,6 +52,23 @@ app.factory('TitlesFactory', function($http){
         return promise;
     };
 
+     factory.restore_position = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Titles/restore_position.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
 
 
     factory.add_position = function(data){

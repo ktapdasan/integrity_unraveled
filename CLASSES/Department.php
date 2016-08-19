@@ -84,6 +84,18 @@ EOT;
     }
 
 
+    public function reactivate(){
+
+        $sql = <<<EOT
+                update departments set 
+                archived = false
+                where pk = $this->pk;
+EOT;
+
+          return ClassParent::update($sql);
+    }
+
+
     public function update_department(){
         $department = $this->department;
         $code = $this->code;

@@ -125,7 +125,9 @@ app.controller('Department', function(
     }
 
     $scope.delete_department = function(k){
-       
+       if($scope.filter.status == 'Inactive'){
+         $scope.restore_department(k);
+       }
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to delete this department?',
@@ -143,25 +145,75 @@ app.controller('Department', function(
         .then(function(value){
             return false;
         }, function(value){
+
+            
             var promise = DepartmentsFactory.delete_department($scope.departments.data[k]);
             promise.then(function(data){
                 
 
                 $scope.archived=true;
-
                 UINotification.success({
                                         message: 'You have successfully deleted department', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-
+                $scope.departments.data.splice(k,1);
 
             })
             .then(null, function(data){
                 
                 UINotification.error({
                                         message: 'An error occured, unable to delete, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    }
+
+    $scope.restore_department = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to restore this department?',
+                save : 'restore',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            
+            var promise = DepartmentsFactory.restore_department($scope.departments.data[k]);
+            promise.then(function(data){
+                
+
+                $scope.archived=true;
+                UINotification.success({
+                                        message: 'You have successfully restored department', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                $scope.departments.data.splice(k,1);
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to restore, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
