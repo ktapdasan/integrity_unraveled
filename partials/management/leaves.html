@@ -3,6 +3,28 @@
 .red {
     color: #ff0000;
 }
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+      font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
 </style>
 
 <div id="content2">
@@ -66,14 +88,14 @@
         <table id="datatables-example" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th><font size = 4 >Employee Name</font></th>
-                    <th><font size = 4>Type of Leave</font></th>
-                    <th><font size = 4>Start Date</font></th>
-                    <th><font size = 4>End Date</font></th>
-                    <th><font size = 4>Duration</font></th>
-                    <th><font size = 4>Category</font></th>
-                    <th><font size = 4>Reason</font></th>
-                    <th><font size = 4>Status</font></th>
+                    <th>Employee Name</th>
+                    <th>Type of Leave</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Duration</th>
+                    <th>Category</th>
+                    <th>Reason</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -90,8 +112,8 @@
                         {{v.status}} 
                         </div>
                         <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                            <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" /> 
-                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove"/> 
+                            <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="btn btn-primary"/> 
+                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="btn btn-danger"/> 
                         </div>
                     </td>
                 </tr> 
