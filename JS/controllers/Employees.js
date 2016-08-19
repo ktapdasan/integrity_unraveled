@@ -452,27 +452,11 @@ app.controller('Employees', function(
     
     $scope.export_employeelist = function(){
         var flag = true;
-        $scope.url ="./FUNCTIONS/Employees/employeelist_export.php?&status=Active";
-        if($scope.filter.department.length > 0){
-            $scope.url += "&departments_pk="+$scope.filter.department[0].pk;
-            flag=false;  
-        }
-        if($scope.filter.titles.length > 0){
-            if(flag === false) {
-                $scope.url += "+";
-            }
-            $scope.url += "&titles_pk="+$scope.filter.titles[0].pk;
-            if(flag === true) {
-                flag = false;
-            }
-        }
-        if($scope.filter.level_title.length > 0){
-            if(flag === false) {
-                $scope.url += "+";
-            }
-            $scope.url += "&levels_pk="+$scope.filter.level_title[0].pk;
-        }
-        window.open($scope.url);
+        list();
+        // $scope.url ="./FUNCTIONS/Employees/employeelist_export.php?&status=Active &department="+$scope.filter.department+'&titles='+$scope.filter.title+'&level_title='+$scope.filter.level_title;
+       
+        window.open('./FUNCTIONS/Employees/employeelist_export.php?&status=Active &departments_pk='+$scope.filter.department[0].pk+'&levels_pk='+$scope.filter.level_title[0].pk+'&titles_pk='+$scope.filter.titles[0].pk);
+   
     }
 
     $scope.level_changed = function(){

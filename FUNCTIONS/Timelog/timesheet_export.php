@@ -6,7 +6,6 @@ $data=array();
 foreach($_GET as $k=>$v){
 	$data[$k] = $v;
 }
-
 $class = new Employees($data);
 $data = $class->timesheet($data);
 

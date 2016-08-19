@@ -6,12 +6,11 @@ $data=array();
 foreach($_GET as $k=>$v){
 	$data[$k] = $v;
 }
-
 $class = new Employees($data);
 $data = $class->employeelist($data);
 
 $count=1;
-$header=	'#,Employee ID,First Name,Middle Name,Last Name,E-mail Address,Business E-mail Address,Position,Level,Department/s';
+$header=	'#,Employee ID,First Name,Middle Name,Last Name,E-mail Address,Business E-mail Address,Position,Level,Department';
 $body="";
 
 foreach($data['result'] as $k=>$v){
@@ -23,8 +22,8 @@ foreach($data['result'] as $k=>$v){
 			$v['last_name'].','.
 			$v['email_address'].','.
 			$v['business_email_address'].','.
-			$v['title'].','.
-			$v['level'].','.
+			$v['titles_pk'].','.
+			$v['levels_pk'].','.
 			$v['department']."\n";
 
 	$count++;
