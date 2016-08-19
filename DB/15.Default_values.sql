@@ -45,13 +45,13 @@ values
 	'work_days',
 	'{
 
-			"0" : false,
-			"1" : true,
-			"2" : true,
-			"3" : true,
-			"4" : true,
-			"5" : true,
-			"6" : false
+			"sunday" : false,
+			"monday" : true,
+			"tuesday" : true,
+			"wednesday" : true,
+			"thursday" : true,
+			"friday" : true,
+			"saturday" : false
 
 }'::jsonb
 );
