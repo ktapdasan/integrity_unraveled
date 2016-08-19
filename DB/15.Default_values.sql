@@ -1,7 +1,8 @@
 create table default_values(
 	pk serial primary key,
 	name text not null,
-	details jsonb not null
+	details jsonb not null,
+	archived boolean default false
 );
 alter table default_values owner to chrs;
 
@@ -43,6 +44,14 @@ values
 (
 	'work_days',
 	'{
-		"days" : ["Monday","Tuesday"]
-	}'::jsonb
+
+			"0" : false,
+			"1" : true,
+			"2" : true,
+			"3" : true,
+			"4" : true,
+			"5" : true,
+			"6" : false
+
+}'::jsonb
 );
