@@ -847,21 +847,6 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function fetch_work_days($info){
-
-        $work_days_pk = $info['work_days_pk'];
-        
-        $sql = <<<EOT
-                select 
-                    pk,
-                    name,
-                    details
-                from work_days
-                ;
-EOT;
-
-        return ClassParent::get($sql);
-    }
 
     public function update_permissions($data){
         foreach($data as $k=>$v){
