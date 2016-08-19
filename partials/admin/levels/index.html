@@ -6,8 +6,8 @@
 .hide {
     display:none;}
 .table1{
-    width: 96%;
-    margin:0 auto;
+    width: 50%;
+
     background-color:white;
     font-size:12px;
     margin-top:3px;
@@ -57,7 +57,7 @@ th {
     </div>
 
         <div class="responsive-table">
-            <table id="datatables-example" width="50%" cellspacing="0">
+            <table id="datatables-example" class="table1" width="50%" cellspacing="0">
                 <thead>
                     <tr>
                         <th><font size = 4>Levels</font></th>
@@ -68,9 +68,13 @@ th {
                     <tr ng-repeat="(k, v) in level_title.data" style="cursor:pointer;">
                         <td>{{v.level_title}}</td>
                         <td><center>
-                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:14px; height:14px" ng-click="edit_level(k)" title="Edit">
+
+
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_level(k)" title="Edit">
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_level(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_level(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
+
+
                         </center>
                         </td>
                     </tr>        
