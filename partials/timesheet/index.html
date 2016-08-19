@@ -26,7 +26,15 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
-
+.bck{
+    margin-top:-20px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 100%;
+    margin-left:-8px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}   
 </style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
@@ -48,15 +56,20 @@ th {
                     <option value="Date Submitted">Date Submitted</option>
                     <option value="Date Received">Date Received</option>
                 </select>
-                Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
-                Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
+                <div class = "bck">
+                    <div style="margin-top:25px;margin-left:30px;float:left;font-size: 16px; font-weight: bold;">
+                        Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                        Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
 
-                <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()">
-                <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_timesheet()">
+                        <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()">
+                        <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_timesheet()">
                 <!-- <input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()"> -->
+
+                    </div>
+                </div>
             </h4>
         </div>
-        <div style="height:25px; width:100%;">
+        <div style="height:15px; width:100%;">
 
         </div>
         <div class="responsive-table">
