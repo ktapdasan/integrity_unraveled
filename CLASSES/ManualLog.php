@@ -231,20 +231,7 @@ EOT;
                 )
                 ;
 EOT;
-<<<<<<< HEAD
-        $sql .= <<<EOT
-                insert into manual_log_status
-                (
-                    pk,
-                    status          
-                )
-                values
-                (    
-                    currval('manual_log_pk_seq'),
-                    'Pending'
-                )
-                ;
-EOT;
+
         $sql .= "commit;";
 
         return ClassParent::insert($sql);   
