@@ -35,6 +35,7 @@ app.factory('EmployeesFactory', function($http){
         return promise;
     };
 
+
     factory.profile = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/profile.php',

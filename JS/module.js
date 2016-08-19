@@ -72,6 +72,11 @@ app.config(function($routeProvider){
         controller: 'Admin_leave',
         templateUrl: 'partials/admin/leaves/index.html'
     })
+    .when('/admin/work_days',
+    {
+        controller: 'Work_days',
+        templateUrl: 'partials/admin/work_days/index.html'
+    })
     .when('/admin/permissions',
     {
         controller: 'EmployeesPermissions',

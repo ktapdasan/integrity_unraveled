@@ -492,6 +492,23 @@ EOT;
         $sql .= "commit;";
         return ClassParent::insert($sql);
     }
+
+
+    public function admin_leave_delete($info){
+
+
+        $leave_types_pk = $info['leave_types_pk'];
+
+
+        $sql .= <<<EOT
+                UPDATE  leave_types
+                set archived = True
+                where pk = $this->pk;
+EOT;
+        return ClassParent::insert($sql);
+
+    }
+
 }
 
 ?>

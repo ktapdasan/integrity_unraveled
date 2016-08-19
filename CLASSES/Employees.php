@@ -847,6 +847,7 @@ EOT;
         return ClassParent::get($sql);
     }
 
+
     public function update_permissions($data){
         foreach($data as $k=>$v){
             if(is_array($v)){

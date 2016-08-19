@@ -56,20 +56,21 @@ EOT;
     }
 
     public function update($extra){
-    foreach($extra as $k=>$v){
+        foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-    $pk = $extra['pk'];
-    $status = $extra['status'];
-    $employees_pk=$extra['employees_pk'];
-    $manual_logs_pk=$extra['manual_logs_pk'];
-    $type = $extra['type'];
-    $time_log= $extra['time_log'];
-
-    $remarks=strtoupper($extra['remarks']);
     
-         $sql = 'begin;';
-         $sql .= <<<EOT
+        $pk = $extra['pk'];
+        $status = $extra['status'];
+        $employees_pk=$extra['employees_pk'];
+        $manual_logs_pk=$extra['manual_logs_pk'];
+        $type = $extra['type'];
+        $time_log= $extra['time_log'];
+
+        $remarks=strtoupper($extra['remarks']);
+    
+        $sql = 'begin;';
+        $sql .= <<<EOT
                 update manual_logs_status set
                 
                     status
@@ -101,7 +102,7 @@ EOT;
                         ;
 EOT;
 
-         $sql .= <<<EOT
+        $sql .= <<<EOT
                 insert into notifications
                 (
                     notification,
@@ -119,46 +120,47 @@ EOT;
                 ;
 EOT;
         if($status=='Approved'){
-        if($type=='In'){
-            $random_hash = $this->generateRandomString(50);
-              $sql .= <<<EOT
-                insert into time_log
-                (   
-                    employees_pk,
-                    type,
-                    time_log,
-                    random_hash         
-                )
-                values
-                (    
-                    $employees_pk,
-                    '$type',
-                    '$time_log',
-                    '$random_hash'
-                )
-                ;
+            if($type=='In'){
+                $random_hash = $this->generateRandomString(50);
+                $sql .= <<<EOT
+                    insert into time_log
+                    (   
+                        employees_pk,
+                        type,
+                        time_log,
+                        random_hash         
+                    )
+                    values
+                    (    
+                        $employees_pk,
+                        '$type',
+                        '$time_log',
+                        '$random_hash'
+                    )
+                    ;
 EOT;
-        }else{
-             $sql .= <<<EOT
-                insert into time_log
-                (   
-                    employees_pk,
-                    type,
-                    time_log,
-                    random_hash         
-                )
-                values
-                (    
-                    
-                    $employees_pk,
-                    '$type',
-                    '$time_log',
-                    (select random_hash from time_log where time_log:: date = '$time_log')
-                )
-                ;
+            }else{
+                 $sql .= <<<EOT
+                    insert into time_log
+                    (   
+                        employees_pk,
+                        type,
+                        time_log,
+                        random_hash         
+                    )
+                    values
+                    (    
+                        
+                        $employees_pk,
+                        '$type',
+                        '$time_log',
+                        (select random_hash from time_log where time_log:: date = '$time_log')
+                    )
+                    ;
 EOT;
+            }
         }
-        }
+        
         $sql .= "commit;";
         return ClassParent::insert($sql);
 
@@ -229,10 +231,21 @@ EOT;
                 )
                 ;
 EOT;
-
-         $sql .= "commit;";
-
-
+<<<<<<< HEAD
+        $sql .= <<<EOT
+                insert into manual_log_status
+                (
+                    pk,
+                    status          
+                )
+                values
+                (    
+                    currval('manual_log_pk_seq'),
+                    'Pending'
+                )
+                ;
+EOT;
+        $sql .= "commit;";
 
         return ClassParent::insert($sql);   
 

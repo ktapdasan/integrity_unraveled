@@ -26,7 +26,7 @@ setcookie('commented', 'commented', time()+43200000, '/');
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
-	date_default_timezone_set('Etc/UTC');
+	date_default_timezone_set('Asia/Manila');
 
 	require '../../PHPMailer/PHPMailerAutoload.php';
 

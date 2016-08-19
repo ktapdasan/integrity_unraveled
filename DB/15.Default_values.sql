@@ -1,7 +1,8 @@
 create table default_values(
 	pk serial primary key,
 	name text not null,
-	details jsonb not null
+	details jsonb not null,
+	archived boolean default false
 );
 alter table default_values owner to chrs;
 
@@ -33,3 +34,24 @@ update leave_types set details = '{
 		"regularization" : 180,
 		"staggered" : "Staggered monthly"
 	}'::jsonb;
+
+insert into default_values
+(
+	name,
+	details
+)
+values
+(
+	'work_days',
+	'{
+
+			"sunday" : false,
+			"monday" : true,
+			"tuesday" : true,
+			"wednesday" : true,
+			"thursday" : true,
+			"friday" : true,
+			"saturday" : false
+
+}'::jsonb
+);
