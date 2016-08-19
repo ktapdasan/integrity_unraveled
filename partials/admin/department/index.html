@@ -3,10 +3,28 @@
 .red {
     color: #ff0000;
 }
-.hide {
-    display:none;
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
 }
 
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
 </style>
 
 
@@ -53,10 +71,7 @@
                         <td>{{v.code}}</td>
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_department(k)" title="Edit">
-                            
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_department(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'"> 
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="restore_department(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'"> 
-                                                
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_department(k)" title="Delete">                        
                         </center>
                         </td>
                     <tr ng-if="!departments.status">

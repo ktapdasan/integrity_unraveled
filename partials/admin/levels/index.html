@@ -4,8 +4,30 @@
     color: #ff0000;
 }
 .hide {
-    display:none;
+    display:none;}
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
 }
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;}
+  
+
 </style>
 
 <div id="content2">
@@ -46,9 +68,14 @@
                     <tr ng-repeat="(k, v) in level_title.data" style="cursor:pointer;">
                         <td>{{v.level_title}}</td>
                         <td><center>
+<<<<<<< Updated upstream
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:14px; height:14px" ng-click="edit_level(k)" title="Edit">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_level(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_level(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
+=======
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_level(k)" title="Edit">
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_level(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="restore_level(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_level(k)" title="Delete">                        
+>>>>>>> Stashed changes
                         </center>
                         </td>
                     </tr>        
