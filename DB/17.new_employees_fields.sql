@@ -2,13 +2,48 @@
 employees table new jsonb fields
 *****/
 
+create table employment_statuses
+(
+	pk serial primary key,
+	status text not null,
+	archived boolean default false
+);
+alter table employment_statuses owner to chrs;
+
+insert into employment_statuses (status)
+values
+(
+	'Probationary'
+),
+(
+	'Trainee'
+),
+(
+	'Contractual'
+),
+(
+	'Regular'
+),
+(
+	'Consultant'
+);
+
 create table employment_types
 (
 	pk serial primary key,
 	type text not null,
 	archived boolean default false
 );
-alter table employment_type owner to chrs;
+alter table employment_types owner to chrs;
+
+insert into employment_types (type)
+values
+(
+	'Exempt'
+),
+(
+	'Non-exempt'
+);
 
 create table allowances
 (
@@ -38,7 +73,8 @@ personal - {
 
 company - {
 	start_date
-	employment_types_pk - Regular/Probationary/Trainee	
+	employment_statuses_pk - Regular/Probationary/Contractual/Consultant/Trainee
+	employment_types_pk - Exempt/Non-exempt
 	salary - {
 		bank
 		account_number
@@ -46,6 +82,15 @@ company - {
 		allowances - {
 			allowances_pk - amount * can be multiple
 		}
+	}
+	work_schedule - {
+		sunday
+		monday
+		tuesday
+		wednesday
+		thursday
+		friday
+		saturday
 	}
 }
 

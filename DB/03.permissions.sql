@@ -16,6 +16,16 @@ values
 		"employees" : {
 			"list" : true,
 			"employees" : true
+		},	
+		"management" : {
+			"manual log" : true,
+			"leave" : true
+		}, 
+		"administration" : {
+			"departments" : true,
+			"positions" : true,
+			"levels" : true,
+			"permissions" : true
 		} 
 	}'
 );
