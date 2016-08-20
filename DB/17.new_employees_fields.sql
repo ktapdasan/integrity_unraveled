@@ -28,15 +28,15 @@ values
 	'Consultant'
 );
 
-create table employment_types
+create table employee_types
 (
 	pk serial primary key,
 	type text not null,
 	archived boolean default false
 );
-alter table employment_types owner to chrs;
+alter table employee_types owner to chrs;
 
-insert into employment_types (type)
+insert into employee_types (type)
 values
 (
 	'Exempt'
@@ -61,6 +61,49 @@ create table civil_statuses
 );
 alter table civil_statuses owner to chrs;
 
+create table allowances
+(
+	pk serial primary key,
+	allowance text not null,
+	archived boolean default false
+);
+alter table allowances owner to chrs;
+
+insert into allowances
+(
+	allowance
+)
+values
+(
+	'Transportation'
+),
+(
+	'Food'
+);
+
+create table salary_types
+(
+	pk serial primary key,
+	type text not null,
+	archived boolean default false
+);
+alter table salary_types owner to chrs;
+
+insert into salary_types
+(
+	type
+)
+values
+(
+	'Bank'
+),
+(
+	'Cash'
+),
+(
+	'Wire Transfer'
+);
+
 
 /*start of details fields*/
 /*
@@ -76,21 +119,63 @@ company - {
 	employment_statuses_pk - Regular/Probationary/Contractual/Consultant/Trainee
 	employment_types_pk - Exempt/Non-exempt
 	salary - {
-		bank
-		account_number
-		amount
+		salary_types_pk
+
+		//if type is bank//
+		details - {
+			bank
+			account_number
+			amount
+		}
+		//end of if type is bank//
+		
+		//if type is cash//
+		details - {
+			amount
+		}
+		//end of if type is cash//
+
+		//if type is wire transfer//
+		details - {
+			mode_of_payment
+			account_number
+			amount
+		}
+		//end of if type is wire transfer//
+
 		allowances - {
 			allowances_pk - amount * can be multiple
 		}
 	}
 	work_schedule - {
-		sunday
-		monday
-		tuesday
-		wednesday
-		thursday
-		friday
-		saturday
+		sunday : {
+			in 
+			out
+		}
+		monday : {
+			in 
+			out
+		}
+		tuesday : {
+			in 
+			out
+		}
+		wednesday : {
+			in 
+			out
+		}
+		thursday : {
+			in 
+			out
+		}
+		friday : {
+			in 
+			out
+		}
+		saturday : {
+			in 
+			out
+		}
 	}
 }
 
@@ -136,4 +221,109 @@ education - {
 		to
 	}
 }
+*/
+
+/*
+EXAMPLES
+
+update employees set 
+details=jsonb_set(details, '{company}', '
+{
+	"start_date" : "2016-01-18",
+	"employment_statuses_pk" : "3",
+	"employee_types_pk" : "2",
+	"departments_pk": "26", 
+	"levels_pk": "3", 
+	"titles_pk": "21", 
+	"supervisor": "28", 
+	"email_address": "jgfuntera.chrs@gmail.com", 
+	"business_email_address": "john.funtera@chrsglobal.com",
+	"salary" : {
+		"salary_types_pk" : "2",
+		"details" : {
+			"amount" : "20000"
+		},
+		"allowances" : {
+			"1" : "150",
+			"2" : "100"
+		}
+	},
+	"work_schedule" : {
+		"sunday" : null,
+		"monday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"tuesday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"wednesday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"thursday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"friday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"saturday" : null
+	},
+	"hours": "250"
+}', true) 
+where pk = 51;
+
+update employees set 
+details=jsonb_set(details, '{company}', '
+{
+	"start_date" : "2016-01-18",
+	"employment_statuses_pk" : "4",
+	"employee_types_pk" : "1",
+	"departments_pk": "26", 
+	"levels_pk": "4", 
+	"titles_pk": "15", 
+	"supervisor": "10", 
+	"email_address": "rafael.pascual@chrsglobal.com", 
+	"business_email_address": "rpascual0812@gmail.com",
+	"salary" : {
+		"salary_types_pk" : "1",
+		"details" : {
+			"bank" : "BDO",
+			"account_number" : "100010001",
+			"amount" : "1000000"
+		},
+		"allowances" : {
+			"1" : "100",
+			"2" : "100"
+		}
+	},
+	"work_schedule" : {
+		"sunday" : null,
+		"monday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"tuesday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"wednesday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"thursday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"friday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"saturday" : null
+	}
+}', true) 
+where pk = 28;
 */
