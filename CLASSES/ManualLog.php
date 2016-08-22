@@ -66,6 +66,7 @@ EOT;
         $manual_logs_pk=$extra['manual_logs_pk'];
         $type = $extra['type'];
         $time_log= $extra['time_log'];
+        $approver_pk= $extra['approver_pk'];
 
         $remarks=strtoupper($extra['remarks']);
     
@@ -96,7 +97,7 @@ EOT;
                         
                             created_by
                         =
-                            $employees_pk
+                            $approver_pk
                         
                        where manual_logs_pk = $pk
                         ;
@@ -115,7 +116,7 @@ EOT;
                     'Manual log filed $status',
                     'manual_log',
                     $pk,
-                    $employees_pk
+                    $approver_pk
                 )
                 ;
 EOT;
@@ -154,7 +155,7 @@ EOT;
                         $employees_pk,
                         '$type',
                         '$time_log',
-                        (select random_hash from time_log where time_log:: date = '$time_log')
+                        (select random_hash from time_log where time_log:: date = '$time_log' and employees_pk=$employees_pk)
                     )
                     ;
 EOT;
@@ -249,6 +250,7 @@ EOT;
        $sql = <<<EOT
                 select
                     pk, 
+                    employees_pk,
                     (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     time_log :: timestamp as time,
                     date_created::date as datecreated,
