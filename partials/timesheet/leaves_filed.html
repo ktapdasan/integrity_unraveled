@@ -58,8 +58,18 @@ th {
     border: 1px solid #c6c6c6;
 }
 
-.centerDiv { width:1000px;padding-left:115px; margin: 0 auto; }
+.centerDiv { width:1000px;padding-left:105px; margin: 0 auto; }
 
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 97%;
+    margin-top:20px;
+    margin-left:20px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
 
 </style>
 
@@ -87,7 +97,7 @@ th {
         <div style="clear:both;"></div>
 
     </div>
-
+    <div class ="bck">
     <div style="font-size: 16px; font-weight: bold;  width:1000px; margin: 0 auto; margin-top:20px;
     ">
         <div style="float:left;">
@@ -111,16 +121,21 @@ th {
                 max-height="200px" 
                 >
             </div>
-            <div style="clear:both;"></div>
-        </div>
-        
-        <div style="float:left; margin-left:10px;">
+                 <div style="float:left; margin-left:10px;">
             <input type="button" class="btn btn-primary" value="SEARCH" ng-click="leaves_filed()" />
         </div>
 
         <div style="float:left; margin-left:10px;">
             <input type="button" class="btn btn-add" value="File Leave" ng-click="add_leave()" />
         </div>
+         </div>
+    </div>
+            <div style="clear:both;"></div>
+  
+   
+
+   
+        
         <div style="clear:both;"></div>
 
 
