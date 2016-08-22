@@ -125,9 +125,7 @@ app.controller('Department', function(
     }
 
     $scope.delete_department = function(k){
-       if($scope.filter.status == 'Inactive'){
-         $scope.restore_department(k);
-       }
+       
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to delete this department?',
