@@ -4,7 +4,7 @@
 }
 .table1{
     width: 96%;
-    margin:0 auto;
+    margin:0 auto; 
     background-color:white;
     font-size:12px;
     margin-top:3px;
@@ -24,6 +24,16 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 100%;
+    margin-top:20px;
+    margin-left:1px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+} 
 </style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
@@ -38,21 +48,24 @@ th {
         </div>
     </div>
     <div class="panel">
-        <div style="padding-left: 20px; padding-top:20px;">
+        <div class="bck">
+        <div style="padding-left: 10px; padding-top:20px;">
+
             <div style="font-size: 18px;">
-                <div style="margin-left:-20px;float:left; margin-right:10px;">
-                    Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                <div style="float:left; margin-top: -15px;margin-left:5px;margin-right:20px;">
+                    <label style="float:left;font-size: 13px;">Date From:</label><br>
+                    <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:155px;"/>
                 </div>
-                <div style="float:left; margin-right:10px;">
-                    Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
+                <div style="float:left; margin-top: -15px;margin-left:-13px;margin-right:5px;">
+                    <label style="float:left;font-size: 13px;">Date To: </label><br>
+                     <input ng-model="filter.dateto" type="date" id="dateto" style="width:155px;"/>
                 </div>
-                <div style="float:left; margin-right:10px;">
-                    <button type="button" class="btn btn-success btn-lg" style="padding: 4px 11px;" ng-click="upload_excel()"> UPLOAD EXCEL <span class="fa fa-file-excel-o"></span></button>
+                <div style="float:left; margin-right:10px;margin-top:12px;">
+                    <button type="button" class="btn btn-success btn-sm" style="padding: 4px 11px;" ng-click="upload_excel()"> UPLOAD EXCEL <span class="fa fa-file-excel-o"></span></button>
                 </div>
 
-                <div class="col-md-11" style="padding-top:30px;">
-                    <div style="float:left; margin-top: -10px;margin-left:-40px;margin-right:10px;">
-                        <label style="float:left;font-size: 15px;">Select an Employee</label><br>
+                    <div style="float:left; margin-top: -17px;margin-left:-5px;margin-right:10px;">
+                        <label style="float:left;font-size: 13px;">Select an Employee</label><br>
                         <div
                             isteven-multi-select
                             input-model="employees"
@@ -61,14 +74,14 @@ th {
                             item-label="icon name maker"
                             tick-property="ticked"
                             selection-mode="single"
-                            style="width:250px; float:left;"
+                            style="width:150px; float:left;"
                             max-height="200px" 
 
                                 >
                         </div></br>
                     </div>
-                    <div style="float:left; margin-top: -10px;margin-right:10px;">
-                        <label style="float:left; font-size: 15px;">Select a Department</label><br>
+                    <div style="float:left; margin-top: -17px;margin-right:10px;">
+                        <label style="float:left; font-size: 13px;">Select a Department</label><br>
                         <div
                             isteven-multi-select
                             input-model="department.data"
@@ -77,16 +90,16 @@ th {
                             item-label="icon name maker"
                             tick-property="ticked"
                             selection-mode="single"
-                            style="width:250px; float:left;"
+                            style="width:150px; float:left;"
                             max-height="200px"
                                 >
                         </div>
                         </br>
                     </div>
                     
-                    <div style="float:left; margin-top: -10px;margin-right:10px;">
-                        <label style="float:left; font-size: 15px;">Select a Level</label><br>
-                        <br>
+                    <div style="float:left; margin-top: -17px;margin-right:10px;">
+                        <label style="float:left; font-size: 13px;">Select a Level</label><br>
+                        
                         <div
                             isteven-multi-select
                             input-model="levels.data"
@@ -95,7 +108,7 @@ th {
                             item-label="icon name maker"
                             tick-property="ticked"
                             selection-mode="single"
-                            style="width:250px; float:left;margin-top: -23px"
+                            style="width:150px; float:left;"
                             max-height="200px"
                                 >
                         </div>
@@ -104,9 +117,9 @@ th {
 
                         
 
-                    <div style="float:left; margin-top: -10px;">
-                        <label style="float:left; font-size: 15px;">Select a Position</label><br>
-                        <br>
+                    <div style="float:left; margin-top: -17px;margin-right:6px;">
+                        <label style="float:left; font-size: 13px;">Select a Position</label><br>
+                    
                         <div
                         isteven-multi-select
                         input-model="titles.data"
@@ -115,22 +128,20 @@ th {
                         item-label="icon name maker"
                         tick-property="ticked"
                         selection-mode="single"
-                        style="width:250px;float:left;margin-top: -23px"
+                        style="width:150px;float:left;"
                         max-height="200px"
                                 >
                         </div>
                         </br>
                         </br>
                     </div>
-                </div>
-                <div class="col-md-1"style="float:right; margin-right:-20px; display:inline;">
-                    <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()" style="margin-left:-110px;margin-top: 48px;">
-                    <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_timesheet()" style="margin-top: 48px;">
-                </div>
+                    <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_timesheet()" style="float:left; margin-right:8px;margin-top:10px;">
+                    <input type="button" class="btn btn-success btn-sm" value="EXPORT" ng-click="export_timesheet()" style="float:left;margin-top:10px;">
+            </div>   
             </div>
         </div>
     </div>
-    <div style="height:50px; width:100%;">
+    <div style="height:10px; width:100%;">
     
     </div>
     <div class="responsive-table">

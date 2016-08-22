@@ -6,8 +6,24 @@
     visibility: hidden;
 }
 .work{margin: 0 auto;}
-</style>
 
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+</style>
+ 
 <div id="content2">
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
@@ -22,7 +38,7 @@
     </div>
 
 
-    <table id="datatables-example" width="20%" cellspacing="0">
+    <table id="table1" width="20%" cellspacing="0">
             <thead>
                 <tr>
                     <th><font size = 4>Work Days</font></th>
@@ -60,7 +76,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="(k, v) in default_values.data" style="cursor:pointer;">
-                     <div style="padding-left: 100px; margin-top: 450px; position:absolute">
+                     <div style="padding-left: 100px; margin-top: 480px; position:absolute">
                         <button ng-click = "save()" class=" btn btn-add"><h5> Save </h5></button>
         </div>
     </tr>
