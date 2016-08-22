@@ -1,6 +1,15 @@
 app.factory('TimelogFactory', function($http){
     var factory = {};           
 
+    factory.get_current_date = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/current_date.php',
+            method: 'GET'
+        })
+ 
+        return promise;
+    };
+
     factory.last_log = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/last_log.php',
@@ -238,6 +247,23 @@ app.factory('TimelogFactory', function($http){
     factory.myemployees_manual_logs= function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/myemployees_manual_logs.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.file_overtime= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/file_overtime.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

@@ -241,12 +241,6 @@ app.controller('Management_leave', function(
     //     });
     // }
 
-
-
-
-
-
-
     $scope.respond = function(k, type){
 
         if(type == "approve"){
@@ -305,8 +299,6 @@ app.controller('Management_leave', function(
                 });                                  
             });
         }
-
-
         else {
 
                 check_filed_leave(k);

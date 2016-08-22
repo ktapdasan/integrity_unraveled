@@ -10,6 +10,10 @@
     width: 350px;
 }
 
+.ngdialog.ngdialog-theme-plain.custom-widthfourfifty .ngdialog-content {
+    width: 450px;
+}
+
 .ngdialog.ngdialog-theme-plain.custom-widtheightfifty .ngdialog-content {
     width: 850px;
 }

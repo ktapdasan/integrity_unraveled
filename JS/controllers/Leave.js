@@ -35,6 +35,8 @@ app.controller('Leave', function(
 
     $scope.isEndDate = true;
 
+    $scope.workdays = [];
+
     init();
 
     function init(){
@@ -55,13 +57,14 @@ app.controller('Leave', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+            $scope.profile.details = JSON.parse($scope.profile.details);
+            $scope.profile.permission = JSON.parse($scope.profile.permission);
+            $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
 
             DEFAULTDATES();
+            workdays();
             leave_types();
             leaves_filed();
-
-
-            //fetch_myemployees(); 
         })         
     } 
 
@@ -157,7 +160,7 @@ app.controller('Leave', function(
         // $scope.modal.total.count = 0;
         
         if($scope.modal.category == "Paid"){
-            var d = countCertainDays([1,2,3,4,5],date_started,date_ended); //CODE_0001
+            var d = countCertainDays($scope.workdays,date_started,date_ended);
 
             $scope.modal.total.count = d;
 
@@ -212,11 +215,9 @@ app.controller('Leave', function(
         $scope.modal.date_started = new Date();
         $scope.modal.date_ended = new Date();
 
-        
-
         ngDialog.openConfirm({
             template: 'LeaveModal',
-            className: 'ngdialog-theme-plain custom-widththreefifty',
+            className: 'ngdialog-theme-plain custom-widthfourfifty',
             preCloseCallback: function(value) {
                 
                 $scope.duration_changed();
@@ -238,7 +239,7 @@ app.controller('Leave', function(
                                 '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
                             '</button></div>',
                     plain: true,
-                    className: 'ngdialog-theme-plain custom-widththreefifty'
+                    className: 'ngdialog-theme-plain custom-widthfourfifty'
                 });
 
                 return nestedConfirmDialog;
@@ -266,7 +267,7 @@ app.controller('Leave', function(
             $scope.modal.total_days = $scope.modal.total.count;
 
 
-            // var workdays = countCertainDays([1,2,3,4,5],date_started,date_ended); //CODE_0001
+            // var workdays = countCertainDays($scope.workdays,date_started,date_ended);
             // console.log($scope.modal.remaining.count);
             // console.log(satsun);
             //return false;
@@ -295,7 +296,7 @@ app.controller('Leave', function(
                 promise.then(function(data){
                     $scope.profile = data.data.result[0];
 
-                    $scope.leave_balances = JSON.parse(data.data.result[0].leave_balances);
+                    $scope.profile.leave_balances = JSON.parse(data.data.result[0].leave_balances);
                     leaves_filed();
                     leave_types();
                 })
@@ -337,7 +338,7 @@ app.controller('Leave', function(
                                         });
             }
 
-            var a = JSON.parse($scope.profile.leave_balances);
+            var a = $scope.profile.leave_balances;
             
             $scope.leave_balances = {};
             for(var i in $scope.leave_types.data){
@@ -355,7 +356,7 @@ app.controller('Leave', function(
         var date1 = new Date($scope.leaves_filed.data[k].date_started);
         var date2 = new Date($scope.leaves_filed.data[k].date_ended);
 
-        var workdays = countCertainDays([1,2,3,4,5],date1,date2); //CODE_0001
+        var workdays = countCertainDays($scope.workdays,date1,date2);
        
         $scope.modal = {
                 title : '',
@@ -477,7 +478,6 @@ app.controller('Leave', function(
         if($scope.filter.leave_type && $scope.filter.leave_type[0]){
             filter.leave_types_pk = $scope.filter.leave_type[0].pk;
         }
-
         
         var promise = LeaveFactory.leaves_filed(filter);
         promise.then(function(data){
@@ -489,5 +489,39 @@ app.controller('Leave', function(
         }); 
     }
 
-    
+    function workdays(){
+        var a = $scope.profile.details.company.work_schedule;
+
+        for(var i in a){
+            if(a[i] != null){
+                $scope.workdays.push(get_day_num(i));
+            }
+        }
+    }
+
+    function get_day_num(day){
+        var num;
+        if(day == "sunday"){
+            num = 0;
+        }
+        else if(day == "monday"){
+            num = 1;
+        }
+        else if(day == "tuesday"){
+            num = 2;
+        }
+        else if(day == "wednesday"){
+            num = 3;
+        }
+        else if(day == "thursday"){
+            num = 4;
+        }
+        else if(day == "friday"){
+            num = 5;
+        }
+        else if(day == "saturday"){
+            num = 6;
+        }
+        return num;
+    }
 });

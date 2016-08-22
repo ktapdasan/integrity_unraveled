@@ -3,12 +3,10 @@ require_once('../connect.php');
 require_once('../../CLASSES/Default_values.php');
 
 $class = new Default_values(
-						NULL,
-                        NULL,
-                        NULL
-
-
-			);
+								NULL,
+		                        NULL,
+		                        NULL
+							);
 
 $data = $class->update_work_days($_POST);
 

@@ -3,6 +3,7 @@ app.controller('Timelogs', function(
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
+                                        CutoffFactory,
                                         md5,
                                         UINotification,
                                         ngDialog,
@@ -11,7 +12,7 @@ app.controller('Timelogs', function(
 
     $scope.profile = {};
     $scope.filter = {};
-    $scope.timesheet_data = [];
+    $scope.timesheet = {};
     $scope.employee = [];
     $scope.employeelist_data = [];
     $scope.titles={};
@@ -29,12 +30,14 @@ app.controller('Timelogs', function(
             var _id = md5.createHash('pk');
             $scope.pk = data.data[_id];
 
-            get_profile();
+            
             get_positions();
             get_department();
             get_levels();
             employees();
 
+            //employeelist();
+            get_profile();
             
         })
         .then(null, function(data){
@@ -51,11 +54,12 @@ app.controller('Timelogs', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
-            DEFAULTDATES();
-            employeelist();
+            $scope.profile.details = JSON.parse($scope.profile.details);
+            $scope.profile.permission = JSON.parse($scope.profile.permission);
+            $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
+            //DEFAULTDATES();
             
-            timesheet();
-            
+            fetch_cutoff();
         })   
     } 
 
@@ -104,6 +108,44 @@ app.controller('Timelogs', function(
         return monday;
     }
 
+    function fetch_cutoff(){  
+        var promise = CutoffFactory.fetch_dates();
+        promise.then(function(data){
+            var a = data.data.result[0];
+            a.dates = JSON.parse(a.dates);
+            
+            var new_date = new Date();
+            var dd = new_date.getDate();
+            var mm = new_date.getMonth()+1; //January is 0!
+            var yyyy = new_date.getFullYear();
+
+            if(a.cutoff_types_pk == "2"){ //bimonthly
+                var first = a.dates.first;
+                var second = a.dates.second;
+                
+                if(dd >= parseInt(second.from)){
+                    $scope.filter.datefrom = new Date(mm+"/"+second.from+"/"+yyyy);
+                    $scope.filter.dateto = new Date(mm+"/"+second.to+"/"+yyyy);
+                }
+                else {
+                    $scope.filter.datefrom = new Date(mm+"/"+first.from+"/"+yyyy);
+                    $scope.filter.dateto = new Date(mm+"/"+first.to+"/"+yyyy);   
+                }
+            }
+            else { //monthly
+                $scope.filter.datefrom = new Date(mm+"/"+a.dates.from+"/"+yyyy);
+                $scope.filter.dateto = new Date(mm+"/"+a.dates.to+"/"+yyyy);
+            }
+
+            //fetch_myemployees();
+            timesheet();
+        })
+        .then(null, function(data){
+
+            //timesheet();
+        });
+    }
+
     function employees(){
         var filter = {
             archived : 'false'
@@ -133,13 +175,12 @@ app.controller('Timelogs', function(
         var mm = datefrom.getMonth()+1; //January is 0!
         var yyyy = datefrom.getFullYear();
 
-        $scope.filter.newdatefrom=yyyy+'-'+mm+'-01';
-
         var dateto = new Date($scope.filter.dateto);
         var Dd = dateto.getDate();
         var Mm = dateto.getMonth()+1; //January is 0!
         var Yyyy = dateto.getFullYear();
 
+        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
 
@@ -167,14 +208,35 @@ app.controller('Timelogs', function(
 
         var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
-            $scope.timesheet_data = data.data.result;
-            $scope.timesheet_data.status = true;
+            $scope.timesheet.data = data.data.result;
+            $scope.timesheet.status = true;
+
+            var a = getDates( datefrom, dateto );
+            var new_timesheet=[];
+
+            for(var i in a){
+                mm = a[i].getMonth()+1;
+                date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
+
+                for(var j in $scope.timesheet.data){
+                    console.log($scope.timesheet.data[j]);
+                }
+            }
+
 
         })  
         .then(null, function(data){
-            $scope.timesheet_data.status = false;
+            $scope.timesheet.status = false;
             
         });
+    }
+
+    function getDates( d1, d2 ){
+        var oneDay = 24*3600*1000;
+        for (var d=[],ms=d1*1,last=d2*1;ms<=last;ms+=oneDay){
+            d.push( new Date(ms) );
+        }
+        return d;
     }
 
 
@@ -186,9 +248,20 @@ app.controller('Timelogs', function(
             $scope.filter.employees_pk = $scope.filter.employee[0].pk;
         }
 
-        window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk);
+        var datefrom = new Date($scope.filter.datefrom);
+        var dd = datefrom.getDate();
+        var mm = datefrom.getMonth()+1; //January is 0!
+        var yyyy = datefrom.getFullYear();
 
-        
+        var dateto = new Date($scope.filter.dateto);
+        var Dd = dateto.getDate();
+        var Mm = dateto.getMonth()+1; //January is 0!
+        var Yyyy = dateto.getFullYear();
+
+        $scope.filter.datefrom=yyyy+'-'+mm+'-'+dd;
+        $scope.filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
+
+        window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk);
     }
 
 
@@ -224,8 +297,6 @@ app.controller('Timelogs', function(
 
         
     }
-
-
 
     function get_positions(){
         var promise = TimelogFactory.get_positions();

@@ -495,10 +495,7 @@ EOT;
 
 
     public function admin_leave_delete($info){
-
-
         $leave_types_pk = $info['leave_types_pk'];
-
 
         $sql .= <<<EOT
                 UPDATE  leave_types
@@ -509,6 +506,38 @@ EOT;
 
     }
 
+    public function approved_leaves(){
+        $where="";
+        if($this->employees_pk && $this->employees_pk != 'undefined'){
+            $where = "where employees_pk = ".$this->employees_pk;
+        }
+
+        $sql .= <<<EOT
+                with Q as
+                (
+                    select
+                        leave_filed.pk,
+                        employees_pk,
+                        date_started::date as date_started,
+                        date_ended::date as date_ended,
+                        (select name from leave_types where pk = leave_filed.leave_types_pk) as name,
+                        (select status from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1) as status
+                    from leave_filed
+                    $where 
+                )
+                select
+                    employees_pk,
+                    date_started,
+                    date_ended,
+                    name,
+                    status
+                from Q where status = 'Approved'
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+
+    }
 }
 
 ?>

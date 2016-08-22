@@ -147,7 +147,7 @@ th {
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="(k, v) in timesheet_data" style="cursor:pointer;" ng-if="timesheet_data.status">
+                <tr ng-repeat="(k, v) in timesheet.data" style="cursor:pointer;" ng-if="timesheet.status">
                     <td>{{v.employee_id}}</td>
                     <td>{{v.employee}}</td>
                     <td>{{v.log_date2}}</td>
@@ -155,7 +155,7 @@ th {
                     <td ng-class="(v.log_in == 'None')?'red':''">{{v.log_in}}</td>
                     <td ng-class="(v.log_out == 'None')?'red':''">{{v.log_out}}</td>
                 </tr>
-                <tr ng-if="!timesheet_data.status" style= "text-align: center;">
+                <tr ng-if="!timesheet.status" style= "text-align: center;">
                     <td colspan = "9">No Data Found</td>
                 </tr>
 

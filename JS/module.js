@@ -107,3 +107,14 @@ app.config(function($routeProvider){
         redirectTo: '/'
     })
 })
+
+function contains(obj, str) {
+    var i = obj.length;
+    while (i--) {
+        if (obj[i] === str) {
+            return true;
+        }
+    }
+
+    return false;
+}

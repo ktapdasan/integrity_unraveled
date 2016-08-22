@@ -17,8 +17,9 @@ app.controller('Dashboard', function(
     $scope.profile = {};
     $scope.greetings = "Good Morning";
     $scope.logtype = "login";
-    $scope.lastlog = "";
+    $scope.lastlog = {};
     $scope.logbutton = false;
+    $scope.overtime = false;
 
     $scope.pk={};
     //$scope.notification = {};
@@ -27,6 +28,8 @@ app.controller('Dashboard', function(
     $scope.font;
     $scope.read={};
     $scope.headerBackground="stop";
+
+    $scope.current_date={};
 
     init();
     //get_notifs();
@@ -64,9 +67,20 @@ app.controller('Dashboard', function(
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+            $scope.profile.details = JSON.parse($scope.profile.details);
+            $scope.profile.permission = JSON.parse($scope.profile.permission);
+            $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
 
             get_last_log_today();
+            get_current_date();
         })   
+    }
+
+    function get_current_date(){
+        var promise = TimelogFactory.get_current_date();
+        promise.then(function(data){
+            $scope.current_date = data.data;
+        });
     }
 
     function set_greetings(){
@@ -89,15 +103,16 @@ app.controller('Dashboard', function(
 
             var date = moment(new Date(log.date));
 
+            $scope.lastlog.date = log.date + " " + log.time;
             if(log.type == 'In'){
                 $scope.logtype = "logout";
 
-                $scope.lastlog = "Your last log in was on " + date.format('dddd, MMMM Do YYYY') + " " + log.time;
+                $scope.lastlog.message = "Your last log in was on " + date.format('dddd, MMMM Do YYYY') + " " + log.time;
             }
             else {
                 $scope.logtype = "login";
 
-                $scope.lastlog = "Your last log out was on " + date.format('dddd, MMMM Do YYYY') + " " + log.time;
+                $scope.lastlog.message = "Your last log out was on " + date.format('dddd, MMMM Do YYYY') + " " + log.time;
             }
         })
         .then(null, function(data){
@@ -111,15 +126,16 @@ app.controller('Dashboard', function(
         promise.then(function(data){
             var log = data.data.result[0];
             
+            $scope.lastlog.date = log.date + " " + log.time;
             if(log.type == 'In'){
                 $scope.logtype = "logout";
                 $scope.random_hash = log.random_hash;
-                $scope.lastlog = "Your last log in was today " + log.time;
+                $scope.lastlog.message = "Your last log in was today " + log.time;
             }
             else {
                 $scope.logtype = "login";
 
-                $scope.lastlog = "Your last log out was today " + log.time;
+                $scope.lastlog.message = "Your last log out was today " + log.time;
             }
         })
         .then(null, function(data){
@@ -154,6 +170,7 @@ app.controller('Dashboard', function(
             }, function(value){
                 $scope.logbutton = true;
                 filter.random_hash = $scope.random_hash;
+
                 var promise = TimelogFactory.submit_log(filter);
                 promise.then(function(data){
                     get_last_log_today();
@@ -164,6 +181,8 @@ app.controller('Dashboard', function(
                                     delay : 5000,
                                     positionY: 'top', positionX: 'right'
                                 });
+
+                    is_overtime();
 
                     var to = $timeout(function() {
                         $timeout.cancel(to);
@@ -246,6 +265,51 @@ app.controller('Dashboard', function(
         else {
             $scope.logtype = "logout";
         }
+    }
+
+    function is_overtime(){
+        $scope.modal = {
+            title : 'It seems that you have excess hours, please file an overtime',
+            save : 'File Overtime',
+            close : 'Maybe later'
+        };
+
+        ngDialog.openConfirm({
+            template: 'OvertimeModal',
+            className: 'ngdialog-theme-plain',
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+            var a = $scope.profile.details.company.work_schedule;
+
+            var filter = {
+                employees_pk : $scope.profile.pk,
+                remarks : $scope.modal.remarks,
+                last_log : $scope.lastlog.date,
+                work_schedule : JSON.stringify(a[$scope.current_date.day.toLowerCase()])
+            };
+            
+            var promise = TimelogFactory.file_overtime(filter);
+            promise.then(function(data){
+                UINotification.success({
+                                message: 'Your overtime has been filed.', 
+                                title: 'SUCCESS', 
+                                delay : 5000,
+                                positionY: 'top', positionX: 'right'
+                            });
+            })
+            .then(null, function(data){
+                UINotification.error({
+                                message: 'An error occurred while saving your overtime. Please try again.', 
+                                title: 'ERROR', 
+                                delay : 5000,
+                                positionY: 'top', positionX: 'right'
+                            });
+            });
+        });
     }
 
     // $scope.show_notifs = function(){

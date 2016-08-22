@@ -174,9 +174,6 @@ app.factory('LeaveFactory', function($http){
         return promise;
     };
 
-
-    
-
     factory.myemployees = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Leave/myemployees.php',
@@ -214,6 +211,23 @@ app.factory('LeaveFactory', function($http){
     factory.update_default_values = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Leave/update_default_values.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.approved_leaves = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Leave/approved_leaves.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

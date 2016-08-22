@@ -22,7 +22,6 @@ $extra['duration'] 			= $_POST['duration'];
 $extra['leave_types_pk'] 	= $_POST['leave_types_pk'];
 $extra['workdays'] 			= $_POST['workdays'];
 $extra['remarks'] 			= $_POST['remarks'];
-print_r($_POST);
 
 $data = $class->update($extra);
 

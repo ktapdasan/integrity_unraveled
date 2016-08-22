@@ -35,6 +35,10 @@ th {
     border-radius: 5px;
     border:1px solid #dbd9d9;
 }   
+
+tr:hover {
+    background-color: #cfcece;
+}
 </style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
@@ -62,9 +66,9 @@ th {
                         Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
 
                         <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_timesheet()">
+                        <!--
                         <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_timesheet()">
-                <!-- <input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()"> -->
-
+                        -->
                     </div>
                 </div>
             </h4>
@@ -81,13 +85,14 @@ th {
                         <th>Log In</th>
                         <th>Log Out</th>
                         <th># of Hours</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in timesheet.data">
+                    <tr ng-repeat="(k, v) in timesheet.data" >
                         <td>{{v.log_date}}</td>
                         <td>{{v.log_day}}</td>
-                        <td ng-class="(v.login == 'None')?'':''">
+                        <td>
                             <span ng-if = "v.login == 'None'">
                                 <a ng-click="open_manual_log('In', k)">
                                     <font color="red" title = "File Manual Log"><u>None</u></font>
@@ -97,7 +102,7 @@ th {
                                 {{v.login}}
                             </span>
                         </td>
-                        <td ng-class="(v.logout == 'None')?'':''">
+                        <td>
                             <span ng-if="v.logout == 'None'">
                                 <a ng-click="open_manual_log('Out', k)">
                                     <font color="red" title = "File Manual Log"><u>None</u></font>
@@ -108,6 +113,7 @@ th {
                             </span>
                         </td>
                         <td>{{v.hrs}}</td> 
+                        <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
                     </tr>               
                     <!-- <tr ng-if="!timesheet.status" style= "text-align: center;">
                         <td colspan="9" style="text-align:center;">No Data Found</td>

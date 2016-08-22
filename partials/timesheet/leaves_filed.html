@@ -67,18 +67,18 @@ th {
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
             <div class="col-md-12">
-                <h2 class="animated fadeInLeft">Leave</h2>
+                <h2 class="animated fadeInLeft">Leaves</h2>
                 <p class="animated fadeInDown">
                     <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
                     <a href="#/timesheet">Timesheet</a> <span class="fa-angle-right fa"></span> 
-                    Leave
+                    Leaves
                 </p>
             </div>
         </div>
     </div>
 
     <div class="centerDiv">
-  
+    
         <div class="leave-square" ng-repeat="(k, v) in leave_balances">
             <div class="leave-circle">{{v}}</div>
             <label>{{k}}</label>
@@ -160,7 +160,7 @@ th {
                             </div></td>
                     </tr>
                     <tr ng-if="!leaves_filed.status" style= "text-align: center;">
-                        <td colspan = "9">No Data Found</td>
+                        <td colspan = "9" style="text-align:center;">No Data Found</td>
                     </tr>         
                 </tbody>
             </table>

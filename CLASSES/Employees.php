@@ -374,7 +374,7 @@ EOT;
                     ))::text,'N/A') as hrs
                 from Q as logs
                 group by employees_pk, employee, employee_id, log_date, log_day
-                order by logs.log_date
+                order by logs.log_date, employee
                 ;
 EOT;
 
@@ -408,13 +408,12 @@ EOT;
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
-
-        $lvl=$data[levels_pk];
-        $dept=$data[departments_pk];
-        $posi=$data[titles_pk];
+        $lvl=$data['levels_pk'];
+        $dept=$data['departments_pk'];
+        $posi=$data['titles_pk'];
         $where = "";
 
-        if($data['employees_pk']){
+        if($data['employees_pk'] && $data['employees_pk'] != 'undefined'){
             $where .= "and employees_pk = ". $data['employees_pk']; 
         }
 
@@ -438,10 +437,8 @@ EOT;
             $where.="";
         }
 
-        $datefrom = $data['newdatefrom'];
-        $dateto = $data['newdateto'];
-
-
+        $datefrom = $data['datefrom'];
+        $dateto = $data['dateto'];
 
         $sql = <<<EOT
                 with Q as
@@ -452,8 +449,8 @@ EOT;
                         (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
                         type,
                         time_log::date as log_date,
-                        time_log::time(0) as log_time
-                        
+                        time_log::time(0) as log_time,
+                        employees.details->'company'->'work_schedule' as work_schedule
                     from time_log
                     left join employees on (employees.pk = time_log.employees_pk)
                     where time_log::date between '$datefrom' and '$dateto'
@@ -463,6 +460,7 @@ EOT;
                     employees_pk,
                     employee_id,
                     employee,
+                    work_schedule,
                     log_date,
                     to_char(log_date, 'dd-Mon-YYYY') as log_date2,
                     to_char(log_date, 'Day') as log_day,
@@ -491,7 +489,7 @@ EOT;
                         and Q.log_date = logs.log_date and Q.type = 'In'
                     ))::text,'N/A') as hrs
                 from Q as logs
-                group by employees_pk, employee, employee_id, log_date
+                group by employees_pk, employee, employee_id, log_date, work_schedule
                 order by logs.log_date,logs.employee
                 ;
 EOT;
