@@ -3,6 +3,12 @@
 .red {
     color: #ff0000;
 }
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
 .table1{
     width: 96%;
     margin:0 auto;
@@ -56,6 +62,7 @@ th {
     </div>
     
         <div class="responsive-table">
+            <b class="total">Total: {{departments.count}}</b>
             <table id="datatables-example" width="50%" cellspacing="0">
                 <thead>
                      

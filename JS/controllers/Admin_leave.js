@@ -11,6 +11,7 @@ app.controller('Admin_leave', function(
 
     $scope.pk='';
     $scope.leave_types={};
+    $scope.leave_types.count=0;
     $scope.profile= {};
 
     $scope.filter= {};
@@ -69,6 +70,7 @@ app.controller('Admin_leave', function(
         promise.then(function(data){
             $scope.leave_types.status = true;
             $scope.leave_types.data = data.data.result;
+            $scope.leave_types.count = data.data.result.length;
 6
         })
         .then(null, function(data){

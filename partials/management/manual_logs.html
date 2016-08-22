@@ -11,6 +11,12 @@
 .hide {
 visibility: hidden;
 }
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
 .table1{
     width: 96%;
     margin:0 auto;
@@ -79,6 +85,7 @@ th {
 </div>
 </div>
         <div class="responsive-table">
+            <b class="total">Total: {{manual_logs.count}}</b>
             <table id="datatables-example" width="80%" cellspacing="0">
                 <thead>
                     <tr>

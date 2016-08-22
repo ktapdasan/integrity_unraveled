@@ -3,6 +3,12 @@
 .red {
     color: #ff0000;
 }
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
 .table1{
     width: 96%;
     margin:0 auto;
@@ -85,6 +91,7 @@ th {
         <div style="clear:both;"></div>
     </div>
     <div class="responsive-table" style="margin-top:20px;">
+         <b class="total">Total: {{leaves_filed.count}}</b>
         <table id="datatables-example" width="100%" cellspacing="0">
             <thead>
                 <tr>

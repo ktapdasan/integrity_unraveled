@@ -16,6 +16,7 @@ app.controller('Management_manual_logs', function(
     $scope.log.time_log = new Date;
    
     $scope.manual_logs = {};
+    $scope.manual_logs.count = 0;
 
     $scope.modal = {};
 
@@ -128,6 +129,7 @@ app.controller('Management_manual_logs', function(
         var promise = TimelogFactory.myemployees_manual_logs(filter);
         promise.then(function(data){
             $scope.manual_logs.data = data.data.result;
+            $scope.manual_logs.count = data.data.result.length;
             $scope.manual_logs.status = true;
               
         }) 

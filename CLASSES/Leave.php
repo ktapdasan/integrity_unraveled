@@ -506,6 +506,20 @@ EOT;
 
     }
 
+    public function total(){
+
+        $sql = <<<EOT
+
+        select
+                    pk
+                    from leave_filed;
+                ;
+                
+EOT;
+        return ClassParent::get($sql);
+
+    }
+
     public function approved_leaves(){
         $where="";
         if($this->employees_pk && $this->employees_pk != 'undefined'){

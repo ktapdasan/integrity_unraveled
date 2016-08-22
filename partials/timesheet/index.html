@@ -26,6 +26,12 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
 .bck{
     margin-top:-20px;
     background-color: #F9F9F9;
@@ -34,7 +40,7 @@ th {
     margin-left:-8px;
     border-radius: 5px;
     border:1px solid #dbd9d9;
-}   
+} 
 
 tr:hover {
     background-color: #cfcece;
@@ -77,6 +83,7 @@ tr:hover {
 
         </div>
         <div class="responsive-table">
+            <b class="total">Total: {{timesheet.count}}</b>
             <table id="datatables-example" class="table1" width="90%" cellspacing="0">
                 <thead>
                     <tr>

@@ -21,6 +21,7 @@ app.controller('Employees', function(
 
     $scope.employee = {};
     $scope.employees={};
+    $scope.employees.count = 0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
     
@@ -140,6 +141,7 @@ app.controller('Employees', function(
             }
 
             $scope.employees.data = a;
+            $scope.employees.count = data.data.result.length;
         })
         .then(null, function(data){
             $scope.employees.status = false;

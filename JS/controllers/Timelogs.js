@@ -13,6 +13,7 @@ app.controller('Timelogs', function(
     $scope.profile = {};
     $scope.filter = {};
     $scope.timesheet = {};
+    $scope.timesheet.count = 0;
     $scope.employee = [];
     $scope.employeelist_data = [];
     $scope.titles={};
@@ -209,6 +210,7 @@ app.controller('Timelogs', function(
         var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
             $scope.timesheet.data = data.data.result;
+            $scope.timesheet.count = data.data.result.length;
             $scope.timesheet.status = true;
 
             var a = getDates( datefrom, dateto );

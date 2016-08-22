@@ -9,6 +9,7 @@ app.controller('EmployeesPermissions', function(
     $scope.profile = {};
 
     $scope.employee = {};
+    $scope.employees.count = 0;
 
     $scope.permissions = {};
     $scope.permissions.home = {
@@ -102,6 +103,8 @@ app.controller('EmployeesPermissions', function(
             }
 
             $scope.employees.data = a;
+            $scope.employees.count = data.data.result.length;
+            
         })
         .then(null, function(data){
             $scope.employees.status = false;

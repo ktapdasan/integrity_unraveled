@@ -20,6 +20,7 @@ app.controller('Leave', function(
     $scope.modal = {};
 
     $scope.leaves_filed = {};
+    $scope.leaves_filed.count = 0;
 
     $scope.myemployees={};
 
@@ -27,6 +28,7 @@ app.controller('Leave', function(
         status : false,
         count : 0
     }
+    
 
     $scope.modal.total = {
         status : false,
@@ -65,6 +67,7 @@ app.controller('Leave', function(
             workdays();
             leave_types();
             leaves_filed();
+            
         })         
     } 
 
@@ -483,6 +486,7 @@ app.controller('Leave', function(
         promise.then(function(data){
             $scope.leaves_filed.status = true;
             $scope.leaves_filed.data = data.data.result;
+            $scope.leaves_filed.count = data.data.result.length;
         })
         .then(null, function(data){
             $scope.leaves_filed.status = false;

@@ -15,6 +15,7 @@ app.controller('Timesheet', function(
     $scope.profile = {};
     $scope.filter = {};
     $scope.timesheet = {};
+    $scope.timesheet.count = 0;
     $scope.log = {};
     $scope.log.time_log = new Date;
 
@@ -165,6 +166,7 @@ app.controller('Timesheet', function(
         var promise = TimelogFactory.timesheet($scope.filter);
         promise.then(function(data){
             $scope.timesheet.data = data.data.result;
+            $scope.timesheet.count = data.data.result.length;
             $scope.timesheet.status = true;
             
             var a = getDates( datefrom, dateto );
