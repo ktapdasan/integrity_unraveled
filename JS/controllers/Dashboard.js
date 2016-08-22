@@ -182,7 +182,7 @@ app.controller('Dashboard', function(
                                     positionY: 'top', positionX: 'right'
                                 });
 
-                    is_overtime();
+                    //is_overtime();
 
                     var to = $timeout(function() {
                         $timeout.cancel(to);
