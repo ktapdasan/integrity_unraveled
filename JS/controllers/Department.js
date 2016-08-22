@@ -16,7 +16,7 @@ app.controller('Department', function(
     $scope.departments.count=0;
     $scope.modal = {};
     
-
+ 
     init();
 
     function init(){
