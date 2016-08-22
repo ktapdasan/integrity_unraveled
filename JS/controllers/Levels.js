@@ -16,7 +16,7 @@ app.controller('Levels', function(
 
     $scope.modal = {};
     $scope.levels = {};
-    $scope.level.count = 0;
+    $scope.level_title.count=0;
 
 
     init();
