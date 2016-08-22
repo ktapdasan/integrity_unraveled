@@ -2,8 +2,9 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Leave.php');
 
+
 $class = new Leave(
-                    $_POST['leave_filed_pk'],
+                    $_POST['pk'],
                     NULL,
                     NULL,
                     NULL,
@@ -14,7 +15,7 @@ $class = new Leave(
                 );
 
 $info = array(
-        		"leave_filed_pk" => $_POST['leave_filed_pk'],
+        		"pk" => $_POST['pk'],
         		"created_by" => $_POST['created_by'],
                 "workdays" => $_POST['workdays'],
                 "leave_types_pk" => $_POST['leave_types_pk'],
