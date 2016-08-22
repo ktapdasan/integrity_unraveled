@@ -30,6 +30,25 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
+.bck{
+    background-color: #F9F9F9;
+    height:80px;
+    width: 99%;
+
+    margin-left:5px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 4px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
 </style>
 
 <div id="content2">
@@ -45,7 +64,8 @@ th {
         </div>
     </div>
     <div class="panel">
-        <div style="padding-left: 20px; padding-top:20px;"> 
+        <div class ="bck">
+        <div style="padding-left: 30px; padding-top:6px;"> 
             <h4>
             <!--
                 <select ng-model="filter.datetype" ng-hide="true">
@@ -53,8 +73,9 @@ th {
                   <option value="Date Received">Date Received</option>
                 </select>
             -->
-                <input ng-model="filter.searchstring" type="text" style="width:400px; margin-left:-20px;" ng-change= "show_employees()"/>
-                <select ng-model="filter.status" ng-change= "show_employees()">
+                <label style="float:left;font-size: 13px;margin-left:-15px;margin-top:">Search</label><br>
+                <input ng-model="filter.searchstring" type="text" style="width:250px;float:left; margin-left:-20px;" ng-change= "show_employees()"/>
+                <select ng-model="filter.status" ng-change= "show_employees()" style="float:left">
                     <option>Active</option>
                     <option>Inactive</option>
                 </select>
@@ -63,10 +84,9 @@ th {
                 <a href = "#/employees/new"><input type="button" class="btn btn-add" value="ADD NEW EMPLOYEE" style="float: right;">
                 </a> -->
 
-                <div class="col-md-11" style="margin-top:20px; margin-bottom:20px;">
-
-                    <div style="float:left; margin-left: -40px;margin-top: 5px;margin-right: 20px;">
-                    <label style="float:left;font-size: 15px;">Select a Department</label><br>
+              
+                    <div style="float:left; margin-left: 14px;margin-top: -20px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Department</label><br>
                     <div
                         isteven-multi-select
                         input-model="department.data"
@@ -75,14 +95,14 @@ th {
                         item-label="icon name maker"
                         tick-property="ticked"
                         selection-mode="single"
-                        style="width:250px; float:left;"
+                        style="width:150px; float:left;"
                         max-height="200px"
                             >
                     </div>
                     </br>
                     </div>
-                    <div style="float:left; margin-top: 5px;margin-right: 20px;">
-                    <label style="float:left;font-size: 15px;">Select a Level</label><br>
+                    <div style="float:left; margin-top: -20px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Level</label><br>
                     <div
                         isteven-multi-select
                         input-model="level_title.data"
@@ -91,7 +111,7 @@ th {
                         item-label="icon name maker"
                         tick-property="ticked"
                         selection-mode="single"
-                        style="width:250px; float:left;"
+                        style="width:150px; float:left;"
                         max-height="200px"
                             >
                     </div>
@@ -99,8 +119,8 @@ th {
                     </div>
 
 
-                    <div style="float:left; margin-top: 5px;margin-right: 20px;">
-                    <label style="float:left;font-size: 15px;">Select a Position</label><br>
+                    <div style="float:left; margin-top: -22px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Position</label><br>
                      <br>
                         <div
                         isteven-multi-select
@@ -110,24 +130,26 @@ th {
                         item-label="icon name maker"
                         tick-property="ticked"
                         selection-mode="single"
-                        style="width:250px;float:left; margin-top: -17px;"
+                        style="width:150px;float:left; margin-top: -17px;"
                         max-height="200px"
                             >
                     </div>
+                       <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:10px;">
                     </br>
-                    </br>
+                 
+
                     </div>
 
 
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_list()" style="float:left; margin-top: 27px;">
+                  
                 </div>
-
-                </div> 
+                </div>
+                
 
             <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
             </h4>
         </div>
-        <div style="height:50px; width:100%;">
+        <div style="height:10px; width:100%;">
 
         </div>
         <div class="responsive-table">

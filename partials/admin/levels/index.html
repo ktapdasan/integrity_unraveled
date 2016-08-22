@@ -31,8 +31,30 @@ th {
     font-size:13px;
     background-color:white;
     color: #3d3d3d;
-    border: 1px solid #c6c6c6;}
-  
+    border: 1px solid #c6c6c6;
+}
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 47.5%;
+    margin-top:20px;
+    margin-left:15px;
+    border-radius: 5px;
+    padding-top:5px;
+    padding-left:10px;
+    border:1px solid #dbd9d9;
+}
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 5px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
 
 </style>
 
@@ -50,15 +72,17 @@ th {
     </div>
 
      <div class="panel">
+        <div class="bck">
         <div style="padding-left: 20px;"><h4>
-            
-                            <input ng-model="filter.searchstring" type="text" style="width:400px; margin-left:-20px;" ng-change= "show_levels()"/>
+                            <label style="float:left;font-size: 13px;margin-left:-15px;">Search</label><br>
+                            <input ng-model="filter.searchstring" type="text" style="width:190px; margin-left:-20px;" ng-change= "show_levels()"/>
 
                             <select ng-model="filter.status" ng-change= "show_levels()">
                                 <option>Active</option>
                                 <option>Inactive</option>
                             </select>
-                            <input type="button" class="btn btn-add" value = "Add New Level" alt="edit"ng-click="add_level(k)" title="Edit" style = "float: right;"/></h4> 
+                            <input type="button" class="btn btn-add btn-sm" value = "Add New Level" alt="edit"ng-click="add_level(k)" title="Edit" style = "float: right;margin-right:10px;"/></h4> 
+        </div>
         </div>
     </div>
 

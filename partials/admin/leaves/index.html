@@ -22,7 +22,7 @@ th, td {
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
 }
-
+ 
 tr:nth-child(odd){background-color:#F9F9F9;}
 
 th {
@@ -30,6 +30,28 @@ th {
     background-color:white;
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
+}
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 5px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:70px;
+    width: 47.5%;
+    margin-top:5px;
+    margin-left:15px;
+    border-radius: 5px;
+    padding-top:20px;
+    padding-left:10px;
+    border:1px solid #dbd9d9;
 }
 </style>
 
@@ -47,19 +69,21 @@ th {
     </div>
 
     <div class="panel-body">
-        <div class="col-md-6">
-            <div>         
+           <div class="bck">         
                 <select class="ng-pristine ng-valid ng-touched" ng-model="filter.status" ng-click="status_changed()">
                     <option>Active</option>
                     <option>Inactive</option>
                 </select>
 
-                <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="add" ng-click="add_leavetype(k)" title="add" style = "float: right;"/> 
+                <input type="button" class="btn btn-add btn-sm" value = "Add New Leave Type" alt="add" ng-click="add_leavetype(k)" title="add" style = "float: right;margin-right:10px;"/> 
             </div>
+        <div class="col-md-6">
+         
 
-            <div class="responsive-table" style="margin-top:50px;">
-                <b class="total">Total: {{leave_types.count}}</b>
-                <table width="100%" cellspacing="0">
+
+        <div class="responsive-table" style="margin-top:20px;">
+            <b class="total">Total: {{leave_types.count}}</b>
+                <table class= "table1" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th><font size = 4>Leave Types</font></th>
@@ -88,7 +112,7 @@ th {
         </div>
 
         <div class="col-md-6">
-            <div class="responsive-table" style="margin-top:50px;">
+            <div class="responsive-table" style="margin-top:20px;">
                 <h3>Default Leave Values</h3>
                 <table cellspacing="0">
                     <tbody>

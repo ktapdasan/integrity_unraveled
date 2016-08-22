@@ -12,7 +12,7 @@
 .table1{
     width: 96%;
     margin:0 auto;
-    background-color:white;
+    background-color:white;     
     font-size:12px;
     margin-top:3px;
 }
@@ -31,6 +31,34 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
+
+.hide {
+    display:none;}
+
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 47.5%;
+    margin-top:20px;
+    margin-left:15px;
+    border-radius: 5px;
+    padding-top:5px;
+    padding-left:10px;
+    border:1px solid #dbd9d9;
+}
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 5px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+
+
 </style>
 
 
@@ -48,16 +76,18 @@ th {
     </div>
 
     <div class="panel">
+        <div class ="bck">
         <div style="padding-left: 20px;"><h4>
-
-                             <input ng-model="filter.searchstring" type="text" style="width:400px; margin-left:-20px;" ng-change= "show_departments()"/>
+                      <label style="float:left;font-size: 13px;margin-left:-15px;">Search</label><br>
+                             <input ng-model="filter.searchstring" type="text" style="width:190px; margin-left:-20px;" ng-change= "show_departments()"/>
 
                             <select ng-model="filter.status" ng-change= "show_departments()">
                                 <option>Active</option>
                                 <option>Inactive</option>
                             </select>
 
-                            <input type="button" class="btn btn-add" value = "Add New Department" alt="edit"ng-click="add_department(k)" title="Edit" style = "float: right;"/></h4> 
+                            <input type="button" class="btn btn-add btn-sm" value = "Add New Department" alt="edit"ng-click="add_department(k)" title="Edit" style = "float: right;margin-right:10px;"/></h4> 
+        </div>
         </div>
     </div>
     
@@ -78,7 +108,8 @@ th {
                         <td>{{v.code}}</td>
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_department(k)" title="Edit">
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_department(k)" title="Delete">                        
+                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_department(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'"> 
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_department(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">                          
                         </center>
                         </td>
                     <tr ng-if="!departments.status">

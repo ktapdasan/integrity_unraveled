@@ -131,7 +131,7 @@ app.controller('Management_manual_logs', function(
             $scope.manual_logs.data = data.data.result;
             $scope.manual_logs.count = data.data.result.length;
             $scope.manual_logs.status = true;
-              
+            // console.log($scope.manual_logs.data);
         }) 
         .then(null, function(data){
             $scope.manual_logs.status = false;
@@ -140,7 +140,8 @@ app.controller('Management_manual_logs', function(
     }
 
     $scope.approve = function(k){
-        $scope.manual_logs["employees_pk"] = $scope.profile.pk;
+        $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
+        $scope.manual_logs["approver_pk"]=$scope.profile.pk;
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to approve manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?',
@@ -194,8 +195,11 @@ app.controller('Management_manual_logs', function(
     }
 
     $scope.disapprove = function(k){
-        $scope.manual_logs["employees_pk"] = $scope.profile.pk; 
+        $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
         $scope.log.remarks = '';
+        $scope.manual_logs["approver_pk"]=$scope.profile.pk;
+        // console.log($scope.profile.pk);
+
 
        $scope.modal = {
                 title : 'Disapprove Log ' + $scope.manual_logs.data[k].type,

@@ -38,7 +38,17 @@ th {
     background-color:white;
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
-}
+} 
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 97%;
+    margin-top:20px;
+    margin-left:20px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+} 
 </style>
 
 <div id="content2">
@@ -56,17 +66,20 @@ th {
         </div>
     </div>
     <div class="panel">
+        <div class ="bck">
         <div style="padding-left: 20px; padding-top:20px;">
             <div style="font-size: 18px;">
-                <div style="margin-left:-20px;float:left; margin-right:10px;">
-                    Date From: <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                <div style="margin-left:5px;float:left; margin-right:10px;margin-top:-15px;">
+                     <label style="float:left;font-size: 15px;">Date From:</label><br>
+                      <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
                 </div>
-                <div style="float:left; margin-right:10px;">
-                    Date To: <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
+                <div style="float:left; margin-right:-5px;margin-top:-14px;">
+                   <label style="float:left;font-size: 15px;">Date To:</label><br> <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
                 </div>
  <div class="col-md-6" style="padding-top:0px;">
-                 <div style="float:left; margin-top: -10px;">
-                    <label style="float:left;font-size: 15px; padding-right:10px;">Select an Employee</label>
+                 <div style="float:left; margin-top:-15px;margin-right:10px;">
+                    <label style="float:left;font-size: 15px;">Select an Employee</label>
+                    <br>
                     <div
                         isteven-multi-select
                         input-model="myemployees"
@@ -81,12 +94,14 @@ th {
                             >
                     </div>
                     </div>
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="float:left;margin:-1.5% 0 0 6%;">
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="float:left;margin-top:11px;">
+                </div>
 </div>
 </div>
-        <div class="responsive-table">
+
+        <div class="responsive-table" style="margin-top:90px;">
             <b class="total">Total: {{manual_logs.count}}</b>
-            <table id="datatables-example" width="80%" cellspacing="0">
+            <table id="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Employee Name</th>
