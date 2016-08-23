@@ -1,4 +1,4 @@
-<!DOCTYPE html>    
+<!DOCTYPE html>     
 <html lang="en" ng-app="onload">
 <head>
     <meta charset="utf-8">
@@ -130,9 +130,27 @@
         background-color: #fafafa;
         color:#AAA;
     }
+
     button:disabled{
         cursor: not-allowed;
     }
+
+
+    .tblleave_timesheet th{
+        border:1px solid white; 
+    
+    }
+    
+    
+    .tblleave_timesheet tr {
+    background-color:#fff;
+    border:0;
+    }
+    .tblleave_timesheet td {
+    background-color:#fff;
+    border:1px solid white;
+    }
+
     </style>
 
 </head>
@@ -338,10 +356,11 @@
             <div class="selector-toggle">
                 <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } ">
                 </a>
-
-               <span class="tooltiptext" ><i class="fa fa-angle-double-right"></i> </span>
+             <div ng-style="{'opacity' : get_arrowstop() }">
+               <span class="tooltiptext"><i class="fa fa-angle-double-right"></i> </span>
                <span class="tooltiptext1"><i class="fa fa-angle-double-up"></i> </span>
                <span class="tooltiptext2"><i class="fa fa-angle-double-down"></i> </span>
+             </div>
             </div>
 
 
@@ -1003,12 +1022,16 @@
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
             <div> 
+
             <form name="leave">
-            <table>
+            
+
+            <table class="tblleave_timesheet">
+
                 <tr>
                     <th colspan="2">
                     <label style = "font-size:20px;">Type of leave</label>
-                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
+                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:283px; height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
                             <option ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;" value="{{v.pk}}">
                                 {{v.name}}
                             </option>

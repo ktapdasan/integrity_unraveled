@@ -10,7 +10,7 @@ app.controller('Leave', function(
                                     ){
 
     //$scope.pk='';
-    $scope.leave_types={};
+    $scope.leave_types={}; 
     $scope.leave_balances={};
     $scope.profile= {};
 
