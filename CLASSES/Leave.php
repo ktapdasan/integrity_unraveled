@@ -494,23 +494,6 @@ EOT;
         return ClassParent::insert($sql);
     }
 
-<<<<<<< Updated upstream
-    public function total(){
-
-        $sql = <<<EOT
-
-        select
-                    pk
-                    from leave_filed;
-                ;
-                
-EOT;
-        return ClassParent::get($sql);
-
-    }
-=======
->>>>>>> Stashed changes
-
     public function approved_leaves(){
         $where="";
         if($this->employees_pk && $this->employees_pk != 'undefined'){
