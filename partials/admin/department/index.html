@@ -107,7 +107,7 @@ select{
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_department(k)" title="Edit">
                              <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_department(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'"> 
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_department(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">                          
+                            <input type="image" src="ASSETS/img/restore.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_department(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">                          
                         </center>
                         </td>
                     <tr ng-if="!departments.status">

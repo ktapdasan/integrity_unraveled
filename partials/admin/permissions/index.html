@@ -155,9 +155,9 @@ select{
             <table id="datatables-example" class="table1" width="90%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Employee Number</th>
+                        <th col width="135">Employee Number</th>
                         <th>First Name</th>
-                        <th>Middle Name</th>
+                        <th col width="100">Middle Name</th>
                         <th>Last Name</th>
                         <th>Supervisor</th>
                         <th>Position</th>
@@ -180,7 +180,7 @@ select{
                         <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
                         <td>{{v.department}}</td>
                         <td>
-                            <button ng-click="update_access(k)">Update Access</button>
+                            <button ng-click="update_access(k) ">Update Access</button>
                         </td>
                     </tr>
                     <tr ng-if="!employees.status" style = "text-align: center;">

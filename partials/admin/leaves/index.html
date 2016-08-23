@@ -132,8 +132,13 @@ th.a {
                             <td>{{v.code}}</td>
                             <td>{{v.days}}</td>
                             <td><center>
-                                    <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_leavetype(k)" title="Edit">
-                                    <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_leavetype(k)" title="Delete">
+                                    <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:5px;" ng-click="edit_leavetype(k)" title="Edit">
+                                    <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_leavetype(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
+                                    <input type="image" src="ASSETS/img/restore.png" alt="Restore" style="width:19px; height:19px;"  ng-click="delete_leavetype(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
+
+
+
+
                                 </center>
                             </td>
                         </tr> 

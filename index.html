@@ -143,14 +143,30 @@
     
     
     .tblleave_timesheet tr {
-    background-color:#fff;
-    border:0;
+        background-color:#fff;
+        border:0;
     }
     .tblleave_timesheet td {
-    background-color:#fff;
-    border:1px solid white;
+        background-color:#fff;
+        border:1px solid white;
     }
 
+    .tblDeactivate tr {
+        background-color:#fff;
+        border:0;
+    }
+    .tblDeactivate td{
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tbldisapprove tr {
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tbldisapprove td {
+        background-color:#fff;
+        border:1px solid white;
+    }  
     </style>
 
 </head>
@@ -538,7 +554,7 @@
             <div>
                 <h4>{{ modal.message }}</h4>
 
-                <table>
+                <table class ="tblDeactivate">
                 <tr>
                     <td>
                         <label style= "font-size:20px; float: left;">Last day of Work</label>
@@ -582,11 +598,11 @@
             <div>
                 <h4>{{ modal.message }}</h4>
 
-                <table>
+                <table class ="tbldisapprove">
                 <tr>
                     <td colspan="2">
                         <label style = "font-size:20px;">Remarks:</label> 
-                        <textarea ng-model="modal.remarks" rows ='4' cols ='32' tabindex="1" autofocus required/>
+                        <textarea ng-model="modal.remarks" rows ='5' cols ='42' tabindex="1" autofocus required/>
                     </td>
                 </tr>
             </table>
