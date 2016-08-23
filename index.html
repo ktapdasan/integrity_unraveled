@@ -1,4 +1,4 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>    
 <html lang="en" ng-app="onload">
 <head>
     <meta charset="utf-8">
@@ -881,17 +881,20 @@
     <script type="text/ng-template" id="DepartmentNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
+             <hr style="height:2px">
         <form name="myForm" novalidate>
             <div> 
-                <label style= "font-size:20px; float: left;">Department Name:</label>
-                <input required type="text" size="10" ng-model="modal.department" style="width: 250px;"/>          
-                <label style = "font-size:20px;">Department Code:</label> 
-               <input required type="text" size="10" ng-model="modal.code" style="width: 250px;" /> 
+                <label style= "font-size:18px; float: left;">Department Name:</label>
+                <input required type="text" size="10" ng-model="modal.department" style="width: 320px;"/>  
+
+                <label style = "font-size:18px;margin-top:20px;">Department Code:</label> 
+               <input required type="text" size="10" ng-model="modal.code" style="width: 320px;" /> 
             </div>
         </form>
         </div>
+         <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
@@ -900,7 +903,7 @@
     <script type="text/ng-template" id="PositionModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
         <form name="myForm" novalidate>
             <div> 
@@ -918,15 +921,17 @@
     <script type="text/ng-template" id="PositionNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
+            <hr style="height:2px">
         <form name="myForm" novalidate>
             <div> 
                 <label style= "font-size:20px; float: left;">Position Name:</label>
-                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 250px;" />          
+                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 320px;" />          
             </div>
         </form>
         </div>
+        <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
@@ -953,15 +958,17 @@
     <script type="text/ng-template" id="LevelNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
+            <hr style="height:2px">
         <form name="myForm" novalidate>
             <div> 
                 <label style= "font-size:20px; float: left;">Level Name:</label>
-                <input required type="text" size="10" ng-model="modal.level_title" style="width: 250px;" />          
+                <input required type="text" size="10" ng-model="modal.level_title" style="width: 320px;" />          
             </div>
         </form>
         </div>
+        <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
@@ -977,7 +984,7 @@
             <div>
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-            <div>
+            <div> 
             <table>
                 <tr>
                     <th colspan="2">
