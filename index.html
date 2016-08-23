@@ -387,7 +387,15 @@
                 <div class="notification_data">
                     <ul class="nav">
                         <li ng-repeat="(k,v) in notifications.data">
-                            <a ng-click="goto(k)">{{v.notification}}</a>
+                            <a ng-click="goto(k)">
+                                {{v.notification}}
+                                <br>
+                                <span style="font-size:12px; color:#AAA;" >{{v.employee}}
+                                <br>
+                                {{v.date_created}}
+                                </span>
+                            </a>
+                           
                         </li>
                     </ul>
                 </div>

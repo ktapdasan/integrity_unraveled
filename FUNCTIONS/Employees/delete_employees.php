@@ -13,12 +13,12 @@ $class = new Employees(
                             NULL,
                             NULL,
                             NULL,
-                            NULL,
+                            $_POST['date_created'],
                             NULL
 
 			            );
 
-
+print_r($_POST);
 
 
 $info=json_decode($_POST['info'],true);
@@ -32,6 +32,8 @@ $info['effective_date']=$_POST['effective_date'];
 $info['reason']=$_POST['reason'];
 
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
+
+
 
 $data=$class->deactivate($info,$extra);
 

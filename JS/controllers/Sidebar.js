@@ -108,6 +108,9 @@ app.controller('Sidebar', function(
 
         var promise = NotificationsFactory.get_notifications(filter);
         promise.then(function(data){
+
+
+
             $scope.notifications.status = true;
             $scope.notifications.data = data.data.result;
           

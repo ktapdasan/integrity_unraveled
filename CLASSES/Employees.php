@@ -783,17 +783,18 @@ EOT;
 EOT;
 
        $supervisor_pk = $extra['supervisor_pk'];
+       $$date_created = $extra['$date_created'];
         $sql .= <<<EOT
                 insert into notifications
                 (   
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk      
+                    employees_pk   
                 )
                 values
                 (    
-                    'New attrition filed.',
+                    'New attrition filed',
                     'attritions',
                     currval('attritions_pk_seq'),
                     $supervisor_pk
