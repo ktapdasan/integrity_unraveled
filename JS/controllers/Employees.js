@@ -160,7 +160,11 @@ app.controller('Employees', function(
     }
 
     function get_department(){
-        var promise = EmployeesFactory.get_department();
+        var filter = {
+            archived : false
+        }
+
+        var promise = EmployeesFactory.get_department(filter);
         promise.then(function(data){
             $scope.department.data = data.data.result;
         })
