@@ -45,7 +45,8 @@ class ManualLog extends ClassParent {
                     time_log :: time as time,
                     date_created::date as datecreated,
                     type,
-                    (select status from manual_log_statuses where pk = manual_log.pk) as status
+                    (select status from manual_log_statuses where pk = manual_log.pk) as status,
+                    (select remarks from manual_log_statuses where pk = manual_log.pk) as remarks
                 from manual_log
                 where archived = false
                 ;
@@ -255,7 +256,8 @@ EOT;
                     time_log :: timestamp as time,
                     date_created::date as datecreated,
                     type,
-                    (select status from manual_logs_status where pk = manual_logs_pk) as status
+                    (select status from manual_logs_status where pk = manual_logs_pk) as status,
+                    (select remarks from manual_logs_status where pk = manual_logs_pk) as remarks
                 from manual_logs
                 where date_created::date between '$datefrom' and '$dateto'
                 $where

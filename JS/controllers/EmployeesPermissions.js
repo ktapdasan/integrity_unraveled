@@ -65,6 +65,7 @@ app.controller('EmployeesPermissions', function(
             $scope.pk = data.data[_id];
 
             get_profile();
+            employees();
             
         })
         .then(null, function(data){

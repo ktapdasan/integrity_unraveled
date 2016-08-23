@@ -1,5 +1,14 @@
 
 <style type="text/css">
+.button-action:disabled{
+       cursor:not-allowed;
+       background-color: #F0EFEF;
+       color:#7F7D7C;
+    }
+.button-action{
+        background-color: #3288E6;
+        color: white;
+    }
 .red { 
     color: #ff0000;
 }
@@ -183,7 +192,7 @@ th.a {
         </div>
            <hr style="height:2px">
         <div style="width:40%; float:left">
-            <form name="myForm" novalidate>
+            <form name="myForm">
                 <div> 
                 
                         <label style = "font-size:16px;margin-top:20px;margin-left:10px;">Name:</label> 
@@ -235,6 +244,6 @@ th.a {
     </div>
     <div class="ngdialog-buttons">          
         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
     </div>
 </script>

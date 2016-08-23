@@ -168,7 +168,8 @@ app.controller('Timesheet', function(
             $scope.timesheet.data = data.data.result;
             $scope.timesheet.count = data.data.result.length;
             $scope.timesheet.status = true;
-            
+            // console.log($scope.timesheet);
+
             var a = getDates( datefrom, dateto );
             
             var new_timesheet=[];
@@ -700,11 +701,11 @@ app.controller('Timesheet', function(
 
                                     });
 
-            if($scope.log.type=="In"){
-                $scope.timesheet.data[key].login="Pending";
-            }else{
-                 $scope.timesheet.data[key].logout="Pending";
-            }
+                if($scope.log.type=="In"){
+                    $scope.timesheet.data[key].login="Pending";
+                }else{
+                     $scope.timesheet.data[key].logout="Pending";
+                }
 
             
             
@@ -718,11 +719,6 @@ app.controller('Timesheet', function(
                                         positionY: 'top', positionX: 'right'
                                     });
 
-               if($scope.log.type=="In"){
-                $scope.timesheet.data[key].login="Pending";
-            }else{
-                 $scope.timesheet.data[key].logout="Pending";
-            }
             });  
 
             

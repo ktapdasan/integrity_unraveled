@@ -16,7 +16,6 @@ $class = new Employees(
 							NULL,
 							NULL
 						);
-
 $filter = array(
 	"newdatefrom" => $_POST['newdatefrom'],
 	"newdateto" => $_POST['newdateto'],
