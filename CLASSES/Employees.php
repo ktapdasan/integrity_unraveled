@@ -14,6 +14,13 @@ class Employees extends ClassParent
     var $department = NULL;
     var $date_created = NULL;
     var $archived = NULL;
+    var $civilstatus_pk = NULL;
+    var $gender_pk = NULL;
+    var $religion_pk = NULL;
+    var $employee_type = NULL;
+    var $employment_type = NULL;
+
+
 
     public function __construct(
                                     $pk,
@@ -27,6 +34,11 @@ class Employees extends ClassParent
                                     $levels_pk,
                                     $department,
                                     $date_created,
+                                    $civilstatus_pk,
+                                    $gender_pk,
+                                    $religion_pk,
+                                    $employee_type,
+                                    $employment_type,
                                     $archived
                                 )
     {
@@ -642,7 +654,12 @@ EOT;
                     titles_pk,
                     department,
                     levels_pk,
-                    details
+                    details,
+                    civilstatus_pk,
+                    gender_pk,
+                    religion_pk,
+                    employee_types,
+                    employment_type
                 )
                 values
                 (
@@ -655,6 +672,11 @@ EOT;
                     '$this->titles_pk',
                     '$this->department',
                     '$this->levels_pk',
+                    '$this->civilstatus_pk',
+                    '$this->gender_pk',
+                    '$this->religion_pk',
+                    '$this->employee_type',
+                    '$this->employment_type',
                     '$details'
 
                 );

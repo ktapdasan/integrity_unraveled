@@ -8,7 +8,6 @@ $filters = array(
 					'code' => NULL,
 					'archived' => NULL
 				);
-
 foreach($_POST as $k=>$v){
 	$filters[$k] = $v;
 }
@@ -20,6 +19,7 @@ $class = new Department(
 						$filters['archived']
 					);
 
+
 $data = $class->get_departments($_POST);
 
 header("HTTP/1.0 404 User Not Found");
@@ -29,4 +29,5 @@ if($data['status']){
 
 header('Content-Type: application/json');
 print(json_encode($data));
+
 ?>

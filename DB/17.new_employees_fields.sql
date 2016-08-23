@@ -104,6 +104,34 @@ values
 	'Wire Transfer'
 );
 
+create table religions
+(
+	pk serial primary key,
+	religion text not null,
+	archived boolean default false
+);
+alter table religions owner to chrs;
+
+insert into religions
+(
+	religion
+)
+values
+(
+	'Roman Catholic'
+),
+(
+	'Iglesia Ni Cristo'
+),
+(
+	'Jehovah Witness'
+);
+
+ALTER TABLE employees ADD employee_types text;
+ALTER TABLE employees ADD civilstatus_pk text;
+ALTER TABLE employees ADD gender_pk text;
+ALTER TABLE employees ADD religion_pk text;
+ALTER TABLE employees ADD employment_type text;
 
 /*start of details fields*/
 /*
@@ -326,4 +354,69 @@ details=jsonb_set(details, '{company}', '
 	}
 }', true) 
 where pk = 28;
+
+update employees set 
+details=jsonb_set(details, '{company}', '
+{
+	"start_date" : "2016-01-20",
+	"employment_statuses_pk" : "4",
+	"employee_types_pk" : "1",
+	"departments_pk": "26", 
+	"levels_pk": "4", 
+	"titles_pk": "15", 
+	"supervisor": "10", 
+	"email_address": "rafael.pascual@chrsglobal.com", 
+	"business_email_address": "rpascual0812@gmail.com",
+	"salary" : {
+		"salary_types_pk" : "1",
+		"details" : {
+			"bank" : "BDO",
+			"account_number" : "100010001",
+			"amount" : "1000000"
+		},
+		"allowances" : {
+			"1" : "100",
+			"2" : "100"
+		}
+	},
+	"work_schedule" : {
+		"sunday" : null,
+		"monday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"tuesday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"wednesday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"thursday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"friday" : {
+			"in" : "08:00",
+			"out" : "17:00"
+		},
+		"saturday" : null
+	}
+}', true) 
+where pk = 28;
+
+
+update employees set 
+details=jsonb_set(details, '{personal}', '
+{
+	"Birthday" : "2016-01-18",
+	"Civil Staut" : "4",
+	"employee_types_pk" : "1",
+	"departments_pk": "26", 
+}', true) 
+where pk = 28;
+
+
+
 */

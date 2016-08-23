@@ -15,12 +15,15 @@ $class = new Employees(
                             $_POST['titles_pk'],
                             $_POST['levels_pk'],
                             $_POST['departments_pk'],
+                            $_POST['civilstatus_pk'],
+                            $_POST['gender_pk'],
+                            $_POST['religion_pk'],
+                            $_POST['employee_type'],
+                            $_POST['employment_type'],
                             NULL,
                             NULL,
                             NULL
-
 			);
-
 
 $details = array();
 if ($_POST['levels_pk'] == 3){
