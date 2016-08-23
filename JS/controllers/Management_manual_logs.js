@@ -142,7 +142,7 @@ app.controller('Management_manual_logs', function(
     $scope.approve = function(k){
         $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
         $scope.manual_logs["approver_pk"]=$scope.profile.pk;
-       $scope.modal = {
+        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to approve manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?',
                 save : 'Yes',
@@ -180,6 +180,7 @@ app.controller('Management_manual_logs', function(
                                         positionY: 'top', positionX: 'right'
                                     });  
                 $scope.manual_logs.data[k].status = "Approved";
+                $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks;
 
             })
             .then(null, function(data){
@@ -237,7 +238,12 @@ app.controller('Management_manual_logs', function(
 
             $scope.manual_logs.status = "Disapproved";
             $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-            $scope.manual_logs.remarks =  $scope.log.remarks;
+            if($scope.log.remarks==''){
+                $scope.manual_logs.remarks="Disapproved";
+            }else{
+                $scope.manual_logs.remarks =  $scope.log.remarks;
+            }
+            
 
 
             var promise = TimelogFactory.disapprove($scope.manual_logs);
@@ -252,6 +258,7 @@ app.controller('Management_manual_logs', function(
                                         positionY: 'top', positionX: 'right'
                                     });  
                 $scope.manual_logs.data[k].status = "Disapproved";
+                $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks.toUpperCase();
                      
 
             })

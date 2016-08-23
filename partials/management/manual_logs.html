@@ -106,8 +106,9 @@ th {
                     <tr>
                         <th>Employee Name</th>
                         <th>Manual Log Type</th>
-                        <th>Date</th>
-                        <th>Time</th>
+                        <th>Date Filed</th>
+                        <th>Time and Date of Manual Log</th>
+                        <th>Remarks</th>
                         <th>Status<th>
                     </tr>
                 </thead>
@@ -117,6 +118,7 @@ th {
                         <td>Log {{v.type}}</td>                       
                         <td>{{v.datecreated}}</td>
                         <td>{{v.time}}</td>
+                        <td>{{v.remarks}}</td>
                         <td>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
                                 <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
