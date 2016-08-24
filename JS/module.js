@@ -111,6 +111,7 @@ app.config(function($routeProvider){
     {
         controller: 'Analytics',
         templateUrl: 'partials/management/analytics.html'
+    })
     .when('/management/overtime',
     {
         controller: 'Overtime',
