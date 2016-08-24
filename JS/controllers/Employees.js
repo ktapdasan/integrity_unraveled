@@ -296,36 +296,40 @@ app.controller('Employees', function(
                 var DD= effective_date.getDate();
                 var MM = effective_date.getMonth(); 
                 var YYYY = effective_date.getFullYear(); 
+            
 
             
             $scope.modal.last_day_work = yyyy+'-'+mm+'-'+dd;
             $scope.modal.effective_date = YYYY+'-'+MM+'-'+DD;
-            $scope.modal["pk"] = $scope.profile.pk;
+            $scope.modal["created_by"] = $scope.profile.pk;
             $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
-            console.log($scope.employees);
-            var promise = EmployeesFactory.delete_employees($scope.employees.data[k]);
+            $scope.modal["pk"] =  $scope.employees.data[k].pk;
+
+
+            var promise = EmployeesFactory.delete_employees($scope.modal);
             promise.then(function(data){
                 
                 $scope.archived=true;
 
                 UINotification.success({
-                                        message: 'You have successfully deactivated an employees account.', 
+                                        message: 'You have successfully applied changes to this employee account.', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
                 employees();
 
+
             })
             .then(null, function(data){
                 
                 UINotification.error({
-                                        message: 'An error occured, unable to deactivate, please try again.', 
+                                        message: 'An error occured, unable to save changes, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-            });             
+            });           
                             
         });
     }

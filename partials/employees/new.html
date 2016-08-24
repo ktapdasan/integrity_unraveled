@@ -63,111 +63,116 @@ body>footer .footer-main {
     <div class="panel-heading">
 
         <form name="myForm">
-            <table>
-                <h3>Personal Info</h3>
+            <table style="width:70%;margin-left:140px;" >
+                <h3 style = "color:#219DEC;padding:5px;width:245px;margin-bottom:30px;border-bottom:1px solid #219dec;">Personal Info</h3>
+                
                 <tr>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">First Name:</label> 
+                        <label style="display:block; float:left; padding-right:10px">First Name:</label> 
                     </td>
                     <td id="css">    
-                        <input name="firstName"required ng-model="employee.first_name" type="text" style="display: block; float: left; width:400px;" />
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
+                        <input name="firstName"required ng-model="employee.first_name" type="text" style="display: block; float: left; width:340px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                     </td>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">E-mail Address:</label>
+                        <label style="display:block; float:left; padding-right:10px">E-mail Address:</label>
                     </td>
                     <td id="css">
-                        <input name="emailAddress" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:400px;height:36px;" /> <span style="color:red; display: block; float: left; width:400px ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
+                        <input name="emailAddress" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:340px;height:32px;" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
 
-                        <span style="color:red; display: block; float: left; width:400px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
+                        <span style="color:red; display: block; float: left; width:340px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
                     </td>                        
                 </tr>
                 <tr>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Middle Name:</label>
+                        <label style="display:block; float:left; padding-right:10px">Middle Name:</label>
                     </td>
                     <td id="css">
-                        <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:400px;" />
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
+                        <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:340px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Religion:</label>
                     </td>
                     <td id="css">
-                        <select name="religion" required ng-model="employee.religion_pk" style="display: block; float: left; width:400px" >
+                        <select name="religion" required ng-model="employee.religion_pk" style="display: block; float: left; width:340px;padding:5px;" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="v in religions" style="cursor:pointer;" value="{{v.religion}}">
                                 {{v.religion}}
                             </option>
                         </select>
 
+<<<<<<< HEAD
                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
+=======
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.religion.$error.required">Religion is Required.</span>
+>>>>>>> a379284193e2611db313aa63eef237ab9dcb2a1e
                     </td>  
                 </tr>
                 <tr>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Last Name:</label>
+                        <label style="display:block; float:left; padding-right:10px">Last Name:</label>
                     </td>
                     <td id="css">
-                        <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:400px;" />
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
+                        <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:340px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birthdate :</label>
                     </td>
                     <td id="css">
-                        <input name="bday" ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.bday.$error.required">Date of Birth is Required.</span>
+                        <input name="bday" ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:32px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bday.$error.required">Date of Birth is Required.</span>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Gender:</label>
+                        <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
                     </td>
                     <td id="css">
-                        <select name="gender" required ng-model="employee.gender_pk" style="display: block; float: left; width:400px" >
+                        <select name="gender" required ng-model="employee.gender_pk" style="display: block; float: left; width:340px;padding:5px;" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.gender}}">
                                 {{v.gender}}
                             </option>
                         </select>
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.gender.$error.required">Gender is Required.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is Required.</span>
                     </td>  
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
                     </td>
                     <td id="css">
-                        <select name="cistatus" required ng-model="employee.civilstatus_pk" style="display: block; float: left; width:400px" >
+                        <select name="cistatus" required ng-model="employee.civilstatus_pk" style="display: block; float: left; width:340px;padding:5px;" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.civilstatus}}">
                                 {{v.civilstatus}}
                             </option>
                         </select>
                         <span></span>
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.cistatus.$error.required">Civil Status is Required.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is Required.</span>
                     </td> 
                 </tr>
                 <tr>
                     <td>
-                        <h3>Education</h3>
+                        <h3 style="margin-left:-148px;color:#219DEC;padding:5px;border-bottom:1px solid #219dec;">Education</h3>
                     </td>
                 </tr>
                 <tr>
-                    <td><h4>Primary</h4></td>
+                    <td><h4 style="margin-left:-45px;color:#219DEC;">Primary</h4></td>
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
                     </td>
                     <td id="css" >
-                        <input type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
                     </td>
                     <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -175,31 +180,31 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
 
                 </tr>
                 <tr>
-                    <td><h4>Secondary</h4></td>
+                    <td><h4 style="margin-left:-45px;color:#219DEC;">Secondary</h4></td>
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
                     </td>
                     <td id="css" >
-                        <input type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
                     </td>
                     <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -207,31 +212,31 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
 
                 </tr>
                 <tr>
-                    <td><h4>Tertiary</h4></td>
+                    <td><h4 style="margin-left:-45px;color:#219DEC;">Tertiary</h4></td>
                 </tr>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
                     </td>
                     <td id="css" >
-                        <input type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Course:</label>
                     </td>
                     <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -239,13 +244,13 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
                     </td>
                     <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                 </tr>
                 <tr>   
@@ -253,12 +258,12 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h3>Company</h3>
+                        <h3 style="margin-left:-148px;color:#219DEC;padding:5px;border-bottom:1px solid #219dec;">Company</h3>
                     </td>
                 </tr>
                 <tr>
@@ -266,18 +271,18 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
                     </td>
                     <td id="css">
-                        <input name="user" required ng-model="employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:400px" />
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.user.$error.required">Employee I.D. is required.</span>
+                        <input name="user" required ng-model="employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:340px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.user.$error.required">Employee I.D. is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px"> Business E-mail Address:</label>
                     </td>
                     <td id="css">
-                        <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:400px;height:38px;" />
+                        <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:340px;height:38px;" />
 
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
 
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
                     </td>
                 </tr>
                 <tr>
@@ -285,20 +290,20 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Position:</label>
                     </td>
                     <td id="css">
-                        <select name="position" required ng-model="employee.titles_pk" style="display: block; float: left; width:400px" >
+                        <select name="position" required ng-model="employee.titles_pk" style="display: block; float: left; width:340px;padding:5px;" >
 
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                             <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
                                 {{v.title}}
                             </option>
                         </select>
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.position.$error.required">Position is required.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.position.$error.required">Position is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Start Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:400px; height:36px;" />
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                 </tr>
                 <tr>
@@ -306,7 +311,7 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Level:</label>
                     </td>
                     <td id="css">
-                        <select name="level" required ng-model="employee.levels_pk" style="display: block; float: left; margin-right: 10px"  ng-change = "level_changed()" ng-class = "level_class">
+                        <select name="level" required ng-model="employee.levels_pk" style="display: block; float: left; margin-right: 10px;width:340px;padding:5px;"  ng-change = "level_changed()" ng-class = "level_class">
                         -->
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                         <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}">
@@ -314,19 +319,19 @@ body>footer .footer-main {
                         </option>
                     </select>
                     <input type="text" placeholder = 'no. of hours' ng-model = 'employee.intern_hours' is-number maxlength = "3" size = "8" ng-show="show_hours" required/>   
-                    <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.level.$error.required">Level is required.</span>
+                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.level.$error.required">Level is required.</span>
                 </td>
                 <td>
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Supervisor:</label>
                 </td>
                 <td id="css">
-                    <select name="supervisor" required ng-model="employee.supervisor_pk" style="display: block; float: left; width:400px" >
+                    <select name="supervisor" required ng-model="employee.supervisor_pk" style="display: block; float: left; width:340px;padding:5px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                         <option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
                             {{v.name}}
                         </option>
                     </select>
-                    <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.supervisor.$error.required">Supervisor is required.</span>
+                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.supervisor.$error.required">Supervisor is required.</span>
                 </td>
             </tr>
             <tr>
@@ -334,25 +339,25 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Department:</label>
                 </td>
                 <td id="css">
-                    <select name="department" required ng-model="employee.departments_pk" style="display: block; float: left; width:400px" >                         
+                    <select name="department" required ng-model="employee.departments_pk" style="display: block; float: left; width:340px;padding:5px;" >                         
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                         <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
                             {{v.department}}
                         </option>
                     </select>
-                    <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.department.$error.required">Department is required.</span>
+                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.department.$error.required">Department is required.</span>
                 </td> 
                 <td>
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee Type:</label>
                 </td>
                 <td id="css">
-                    <select name="employeet" required ng-model="employee.employee_type" style="display: block; float: left; width:400px" >
+                    <select name="employeet" required ng-model="employee.employee_type" style="display: block; float: left; width:340px;padding:5px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                         <option ng-repeat="v in estatus" style="cursor:pointer;" value="{{v.pk}}">
                             {{v.emstatus}}
                         </option>
                     </select>
-                    <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.employeet.$error.required">Employee Type is Required.</span>
+                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employeet.$error.required">Employee Type is Required.</span>
                 </td>
 
             </tr>  
@@ -361,13 +366,13 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employment Type:</label>
                 </td>
                 <td id="css">
-                    <select name="employmenttype" required ng-model="employee.employment_type" style="display: block; float: left; width:400px" >
+                    <select name="employmenttype" required ng-model="employee.employment_type" style="display: block; float: left; width:340px;padding:5px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                         <option ng-repeat="v in etype" style="cursor:pointer;" value="{{v.pk}}">
                             {{v.emtype}}
                         </option>
                     </select>
-                    <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.employmenttype.$error.required">Employment Type is Required.</span>
+                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment Type is Required.</span>
                 </td>   
 
                 <tr>
@@ -386,13 +391,13 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Bank Name:</label>
                 </td>
                 <td id="css" >
-                    <input type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
                 <td>
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Account Number:</label>
                 </td>
                 <td id="css" >
-                    <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
 
             </tr>
@@ -401,7 +406,7 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                 </td>
                 <td id="css" >
-                    <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
             <tr ng-show="model.salary1">
@@ -409,13 +414,13 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Mode of Payment:</label>
                 </td>
                 <td id="css" >
-                    <input type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
                 <td>
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Account Number:</label>
                 </td>
                 <td id="css" >
-                    <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
 
             </tr>
@@ -424,7 +429,7 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                 </td>
                 <td id="css" >
-                    <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
             <tr ng-show="model.salary2">
@@ -432,7 +437,7 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                 </td>
                 <td id="css">
-                    <input  type="text"  is-number style="display: block; float: left; width:400px; height:36px;"/>
+                    <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
             <tr>
@@ -440,13 +445,13 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Philhealth No:</label>
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="phid form-control" maxlength="14" style="display: block; float: left; width:400px; height:36px;"/>
+                    <input placeholder="(Optional)" class="phid form-control" maxlength="14" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
                 <td>
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">PagIbig MID No:</label>
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="pagmid form-control" maxlength="14" style="display: block; float: left; width:400px; height:36px;"/>
+                    <input placeholder="(Optional)" class="pagmid form-control" maxlength="14" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
             <tr>
@@ -455,14 +460,14 @@ body>footer .footer-main {
 
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="tin form-control" name="tin" maxlength="15" style="display: block; float: left; width:400px; height:36px;"/>
+                    <input placeholder="(Optional)" class="tin form-control" name="tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
 
                 </td>
                 <td  id="css">
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">SSS No:</label>
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="tin form-control" maxlength="15" style="display: block; float: left; width:400px; height:36px;"/>
+                    <input placeholder="(Optional)" class="tin form-control" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
 

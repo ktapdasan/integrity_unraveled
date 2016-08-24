@@ -3,6 +3,7 @@ drop table notifications;
 create table notifications
 (
 	pk serial primary key,
+	created_by int references employees(pk),
 	employees_pk int references employees(pk),
 	notification text not null,
 	table_from text not null,

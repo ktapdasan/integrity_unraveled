@@ -259,11 +259,11 @@ app.controller('New_Employees', function(
     $scope.etype = [
     {
         pk:'1',
-        emtype:'Probationary'
+        emtype:'Exempt'
     },
     {
         pk:'2',
-        emtype:'Trainee'
+        emtype:'Non-Exempt'
     }
     ];
 });

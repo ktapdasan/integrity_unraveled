@@ -350,14 +350,16 @@ EOT;
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk      
+                    employees_pk,
+                    created_by      
                 )
                 values
                 (    
                     'New leave filed.',
                     'leave_filed',
                     currval('leave_filed_pk_seq'),
-                    $supervisor_pk
+                    $supervisor_pk,
+                    $employees_pk
                 )
                 ;
 EOT;

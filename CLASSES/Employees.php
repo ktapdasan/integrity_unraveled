@@ -807,7 +807,14 @@ EOT;
 
     public function deactivate($info,$extra){
 
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }  
+        $employees_pk = $this->employees_pk;
+        $supervisor_pk = $extra['supervisor_pk'];
+        $created_by = $extra['created_by'];
         $hr=json_encode($info);
+
         
         $sql = 'begin;';
 
@@ -824,22 +831,24 @@ EOT;
                 );
 EOT;
 
-       $supervisor_pk = $extra['supervisor_pk'];
-       $$date_created = $extra['$date_created'];
+       
+
         $sql .= <<<EOT
                 insert into notifications
                 (   
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk   
+                    employees_pk,
+                    created_by
                 )
                 values
                 (    
                     'New attrition filed',
                     'attritions',
                     currval('attritions_pk_seq'),
-                    $supervisor_pk
+                    $supervisor_pk,
+                    $created_by
                 )
                 ;
 EOT;

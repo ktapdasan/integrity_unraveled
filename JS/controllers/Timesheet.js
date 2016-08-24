@@ -724,10 +724,6 @@ app.controller('Timesheet', function(
             $scope.log.time_log = H + ":" + M ;
             $scope.log.type = type;
 
-
-            
-
-        
             var promise = TimelogFactory.save_manual_log($scope.log);
             promise.then(function(data){
 
