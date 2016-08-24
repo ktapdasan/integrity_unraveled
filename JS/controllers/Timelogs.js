@@ -140,7 +140,7 @@ app.controller('Timelogs', function(
             }
 
             //fetch_myemployees();
-            timesheet();
+            //timesheet();
         })
         .then(null, function(data){
 
