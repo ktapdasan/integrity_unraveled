@@ -9,6 +9,7 @@ app.controller('EmployeesPermissions', function(
     $scope.profile = {};
 
     $scope.employee = {};
+    
 
     $scope.permissions = {};
     $scope.permissions.home = {
@@ -42,6 +43,7 @@ app.controller('EmployeesPermissions', function(
     };
 
     $scope.employees={};
+    $scope.employees.count=0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
     
@@ -63,6 +65,7 @@ app.controller('EmployeesPermissions', function(
             $scope.pk = data.data[_id];
 
             get_profile();
+            employees();
             
         })
         .then(null, function(data){
@@ -95,6 +98,7 @@ app.controller('EmployeesPermissions', function(
         var promise = EmployeesFactory.fetch_all($scope.filter);
         promise.then(function(data){
             $scope.employees.status = true;
+            $scope.employees.count = data.data.result.length;
             
             var a = data.data.result;
             for(var i in a){
@@ -102,6 +106,8 @@ app.controller('EmployeesPermissions', function(
             }
 
             $scope.employees.data = a;
+            
+            
         })
         .then(null, function(data){
             $scope.employees.status = false;

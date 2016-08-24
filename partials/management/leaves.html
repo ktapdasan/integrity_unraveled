@@ -2,7 +2,15 @@
 <style type="text/css">
 .red {
     color: #ff0000;
+
 }
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
+
 .table1{
     width: 96%;
     margin:0 auto;
@@ -25,6 +33,18 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 98%;
+    margin-top:20px;
+    margin-left:15px;
+    border-radius: 5px;
+    padding-top:25px;
+    padding-left:10px;
+    border:1px solid #dbd9d9;
+} 
 </style>
 
 <div id="content2">
@@ -39,7 +59,8 @@ th {
             </div>
         </div>
     </div>
-    <div style="font-size: 16px; font-weight: bold;">
+    <div class="bck">
+    <div style="font-size: 15px; font-weight: bold;">
         <div style="float:left;">
             Date From: <input ng-model="filter.date_from" type="date" id="datefrom" style="width:150px; height: 34px;"/>
             Date To: <input ng-model="filter.date_to" type="date" id="dateto" style="width:150px; height: 34px;"/>
@@ -80,12 +101,14 @@ th {
         </div>
         
         <div style="float:left; margin-left:10px;">
-            <input type="button" class="btn btn-primary" value="SEARCH" ng-click="leaves_filed()" />
+            <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="leaves_filed()" />
         </div>
+    </div>
         <div style="clear:both;"></div>
     </div>
     <div class="responsive-table" style="margin-top:20px;">
-        <table id="datatables-example" width="100%" cellspacing="0">
+         <b class="total">Total: {{leaves_filed.count}}</b>
+        <table id="table1" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>Employee Name</th>
@@ -113,7 +136,7 @@ th {
                         </div>
                         <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
                             <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="btn btn-primary"/> 
-                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="btn btn-danger"/> 
+                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="btn btn-add"/> 
                         </div>
                     </td>
                 </tr> 

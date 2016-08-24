@@ -38,10 +38,12 @@ class Notifications extends ClassParent {
         $sql = <<<EOT
                 select
                     pk, 
+                    (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
                     notification,
                     table_from,
                     table_from_pk,
-                    read
+                    read,
+                    date_created::timestamp (0) as date_created
                 from notifications
                 where employees_pk = $this->employees_pk
                 order by pk desc

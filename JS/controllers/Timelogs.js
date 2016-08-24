@@ -13,6 +13,7 @@ app.controller('Timelogs', function(
     $scope.profile = {};
     $scope.filter = {};
     $scope.timesheet = {};
+    $scope.timesheet.count = 0;
     $scope.employee = [];
     $scope.employeelist_data = [];
     $scope.titles={};
@@ -125,6 +126,7 @@ app.controller('Timelogs', function(
                 
                 if(dd >= parseInt(second.from)){
                     $scope.filter.datefrom = new Date(mm+"/"+second.from+"/"+yyyy);
+                    //mm++;
                     $scope.filter.dateto = new Date(mm+"/"+second.to+"/"+yyyy);
                 }
                 else {
@@ -138,7 +140,7 @@ app.controller('Timelogs', function(
             }
 
             //fetch_myemployees();
-            timesheet();
+            //timesheet();
         })
         .then(null, function(data){
 
@@ -183,8 +185,51 @@ app.controller('Timelogs', function(
         $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
+        
+
+        $scope.timesheet.data = [];
+        var promise = TimelogFactory.timesheet($scope.filter);
+        promise.then(function(data){
+            $scope.timesheet.status = true;
+
+            $scope.timesheet.data = [];
+            for(var i in data.data){
+                for(j in data.data[i]){
+                    $scope.timesheet.data.push(data.data[i][j]);
+                }
+            }
+
+            //$scope.timesheet.data = data.data;
+
+            $scope.timesheet.count=0;
+            for(var i in data.data[$scope.profile.employee_id]){
+                $scope.timesheet.count++;                
+            }
+        })
+        .then(null, function(data){
+            $scope.timesheet.status = false;
+        });
+
+    }
+
+    function timesheet2(){
+
+        var datefrom = new Date($scope.filter.datefrom);
+        var dd = datefrom.getDate();
+        var mm = datefrom.getMonth()+1; //January is 0!
+        var yyyy = datefrom.getFullYear();
+
+        var dateto = new Date($scope.filter.dateto);
+        var Dd = dateto.getDate();
+        var Mm = dateto.getMonth()+1; //January is 0!
+        var Yyyy = dateto.getFullYear();
+
+        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
+        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+
 
         $scope.filter.pk = $scope.profile.pk;
+        
         
         delete $scope.filter.employees_pk;
         if($scope.filter.employee && $scope.filter.employee.length > 0){
@@ -209,6 +254,7 @@ app.controller('Timelogs', function(
         var promise = TimelogFactory.timelogs($scope.filter);
         promise.then(function(data){
             $scope.timesheet.data = data.data.result;
+            $scope.timesheet.count = data.data.result.length;
             $scope.timesheet.status = true;
 
             var a = getDates( datefrom, dateto );
@@ -260,8 +306,8 @@ app.controller('Timelogs', function(
 
         $scope.filter.datefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
-
-        window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk);
+        window.location = './FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&newdatefrom='+$scope.filter.datefrom+"&newdateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk;
+        //window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&newdatefrom='+$scope.filter.datefrom+"&newdateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk);
     }
 
 

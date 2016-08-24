@@ -7,7 +7,7 @@
     width: 230px;
     height: auto;
     top: 75px;
-    right: -230px;
+    right: -230px; 
     z-index: 500;
     -webkit-transition: 0.5s;
     transition: 0.5s;
@@ -146,7 +146,7 @@
     top: 12px;
     font-size: 20px;
     right: 120%;
-    animation: arrow-right 2.6s ease infinite;
+    animation: arrow-right 1.6s ease infinite;
     transform-origin: 50% 50%;
 
 }
@@ -202,7 +202,7 @@
     font-size: 20px;
     margin-left: -60px;
 
-    animation: arrow-up 2.6s ease infinite;
+    animation: arrow-up 1.6s ease infinite;
     transform-origin: 50% 50%;
 }
 
@@ -258,7 +258,7 @@
     right: 230px;
     font-size: 20px;
     margin-left: -60px;
-    animation: arrow-down 2.6s ease infinite;
+    animation: arrow-down 1.6s ease infinite;
     transform-origin: 50% 50%;
 
 

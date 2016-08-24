@@ -1,6 +1,12 @@
 <style type="text/css">
 .red {
     color: #ff0000;
+} 
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
 }
 .bck{
     background-color: #F9F9F9;
@@ -9,7 +15,19 @@
     margin-left:-8px;
     border-radius: 5px;
     border:1px solid #dbd9d9;
-}   
+}  
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
+.tblemployees td{
+    border:0px;
+    background-color:#F0F0F0;
+
+}
+
 .table1{
     width: 96%;
     margin:0 auto;
@@ -191,16 +209,16 @@ select{
                    
                     </div>
                 <div style="float:left; margin-top:33px;margin-right:45px;">
-                    <input type="button" class="medium button blue fa-fa"  value="&#xf002; Search" ng-click="show_list()" style="float:left; margin-right:10px;">
-                    <input type="button" class="medium button green fa-fa" value="&#xf1c3; Export" ng-click="export_employeelist()"; style="float:left;">
+                    <input type="button" class="medium button blue fa-fa"  value="&#xf002; Search" ng-click="show_list()" style="float:left; ">
                 </div>
                     <div style="float:left; margin-top:33px;">
-                        
 
-                        <a href = "#/employees/new"><input type="button" class="medium button red fa-fa" value="&#xf055; Add New Employee" style="float:left;">
+                     <input type="button" class="medium button green fa-fa" value="&#xf1c3; Export" ng-click="export_employeelist()"; style="float:left;margin-right:10px;">
+
+                        <a href = "#/employees/new"><input type="button" class="medium button red fa-fa" value="&#xf055; Add New Employee" style="float:left;margin-right:10px;">
 
                         </a>
-                        
+                       
                       
                     </div>
 
@@ -216,6 +234,7 @@ select{
 
         </div>
         <div class="responsive-table">
+             <b class="total">Total: {{employees.count}}</b>
             <table id="datatables-example" class="table1" width="90%" cellspacing="0">
                 <thead>
                    
@@ -246,7 +265,7 @@ select{
                         <td>{{v.title}}</td>
                         <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
                         <td>{{v.department}}</td>
-                        <td><center>
+                        <td><center> 
                             <!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
                             <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
@@ -345,7 +364,7 @@ select{
                         </div>
                     </div>
                     <form name="myForm" novalidate>
-                    <table>
+                    <table class="tblemployees">
                             
                             <tr>
                                 <td> 

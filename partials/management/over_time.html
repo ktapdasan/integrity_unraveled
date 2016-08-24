@@ -56,11 +56,11 @@ th {
         <div class="panel-body">
 
             <div class="col-md-12">
-                <h2 class="animated fadeInLeft">Manual Logs</h2>
+                <h2 class="animated fadeInLeft">Over Time</h2>
                 <p class="animated fadeInDown">
                     <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
                     Management <span class="fa-angle-right fa"></span> 
-                    Manual Logs
+                    Over Time
                 </p>
             </div>
         </div>
@@ -94,30 +94,30 @@ th {
                             >
                     </div>
                     </div>
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="float:left;margin-top:11px;">
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_overtime()" style="float:left;margin-top:11px;">
                 </div>
 </div>
 </div>
 
         <div class="responsive-table" style="margin-top:90px;">
-            <b class="total">Total: {{manual_logs.count}}</b>
+            <b class="total">Total: {{overtime.count}}</b>
             <table id="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Employee Name</th>
-                        <th>Manual Log Type</th>
                         <th>Date Filed</th>
-                        <th>Time and Date of Manual Log</th>
+                        <th>Time From</th>
+                        <th>Time To</th>
                         <th>Remarks</th>
-                        <th>Status</th>
+                        <th>Status<th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in manual_logs.data track by $index" style="cursor:pointer;" value = "{{v.pk}}" ng-if="manual_logs.status">
+                    <tr ng-repeat="(k, v) in overtime.data track by $index" style="cursor:pointer;" value = "{{v.pk}}" ng-if="overtime.status">
                         <td>{{v.name}}</td>
-                        <td>Log {{v.type}}</td>                       
-                        <td>{{v.datecreated}}</td>
-                        <td>{{v.time}}</td>
+                        <td>{{v.datecreated}}</td>                       
+                        <td>{{v.timefrom}}</td>
+                        <td>{{v.timeto}}</td>
                         <td>{{v.remarks}}</td>
                         <td>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
@@ -129,7 +129,7 @@ th {
                             </div>
                         </td>
                     </tr> 
-                    <tr ng-if="!manual_logs.status" style = "text-align: center;">
+                    <tr ng-if="!overtime.status" style = "text-align: center;">
                         <td colspan = "10">No Data Found</td>
                     </tr>       
                 </tbody>

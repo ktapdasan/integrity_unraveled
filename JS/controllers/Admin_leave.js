@@ -11,6 +11,7 @@ app.controller('Admin_leave', function(
 
     $scope.pk='';
     $scope.leave_types={};
+    $scope.leave_types.count=0;
     $scope.profile= {};
 
     $scope.filter= {};
@@ -69,6 +70,7 @@ app.controller('Admin_leave', function(
         promise.then(function(data){
             $scope.leave_types.status = true;
             $scope.leave_types.data = data.data.result;
+            $scope.leave_types.count = data.data.result.length;
 6
         })
         .then(null, function(data){
@@ -226,15 +228,13 @@ app.controller('Admin_leave', function(
         .then(function(value){
             return false;
         }, function(value){
-
-            console.log($scope.leave_types.data);
-            var promise = LeaveFactory.delete($scope.leave_types.data[k]);
-
-            var filter = {
-                leave_types_pk : $scope.leave_types.data[k].pk,
-            };
             
-            var promise = LeaveFactory.admin_leave_delete(filter);
+            var filter = {
+                pk : $scope.leave_types.data[k].pk,
+            };
+
+            var promise = LeaveFactory.delete(filter);
+            // var promise = LeaveFactory.admin_leave_delete(filter);
 
             promise.then(function(data){
                 $scope.leave_types.status = true;

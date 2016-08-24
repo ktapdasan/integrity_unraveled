@@ -456,54 +456,42 @@ EOT;
             }
         }
         
-        $leave_filed_pk = $info['leave_filed_pk'];
+        $pk = $info['pk'];
         $created_by = $info['created_by'];
         $leave_balances = json_encode($new_balances);
 
-        $sql = 'begin;';
-        $sql .= <<<EOT
-                UPDATE  leave_filed
+        
+       $sql = <<<EOT
+                UPDATE  leave_types
                 set archived = True
-                where pk = $this->pk;
-EOT;
-
-        $sql .= <<<EOT
-                update employees set leave_balances = '$leave_balances' where pk = $created_by;
-EOT;
-
-        $sql .= <<<EOT
-                insert into leave_status
-                (
-                    leave_filed_pk,
-                    status,
-                    created_by,
-                    remarks
-                )
-                values
-                (
-                    $leave_filed_pk,
-                    'Deleted',
-                    $created_by,
-                    'DELETED'
-                ) 
+                where pk = $pk
                 ;
 EOT;
 
-        $sql .= "commit;";
+//         $sql .= <<<EOT
+//                 update employees set leave_balances = '$leave_balances' where pk = $created_by;
+// EOT;
+
+//         $sql .= <<<EOT
+//                 insert into leave_status
+//                 (
+//                     leave_filed_pk,
+//                     status,
+//                     created_by,
+//                     remarks
+//                 )
+//                 values
+//                 (
+//                     $leave_filed_pk,
+//                     'Deleted',
+//                     $created_by,
+//                     'DELETED'
+//                 ) 
+//                 ;
+// EOT;
+
+        
         return ClassParent::insert($sql);
-    }
-
-
-    public function admin_leave_delete($info){
-        $leave_types_pk = $info['leave_types_pk'];
-
-        $sql .= <<<EOT
-                UPDATE  leave_types
-                set archived = True
-                where pk = $this->pk;
-EOT;
-        return ClassParent::insert($sql);
-
     }
 
     public function approved_leaves(){
@@ -512,7 +500,7 @@ EOT;
             $where = "where employees_pk = ".$this->employees_pk;
         }
 
-        $sql .= <<<EOT
+        $sql = <<<EOT
                 with Q as
                 (
                     select

@@ -14,6 +14,7 @@ app.controller('Position', function(
     $scope.filter.status=  "Active";
     
     $scope.titles= {};
+    $scope.titles.count=0;
     $scope.modal = {};
 
 
@@ -311,6 +312,7 @@ app.controller('Position', function(
         promise.then(function(data){
             $scope.titles.status = true;
             $scope.titles.data = data.data.result;
+            $scope.titles.count = data.data.result.length;
 
         })
         .then(null, function(data){

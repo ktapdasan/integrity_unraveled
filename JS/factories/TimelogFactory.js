@@ -61,9 +61,24 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
-    
-
     factory.timesheet = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/timesheet_redo.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.timesheet2 = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/timesheet.php',
             method: 'POST',
@@ -174,7 +189,24 @@ app.factory('TimelogFactory', function($http){
         })
 
         return promise;
-    };      
+    };
+
+    factory.myemployees_overtime = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/overtime.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };     
 
     factory.approve = function(data){
         var promise = $http({
@@ -193,9 +225,60 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
+    factory.approve_overtime = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/insert_overtime.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.cancel = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/cancel.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     factory.disapprove = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/updatestatus.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.disapprove_overtime = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/insert_overtime.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

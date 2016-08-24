@@ -7,14 +7,24 @@ app.controller('Sidebar', function(
   									){
 
 
-    $scope.profile = {};
+    $scope.profile = {}; 
 
     $scope.switcher = {};
     $scope.switcher.main = "";
 
     $scope.notifications = {};
 
-    $scope.stop = false; //how to stop the shaking
+    $scope.stop = true; //how to stop the shaking
+    
+    $scope.animation_arrow = {
+        stop : '0' ,
+        opacity : '1'
+    }
+
+    $scope.animation = {
+        stop : '0' ,
+        duration : '2.6s' 
+    }
 
     init();
 
@@ -41,18 +51,21 @@ app.controller('Sidebar', function(
         })   
     } 
 
+ 
+
+
     $scope.toggle_switcher = function(){
         if($scope.switcher.main == ""){
             $scope.switcher.main = "open";
             $scope.switcher.content = true;
-
             $scope.stop = true;    
+            
         }
         else {
             $scope.switcher.main = "";   
             $scope.switcher.content = false;
-
-            $scope.stop = false;
+            $scope.stop = true;
+            
         }
     }
 
@@ -67,12 +80,26 @@ app.controller('Sidebar', function(
     $scope.getStop = function(){
         if($scope.stop == true)
         {
-            return '0s';
+
+            return $scope.animation.stop;
         }
         else {
-            return '2.6s';
+            return $scope.animation.duration;
         }
     }
+
+    $scope.get_arrowstop = function(){
+         if($scope.stop == true)
+        {
+
+            return $scope.animation_arrow.stop;
+        }
+        else {
+            return $scope.animation_arrow.opacity;
+        }
+
+    }
+   
 
     function get_notifications(){
         var filter = {
@@ -81,11 +108,28 @@ app.controller('Sidebar', function(
 
         var promise = NotificationsFactory.get_notifications(filter);
         promise.then(function(data){
+
+
+
             $scope.notifications.status = true;
             $scope.notifications.data = data.data.result;
+
+            $scope.animation_arrow.stop = '1';
+            $scope.animation_arrow.opacity = '1';
+  
+           
         })
         .then(null, function(data){
             $scope.notifications.status = false;
+
+            $scope.animation.stop = '0s';
+            $scope.animation.duration = '2.6s';
+
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '1';
+            
+
+
         });
     }
 

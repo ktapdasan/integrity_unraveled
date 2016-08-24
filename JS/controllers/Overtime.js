@@ -1,6 +1,6 @@
 
-app.controller('Management_manual_logs', function(
-  										$scope,
+app.controller('Overtime', function(
+                                        $scope,
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
@@ -8,15 +8,16 @@ app.controller('Management_manual_logs', function(
                                         UINotification,
                                         CutoffFactory,
                                         md5
-  									){
+                                    ){
 
     $scope.profile = {};
     $scope.filter = {};
     $scope.log = {};
     $scope.log.time_log = new Date;
    
-    $scope.manual_logs = {};
-    $scope.manual_logs.count = 0;
+    
+    $scope.overtime = {};
+    $scope.overtime.count= 0 ;
 
     $scope.modal = {};
 
@@ -50,7 +51,8 @@ app.controller('Management_manual_logs', function(
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
             fetch_myemployees();
-            employees_manual_logs();
+            employees_overtime();
+            console.log($scope.profile)
         })   
     } 
 
@@ -100,11 +102,11 @@ app.controller('Management_manual_logs', function(
     }
 
 
-    $scope.show_myemployees = function(){
-        employees_manual_logs();
+    $scope.show_overtime = function(){
+        employees_overtime();
     }
 
-    function employees_manual_logs() {
+    function employees_overtime() {
         var filter = {};
 
         var datefrom = new Date($scope.filter.datefrom);
@@ -122,29 +124,28 @@ app.controller('Management_manual_logs', function(
        
         filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
         
-        delete $scope.filter.myemployees_pk;
-        if($scope.filter.myemployees && $scope.filter.myemployees.length > 0){
-            filter.employees_pk = $scope.filter.myemployees[0].pk;
-        }
-        var promise = TimelogFactory.myemployees_manual_logs(filter);
+        filter.employees_pk =  $scope.profile.pk;
+
+        var promise = TimelogFactory.myemployees_overtime(filter);
         promise.then(function(data){
-            $scope.manual_logs.data = data.data.result;
-            $scope.manual_logs.count = data.data.result.length;
-            $scope.manual_logs.status = true;
-            // console.log($scope.manual_logs.data);
+            $scope.overtime.data = data.data.result;
+            $scope.overtime.count = data.data.result.length;
+            $scope.overtime.status = true;
+            console.log($scope.filter)
+            /*console.log($scope.overtime.data);*/
         }) 
         .then(null, function(data){
-            $scope.manual_logs.status = false;
+            $scope.overtime.status = false;
         });
      
     }
 
     $scope.approve = function(k){
-        $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
-        $scope.manual_logs["approver_pk"]=$scope.profile.pk;
-        $scope.modal = {
+        $scope.overtime["employees_pk"] = $scope.overtime.data[k].employees_pk; 
+        $scope.overtime["approver_pk"]=$scope.profile.pk;
+       $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to approve manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?',
+                message: 'Are you sure you want to approve overtime ',
                 save : 'Yes',
                 close : 'Cancel'
 
@@ -161,26 +162,26 @@ app.controller('Management_manual_logs', function(
             return false;
         }, function(value){
 
-            $scope.manual_logs.status = "Approved";
-            $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-            $scope.manual_logs.remarks= "APPROVED";
-            $scope.manual_logs.type= $scope.manual_logs.data[k].type;
-            $scope.manual_logs.time_log=$scope.manual_logs.data[k].time;
-            console.log( $scope.manual_logs.data[k].status);
+            $scope.overtime.status = "Approved";
+            $scope.overtime.pk =  $scope.overtime.data[k].pk;
+            $scope.overtime.remarks= "APPROVED";
             
-            var promise = TimelogFactory.approve($scope.manual_logs);
+            
+            
+            
+            var promise = TimelogFactory.approve_overtime($scope.overtime);
             promise.then(function(data){
             
            
                
                 UINotification.success({
-                                        message: 'You have successfully approve manual log', 
+                                        message: 'You have successfully approve overtime', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                $scope.manual_logs.data[k].status = "Approved";
-                $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks;
+                $scope.overtime.data[k].status = "Approved";
+                $scope.overtime.data[k].remarks= $scope.overtime.remarks;
 
             })
             .then(null, function(data){
@@ -196,14 +197,14 @@ app.controller('Management_manual_logs', function(
     }
 
     $scope.disapprove = function(k){
-        $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
+        $scope.overtime["employees_pk"] = $scope.overtime.data[k].employees_pk; 
         $scope.log.remarks = '';
-        $scope.manual_logs["approver_pk"]=$scope.profile.pk;
+        $scope.overtime["approver_pk"]=$scope.profile.pk;
         // console.log($scope.profile.pk);
 
 
        $scope.modal = {
-                title : 'Disapprove Log ' + $scope.manual_logs.data[k].type,
+                title : 'Disapprove Log ',
                 save : 'Disapprove',
                 close : 'Cancel'
 
@@ -216,7 +217,7 @@ app.controller('Management_manual_logs', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Disapprove manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?</p>' +
+                                '<p>Disapprove manual log ' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -236,17 +237,16 @@ app.controller('Management_manual_logs', function(
             return false;
         }, function(value){
 
-            $scope.manual_logs.status = "Disapproved";
-            $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
+            $scope.overtime.status = "Disapproved";
+            $scope.overtime.pk =  $scope.overtime.data[k].pk;
             if($scope.log.remarks==''){
-                $scope.manual_logs.remarks="Disapproved";
+                $scope.overtime.remarks="Disapproved";
             }else{
-                $scope.manual_logs.remarks =  $scope.log.remarks;
+                $scope.overtime.remarks =  $scope.log.remarks;
             }
-            
 
 
-            var promise = TimelogFactory.disapprove($scope.manual_logs);
+            var promise = TimelogFactory.disapprove_overtime($scope.overtime);
             promise.then(function(data){
             
            
@@ -257,9 +257,8 @@ app.controller('Management_manual_logs', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                $scope.manual_logs.data[k].status = "Disapproved";
-                $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks.toUpperCase();
-                     
+                $scope.overtime.data[k].status = "Disapproved";
+                $scope.overtime.data[k].remarks= $scope.overtime.remarks.toUpperCase();     
 
             })
             .then(null, function(data){
@@ -271,6 +270,63 @@ app.controller('Management_manual_logs', function(
                                         positionY: 'top', positionX: 'right'
                                     });
             });                                  
+        });
+    }
+
+    $scope.cancel = function(k){
+
+        $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to cancel your request',
+                save : 'Delete',
+                close : 'Cancel'
+            };
+        
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            $scope.overtime.pk =  $scope.overtime.data[k].pk;
+
+            
+            var promise = TimelogFactory.cancel($scope.overtime);
+            promise.then(function(data){
+                $scope.overtime.status = true;
+                $scope.overtime.data = data.data.result;
+                $scope.archived=false;
+                
+
+                UINotification.success({
+                                        message: 'You have successfully cancel your request', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+    
+                employees_overtime();
+            })
+
+
+            .then(null, function(data){
+                $scope.overtime.status = false;
+                UINotification.error({
+                                        message: 'An error occured, unable to cancel, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
         });
     }
 

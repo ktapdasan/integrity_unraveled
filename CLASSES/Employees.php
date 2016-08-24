@@ -96,10 +96,49 @@ EOT;
                         employees.middle_name,
                         employees.last_name,
                         employees.email_address,
-                        employees_titles.titles_pk
+                        employees_titles.titles_pk,
+                        employees.details->'company'->'work_schedule' as work_schedule
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
                     where employees.archived = false
+                    order by last_name, first_name
+                )
+                select
+                    *
+                from A
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function fetch_for_timesheet($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $and="";
+        if($data['employees_pk'] && $data['employees_pk'] != "undefined"){
+            $and = "and employees.pk = " . $data['employees_pk'];
+        }
+        
+        $sql = <<<EOT
+                with A as
+                (
+                    select 
+                        employees.pk,
+                        employees.employee_id,
+                        employees.first_name,
+                        employees.middle_name,
+                        employees.last_name,
+                        employees.email_address,
+                        employees_titles.titles_pk,
+                        employees.details->'company'->'work_schedule' as work_schedule
+                    from employees
+                    left join employees_titles on (employees.pk = employees_titles.employees_pk)
+                    where employees.archived = false
+                    $and
+                    order by last_name, first_name
                 )
                 select
                     *
@@ -416,13 +455,14 @@ EOT;
     } 
 
     public function timelogs($data){
+
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
-        $lvl=$data['levels_pk'];
-        $dept=$data['departments_pk'];
-        $posi=$data['titles_pk'];
+        // $lvl=$data['levels_pk'];
+        // $dept=$data['departments_pk'];
+        // $posi=$data['titles_pk'];
         $where = "";
 
         if($data['employees_pk'] && $data['employees_pk'] != 'undefined'){
@@ -433,24 +473,24 @@ EOT;
         /* if($data['departments_pk']){
             $where .= "and departments_pk = ". $data['departments_pk']; 
         }*/
-        if($lvl){
-            $where.=" AND levels_pk = '$lvl'";
-        }else{
-            $where.="";
-        }
-        if($dept){
-            $where.=" AND department = '{{$dept}}'";
-        }else{
-            $where.="";
-        }
-        if($posi){
-            $where.=" AND titles_pk = '$posi'";
-        }else{
-            $where.="";
-        }
+        // if($lvl){
+        //     $where.=" AND levels_pk = '$lvl'";
+        // }else{
+        //     $where.="";
+        // }
+        // if($dept){
+        //     $where.=" AND department = '{{$dept}}'";
+        // }else{
+        //     $where.="";
+        // }
+        // if($posi){
+        //     $where.=" AND titles_pk = '$posi'";
+        // }else{
+        //     $where.="";
+        // }
 
-        $datefrom = $data['datefrom'];
-        $dateto = $data['dateto'];
+        $datefrom = $data['newdatefrom'];
+        $dateto = $data['newdateto'];
 
         $sql = <<<EOT
                 with Q as
@@ -805,17 +845,18 @@ EOT;
 EOT;
 
        $supervisor_pk = $extra['supervisor_pk'];
+       $$date_created = $extra['$date_created'];
         $sql .= <<<EOT
                 insert into notifications
                 (   
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk      
+                    employees_pk   
                 )
                 values
                 (    
-                    'New attrition filed.',
+                    'New attrition filed',
                     'attritions',
                     currval('attritions_pk_seq'),
                     $supervisor_pk

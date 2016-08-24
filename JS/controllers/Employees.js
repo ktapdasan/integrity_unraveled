@@ -21,6 +21,7 @@ app.controller('Employees', function(
 
     $scope.employee = {};
     $scope.employees={};
+    $scope.employees.count = 0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
     
@@ -140,6 +141,7 @@ app.controller('Employees', function(
             }
 
             $scope.employees.data = a;
+            $scope.employees.count = data.data.result.length;
         })
         .then(null, function(data){
             $scope.employees.status = false;
@@ -158,7 +160,11 @@ app.controller('Employees', function(
     }
 
     function get_department(){
-        var promise = EmployeesFactory.get_department();
+        var filter = {
+            archived : false
+        }
+
+        var promise = EmployeesFactory.get_department(filter);
         promise.then(function(data){
             $scope.department.data = data.data.result;
         })
@@ -281,6 +287,7 @@ app.controller('Employees', function(
          .then(function(value){
             return false;
         }, function(value){
+
             var last_day_work= new Date($scope.modal.last_day_work);
                 var dd = last_day_work.getDate();
                 var mm= last_day_work.getMonth();
@@ -289,13 +296,13 @@ app.controller('Employees', function(
                 var DD= effective_date.getDate();
                 var MM = effective_date.getMonth(); 
                 var YYYY = effective_date.getFullYear(); 
-               
+
+            
             $scope.modal.last_day_work = yyyy+'-'+mm+'-'+dd;
             $scope.modal.effective_date = YYYY+'-'+MM+'-'+DD;
             $scope.modal["pk"] = $scope.profile.pk;
             $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
-
-            
+            console.log($scope.employees);
             var promise = EmployeesFactory.delete_employees($scope.employees.data[k]);
             promise.then(function(data){
                 

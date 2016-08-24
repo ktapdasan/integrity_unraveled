@@ -1,6 +1,6 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>     
 <html lang="en" ng-app="onload">
-<head>
+<head> 
     <meta charset="utf-8">
     <meta name="description" content="Career Hunter Recruitment Solutions, Time Tracking System">
     <meta name="author" content="CHRS IT">
@@ -47,7 +47,15 @@
     .custom-menu li:hover{
         background-color: #e7e7e7;
     }
-
+    .button-action:disabled{
+       cursor:not-allowed;
+       background-color: #F0EFEF;
+       color:#7F7D7C;
+    }
+    .button-action{
+        background-color: #3288E6;
+        color: white;
+    }
     body>footer {
         /*background-color: #eee;*/
         font-size: 11px;
@@ -122,6 +130,43 @@
         background-color: #fafafa;
         color:#AAA;
     }
+
+    button:disabled{
+        cursor: not-allowed;
+    }
+
+
+    .tblleave_timesheet th{
+        border:1px solid white; 
+    
+    }
+    
+    
+    .tblleave_timesheet tr {
+        background-color:#fff;
+        border:0;
+    }
+    .tblleave_timesheet td {
+        background-color:#fff;
+        border:1px solid white;
+    }
+
+    .tblDeactivate tr {
+        background-color:#fff;
+        border:0;
+    }
+    .tblDeactivate td{
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tbldisapprove tr {
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tbldisapprove td {
+        background-color:#fff;
+        border:1px solid white;
+    }  
     </style>
 
 </head>
@@ -202,7 +247,7 @@
     <!-- start: Header -->
     <nav class="navbar navbar-default header navbar-fixed-top">
         <div class="col-md-12 nav-wrapper">
-            {{profile.permission}}
+            
             <div class="navbar-header" style="width:100%;" ng-controller="Header">
                 <a href="#/" class="navbar-brand"> 
                     <b>Integrity</b>
@@ -218,13 +263,14 @@
                             <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')"> Timesheet</a></li>
                             <!-- <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li> --> 
                             <li><a style="cursor:pointer;" href="#/timesheet/leaves" ng-click="menuclicked('timesheet')">Leaves</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/overtime" ng-click="menuclicked('timesheet')">Over Time</a></li>
                         </ul>
                     </li>
 
                     <!-- <li ng-class="menu.timelogs">
                         <a href="#/timelogs" ng-click="menuclicked('timelogs')">Time Logs</a>
                     </li> -->
-                    <li ng-class="menu.employee" ng-if="profile.permission.employees">
+                    <li ng-class="menu.employees" ng-if="profile.permission.employees">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
                             
@@ -239,7 +285,10 @@
                         <ul class="dropdown-menu">
                             <li><a style="cursor:pointer;" href="#/management/manual_logs" ng-click="menuclicked('management')">Manual Logs</a></li>
                             <li><a style="cursor:pointer;" href="#/management/leaves" ng-click="menuclicked('management')">Leaves</a></li>
+                            <!-- <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li> -->
+                            <li><a style="cursor:pointer;" href="#/management/analytics" ng-click="menuclicked('management')">Analytics</a></li>
                             <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/overtime" ng-click="menuclicked('management')">Over Time</a></li>
                         </ul>
                     </li>
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
@@ -276,8 +325,8 @@
                             <li role="separator" class="divider"></li>
                             <li class="more">
                                 <ul>
-                                    <!-- <li><a href=""><span class="fa fa-cogs"></span></a></li>
-                                    <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li> -->
+                                    <!-- <li><a href=""><span class="fa fa-cogs"></span></a></li> -->
+                                    <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li>
                                     <li alt="Log out"><a href="" ng-click="logout()"><span class="fa fa-power-off"></span></a></li>
                                 </ul>
                             </li>
@@ -327,10 +376,11 @@
             <div class="selector-toggle">
                 <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } ">
                 </a>
-
-               <span class="tooltiptext" ><i class="fa fa-angle-double-right"></i> </span>
+             <div ng-style="{'opacity' : get_arrowstop() }">
+               <span class="tooltiptext"><i class="fa fa-angle-double-right"></i> </span>
                <span class="tooltiptext1"><i class="fa fa-angle-double-up"></i> </span>
                <span class="tooltiptext2"><i class="fa fa-angle-double-down"></i> </span>
+             </div>
             </div>
 
 
@@ -357,7 +407,15 @@
                 <div class="notification_data">
                     <ul class="nav">
                         <li ng-repeat="(k,v) in notifications.data">
-                            <a ng-click="goto(k)">{{v.notification}}</a>
+                            <a ng-click="goto(k)">
+                                {{v.notification}}
+                                <br>
+                                <span style="font-size:12px; color:#AAA;" >{{v.employee}}
+                                <br>
+                                {{v.date_created}}
+                                </span>
+                            </a>
+                           
                         </li>
                     </ul>
                 </div>
@@ -430,6 +488,8 @@
     <script src="./JS/controllers/Admin_leave.js"></script>
     <script src="./JS/controllers/Attritions.js"></script>
     <script src="./JS/controllers/Work_days.js"></script>
+    <script src="./JS/controllers/Analytics.js"></script>
+    <script src="./JS/controllers/Overtime.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -499,7 +559,7 @@
             <div>
                 <h4>{{ modal.message }}</h4>
 
-                <table>
+                <table class ="tblDeactivate">
                 <tr>
                     <td>
                         <label style= "font-size:20px; float: left;">Last day of Work</label>
@@ -518,7 +578,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style = "font-size:20px;">Reason:</label> 
+                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
                         <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
                     </td>
                 </tr>
@@ -536,17 +596,18 @@
 
     <script type="text/ng-template" id="DisapprovedModal">
         <div class="ngdialog-message" style="width: 100%;">
+            <form name= "disapprove">
             <div style="margin-top: -15px;">
                 <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
             </div>
             <div>
                 <h4>{{ modal.message }}</h4>
 
-                <table>
+                <table class ="tbldisapprove">
                 <tr>
                     <td colspan="2">
                         <label style = "font-size:20px;">Remarks:</label> 
-                        <textarea ng-model="modal.remarks" rows ='4' cols ='32' tabindex="1" autofocus required/>
+                        <textarea ng-model="modal.remarks" rows ='5' cols ='42' tabindex="1" autofocus required/>
                     </td>
                 </tr>
             </table>
@@ -556,8 +617,9 @@
         </div>
         <div class="ngdialog-buttons">
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="disapprove.$error.required">{{modal.save}}</button>
         </div>
+        </form>
     </script>
 
 
@@ -605,6 +667,7 @@
 
     <script type="text/ng-template" id="ManualLogModal">
         <div class="ngdialog-message">
+        <form name="manualLog">
             <div style="margin-top: 10px;">
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
@@ -617,23 +680,25 @@
         </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="manualLog.$error.required">{{modal.save}}</button>
         </div>
+        </form>
     </script>
-
 
     <script type="text/ng-template" id="DisapproveModal">
         <div class="ngdialog-message">
+            <form name="disapproveForm">
             <div style="margin-top: 10px;">
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-                   <label style = "font-size:20px;">Remarks:</label> 
-                <textarea ng-model="log.remarks" rows ='6' cols ='32' tabindex="1" autofocus required/>
+                <label style = "font-size:20px;">Remarks:</label> 
+                <textarea ng-model="log.remarks" rows ='6' cols ='32' tabindex="1" required/>
         </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="disapproveForm.$error.required">{{modal.save}}</button>
         </div>
+        </form>
     </script>
 
     <!--
@@ -829,17 +894,19 @@
     
     <script type="text/ng-template" id="OvertimeModal">
         <div class="ngdialog-message" style="width: 100%;">
+            <form name="overtime">
             <div style="margin-top: -15px;">
                 <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
             </div>
             <div>
-                <textarea ng-model="modal.remarks" cols="45" rows="5"></textarea>
+                <textarea ng-model="modal.remarks" cols="45" rows="5" required></textarea>
             </div>
         </div>
         <div class="ngdialog-buttons">
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="overtime.$error.required">{{modal.save}}</button>
         </div>
+        </form>
     </script>
 
     <script type="text/ng-template" id="ConfirmLogModal">
@@ -862,7 +929,7 @@
             <div style="margin-top: 10px;">
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-        <form name="myForm" novalidate>
+        <form name="myForm">
             <div> 
                 <label style= "font-size:20px; float: left;">New Department Name:</label>
                 <input required type="text" size="10" ng-model="modal.department" style="width: 250px;" />          
@@ -873,33 +940,36 @@
         </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>
     </script>
 
     <script type="text/ng-template" id="DepartmentNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
-        <form name="myForm" novalidate>
+             <hr style="height:2px">
+        <form name="myForm">
             <div> 
-                <label style= "font-size:20px; float: left;">Department Name:</label>
-                <input required type="text" size="10" ng-model="modal.department" style="width: 250px;"/>          
-                <label style = "font-size:20px;">Department Code:</label> 
-               <input required type="text" size="10" ng-model="modal.code" style="width: 250px;" /> 
+                <label style= "font-size:18px; float: left;">Department Name:</label>
+                <input required type="text" size="10" ng-model="modal.department" style="width: 320px;"/>  
+
+                <label style = "font-size:18px;margin-top:20px;">Department Code:</label> 
+               <input required type="text" size="10" ng-model="modal.code" style="width: 320px;" /> 
             </div>
         </form>
         </div>
+         <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>
     </script>
     <script type="text/ng-template" id="PositionModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
         <form name="myForm" novalidate>
             <div> 
@@ -917,18 +987,20 @@
     <script type="text/ng-template" id="PositionNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
-        <form name="myForm" novalidate>
+            <hr style="height:2px">
+        <form name="myForm">
             <div> 
                 <label style= "font-size:20px; float: left;">Position Name:</label>
-                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 250px;" />          
+                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 320px;" />          
             </div>
         </form>
         </div>
+        <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>
     </script>
 
@@ -937,7 +1009,7 @@
             <div style="margin-top: 10px;">
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-        <form name="myForm" novalidate>
+        <form name="myForm">
             <div> 
                 <label style= "font-size:20px; float: left;">New Level Name:</label>
                 <input required type="text" size="10" ng-model="modal.fields.level_title" style="width: 250px;" />          
@@ -946,24 +1018,26 @@
         </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>
     </script>
     <script type="text/ng-template" id="LevelNewModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
-        <form name="myForm" novalidate>
+            <hr style="height:2px">
+        <form name="myForm" >
             <div> 
                 <label style= "font-size:20px; float: left;">Level Name:</label>
-                <input required type="text" size="10" ng-model="modal.level_title" style="width: 250px;" />          
+                <input required type="text" size="10" ng-model="modal.level_title" style="width: 320px;" />          
             </div>
         </form>
         </div>
+        <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>
     </script>
 
@@ -976,12 +1050,18 @@
             <div>
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
-            <div>
-            <table>
+            <div> 
+
+            <form name="leave">
+            
+Administration
+Departments
+            <table class="tblleave_timesheet">
+
                 <tr>
                     <th colspan="2">
                     <label style = "font-size:20px;">Type of leave</label>
-                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
+                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:400px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
                             <option ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;" value="{{v.pk}}">
                                 {{v.name}}
                             </option>
@@ -1025,7 +1105,8 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style = "font-size:20px;">Reason:</label> 
+                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
+
                         <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
 
                         <div>
@@ -1040,8 +1121,9 @@
             </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button" ng-class="modal.save_class"  data-ng-click="closeThisDialog('Save')" ng-disabled="modal.save_status">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" ng-class=""  data-ng-click="closeThisDialog('Save')" ng-disabled="leave.$error.required">{{modal.save}}</button>
         </div>
+        </form>
     </script>
 </body>
 </html>

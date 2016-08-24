@@ -26,6 +26,12 @@ th {
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
 }
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
 .bck{
     margin-top:-20px;
     background-color: #F9F9F9;
@@ -34,7 +40,7 @@ th {
     margin-left:-8px;
     border-radius: 5px;
     border:1px solid #dbd9d9;
-}   
+} 
 
 tr:hover {
     background-color: #cfcece;
@@ -77,6 +83,7 @@ tr:hover {
 
         </div>
         <div class="responsive-table">
+            <b class="total">Total: {{timesheet.count}}</b>
             <table id="datatables-example" class="table1" width="90%" cellspacing="0">
                 <thead>
                     <tr>
@@ -93,26 +100,35 @@ tr:hover {
                         <td>{{v.log_date}}</td>
                         <td>{{v.log_day}}</td>
                         <td>
-                            <span ng-if = "v.login == 'None'">
+                            <span ng-if = "v.login == 'None' || v.login == ''">
                                 <a ng-click="open_manual_log('In', k)">
                                     <font color="red" title = "File Manual Log"><u>None</u></font>
                                 </a>
                             </span>
-                            <span ng-if = 'v.login != "None"'>
+
+                            
+                            <span ng-if = 'v.login != "None" && v.login != ""'>
+
                                 {{v.login}}
                             </span>
                         </td>
                         <td>
-                            <span ng-if="v.logout == 'None'">
+                            <span ng-if="v.logout == 'None' || v.logout == ''">
                                 <a ng-click="open_manual_log('Out', k)">
                                     <font color="red" title = "File Manual Log"><u>None</u></font>
                                 </a>
                             </span>
-                            <span ng-if="v.logout != 'None'">
+
+                            <span ng-if="v.logout != 'None' && v.logout != ''">
+
                                 {{v.logout}}
                             </span>
                         </td>
-                        <td>{{v.hrs}}</td> 
+                        <td>
+                            <span >
+                            {{v.hrs}}
+                            </span>
+                        </td> 
                         <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
                     </tr>               
                     <!-- <tr ng-if="!timesheet.status" style= "text-align: center;">

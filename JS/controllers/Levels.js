@@ -16,6 +16,7 @@ app.controller('Levels', function(
 
     $scope.modal = {};
     $scope.levels = {};
+    $scope.level_title.count=0;
 
 
     init();
@@ -277,6 +278,7 @@ $scope.restore_level = function(k){
         promise.then(function(data){
             $scope.level_title.status = true;
             $scope.level_title.data = data.data.result;
+            $scope.level_title.count = data.data.result.length;
 
         })
         .then(null, function(data){

@@ -1,9 +1,26 @@
 
 <style type="text/css">
+.button-action:disabled{
+       cursor:not-allowed;
+       background-color: #F0EFEF;
+       color:#7F7D7C;
+    }
+.button-action{
+        background-color: #3288E6;
+        color: white;
+    }
 .red { 
     color: #ff0000;
 }
+
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:14px;
+}
 .table1{
+
     width: 96%;
     margin:0 auto;
     background-color:white;
@@ -11,12 +28,12 @@
     margin-top:3px;
 }
 th, td {
-    text-align: left;
+    text-align: left; 
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
 }
-
+ 
 tr:nth-child(odd){background-color:#F9F9F9;}
 
 th {
@@ -24,6 +41,51 @@ th {
     background-color:white;
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
+}
+select{
+    background-color:white;
+    color:#433D43;
+    padding: 5px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:70px;
+    width: 47.5%;
+    margin-top:5px;
+    margin-left:15px;
+    border-radius: 5px;
+    padding-top:20px;
+    padding-left:10px;
+    border:1px solid #dbd9d9;
+}
+
+.table2{ 
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th.a, td.a {
+    text-align: left; 
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid white;
+}
+ 
+tr.a:nth-child(odd){background-color:white;}
+
+th.a {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid white;
 }
 </style>
 
@@ -41,18 +103,21 @@ th {
     </div>
 
     <div class="panel-body">
-        <div class="col-md-6">
-            <div>         
+           <div class="bck">         
                 <select class="ng-pristine ng-valid ng-touched" ng-model="filter.status" ng-click="status_changed()">
                     <option>Active</option>
                     <option>Inactive</option>
                 </select>
 
-                <input type="button" class="btn btn-add" value = "Add New Leave Type" alt="add" ng-click="add_leavetype(k)" title="add" style = "float: right;"/> 
+                <input type="button" class="btn btn-add btn-sm" value = "Add New Leave Type" alt="add" ng-click="add_leavetype(k)" title="add" style = "float: right;margin-right:10px;"/> 
             </div>
+        <div class="col-md-6">
+         
 
-            <div class="responsive-table" style="margin-top:50px;">
-                <table width="100%" cellspacing="0">
+
+        <div class="responsive-table" style="margin-top:20px;">
+            <b class="total">Total: {{leave_types.count}}</b>
+                <table class= "table1" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th><font size = 4>Leave Types</font></th>
@@ -67,8 +132,13 @@ th {
                             <td>{{v.code}}</td>
                             <td>{{v.days}}</td>
                             <td><center>
-                                    <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_leavetype(k)" title="Edit">
-                                    <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_leavetype(k)" title="Delete">
+                                    <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:5px;" ng-click="edit_leavetype(k)" title="Edit">
+                                    <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:16px; height:16px"  ng-click="delete_leavetype(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'">
+                                    <input type="image" src="ASSETS/img/restore.png" alt="Restore" style="width:19px; height:19px;"  ng-click="delete_leavetype(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">
+
+
+
+
                                 </center>
                             </td>
                         </tr> 
@@ -81,7 +151,7 @@ th {
         </div>
 
         <div class="col-md-6">
-            <div class="responsive-table" style="margin-top:50px;">
+            <div class="responsive-table" style="margin-top:20px;">
                 <h3>Default Leave Values</h3>
                 <table cellspacing="0">
                     <tbody>
@@ -125,26 +195,21 @@ th {
         <div style="margin-top: 10px;">
             <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
         </div>
+           <hr style="height:2px">
         <div style="width:40%; float:left">
-            <form name="myForm" novalidate>
+            <form name="myForm">
                 <div> 
-                    <table>
-                        <tr>
-                            <td>Name:</td>
-                            <td>
-                                <input required type="text" size="10" ng-model="modal.name" style="width: 200px;" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Code:</td>
-                            <td>
-                                <input required type="text" size="10" ng-model="modal.code" style="width: 200px;" />
-                            </td>
-                        </tr>
-                        
-                        <tr>
-                            <td># of Days (per year):</td>
-                            <td>
+                
+                        <label style = "font-size:16px;margin-top:20px;margin-left:10px;">Name:</label> 
+                        <input required type="text" size="10" ng-model="modal.name" style="width: 240px;" />
+                        <br>
+                        <label style = "font-size:16px;margin-top:20px;margin-left:10px;">Code: </label> 
+                        <input required type="text" size="10" ng-model="modal.code" style="width: 240px;margin-left:3px;" />
+                        <br>
+                        <label style = "font-size:16px;margin-top:20px;margin-left:95px;"># of Days (per year):
+                        </label> 
+                    
+                          
                                 <input required type="text" is-number size="2" ng-model="modal.days" style="width: 50px;" maxlength="2"/> 
                             </td>
                         </tr>
@@ -154,41 +219,36 @@ th {
         </div>
         <div style="width:60%; float:left;">
             <div class="responsive-table">
-                <table cellspacing="0">
-                    <tbody>
-                        <tr style="cursor:pointer;">
-                            <td colspan="2"><label> <input type="checkbox" ng-model="modal.default_checkbox" ng-click="default_checkbox_toggle()"/> Get default values </label></td>
-                        </tr>
-                        <tr style="cursor:pointer;">
-                            <td>Regularization (in days)</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="modal.regularization" />
-                                
-                            </td>
-                        </tr> 
-                        <tr style="cursor:pointer;">
-                            <td>The rest of the leaves are given:</td>
-                            <td>
+               
+                       
+                  
+                          <label style = "font-size:16px;margin-top:20px;">Regularization (in days):
+                          </label> 
+                          <input type="text" style="width:80px;" is-number maxlength="3" ng-model="modal.regularization" />
+                            <label style="margin-left:19px;"> <input type="checkbox" ng-model="modal.default_checkbox" ng-click="default_checkbox_toggle()"/> Get default values </label>
+                          <br>
+                          <label style = "font-size:16px;margin-top:20px;">The rest of the leaves are given:
+                          </label> 
+                           
+                            
                                 <select ng-model="modal.staggered">
                                     <option>Staggered monthly</option>
                                     <option>All at once</option>
                                 </select>
-                            </td>
-                        </tr>
-                        <tr style="cursor:pointer;">
-                            <td>How many leaves will be carried-over:</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="modal.carry_over" />
-                            </td>
-                        </tr> 
-                    </tbody>
-                </table>
+                         <br>
+                         <label style = "font-size:16px;margin-top:20px;">How many leaves will be carried-over:
+                         </label> 
+                        
+                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="modal.carry_over" /><br>
+                           
+                 
             </div>
         </div>
         <div style="clear:both;"></div>
+          <hr style="height:2px">
     </div>
     <div class="ngdialog-buttons">          
         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
     </div>
 </script>

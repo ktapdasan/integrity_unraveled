@@ -13,9 +13,10 @@ app.controller('Department', function(
     $scope.filter.status= 'Active';
     $scope.department={};
     $scope.departments={};
+    $scope.departments.count=0;
     $scope.modal = {};
     
-
+ 
     init();
 
     function init(){
@@ -125,9 +126,7 @@ app.controller('Department', function(
     }
 
     $scope.delete_department = function(k){
-       if($scope.filter.status == 'Inactive'){
-         $scope.restore_department(k);
-       }
+       
        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to delete this department?',
@@ -309,6 +308,7 @@ app.controller('Department', function(
         promise.then(function(data){
             $scope.departments.status = true;
             $scope.departments.data = data.data.result;
+            $scope.departments.count = data.data.result.length;
 
         })
         .then(null, function(data){
