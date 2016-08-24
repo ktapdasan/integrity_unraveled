@@ -7,7 +7,7 @@ app.controller('Sidebar', function(
   									){
 
 
-    $scope.profile = {};
+    $scope.profile = {}; 
 
     $scope.switcher = {};
     $scope.switcher.main = "";
@@ -113,16 +113,17 @@ app.controller('Sidebar', function(
 
             $scope.notifications.status = true;
             $scope.notifications.data = data.data.result;
-          
-            $scope.animation.stop = '0s';
-            $scope.animation.duration = '2.6s';
-
-            $scope.animation_arrow.stop = '0';
-            $scope.animation_arrow.opacity = '1';
+  
            
         })
         .then(null, function(data){
             $scope.notifications.status = false;
+
+            $scope.animation.stop = '0s';
+            $scope.animation.duration = '2.6s';
+
+            $scope.animation_arrow.stop = '1';
+            $scope.animation_arrow.opacity = '0';
             
 
 

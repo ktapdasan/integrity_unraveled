@@ -1,6 +1,6 @@
 <!DOCTYPE html>     
 <html lang="en" ng-app="onload">
-<head>
+<head> 
     <meta charset="utf-8">
     <meta name="description" content="Career Hunter Recruitment Solutions, Time Tracking System">
     <meta name="author" content="CHRS IT">
@@ -575,7 +575,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style = "font-size:20px;">Reason:</label> 
+                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
                         <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
                     </td>
                 </tr>
@@ -1051,13 +1051,14 @@
 
             <form name="leave">
             
-
+Administration
+Departments
             <table class="tblleave_timesheet">
 
                 <tr>
                     <th colspan="2">
                     <label style = "font-size:20px;">Type of leave</label>
-                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:283px; height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
+                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:400px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
                             <option ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;" value="{{v.pk}}">
                                 {{v.name}}
                             </option>
@@ -1101,7 +1102,8 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style = "font-size:20px;">Reason:</label> 
+                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
+
                         <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
 
                         <div>
