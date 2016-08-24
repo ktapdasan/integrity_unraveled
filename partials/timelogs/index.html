@@ -48,7 +48,13 @@ th {
         </div>
     </div>
     <div class="panel">
+        <div style="float:right;margin-top:12px;">
+            <button type="button" class="btn btn-success btn-sm" style="padding: 4px 11px;" ng-click="upload_excel()"> UPLOAD EXCEL <span class="fa fa-file-excel-o"></span></button>
+        </div>
+    </div>
+    <div class="panel">
         <div class="bck">
+
         <div style="padding-left: 10px; padding-top:20px;">
 
             <div style="font-size: 18px;">
@@ -56,87 +62,85 @@ th {
                     <label style="float:left;font-size: 13px;">Date From:</label><br>
                     <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:155px;"/>
                 </div>
-                <div style="float:left; margin-top: -15px;margin-left:-13px;margin-right:5px;">
+                <div style="float:left; margin-top: -15px;margin-left:-13px;margin-right:10px;">
                     <label style="float:left;font-size: 13px;">Date To: </label><br>
                      <input ng-model="filter.dateto" type="date" id="dateto" style="width:155px;"/>
                 </div>
-                <div style="float:left; margin-right:10px;margin-top:12px;">
-                    <button type="button" class="btn btn-success btn-sm" style="padding: 4px 11px;" ng-click="upload_excel()"> UPLOAD EXCEL <span class="fa fa-file-excel-o"></span></button>
-                </div>
+               
 
-                    <div style="float:left; margin-top: -17px;margin-left:-5px;margin-right:10px;">
-                        <label style="float:left;font-size: 13px;">Select an Employee</label><br>
-                        <div
-                            isteven-multi-select
-                            input-model="employees"
-                            output-model="filter.employee"
-                            button-label="icon name"
-                            item-label="icon name maker"
-                            tick-property="ticked"
-                            selection-mode="single"
-                            style="width:150px; float:left;"
-                            max-height="200px" 
-
-                                >
-                        </div></br>
-                    </div>
-                    <div style="float:left; margin-top: -17px;margin-right:10px;">
-                        <label style="float:left; font-size: 13px;">Select a Department</label><br>
-                        <div
-                            isteven-multi-select
-                            input-model="department.data"
-                            output-model="filter.department"
-                            button-label="icon name"
-                            item-label="icon name maker"
-                            tick-property="ticked"
-                            selection-mode="single"
-                            style="width:150px; float:left;"
-                            max-height="200px"
-                                >
-                        </div>
-                        </br>
-                    </div>
-                    
-                    <div style="float:left; margin-top: -17px;margin-right:10px;">
-                        <label style="float:left; font-size: 13px;">Select a Level</label><br>
-                        
-                        <div
-                            isteven-multi-select
-                            input-model="levels.data"
-                            output-model="filter.levels"
-                            button-label="icon name"
-                            item-label="icon name maker"
-                            tick-property="ticked"
-                            selection-mode="single"
-                            style="width:150px; float:left;"
-                            max-height="200px"
-                                >
-                        </div>
-                        </br>
-                    </div>
-
-                        
-
-                    <div style="float:left; margin-top: -17px;margin-right:6px;">
-                        <label style="float:left; font-size: 13px;">Select a Position</label><br>
-                    
-                        <div
+                <div style="float:left; margin-top: -17px;margin-left:-5px;margin-right:10px;">
+                    <label style="float:left;font-size: 13px;">Select an Employee</label><br>
+                    <div
                         isteven-multi-select
-                        input-model="titles.data"
-                        output-model="filter.titles"
+                        input-model="employees"
+                        output-model="filter.employee"
                         button-label="icon name"
                         item-label="icon name maker"
                         tick-property="ticked"
                         selection-mode="single"
-                        style="width:150px;float:left;"
+                        style="width:150px; float:left;"
+                        max-height="200px" 
+
+                            >
+                    </div></br>
+                </div>
+                <div style="float:left; margin-top: -17px;margin-right:10px;">
+                    <label style="float:left; font-size: 13px;">Select a Department</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="department.data"
+                        output-model="filter.department"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
                         max-height="200px"
-                                >
-                        </div>
-                        </br>
-                        </br>
+                            >
                     </div>
-                    <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_timesheet()" style="float:left; margin-right:8px;margin-top:10px;">
-                    <input type="button" class="btn btn-success btn-sm" value="EXPORT" ng-click="export_timesheet()" style="float:left;margin-top:10px;">
+                    </br>
+                </div>
+                
+                <div style="float:left; margin-top: -17px;margin-right:10px;">
+                    <label style="float:left; font-size: 13px;">Select a Level</label><br>
+                    
+                    <div
+                        isteven-multi-select
+                        input-model="levels.data"
+                        output-model="filter.levels"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                </div>
+
+                    
+
+                <div style="float:left; margin-top: -17px;margin-right:6px;">
+                    <label style="float:left; font-size: 13px;">Select a Position</label><br>
+                
+                    <div
+                    isteven-multi-select
+                    input-model="titles.data"
+                    output-model="filter.titles"
+                    button-label="icon name"
+                    item-label="icon name maker"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    style="width:150px;float:left;"
+                    max-height="200px"
+                            >
+                    </div>
+                    </br>
+                    </br>
+                </div>
+                <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_timesheet()" style="float:left; margin-right:8px;margin-top:10px;">
+                <input type="button" class="btn btn-success btn-sm" value="EXPORT" ng-click="export_timesheet()" style="float:left;margin-top:10px;">
             </div>   
             </div>
         </div>
@@ -155,16 +159,33 @@ th {
                     <th>Day</th>
                     <th>Log in</th>
                     <th>Log out</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="(k, v) in timesheet.data" style="cursor:pointer;" ng-if="timesheet.status">
+                <tr ng-repeat="(k, v) in timesheet.data | orderBy : v.employee" style="cursor:pointer;" ng-if="timesheet.status">
                     <td>{{v.employee_id}}</td>
                     <td>{{v.employee}}</td>
-                    <td>{{v.log_date2}}</td>
+                    <td>{{v.log_date}}</td>
                     <td>{{v.log_day}}</td>
-                    <td ng-class="(v.log_in == 'None')?'red':''">{{v.log_in}}</td>
-                    <td ng-class="(v.log_out == 'None')?'red':''">{{v.log_out}}</td>
+                    <td>
+                        <span ng-if = "v.login == 'None' || v.login == ''">
+                            <font color="red" title = "File Manual Log">None</font>
+                        </span>
+                        <span ng-if = 'v.login != "None" && v.login != ""'>
+                            {{v.login}}
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-if="v.logout == 'None' || v.logout == ''">
+                            <font color="red" title = "File Manual Log">None</font>
+                        </span>
+
+                        <span ng-if="v.logout != 'None' && v.logout != ''">
+                            {{v.logout}}
+                        </span>
+                    </td>
+                    <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td>
                 </tr>
                 <tr ng-if="!timesheet.status" style= "text-align: center;">
                     <td colspan = "9">No Data Found</td>

@@ -308,8 +308,8 @@
       $(".fileupload-v1-file").click();   
       $(".fileupload-v1-file").on("change",function(){
           path.attr("placeholder",$(this).val());
-          console.log(wrapper);
-          console.log(path);
+          // console.log(wrapper);
+          // console.log(path);
       });
     });
 
@@ -333,7 +333,7 @@
         datetime = $('.time h1');
         datetime2 = $('.time p');
         update();
-        //setInterval(update, 1000);
+        setInterval(update, 1000);
     });
 
 

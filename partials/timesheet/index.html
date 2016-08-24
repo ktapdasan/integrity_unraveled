@@ -100,39 +100,33 @@ tr:hover {
                         <td>{{v.log_date}}</td>
                         <td>{{v.log_day}}</td>
                         <td>
-                            <span ng-if = "v.login == 'None'">
+                            <span ng-if = "v.login == 'None' || v.login == ''">
                                 <a ng-click="open_manual_log('In', k)">
                                     <font color="red" title = "File Manual Log"><u>None</u></font>
                                 </a>
                             </span>
-                            <span ng-if = 'v.login != "None"&& v.status=="Rest Day"'>
-                                -----------
-                            </span>
-                            <span ng-if="v.login != 'None'&& v.status!='Rest Day'">                          
+
+                            
+                            <span ng-if = 'v.login != "None" && v.login != ""'>
+
                                 {{v.login}}
                             </span>
                         </td>
                         <td>
-                            <span ng-if="v.logout == 'None'">
+                            <span ng-if="v.logout == 'None' || v.logout == ''">
                                 <a ng-click="open_manual_log('Out', k)">
-
                                     <font color="red" title = "File Manual Log"><u>None</u></font>
                                 </a>
                             </span>
-                            <span ng-if = 'v.logout != "None"&& v.status=="Rest Day"'>
-                                -----------
-                            </span>
-                            <span ng-if="v.logout != 'None'&& v.status!='Rest Day'">
+
+                            <span ng-if="v.logout != 'None' && v.logout != ''">
+
                                 {{v.logout}}
                             </span>
                         </td>
                         <td>
-                            <span ng-if="v.status!='Rest Day'">
+                            <span >
                             {{v.hrs}}
-                            </span>
-
-                            <span ng-if = 'v.status=="Rest Day"'>
-                                -----------
                             </span>
                         </td> 
                         <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 

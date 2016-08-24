@@ -247,7 +247,7 @@
     <!-- start: Header -->
     <nav class="navbar navbar-default header navbar-fixed-top">
         <div class="col-md-12 nav-wrapper">
-            {{profile.permission}}
+            
             <div class="navbar-header" style="width:100%;" ng-controller="Header">
                 <a href="#/" class="navbar-brand"> 
                     <b>Integrity</b>
@@ -269,7 +269,7 @@
                     <!-- <li ng-class="menu.timelogs">
                         <a href="#/timelogs" ng-click="menuclicked('timelogs')">Time Logs</a>
                     </li> -->
-                    <li ng-class="menu.employee" ng-if="profile.permission.employees">
+                    <li ng-class="menu.employees" ng-if="profile.permission.employees">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
                             
@@ -284,7 +284,8 @@
                         <ul class="dropdown-menu">
                             <li><a style="cursor:pointer;" href="#/management/manual_logs" ng-click="menuclicked('management')">Manual Logs</a></li>
                             <li><a style="cursor:pointer;" href="#/management/leaves" ng-click="menuclicked('management')">Leaves</a></li>
-                            <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li>
+                            <!-- <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li> -->
+                            <li><a style="cursor:pointer;" href="#/management/analytics" ng-click="menuclicked('management')">Analytics</a></li>
                         </ul>
                     </li>
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
@@ -484,6 +485,7 @@
     <script src="./JS/controllers/Admin_leave.js"></script>
     <script src="./JS/controllers/Attritions.js"></script>
     <script src="./JS/controllers/Work_days.js"></script>
+    <script src="./JS/controllers/Analytics.js"></script>
     
 
 

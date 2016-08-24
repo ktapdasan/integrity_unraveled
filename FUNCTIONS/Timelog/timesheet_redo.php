@@ -2,16 +2,16 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 require_once('../../CLASSES/Leave.php');
-// print_r($_GET);
+
 $data = array(
-				"pk" => $_GET['pk'],
-				"employees_pk" => $_GET['employees_pk'],
-				"newdatefrom" => $_GET['newdatefrom'],
-				"newdateto" => $_GET['newdateto']
+				"pk" => $_POST['pk'],
+				"employees_pk" => $_POST['employees_pk'],
+				"newdatefrom" => $_POST['newdatefrom'],
+				"newdateto" => $_POST['newdateto']
 			);
 
-$startdate = $_GET['datefrom'];
-$enddate = $_GET['dateto'];
+$startdate = $_POST['datefrom'];
+$enddate = $_POST['dateto'];
 $cutoff=array();
 while(strtotime($startdate) <= strtotime($enddate)){
 	$date = date('Y-m-d', strtotime($startdate));
@@ -104,7 +104,7 @@ $data = $class->timelogs($data);
 
 $class2 = new Leave(
         				NULL,
-        				$_GET['employees_pk'],
+        				$_POST['employees_pk'],
                         NULL,
                         NULL,
         				NULL,
@@ -164,27 +164,13 @@ foreach ($employees as $employee_id => $value) {
 	
 }
 
-$header	=	'Employee ID, Employee Name, Day, Date, Time In, Time Out, Hours, Status';
-$body	=	"";
-// echo "<pre>";
-// print_r($employees);
-foreach($employees as $k=>$v){
-	foreach ($v as $key => $value) {
-		$body .= $value['employee_id'].','.
-				'"'.$value['employee'].'",'.
-				$value['log_day'].','.
-				$value['log_date'].','.
-				$value['login'].','.
-				$value['logout'].','.
-				$value['hrs'].','.
-				$value['status']."\n";	
-	}
-	$body .= "\n\n";
+//print_r($employees);
+
+header("HTTP/1.0 500 Internal Server Error");
+if($employees){
+	header("HTTP/1.0 200 OK");
 }
 
-$filename = "TIMELOGS_".date('Ymd_His').".csv";
-
-header ("Content-type: application/octet-stream");
-header ("Content-Disposition: attachment; filename=".$filename);
-echo $header."\n".$body;
+header('Content-Type: application/json');
+print(json_encode($employees));
 ?>

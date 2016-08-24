@@ -102,6 +102,11 @@ app.config(function($routeProvider){
         controller: 'Attritions',
         templateUrl: 'partials/management/attrition.html'
     })
+    .when('/management/analytics',
+    {
+        controller: 'Analytics',
+        templateUrl: 'partials/management/analytics.html'
+    })
     .otherwise(
     {
         redirectTo: '/'

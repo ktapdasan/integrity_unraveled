@@ -500,7 +500,7 @@ EOT;
             $where = "where employees_pk = ".$this->employees_pk;
         }
 
-        $sql .= <<<EOT
+        $sql = <<<EOT
                 with Q as
                 (
                     select

@@ -97,11 +97,12 @@ app.controller('Timesheet', function(
     }
 
     function fetch_cutoff(){  
+
         var promise = CutoffFactory.fetch_dates();
         promise.then(function(data){
             var a = data.data.result[0];
             a.dates = JSON.parse(a.dates);
-            
+             
             var new_date = new Date();
             var dd = new_date.getDate();
             var mm = new_date.getMonth()+1; //January is 0!
@@ -113,10 +114,14 @@ app.controller('Timesheet', function(
                 
                 if(dd >= parseInt(second.from)){
                     $scope.filter.datefrom = new Date(mm+"/"+second.from+"/"+yyyy);
+                    mm++;
                     $scope.filter.dateto = new Date(mm+"/"+second.to+"/"+yyyy);
                 }
                 else {
                     $scope.filter.datefrom = new Date(mm+"/"+first.from+"/"+yyyy);
+
+                    
+
                     $scope.filter.dateto = new Date(mm+"/"+first.to+"/"+yyyy);   
                 }
             }
@@ -160,10 +165,43 @@ app.controller('Timesheet', function(
         $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
-        $scope.filter.pk = $scope.profile.pk;
+        $scope.filter.employees_pk = $scope.profile.pk;
 
         $scope.timesheet.data = [];
         var promise = TimelogFactory.timesheet($scope.filter);
+        promise.then(function(data){
+            $scope.timesheet.status = true;
+            $scope.timesheet.data = data.data[$scope.profile.employee_id];
+            
+            $scope.timesheet.count=0;
+            for(var i in data.data[$scope.profile.employee_id]){
+                $scope.timesheet.count++;                
+            }
+        })
+        .then(null, function(data){
+            $scope.timesheet.status = false;
+        });
+
+    }
+
+    function timesheet2(){
+        var datefrom = new Date($scope.filter.datefrom);
+        var dd = datefrom.getDate();
+        var mm = datefrom.getMonth()+1; //January is 0!
+        var yyyy = datefrom.getFullYear();
+
+        var dateto = new Date($scope.filter.dateto);
+        var Dd = dateto.getDate();
+        var Mm = dateto.getMonth()+1; //January is 0!
+        var Yyyy = dateto.getFullYear();
+
+        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
+        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+
+        $scope.filter.pk = $scope.profile.pk;
+
+        $scope.timesheet.data = [];
+        var promise = TimelogFactory.timesheet2($scope.filter);
         promise.then(function(data){
             $scope.timesheet.data = data.data.result;
             $scope.timesheet.count = data.data.result.length;
