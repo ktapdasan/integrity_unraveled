@@ -14,7 +14,7 @@ app.controller('Sidebar', function(
 
     $scope.notifications = {};
 
-    $scope.stop = true; //how to stop the shaking
+    $scope.stop = false; //how to stop the shaking
     
     $scope.animation_arrow = {
         stop : '0' ,
@@ -128,6 +128,11 @@ app.controller('Sidebar', function(
             $scope.animation_arrow.stop = '0';
             $scope.animation_arrow.opacity = '1';
             
+            $scope.animation.stop = '0s';
+            $scope.animation.duration = '2.6s';
+
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '1';
 
 
         });
