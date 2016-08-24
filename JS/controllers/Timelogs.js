@@ -126,7 +126,7 @@ app.controller('Timelogs', function(
                 
                 if(dd >= parseInt(second.from)){
                     $scope.filter.datefrom = new Date(mm+"/"+second.from+"/"+yyyy);
-                    mm++;
+                    //mm++;
                     $scope.filter.dateto = new Date(mm+"/"+second.to+"/"+yyyy);
                 }
                 else {
