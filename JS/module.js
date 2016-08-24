@@ -32,6 +32,11 @@ app.config(function($routeProvider){
         controller: 'Leave',
         templateUrl: 'partials/timesheet/leaves_filed.html'
     })
+    .when('/timesheet/overtime',
+    {
+        controller: 'Overtime',
+        templateUrl: 'partials/timesheet/overtime.html'
+    })
     .when('/employees/list',
     {
         controller: 'Employees',
@@ -106,6 +111,11 @@ app.config(function($routeProvider){
     {
         controller: 'Analytics',
         templateUrl: 'partials/management/analytics.html'
+    })
+    .when('/management/overtime',
+    {
+        controller: 'Overtime',
+        templateUrl: 'partials/management/over_time.html'
     })
     .otherwise(
     {
