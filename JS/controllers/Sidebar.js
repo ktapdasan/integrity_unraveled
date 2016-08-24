@@ -113,6 +113,9 @@ app.controller('Sidebar', function(
 
             $scope.notifications.status = true;
             $scope.notifications.data = data.data.result;
+
+            $scope.animation_arrow.stop = '1';
+            $scope.animation_arrow.opacity = '1';
   
            
         })
