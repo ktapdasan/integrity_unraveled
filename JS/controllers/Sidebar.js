@@ -122,8 +122,8 @@ app.controller('Sidebar', function(
             $scope.animation.stop = '0s';
             $scope.animation.duration = '2.6s';
 
-            $scope.animation_arrow.stop = '1';
-            $scope.animation_arrow.opacity = '0';
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '1';
             
 
 
