@@ -64,7 +64,7 @@ EOT;
                     date_created::date as datecreated,
                     (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
                 from overtime
-                where date_created::date between '8-16-2016' and '8-26-2016'
+                where date_created::date between '$datefrom' and '$dateto'
                 and archived = 'f'
                 $where
                 ;
