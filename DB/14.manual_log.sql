@@ -1,3 +1,5 @@
+drop table manual_logs cascade;
+
 CREATE TABLE manual_logs (
 	pk serial primary key,
 	employees_pk int references employees(pk),
