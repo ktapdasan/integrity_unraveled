@@ -96,7 +96,7 @@ body>footer .footer-main {
                     <td id="css">
                         <select name="religion" required ng-model="employee.religion_pk" style="display: block; float: left; width:400px" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in religions" style="cursor:pointer;" value="{{v.pk}}">
+                            <option ng-repeat="v in religions" style="cursor:pointer;" value="{{v.religion}}">
                                 {{v.religion}}
                             </option>
                         </select>
@@ -128,7 +128,7 @@ body>footer .footer-main {
                     <td id="css">
                         <select name="gender" required ng-model="employee.gender_pk" style="display: block; float: left; width:400px" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.pk}}">
+                            <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.gender}}">
                                 {{v.gender}}
                             </option>
                         </select>
@@ -140,10 +140,11 @@ body>footer .footer-main {
                     <td id="css">
                         <select name="cistatus" required ng-model="employee.civilstatus_pk" style="display: block; float: left; width:400px" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.pk}}">
+                            <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.civilstatus}}">
                                 {{v.civilstatus}}
                             </option>
                         </select>
+                        <span></span>
                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.cistatus.$error.required">Civil Status is Required.</span>
                     </td> 
                 </tr>

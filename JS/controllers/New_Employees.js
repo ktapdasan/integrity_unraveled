@@ -11,7 +11,7 @@ app.controller('New_Employees', function(
     $scope.titles={};
     $scope.level_title={};
     $scope.department={};
-
+    $scope.start_date = new Date();
     $scope.employee={
         employee_id:'',
         first_name:'',
