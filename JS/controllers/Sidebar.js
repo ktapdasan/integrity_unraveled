@@ -18,7 +18,7 @@ app.controller('Sidebar', function(
     
     $scope.animation_arrow = {
         stop : '0' ,
-        opacity : '1' 
+        opacity : '1'
     }
 
     $scope.animation = {
