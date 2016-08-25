@@ -126,6 +126,8 @@ app.controller('Management_manual_logs', function(
         if($scope.filter.myemployees && $scope.filter.myemployees.length > 0){
             filter.employees_pk = $scope.filter.myemployees[0].pk;
         }
+
+        filter.supervisor_pk = $scope.profile.pk;
         var promise = TimelogFactory.myemployees_manual_logs(filter);
         promise.then(function(data){
             $scope.manual_logs.data = data.data.result;

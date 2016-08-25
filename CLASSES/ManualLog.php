@@ -221,8 +221,7 @@ EOT;
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk,
-                    created_by
+                    employees_pk
                 
                 )
                 values
@@ -230,7 +229,6 @@ EOT;
                     'New manual log filed.',
                     'manual_log',
                     currval('manual_logs_pk_seq'),
-                    $supervisor_pk,
                     $employees_pk
                 )
                 ;
@@ -242,25 +240,34 @@ EOT;
 
     }
 
-    public function employees_manual_logs($data)
-    {
+    public function employees_manual_logs($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
         $where = "";
         if($this->employees_pk){
-            $where .= "and employees_pk = ".$this->employees_pk;
+            $where .= "and manual_logs.employees_pk = ".$this->employees_pk;
         }
+
+        if($data['supervisor_pk']){
+            $where .= "and groupings.supervisor_pk = ".$data['supervisor_pk'];
+        }
+
         $datefrom = $data['datefrom'] ;
         $dateto = $data['dateto'];
-       $sql = <<<EOT
+        $sql = <<<EOT
                 select
                     pk, 
-                    employees_pk,
-                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    manual_logs.employees_pk,
+                    (select first_name||' '||last_name from employees where pk = manual_logs.employees_pk) as name,
                     time_log :: timestamp as time,
                     date_created::date as datecreated,
                     type,
                     (select status from manual_logs_status where pk = manual_logs_pk) as status,
                     (select remarks from manual_logs_status where pk = manual_logs_pk) as remarks
                 from manual_logs
+                left join groupings on (manual_logs.employees_pk = groupings.employees_pk)
                 where date_created::date between '$datefrom' and '$dateto'
                 $where
                 ;
