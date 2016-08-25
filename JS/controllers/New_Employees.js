@@ -200,6 +200,11 @@ app.controller('New_Employees', function(
     {
         pk:'6',
         religion:'Hinduism'
+    },
+    {
+        pk:'7',
+        religion:'Taoism'
+
     }
     ];
 
