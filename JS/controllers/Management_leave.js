@@ -289,7 +289,9 @@ app.controller('Management_leave', function(
                                             delay : 5000,
                                             positionY: 'top', positionX: 'right'
                                         });
-                    leaves_filed();
+                    //leaves_filed();
+
+                    $scope.leaves_filed.data[k].status = leaves_filed.status;
                 })
                 .then(null, function(data){
                     UINotification.error({
@@ -349,7 +351,8 @@ app.controller('Management_leave', function(
                                             delay : 5000,
                                             positionY: 'top', positionX: 'right'
                                         });
-                    leaves_filed();
+                    //leaves_filed();
+                    $scope.leaves_filed.data[k].status = leaves_filed.status;
                 })
                 .then(null, function(data){
                     UINotification.error({
