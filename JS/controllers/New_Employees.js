@@ -155,6 +155,11 @@ app.controller('New_Employees', function(
         };
     }
 
+
+    $scope.employees.date_started = new Date();
+
+
+     
     $scope.level_changed = function(){
         level_changed();
     }
@@ -195,6 +200,11 @@ app.controller('New_Employees', function(
     {
         pk:'6',
         religion:'Hinduism'
+    },
+    {
+        pk:'7',
+        religion:'Taoism'
+
     }
     ];
 
