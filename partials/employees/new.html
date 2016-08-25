@@ -91,18 +91,13 @@ body>footer .footer-main {
                         <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:340px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                     </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Religion:</label>
+                     <td>
+                        <label style="display:block; float:left; padding-right:10px">Religion:</label>
                     </td>
                     <td id="css">
-                        <select name="religion" required ng-model="employee.religion_pk" style="display: block; float: left; width:340px;padding:5px;" >
-                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in religions" style="cursor:pointer;" value="{{v.religion}}">
-                                {{v.religion}}
-                            </option>
-                        </select>
-                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
-                    </td>  
+                        <input name="religion" required ng-model="employee.religion_pk" type="text" style="display: block; float: left; width:340px;" />
+                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>
