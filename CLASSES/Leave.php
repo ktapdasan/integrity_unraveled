@@ -164,6 +164,7 @@ EOT;
         $workdays       = $extra['workdays'];
         $leave_types_pk = $extra['leave_types_pk'];
         $remarks = $extra['remarks'];
+        $created_by = $extra['created_by'];
 
 
         $sql = 'begin;';
@@ -230,14 +231,17 @@ EOT;
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk        
+                    employees_pk,
+                    created_by        
                 )
                 values
                 (    
                     'Leave $status',
                     'leave_filed',
                     $this->pk,
-                    $employees_pk
+                    $employees_pk,
+                    $created_by
+
                 )
                 ;
 EOT;

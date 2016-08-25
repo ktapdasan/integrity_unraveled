@@ -110,7 +110,7 @@ EOT;
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk           
+                    employees_pk       
                 )
                 values
                 (    
@@ -221,7 +221,8 @@ EOT;
                     notification,
                     table_from,
                     table_from_pk,
-                    employees_pk
+                    employees_pk,
+                    created_by
                 
                 )
                 values
@@ -229,6 +230,7 @@ EOT;
                     'New manual log filed.',
                     'manual_log',
                     currval('manual_logs_pk_seq'),
+                    $supervisor_pk,
                     $employees_pk
                 )
                 ;

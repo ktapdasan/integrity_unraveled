@@ -14,6 +14,8 @@ app.controller('Sidebar', function(
 
     $scope.notifications = {};
 
+    $scope.notifications.count =0;
+
     $scope.stop = false; //how to stop the shaking
     
     $scope.animation_arrow = {
@@ -25,6 +27,7 @@ app.controller('Sidebar', function(
         stop : '0' ,
         duration : '2.6s' 
     }
+
 
     init();
 
@@ -109,10 +112,11 @@ app.controller('Sidebar', function(
         var promise = NotificationsFactory.get_notifications(filter);
         promise.then(function(data){
 
-
+            console.log($scope.notifications.count);
 
             $scope.notifications.status = true;
             $scope.notifications.data = data.data.result;
+            $scope.notifications.count = data.data.result.length;
 
             $scope.animation_arrow.stop = '1';
             $scope.animation_arrow.opacity = '1';
