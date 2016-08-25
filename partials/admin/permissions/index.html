@@ -7,22 +7,25 @@
     margin: 1px 0 -100px 0px;
 }
 .table1{
-    width: 96%;
+    width: 99%;
     margin:0 auto;
     background-color:white;
     font-size:12px;
     margin-top:3px;
+    table-layout:fixed;
 }
-th, td {
+.table1 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+    overflow: hidden;
+
 }
 
-tr:nth-child(odd){background-color:#F9F9F9;}
+.table1 tr:nth-child(odd){background-color:#F9F9F9;}
 
-th {
+.table1 th {
     font-size:13px;
     background-color:white;
     color: #3d3d3d;
@@ -150,20 +153,20 @@ select{
         <div style="height:10px; width:100%;">
 
         </div>
-        <div class="responsive-table">
+        <div>
             <b class="total">Total: {{employees.count}}</b>
-            <table id="datatables-example" class="table1" width="90%" cellspacing="0">
+            <table id="datatables-example" class="table1" width="90%" cellspacing="0" style="word-break:break-all;">
                 <thead>
                     <tr>
-                        <th col width="135">Employee Number</th>
-                        <th>First Name</th>
-                        <th col width="100">Middle Name</th>
-                        <th>Last Name</th>
-                        <th>Supervisor</th>
-                        <th>Position</th>
-                        <th>Level</th>
-                        <th>Department</th>
-                        <th>Options</th>
+                        <th col width="70">Employee Number</th>
+                        <th col width="60">First Name</th>
+                        <th col width="65">Middle Name</th>
+                        <th col width="60">Last Name</th>
+                        <th col width="80">Supervisor</th>
+                        <th col width="100">Position</th>
+                        <th col width="50">Level</th>
+                        <th col width="70">Department</th>
+                        <th col width="60">Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -180,7 +183,7 @@ select{
                         <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
                         <td>{{v.department}}</td>
                         <td>
-                            <button ng-click="update_access(k) ">Update Access</button>
+                            <button ng-click="update_access(k) " class="btn btn-primary btn-xs">Update Access</button>
                         </td>
                     </tr>
                     <tr ng-if="!employees.status" style = "text-align: center;">

@@ -17,18 +17,21 @@ visibility: hidden;
     margin-bottom: 10px; 
     font-size:15px;
 }
-.table1{
+.table1{ 
     width: 96%;
     margin:0 auto;
     background-color:white;
     font-size:12px;
     margin-top:3px;
+    table-layout:fixed;
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+    overflow: hidden;
+    word-break:break-all;
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
@@ -99,17 +102,17 @@ th {
 </div>
 </div>
 
-        <div class="responsive-table" style="margin-top:90px;">
+        <div style="margin-top:90px;">
             <b class="total">Total: {{manual_logs.count}}</b>
             <table id="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Employee Name</th>
-                        <th>Manual Log Type</th>
-                        <th>Date Filed</th>
-                        <th>Time and Date of Manual Log</th>
-                        <th>Remarks</th>
-                        <th>Status</th>
+                        <th col width="140">Employee Name</th>
+                        <th col width="70">Manual Log Type</th>
+                        <th col width="50">Date Filed</th>
+                        <th col width="70">Time and Date of Manual Log</th>
+                        <th col width="50">Remarks</th>
+                        <th col width="50">Status</th>
                     </tr>
                 </thead>
                 <tbody>

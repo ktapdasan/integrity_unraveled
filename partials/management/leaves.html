@@ -13,16 +13,19 @@
 
 .table1{
     width: 96%;
-    margin:0 auto;
+    margin:0 auto;padding-left:100px;
     background-color:white;
     font-size:12px;
     margin-top:3px;
+    table-layout:fixed;
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+    overflow: hidden;
+    word-break:break-all;
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
@@ -106,9 +109,9 @@ th {
     </div>
         <div style="clear:both;"></div>
     </div>
-    <div class="responsive-table" style="margin-top:20px;">
+    <div  style="margin-top:20px;margin-left:20px;">
          <b class="total">Total: {{leaves_filed.count}}</b>
-        <table id="table1" width="100%" cellspacing="0">
+        <table id="table1" width="99%" cellspacing="0">
             <thead>
                 <tr>
                     <th>Employee Name</th>
@@ -123,14 +126,14 @@ th {
             </thead>
             <tbody>
                 <tr style="width:20px;" ng-repeat="(k, v) in leaves_filed.data" style="cursor:pointer;" ng-if="leaves_filed.status">
-                    <td>{{v.name}}</td>
-                    <td>{{v.leave_type}}</td>
-                    <td>{{v.date_started}}</td>
-                    <td>{{v.date_ended}}</td>
-                    <td>{{v.duration}}</td>
-                    <td>{{v.category}}</td>
-                    <td>{{v.reason}}</td>
-                    <td> 
+                    <td col width="90">{{v.name}}</td>
+                    <td col width="70">{{v.leave_type}}</td>
+                    <td col width="50">{{v.date_started}}</td>
+                    <td col width="50">{{v.date_ended}}</td>
+                    <td col width="50">{{v.duration}}</td>
+                    <td col width="50">{{v.category}}</td>
+                    <td col width="180">{{v.reason}}</td>
+                    <td col width="50"> 
                         <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                         {{v.status}} 
                         </div>
