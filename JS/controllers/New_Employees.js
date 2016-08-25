@@ -155,6 +155,9 @@ app.controller('New_Employees', function(
         };
     }
 
+
+    $scope.date = new Date();
+
     $scope.level_changed = function(){
         level_changed();
     }
