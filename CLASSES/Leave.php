@@ -464,33 +464,33 @@ EOT;
 
         
        $sql = <<<EOT
-                UPDATE  leave_types
+                UPDATE  leave_filed
                 set archived = True
                 where pk = $pk
                 ;
 EOT;
 
-//         $sql .= <<<EOT
-//                 update employees set leave_balances = '$leave_balances' where pk = $created_by;
-// EOT;
+        $sql .= <<<EOT
+                update employees set leave_balances = '$leave_balances' where pk = $created_by;
+EOT;
 
-//         $sql .= <<<EOT
-//                 insert into leave_status
-//                 (
-//                     leave_filed_pk,
-//                     status,
-//                     created_by,
-//                     remarks
-//                 )
-//                 values
-//                 (
-//                     $leave_filed_pk,
-//                     'Deleted',
-//                     $created_by,
-//                     'DELETED'
-//                 ) 
-//                 ;
-// EOT;
+        $sql .= <<<EOT
+                insert into leave_status
+                (
+                    leave_filed_pk,
+                    status,
+                    created_by,
+                    remarks
+                )
+                values
+                (
+                    $pk,
+                    'Deleted',
+                    $created_by,
+                    'DELETED'
+                ) 
+                ;
+EOT;
 
         
         return ClassParent::insert($sql);
