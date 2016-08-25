@@ -1,0 +1,328 @@
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+.total{
+    font-size: 14px;
+    margin: 1px 0 -100px 0px;
+}
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+.bck{
+    background-color: #F9F9F9;
+    height:80px;
+    width: 99%;
+
+    margin-left:5px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 4px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h3 class="animated fadeInLeft">Permissions</h3>
+                <p class="animated fadeInDown">
+                    Administration <span class="fa-angle-right fa"></span> 
+                    Permissions
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class ="bck">
+        <div style="padding-left: 30px; padding-top:6px;"> 
+            <h4>
+            <!--
+                <select ng-model="filter.datetype" ng-hide="true">
+                  <option value="Date Submitted">Date Submitted</option>
+                  <option value="Date Received">Date Received</option>
+                </select>
+            -->
+                <label style="float:left;font-size: 13px;margin-left:-15px;margin-top:">Search</label><br>
+                <input ng-model="filter.searchstring" type="text" style="width:250px;float:left; margin-left:-20px;" ng-change= "show_employees()"/>
+                <select ng-model="filter.status" ng-change= "show_employees()" style="float:left">
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            
+                <!-- <input type="button" class="btn btn-success" value="EXPORT" ng-click="export_employeelist()">
+                <a href = "#/employees/new"><input type="button" class="btn btn-add" value="ADD NEW EMPLOYEE" style="float: right;">
+                </a> -->
+
+              
+                    <div style="float:left; margin-left: 14px;margin-top: -20px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Department</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="department.data"
+                        output-model="filter.department"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                    </div>
+                    <div style="float:left; margin-top: -20px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Level</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="level_title.data"
+                        output-model="filter.level_title"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br> 
+                    </div>
+
+
+                    <div style="float:left; margin-top: -22px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Position</label><br>
+                     <br>
+                        <div
+                        isteven-multi-select
+                        input-model="titles.data"
+                        output-model="filter.titles"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px;float:left; margin-top: -17px;"
+                        max-height="200px"
+                            >
+                    </div>
+                       <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:10px;">
+                    </br>
+                 
+
+                    </div>
+
+
+                  
+                </div>
+                </div>
+                
+
+            <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
+            </h4>
+        </div>
+        <div style="height:10px; width:100%;">
+
+        </div>
+        <div class="responsive-table">
+            <b class="total">Total: {{employees.count}}</b>
+            <table id="datatables-example" class="table1" width="90%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th col width="135">Employee Number</th>
+                        <th>First Name</th>
+                        <th col width="100">Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Supervisor</th>
+                        <th>Position</th>
+                        <th>Level</th>
+                        <th>Department</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status">
+                        <td>{{v.employee_id}}</td>
+                        <td>{{v.first_name}}</td>
+                        <td>{{v.middle_name}}</td>
+                        <td>{{v.last_name}}</td>
+                        <td>
+                            {{v.supervisor}}
+                            <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
+                        </td>
+                        <td>{{v.title}}</td>
+                        <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
+                        <td>{{v.department}}</td>
+                        <td>
+                            <button ng-click="update_access(k) ">Update Access</button>
+                        </td>
+                    </tr>
+                    <tr ng-if="!employees.status" style = "text-align: center;">
+                        <td colspan = "10">Please search an employee</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div style="height:50px; width:100%;">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="PermissionModal">
+    <div class="ngdialog-message">
+        <div>
+            <div>
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span> </h2>
+            </div>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Home</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.home.timeinout" /> Time In/Out
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </td>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>My Timesheet</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.mytimesheet.timesheet" /> Timesheet
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.mytimesheet.leaves" /> Leaves
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Employee List</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.employees.new" /> Add New
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.employees.list" /> View List
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.employees.timelogs" /> Time Logs
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="width:25%;">
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Management</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.management.manuallogs" /> Manual Logs
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.management.leaves" /> Leaves
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.management.attrition" /> Attrition
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="width:100%; height:100%;">
+                            <div>
+                                <h3>Administration</h3>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.departments" /> Departments
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.positions" /> Positions
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.levels" /> Levels
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" /ng-model="permissions.administration.permissions" > Permissions
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.cutoff" /> Cutoff
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" ng-model="permissions.administration.leaves" /> Leaves
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+    </div>
+</script>

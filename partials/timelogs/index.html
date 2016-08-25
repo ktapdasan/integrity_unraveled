@@ -1,0 +1,284 @@
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+.table1{
+    width: 96%;
+    margin:0 auto; 
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+      font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 100%;
+    margin-top:20px;
+    margin-left:1px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+} 
+</style>
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h3 class="animated fadeInLeft">Time Logs</h3>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Time Logs
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div style="float:right;margin-top:12px;">
+            <button type="button" class="btn btn-success btn-sm" style="padding: 4px 11px;" ng-click="upload_excel()"> UPLOAD EXCEL <span class="fa fa-file-excel-o"></span></button>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="bck">
+
+        <div style="padding-left: 10px; padding-top:20px;">
+
+            <div style="font-size: 18px;">
+                <div style="float:left; margin-top: -15px;margin-left:5px;margin-right:20px;">
+                    <label style="float:left;font-size: 13px;">Date From:</label><br>
+                    <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:155px;"/>
+                </div>
+                <div style="float:left; margin-top: -15px;margin-left:-13px;margin-right:10px;">
+                    <label style="float:left;font-size: 13px;">Date To: </label><br>
+                     <input ng-model="filter.dateto" type="date" id="dateto" style="width:155px;"/>
+                </div>
+               
+
+                <div style="float:left; margin-top: -17px;margin-left:-5px;margin-right:10px;">
+                    <label style="float:left;font-size: 13px;">Select an Employee</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="employees"
+                        output-model="filter.employee"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px" 
+
+                            >
+                    </div></br>
+                </div>
+                <div style="float:left; margin-top: -17px;margin-right:10px;">
+                    <label style="float:left; font-size: 13px;">Select a Department</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="department.data"
+                        output-model="filter.department"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                </div>
+                
+                <div style="float:left; margin-top: -17px;margin-right:10px;">
+                    <label style="float:left; font-size: 13px;">Select a Level</label><br>
+                    
+                    <div
+                        isteven-multi-select
+                        input-model="levels.data"
+                        output-model="filter.levels"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                </div>
+
+                    
+
+                <div style="float:left; margin-top: -17px;margin-right:6px;">
+                    <label style="float:left; font-size: 13px;">Select a Position</label><br>
+                
+                    <div
+                    isteven-multi-select
+                    input-model="titles.data"
+                    output-model="filter.titles"
+                    button-label="icon name"
+                    item-label="icon name maker"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    style="width:150px;float:left;"
+                    max-height="200px"
+                            >
+                    </div>
+                    </br>
+                    </br>
+                </div>
+                <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_timesheet()" style="float:left; margin-right:8px;margin-top:10px;">
+                <input type="button" class="btn btn-success btn-sm" value="EXPORT" ng-click="export_timesheet()" style="float:left;margin-top:10px;">
+            </div>   
+            </div>
+        </div>
+    </div>
+    <div style="height:10px; width:100%;">
+    
+    </div>
+    <div class="responsive-table">
+        <b style="margin-right:140px; float: left; margin-bottom: 10px; font-size:15px;">Total: {{timesheet.count}}</b>
+        <table id="datatables-example" class="table1" width="90%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Log in</th>
+                    <th>Log out</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k, v) in timesheet.data | orderBy : v.employee" style="cursor:pointer;" ng-if="timesheet.status">
+                    <td>{{v.employee_id}}</td>
+                    <td>{{v.employee}}</td>
+                    <td>{{v.log_date}}</td>
+                    <td>{{v.log_day}}</td>
+                    <td>
+                        <span ng-if = "v.login == 'None' || v.login == ''">
+                            <font color="red" title = "File Manual Log">None</font>
+                        </span>
+                        <span ng-if = 'v.login != "None" && v.login != ""'>
+                            {{v.login}}
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-if="v.logout == 'None' || v.logout == ''">
+                            <font color="red" title = "File Manual Log">None</font>
+                        </span>
+
+                        <span ng-if="v.logout != 'None' && v.logout != ''">
+                            {{v.logout}}
+                        </span>
+                    </td>
+                    <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td>
+                </tr>
+                <tr ng-if="!timesheet.status" style= "text-align: center;">
+                    <td colspan = "9" style="text-align:center;">No Data Found</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div style="height:50px; width:100%;">
+
+    </div>
+</div>
+
+<script type="text/ng-template" id="UploadModal">
+    <div class="ngdialog-message">
+        <div style="margin-top: 10px;">
+            <div style="float:left; width:50%;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span> </h2>
+            </div>
+            <div style="float:left; width:50%; text-align:right; padding-top:20px; padding-right: 50px;">
+                <a href="ASSETS/templates/TEMPLATE_TIMELOGS.csv">Download Template</a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div style="margin-top: 20px;">
+            <span style="font-size:12px; color:#FF0000;">* Only CSV files are allowed.</span>
+            <input type="file" nv-file-select="" accept=".csv" uploader="uploader" multiple />
+            
+            <br/>
+        </div>
+
+        <div>
+            <p>Number of files queued: {{ uploader.queue.length }}</p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50%">Name</th>
+                        <th ng-show="uploader.isHTML5">Size</th>
+                        <th ng-show="uploader.isHTML5">Progress</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in uploader.queue">
+                        <td><strong>{{ item.file.name }}</strong></td>
+                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                        <td ng-show="uploader.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                            <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                        </td>
+                        <td nowrap>
+                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <div>
+                    Queue progress:
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+            </div>
+        </div> 
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">{{modal.close}}</button>
+    </div>
+</script>

@@ -1,0 +1,19 @@
+.ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
+    /*width: 850px;*/
+}
+
+.ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
+    width: 650px;
+}
+
+.ngdialog.ngdialog-theme-plain.custom-widththreefifty .ngdialog-content {
+    width: 350px;
+}
+
+.ngdialog.ngdialog-theme-plain.custom-widthfourfifty .ngdialog-content {
+    width: 450px;
+}
+
+.ngdialog.ngdialog-theme-plain.custom-widtheightfifty .ngdialog-content {
+    width: 850px;
+}

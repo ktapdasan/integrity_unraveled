@@ -1,0 +1,124 @@
+
+<style type="text/css">
+.red {
+    color: #ff0000; 
+}
+.total{
+    font-size: 14px;
+    margin: 1px 0 -100px 0px;
+}
+
+.hide {
+    display:none;}
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 47.5%;
+    margin-top:20px;
+    margin-left:15px;
+    border-radius: 5px;
+    padding-top:5px;
+    padding-left:10px;
+    border:1px solid #dbd9d9;
+}
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 5px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Positions</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Positions
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="panel">
+        <div class="bck">
+        <div style="padding-left: 20px;"><h4>
+                   <label style="float:left;font-size: 13px;margin-left:-15px;">Search</label><br>
+                             <input ng-model="filter.searchstring" type="text" style="width:190px; margin-left:-20px;" ng-change= "show_titles()"/>
+
+                            <select ng-model="filter.status" ng-change= "show_titles()">
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                            <input type="button" class="btn btn-add btn-sm" value = "Add New Position" alt="edit"ng-click="add_position(k)" title="Edit" style = "float: right;margin-right:10px;"/></h4> 
+        </div>
+        </div>
+    </div>
+
+
+        <div class="responsive-table">
+            <b class="total">Total: {{titles.count}}</b>
+            <table id="table1" width="50%" cellspacing="0">
+
+                <thead>
+                    <tr>
+                        <th><font size = 4>Positions</font></th>
+                        <th><font size = 4>Options</font></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k, v) in titles.data" style="cursor:pointer;" ng-if= "titles.status">
+                        <td>{{v.title}}</td>
+                        <td><center>
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_position(k)" title="Edit">
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_position(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'"> 
+                            <input type="image" src="ASSETS/img/restore.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_position(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">                                                               
+                        </center>
+                        </td>
+                    </tr>
+                    <tr ng-if="!titles.status">
+                        <td colspan = "9">No Position Found</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div style="height:50px; width:100%;">
+
+        </div>
+    </div>
+</div>
+
+

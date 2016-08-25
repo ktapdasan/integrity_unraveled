@@ -1,0 +1,144 @@
+
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+
+.display {
+
+}
+
+.hide {
+visibility: hidden;
+}
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+      font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+} 
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 97%;
+    margin-top:20px;
+    margin-left:20px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+} 
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Over Time</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Management <span class="fa-angle-right fa"></span> 
+                    Over Time
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class ="bck">
+        <div style="padding-left: 20px; padding-top:20px;">
+            <div style="font-size: 18px;">
+                <div style="margin-left:5px;float:left; margin-right:10px;margin-top:-15px;">
+                     <label style="float:left;font-size: 15px;">Date From:</label><br>
+                      <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                </div>
+                <div style="float:left; margin-right:-5px;margin-top:-14px;">
+                   <label style="float:left;font-size: 15px;">Date To:</label><br> <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
+                </div>
+ <div class="col-md-6" style="padding-top:0px;">
+                 <div style="float:left; margin-top:-15px;margin-right:10px;">
+                    <label style="float:left;font-size: 15px;">Select an Employee</label>
+                    <br>
+                    <div
+                        isteven-multi-select
+                        input-model="myemployees"
+                        output-model="filter.myemployees"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px; float:left;"
+                        max-height="200px" 
+
+                            >
+                    </div>
+                    </div>
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_overtime()" style="float:left;margin-top:11px;">
+                </div>
+</div>
+</div>
+
+        <div class="responsive-table" style="margin-top:90px;">
+            <b class="total">Total: {{overtime.count}}</b>
+            <table id="table1" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Date Filed</th>
+                        <th>Time From</th>
+                        <th>Time To</th>
+                        <th>Remarks</th>
+                        <th>Status<th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k, v) in overtime.data track by $index" style="cursor:pointer;" value = "{{v.pk}}" ng-if="overtime.status">
+                        <td>{{v.name}}</td>
+                        <td>{{v.datecreated}}</td>                       
+                        <td>{{v.timefrom}}</td>
+                        <td>{{v.timeto}}</td>
+                        <td>{{v.remarks}}</td>
+                        <td>
+                            <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                                <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
+                                <input type= "button" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
+                            </div>
+                            <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                                {{v.status}} 
+                            </div>
+                        </td>
+                    </tr> 
+                    <tr ng-if="!overtime.status" style = "text-align: center;">
+                        <td colspan = "10">No Data Found</td>
+                    </tr>       
+                </tbody>
+            </table>
+        </div>
+        <div style="height:50px; width:100%;">
+
+        </div>
+    </div>
+</div>
+
+

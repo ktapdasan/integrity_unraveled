@@ -1,0 +1,108 @@
+<style type="text/css">
+.display {
+}
+.hide{
+    visibility: hidden;
+}
+.table1{
+  
+  
+    background-color:white;
+    font-size:12px;
+    margin-left:1px;
+}
+th, td {
+    text-align: left; 
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Cut Off</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Cut Off
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel">
+        <div style="padding-left: 100px;"><h4>
+                <select ng-model="filter.status" ng-change= "show_type()">
+                    <option ng-repeat="(k, v) in cutofftypes.data" style="cursor:pointer;" value="{{v.pk}}">{{v.type}}</option>
+                 </select>
+        </div>
+        <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayM"><h4>
+                <table class ="table1"cellspacing="10">
+                    <tr>
+                        <th style = 'padding-right: 50px'> Start Day: </th>
+                        <th style = 'padding-right: 50px'> End Day: </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select ng-model = "filter.start_m">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                            </select>
+                        </td>
+                        <td> 
+                            <select ng-model = "filter.end_m">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                            </select>
+                    </tr>
+                </table>
+        </div>
+        <div style="padding-left: 100px; margin-top: 50px;" ng-show= "displayB"><h4>
+                <table class ="table1"cellspacing="10">
+                    <tr>
+                        <th style = 'padding-right: 50px'> Start Day: </th>
+                        <th style = 'padding-right: 50px'> End Day: </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select ng-model = "filter.start_bf">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                            </select>
+                        </td>
+                        <td> 
+                            <select ng-model = "filter.end_bf">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                            </select>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select ng-model = "filter.start_bs">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                            </select>
+                        </td>
+                        <td> 
+                            <select ng-model = "filter.end_bs">
+                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                            </select>
+                    </tr>
+                </table>
+        </div>
+        <div style="padding-left: 100px; margin-top: 20px;">
+                <button ng-click = "save()" class=" btn btn-add"><h5> Save </h5></button>
+        </div>
+
+
+    </div>
+
+

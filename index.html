@@ -1,0 +1,1201 @@
+<!DOCTYPE html>     
+<html lang="en" ng-app="onload">
+<head> 
+    <meta charset="utf-8">
+    <meta name="description" content="Career Hunter Recruitment Solutions, Time Tracking System">
+    <meta name="author" content="CHRS IT">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CHRS | Integrity</title>
+  
+    <!-- start: Css -->
+    <link rel="stylesheet" type="text/css" href="./ASSETS/css/bootstrap.min.css">
+
+    <!-- plugins -->
+    <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/simple-line-icons.css"/>
+    <link rel="stylesheet" type="text/css" href="./ASSETS/css/plugins/animate.min.css"/>
+   <link rel="stylesheet" type="text/css" href="./ASSETS/css/style.css">
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog.min.css" >
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-theme-plain.min.css" >
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-theme-default.min.css" >
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dialog/ngDialog-custom-width.css" >
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/dropdown/isteven-multi-select.css" >
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/notification/angular-ui-notification.min.css" >
+
+    <link rel="stylesheet" type="text/css" href="./ASSETS/js/plugins/sidebar/sidebar.css" >
+ 
+    <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/libs.min.css">
+    <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/docs.min.css">
+    <!-- end: Css -->
+    
+    <link rel="shortcut icon" href="./ASSETS/img/time.ico"> 
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    .custom-menu li a {
+        color: #2196f3 !important;
+    }
+
+    .custom-menu li:hover{
+        background-color: #e7e7e7;
+    }
+    .button-action:disabled{
+       cursor:not-allowed;
+       background-color: #F0EFEF;
+       color:#7F7D7C;
+    }
+    .button-action{
+        background-color: #3288E6;
+        color: white;
+    }
+    body>footer {
+        /*background-color: #eee;*/
+        font-size: 11px;
+        position: fixed;
+        bottom: 0;
+        padding: 8px;
+        /*width: 100%;*/
+        width: 400px;
+
+        max-height: 450px;
+        display: block;
+
+        /*additional remove to make a footer and uncomment comments above*/
+        margin-left: 75%;
+    }
+
+    body>footer .footer-main {
+        width: 100%;
+        text-align: right;   
+    }
+
+    .div2 {
+        height: 450px;
+        cursor: pointer;
+    }
+
+    .div2 .bubble img {
+        width: 300px;
+        margin-right: 150px;
+    }
+
+    .div2 .msg {
+        font-size: 20px !important;
+        width: 250px;
+        height: 100px;
+        z-index: 99999;
+        position: absolute;
+        margin-top: 50px;
+        margin-left: 30px;
+    }
+
+    .div1 {
+        padding-right: 60px;
+    }
+
+    .div1 textarea {
+        font-size: 15px;
+    }
+
+    .sidebar {
+
+    }
+
+    .sidebar .notification_data {
+        max-height: 500px;
+        height: auto;
+        overflow-y: auto; 
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin: 0px;
+    }
+
+    .sidebar ul li{
+        padding: 10px 2px;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .modal_save_disabled {
+        background-color: #fafafa;
+        color:#AAA;
+    }
+
+    button:disabled{
+        cursor: not-allowed;
+    }
+
+
+    .tblleave_timesheet th{
+        border:1px solid white; 
+    
+    }
+    
+    
+    .tblleave_timesheet tr {
+        background-color:#fff;
+        border:0;
+    }
+    .tblleave_timesheet td {
+        background-color:#fff;
+        border:1px solid white;
+    }
+
+    .tblDeactivate tr {
+        background-color:#fff;
+        border:0;
+    }
+    .tblDeactivate td{
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tbldisapprove tr {
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tbldisapprove td {
+        background-color:#fff;
+        border:1px solid white;
+    }  
+    .tblPasswordModal td{
+        background-color:#fff;
+        border:1px solid white;
+    }
+    .tblPasswordModal tr{
+         background-color:#fff;
+        border:1px solid white;
+    }
+
+    </style>
+
+</head>
+
+<body id="mimin" class="dashboard" style="overflow-x:hidden;">
+    <div class="m-app-loading" ng-animate-children>
+        <!--
+        HACKY CODE WARNING: I'm putting Style block inside directive so that it
+        will be removed from the DOM when we remove the directive container.
+        -->
+        <style type="text/css">
+         
+        div.m-app-loading {
+            position: absolute;
+        }
+         
+        div.m-app-loading div.animated-container {
+            background-color: #333333 ;
+            bottom: 0px ;
+            left: 0px ;
+            opacity: 1.0 ;
+            position: fixed;
+            right: 0px ;
+            top: 0px ;
+            z-index: 999999 ;
+        }
+         
+        /* Used to initialize the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave {
+            opacity: 1.0 ;
+            transition: all linear 200ms ;
+            -webkit-transition: all linear 200ms ;
+        }
+         
+        /* Used to set the end properties of the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave-active {
+            opacity: 0 ;
+        }
+         
+        div.m-app-loading div.messaging {
+            color: #FFFFFF ;
+            font-family: monospace ;
+            left: 0px ;
+            margin-top: -37px ;
+            position: absolute ;
+            right: 0px ;
+            text-align: center ;
+            top: 50% ;
+        }
+         
+        div.m-app-loading h1 {
+            font-size: 26px ;
+            line-height: 35px ;
+            margin: 0px 0px 20px 0px ;
+        }
+         
+        div.m-app-loading p {
+            font-size: 18px ;
+            line-height: 14px ;
+            margin: 0px 0px 0px 0px ;
+        }
+
+
+        </style>
+
+        <!-- BEGIN: Actual animated container. -->
+        <div class="animated-container">
+            <div class="messaging">
+                <p>
+                    Please stand by while Integrity is initializing ...
+                </p>
+            </div>
+        </div>
+        <!-- END: Actual animated container. -->
+    </div>
+    <!-- END: App-Loading Screen. --> 
+
+    <!-- start: Header -->
+    <nav class="navbar navbar-default header navbar-fixed-top">
+        <div class="col-md-12 nav-wrapper">
+            
+            <div class="navbar-header" style="width:100%;" ng-controller="Header">
+                <a href="#/" class="navbar-brand"> 
+                    <b>Integrity</b>
+                </a>
+                <ul class="nav navbar-nav navbar-left user-nav custom-menu">
+                    <li ng-class="menu.home">
+                        <a href="#/" ng-click="menuclicked('home')">Home</a>
+                    </li>
+                    <li ng-class="menu.timesheet">
+                       <!-- <a href="#/timesheet" ng-click="menuclicked('timesheet')">Timesheet</a> -->
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Timesheet<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">  
+                            <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')"> Timesheet</a></li>
+                            <!-- <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li> --> 
+                            <li><a style="cursor:pointer;" href="#/timesheet/leaves" ng-click="menuclicked('timesheet')">Leaves</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/overtime" ng-click="menuclicked('timesheet')">Over Time</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- <li ng-class="menu.timelogs">
+                        <a href="#/timelogs" ng-click="menuclicked('timelogs')">Time Logs</a>
+                    </li> -->
+                    <li ng-class="menu.employees" ng-if="profile.permission.employees">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            
+                            <li><a style="cursor:pointer;" href="#/employees/new" ng-click="menuclicked('employees')">New</a></li>
+                            <li><a style="cursor:pointer;" href="#/employees/list" ng-click="menuclicked('employees')">List</a></li>
+                            <li><a style="cursor:pointer;" href="#/employees/timesheet" ng-click="menuclicked('employees')">Timelogs</a></li>
+                        </ul>
+
+                    </li>
+                    <li ng-class="menu.management" ng-if="profile.permission.management">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Management<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/management/manual_logs" ng-click="menuclicked('management')">Manual Logs</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/leaves" ng-click="menuclicked('management')">Leaves</a></li>
+                            <!-- <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li> -->
+                            <li><a style="cursor:pointer;" href="#/management/analytics" ng-click="menuclicked('management')">Analytics</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/overtime" ng-click="menuclicked('management')">Over Time</a></li>
+                        </ul>
+                    </li>
+                    <li ng-class="menu.admin" ng-if="profile.permission.administration">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/admin/departments" ng-click="menuclicked('admin')">Departments</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/positions" ng-click="menuclicked('admin')">Positions</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/levels" ng-click="menuclicked('admin')">Levels</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/permissions" ng-click="menuclicked('admin')">Permissions</a></li> 
+                            <li><a style="cursor:pointer;" href="#/admin/cutoff" ng-click="menuclicked('admin')">Cut Off</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/leaves" ng-click="menuclicked('admin')">Leaves</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/work_days" ng-click="menuclicked('admin')">Work Days</a></li>
+                        </ul>
+
+                    </li>
+                    <!-- <li class="dropdown" ng-class="menu.manual">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manual<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" ng-click="manual_log()">Manual Log</a></li>
+                        </ul>
+                    </li> -->
+                    <!-- <li ++ng-class="menu.employee">
+                        <a href="#/employees"ng-click="menuclicked('employee')">Employees </a>
+                    </li> -->
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" >
+                    <li class="user-name"><span>{{ profile.first_name + " " + profile.last_name }}</span></li>
+                    <li class="dropdown avatar-dropdown">
+                        <img src="./ASSETS/img/LogoRGB_254.png" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <ul class="dropdown-menu user-dropdown">
+                            <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
+                            <li><a href="#"><span class="fa fa-calendar"></span> My Calendar</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="more">
+                                <ul>
+                                    <!-- <li><a href=""><span class="fa fa-cogs"></span></a></li> -->
+                                    <li alt="Change Password"><a href="" ng-click="change_password()"><span class="fa fa-key"></span></a></li>
+                                    <li alt="Log out"><a href="" ng-click="logout()"><span class="fa fa-power-off"></span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                   <!--  <li style="padding-top:10px; padding-left:5px;">
+                        <img src="./ASSETS/img/new2.gif" style="width:60px; cursor:pointer;" title="View the Latest Updates" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <ul class="dropdown-menu user-dropdown" style="max-height:400px; overflow-y:auto;">
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Added menu button for latest updates
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Added option to show/hide the comment box
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Comment Box. Once you have already submitted your comment, the callouts will always start with Let's start now so you can submit more comments.
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li style="padding: 10px;">
+                                <span class="fa fa-genderless"></span>
+                                Log in page. The Enter key can now be used to log in.
+                            </li>
+                        </ul>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- end: Header -->
+
+    <div class="container-fluid mimin-wrapper">
+        <!-- start:Left Menu -->
+        
+        <!-- end: Left Menu -->
+<!-- <ng-timepicker ng-model="log.time_log" show-meridian="true"></ng-timepicker> -->
+        <div ng-view=""></div>
+    </div>  
+
+    <div ng-controller="Sidebar">
+        <div id="styleSelector" class="{{switcher.main}}">
+          
+            <div class="selector-toggle">
+                <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } ">
+                </a>
+             <div ng-style="{'opacity' : get_arrowstop() }">
+               <span class="tooltiptext"><i class="fa fa-angle-double-right"></i> </span>
+               <span class="tooltiptext1"><i class="fa fa-angle-double-up"></i> </span>
+               <span class="tooltiptext2"><i class="fa fa-angle-double-down"></i> </span>
+             </div>
+            </div>
+
+
+            <div ng-show="switcher.content" class="sidebar">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a ng-click="change_menu('inbox')">
+                                <img src="./ASSETS/img/bell.png" style="height:30px;"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="change_menu('sent')">
+                                <img src="./ASSETS/img/message.png" style="height:30px;"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a ng-click="change_menu('sent')">
+                                <img src="./ASSETS/img/clipboard.png" style="height:30px;"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="notification_data">
+                    <ul class="nav">
+                        <li ng-repeat="(k,v) in notifications.data">
+                            <a ng-click="goto(k)">
+                                {{v.notification}}
+                                <br>
+                                <span style="font-size:12px; color:#AAA;" >
+                                created by:
+                                {{v.created_by}}
+                                <br>
+                                {{v.date_created}}
+                                </span>
+                            </a>
+                           
+                        </li>
+                    </ul>
+                </div>
+                    
+            </div>
+                
+        </div>
+    </div>
+
+
+     <!--<footer >
+        <div class="footer-main" ng-controller="Footer">
+            <img src="./ASSETS/img/close.png" style="margin-bottom: 5px; cursor:pointer; margin-right:60px;" ng-click="temp_close()" ng-if="done"/>
+            <img src="./ASSETS/img/comment.png" style="margin-bottom: 5px; cursor:pointer; margin-right:60px;" ng-click="temp_open()" ng-if="!done"/>
+            <div class="div1" ng-if="comment && done">
+
+                <textarea style="width:100%;" rows="10" ng-model="comments.comment"></textarea>
+                <button class="btn ripple btn-outline btn-primary" style="width:100%;" ng-click="submit_comment()">
+                    <div>
+                        <span>SUBMIT</span>
+                    </div>
+                </button>
+            </div>
+            <div class="div2" ng-click="next_slide()" ng-if="!comment">
+                <div class="msg">
+                    <span>{{current_msg}}</span>
+                    <br />
+                    <img src="./ASSETS/img/arrow-down2.gif" style="width:20px;"/>
+                </div>
+                <div class="bubble">
+                    <img src="./ASSETS/img/bubble.png" style="height:200px;"/>
+                </div>
+                <div class="mascot">
+                    <img src="./ASSETS/img/mascot.png" style="height:200px;"/>
+                </div>
+                
+            </div>
+        </div>
+    </footer>-->
+
+    <!-- start: Javascript -->
+    <script src="./ASSETS/js/jquery.min.js"></script>
+    <script src="./ASSETS/js/jquery.ui.min.js"></script>
+    <script src="./ASSETS/js/bootstrap.min.js"></script>
+   
+    <!-- Angular.js Libraries -->
+    <script src="./ASSETS/js/angularjs/angular.min.js"></script>
+    <script src="./ASSETS/js/angularjs/angular-route.min.js"></script>
+    <script src="./ASSETS/js/angularjs/angular-cookies.min.js"></script>
+    <script src="./ASSETS/js/angularjs/angular-md5.js"></script>
+
+    <!-- MODULE -->
+    <script src="./JS/module.js"></script>
+
+    <!-- CONTROLLERS -->
+    <script src="./JS/controllers/Header.js"></script>
+    <script src="./JS/controllers/Footer.js"></script>
+    <script src="./JS/controllers/Dashboard.js"></script>
+    <script src="./JS/controllers/Timesheet.js"></script>
+    <script src="./JS/controllers/Timelogs.js"></script>
+    <script src="./JS/controllers/Employees.js"></script>
+    <script src="./JS/controllers/New_Employees.js"></script>
+    <script src="./JS/controllers/Leave.js"></script>
+    <script src="./JS/controllers/Manual_logs.js"></script>
+    <script src="./JS/controllers/Cutoff.js"></script>
+    <script src="./JS/controllers/Management_manual_logs.js"></script>
+    <script src="./JS/controllers/Management_leave.js"></script>
+    <script src="./JS/controllers/EmployeesPermissions.js"></script>
+    <script src="./JS/controllers/Sidebar.js"></script>
+    <script src="./JS/controllers/Admin_leave.js"></script>
+    <script src="./JS/controllers/Attritions.js"></script>
+    <script src="./JS/controllers/Work_days.js"></script>
+    <script src="./JS/controllers/Analytics.js"></script>
+    <script src="./JS/controllers/Overtime.js"></script>
+    
+    <!-- ADMIN -->
+    <script src="./JS/controllers/Department.js"></script>
+    <script src="./JS/controllers/Position.js"></script>
+    <script src="./JS/controllers/Levels.js"></script>
+
+    <!-- FACTORIES -->
+    <script src="./JS/factories/SessionFactory.js"></script>
+    <script src="./JS/factories/EmployeesFactory.js"></script>  
+    <script src="./JS/factories/TimelogFactory.js"></script>  
+    <script src="./JS/factories/DepartmentsFactory.js"></script>  
+    <script src="./JS/factories/TitlesFactory.js"></script>  
+    <script src="./JS/factories/LevelsFactory.js"></script>  
+    <script src="./JS/factories/LeaveFactory.js"></script>  
+    <script src="./JS/factories/CutoffFactory.js"></script>  
+    <script src="./JS/factories/WorkdaysFactory.js"></script>  
+
+
+    <!-- DIRECTIVES -->
+    <script src="./JS/directives/splash.js"></script>
+    <script src="./JS/directives/isNumber.js"></script>
+
+    <!-- plugins -->
+    <script src="./ASSETS/js/plugins/moment.min.js"></script>
+    <script src="./ASSETS/js/plugins/jquery.nicescroll.js"></script>
+    <script src="./ASSETS/js/plugins/md5/angular-md5.js"></script>
+    <script src="./ASSETS/js/plugins/dialog/ngDialog.js"></script>
+    <script src="./ASSETS/js/plugins/dropdown/isteven-multi-select.js"></script>
+    <script src="./ASSETS/js/plugins/notification/angular-ui-notification.min.js"></script>
+    <script src="./ASSETS/js/plugins/uploader/angular-file-upload.min.js"></script>
+
+
+    <!--timepicker-->
+    <script src="./ASSETS/js/plugins/timepicker/angular-sanitize.min.js" data-semver="1.5.5"></script>
+    <script src="./ASSETS/js/plugins/timepicker/angular-strap.js" data-semver="v2.3.8"></script>
+    <script src="./ASSETS/js/plugins/timepicker/angular-strap.tpl.js" data-semver="v2.3.8"></script>
+    <script src="./ASSETS/js/plugins/timepicker/angular-strap.docs.tpl.js" data-semver="v2.3.8"></script>
+
+    <!--Notifications-->
+    <script src="./JS/factories/NotificationsFactory.js"></script>  
+
+    <!-- custom -->
+    <script src="./ASSETS/js/main.js"></script>
+    
+
+     <script type="text/ng-template" id="ConfirmModal">
+        <div class="ngdialog-message" style="width: 100%;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <h4>{{ modal.message }}</h4>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="DeactivateModal">
+        <div class="ngdialog-message" style="width: 100%;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <h4>{{ modal.message }}</h4>
+
+                <table class ="tblDeactivate">
+                <tr>
+                    <td>
+                        <label style= "font-size:20px; float: left;">Last day of Work</label>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" ng-model="modal.last_day_work" ng-required="true" close-text="Close"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style= "font-size:20px; float: left;">Effective Date of Resignation</label>
+                    </td>
+                    <td>
+                        <input type="date" size = "10" class="form-control" ng-model= "modal.effective_date"  ng-required="true" close-text="Close"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
+                        <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
+                    </td>
+                </tr>
+            </table>
+
+
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+    
+
+    <script type="text/ng-template" id="DisapprovedModal">
+        <div class="ngdialog-message" style="width: 100%;">
+            <form name= "disapprove">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <h4>{{ modal.message }}</h4>
+
+                <table class ="tbldisapprove">
+                <tr>
+                    <td colspan="2">
+                        <label style = "font-size:20px;">Remarks:</label> 
+                        <textarea ng-model="modal.remarks" rows ='5' cols ='42' tabindex="1" autofocus required/>
+                    </td>
+                </tr>
+            </table>
+
+
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="disapprove.$error.required">{{modal.save}}</button>
+        </div>
+        </form>
+    </script>
+
+
+    <script type="text/ng-template" id="PasswordModal">
+        <div class="ngdialog-message" style="width: 500px;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+            <div>
+                <table class ="tblPasswordModal"style="width: 85%;">
+                    <thead>
+                        <tr>
+                            <td>
+                                Current Password :
+                            </td>
+                            <td>
+                                <input type="password" ng-model="modal.data.old_password" maxlength="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                New Password :
+                            </td>
+                            <td>
+                                <input type="password" ng-model="modal.data.new_password" maxlength="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Confirm Password :
+                            </td>
+                            <td>
+                                <input type="password" ng-model="modal.data.confirm_password" maxlength="20"/>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div> 
+    </script>
+
+    <script type="text/ng-template" id="ManualLogModal">
+        <div class="ngdialog-message">
+        <form name="manualLog">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+            <div label="form-group" ng-class="{'has-error': timepickerForm.time.$invalid}" > 
+                <label style= "font-size:20px; float: left;">Time:</label>
+                <input type="text" class="form-control" size="8" ng-model="log.time_log" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/>           
+                <label style = "font-size:20px;">Reason:</label> 
+                <textarea ng-model="log.reason" rows ='6' cols ='32' tabindex="1" autofocus required/>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="manualLog.$error.required">{{modal.save}}</button>
+        </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="DisapproveModal">
+        <div class="ngdialog-message">
+            <form name="disapproveForm">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+                <label style = "font-size:20px;">Remarks:</label> 
+                <textarea ng-model="log.remarks" rows ='6' cols ='32' tabindex="1" required/>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="disapproveForm.$error.required">{{modal.save}}</button>
+        </div>
+        </form>
+    </script>
+
+    <!--
+    <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">
+        <div class="ngdialog-message" style="width: 500px;">
+            <div style="margin-top: -5px;">
+                <h3><span style="color:#0c79be; margin-left:25px">{{ modal.title }}</span></h3>
+            </div>
+
+            <style type="text/css">
+                #submit {
+                    color: #2196f3 !important;
+                }
+
+                #submit:hover{
+                    background-color: #e7e7e7;
+                }
+
+                body>footer {
+                    /*background-color: #eee;*/
+                    font-size: 11px;
+                    position: fixed;
+                    bottom: 0;
+                    padding: 8px;
+                    /*width: 100%;*/
+                    width: 400px;
+
+                    max-height: 450px;
+                    display: block;
+
+                    /*additional remove to make a footer and uncomment comments above*/
+                    margin-left: 75%;
+                }
+
+                body>footer .footer-main {
+                    width: 100%;
+                    text-align: right;   
+                }
+
+                .red {
+                    color: #ff0000;
+                }
+
+                .container {
+                    width: 500px;
+                    clear: both;
+                }
+                .container input {
+                    width: 100%;
+                    clear: both;
+                }
+                #css .ng-dirty.ng-valid {
+                border:1px solid Green;
+                }
+                #css .ng-dirty.ng-invalid {
+                    border:1px solid Red;
+                }
+
+            </style>
+            <div id="content2" style="margin: 20px; border:0px solid #f0f0f0;">
+                <div>
+                    <form name="myForm" novalidate>
+                    <table>
+                            
+                            <tr>
+                                <td> 
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">Employee ID:</label>
+                                </td>
+                                <td id="css">
+                                    <input name="user" required ng-model = "employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:320px; height:25px;" tabindex="1"/>
+
+                                    <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                                    <span ng-show="myForm.user.$error.required">Employee ID is required.</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> Business E-mail Address:</label>
+                                </td>
+                                <td id="css">
+                                    <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="6"/>
+                                    
+                                    <span style="color:red" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
+                                    <span style="color:red" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">First Name:</label> 
+                               </td>
+                                <td id="css">    
+                                    <input name="firstName" required ng-model="employee.first_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="2"/>
+                                    <span style="color:red" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
+                                    <span ng-show="myForm.firstName.$error.required">First Name is required.</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">E-mail Address:</label>
+                                </td>
+                                <td id="css">
+                                    <input name="email" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="7"/>
+                                    
+                                    <span style="color:red" ng-show="myForm.email.$error.required">E-mail Address is required.</span>
+                                    <span style="color:red" ng-show="myForm.email.$error.email">Please, write a valid E-mail Address address.</span>
+                                </td>                        
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Middle Name:</label>
+                                </td>
+                                <td id="css">
+                                    <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="3"/>
+                                    <span style="color:red" ng-show="myForm.middleName.$dirty && myForm.middleName.$invalid">
+                                    <span ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Department:</label>
+                                </td>
+                                <td id="css">
+                                    <select required ng-model="employee.departments_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="8">
+                                        
+                                        <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
+
+                                            {{v.department}}
+
+                                        </option>
+
+                                    </select>
+                                    
+                                </td>  
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Last Name:</label>
+                                </td>
+                                 <td id="css">
+                                    <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="4"/>
+                                    <span style="color:red" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
+                                    <span ng-show="myForm.lastName.$error.required">Last Name is required.</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Level:</label>
+                                </td>
+                                <td id="css">
+                                    <select required ng-model="employee.levels_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="9">
+                                            <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}">
+                                                {{v.level_title}}
+                                            </option>
+
+                                    </select>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Position:</label>
+                                </td>
+                                <td id="css">
+                                    <select required ng-model="employee.titles_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5" class = "show_hours" >
+                                        <option style="display:none">-- Please Select One --</option>
+                                        <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
+
+                                            {{v.title}}
+
+                                        </option>
+
+                                    </select>
+                                    
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan = "4">
+                                    <center style="font-size: 18px; font-style: bold">
+                                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+                                        <button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
+                                        || myForm.firstName.$dirty && myForm.firstName.$invalid
+                                        || myForm.middleName.$dirty && myForm.middleName.$invalid
+                                        || myForm.lastName.$dirty && myForm.lastName.$invalid
+                                        || myForm.email.$dirty && myForm.email.$invalid
+                                        || myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+
+                                    </center>
+                                </td>
+                            </tr>
+                    </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>-->
+    
+    <script type="text/ng-template" id="OvertimeModal">
+        <div class="ngdialog-message" style="width: 100%;">
+            <form name="overtime">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <textarea ng-model="modal.remarks" cols="45" rows="5" required></textarea>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="overtime.$error.required">{{modal.save}}</button>
+        </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="ConfirmLogModal">
+        <div class="ngdialog-message" style="width: 100%;">
+            <div style="margin-top: -15px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
+            </div>
+            <div>
+                <h4>{{ modal.message }}</h4>
+            </div>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="DepartmentModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+        <form name="myForm">
+            <div> 
+                <label style= "font-size:20px; float: left;">New Department Name:</label>
+                <input required type="text" size="10" ng-model="modal.department" style="width: 250px;" />          
+                <label style = "font-size:20px;">New Department Code:</label> 
+               <input required type="text" size="10" ng-model="modal.code" style="width: 250px;" /> 
+            </div>
+        </form>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="DepartmentNewModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+             <hr style="height:2px">
+        <form name="myForm">
+            <div> 
+                <label style= "font-size:18px; float: left;">Department Name:</label>
+                <input required type="text" size="10" ng-model="modal.department" style="width: 320px;"/>  
+
+                <label style = "font-size:18px;margin-top:20px;">Department Code:</label> 
+               <input required type="text" size="10" ng-model="modal.code" style="width: 320px;" /> 
+            </div>
+        </form>
+        </div>
+         <hr style="height:2px">
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="PositionModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+        <form name="myForm" novalidate>
+            <div> 
+                <label style= "font-size:20px; float: left;">New Position Name:</label>
+                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 250px;" />          
+            </div>
+        </form>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="PositionNewModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+            <hr style="height:2px">
+        <form name="myForm">
+            <div> 
+                <label style= "font-size:20px; float: left;">Position Name:</label>
+                <input required type="text" size="10" ng-model="modal.fields.title" style="width: 320px;" />          
+            </div>
+        </form>
+        </div>
+        <hr style="height:2px">
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="LevelModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+        <form name="myForm">
+            <div> 
+                <label style= "font-size:20px; float: left;">New Level Name:</label>
+                <input required type="text" size="10" ng-model="modal.fields.level_title" style="width: 250px;" />          
+            </div>
+        </form>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="LevelNewModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+            <hr style="height:2px">
+        <form name="myForm" >
+            <div> 
+                <label style= "font-size:20px; float: left;">Level Name:</label>
+                <input required type="text" size="10" ng-model="modal.level_title" style="width: 320px;" />          
+            </div>
+        </form>
+        </div>
+        <hr style="height:2px">
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+
+    
+
+    
+
+    <script type="text/ng-template" id="LeaveModal">
+        <div class="ngdialog-message" >
+            <div>
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+            <div> 
+
+            <form name="leave">
+            
+Administration
+Departments
+            <table class="tblleave_timesheet">
+
+                <tr>
+                    <th colspan="2">
+                    <label style = "font-size:20px;">Type of leave</label>
+                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:400px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
+                            <option ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;" value="{{v.pk}}">
+                                {{v.name}}
+                            </option>
+                        </select>
+                    </th>
+                </tr>
+                <tr>
+                    <td><label style= "font-size:20px;">Duration:</label></td>
+                    <td>
+                        <select ng-model="modal.duration" ng-change="duration_changed(); check_leave_count();">
+                            <option>Whole Day</option>
+                            <option>First Half</option>
+                            <option>Second Half</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style= "font-size:20px; float: left;">Start Date:</label>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" ng-model="modal.date_started" ng-required="true" close-text="Close" ng-change="check_leave_count()" ng-keyup="check_leave_count()" />
+                    </td>
+                </tr>
+                <tr ng-show="isEndDate">
+                    <td>
+                        <label style= "font-size:20px; float: left;">End Date:</label>
+                    </td>
+                    <td>
+                        <input type="date" size = "10" class="form-control" ng-model= "modal.date_ended"  ng-required="true" close-text="Close" ng-change="check_leave_count()" ng-keyup="check_leave_count()"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style= "font-size:20px;">Category:</label></td>
+                    <td>
+                        <select ng-model="modal.category" ng-change="check_balance(); check_leave_count();">
+                            <option>Paid</option>
+                            <option>Non-paid</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
+
+                        <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
+
+                        <div>
+                            <span ng-if="modal.remaining.status">Remaining Balance: {{modal.remaining.count - modal.total.count}}</span>
+                        </div>
+                        <!-- <div>
+                            <span ng-if="modal.total.status">Total # of filed days: {{modal.total.count}}</span>
+                        </div> -->
+                    </td>
+                </tr>
+            </table>
+            </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" ng-class=""  data-ng-click="closeThisDialog('Save')" ng-disabled="leave.$error.required">{{modal.save}}</button>
+        </div>
+        </form>
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <html>
+
+<body>
+
+<form name="login">
+Username<input type="text" name="user_id"/>
+Password<input type="password" name="ps_wrd"/>
+<input type="button" onclick="check(this.form)" value="Login"/>
+<input type="reset" value="Cancel"/>
+</form>
+<script language="javascript">
+function check(form){
+ /*the following code checkes whether the entered userid and password are matching*/
+ if(form.user_id.value == "we" && form.ps_wrd.value == "1234")
+    {
+    window.open('index2.html')
+    }
+ else
+ {
+   alert("Error Password or Username")
+  }
+}
+
+</script>
+</body>
+</html> -->

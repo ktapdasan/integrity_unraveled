@@ -1,0 +1,156 @@
+
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+
+.leave-square {
+
+    width: 150px;
+    height: 150px;
+    float: left;
+
+    border: 1px solid #CCC;
+    padding-top: 10px;
+    margin-right: 10px;
+}
+
+.leave-square .leave-circle {
+    width: 90px;
+    height: 90px;
+    border: 2px solid #CCC;
+    border-radius: 50%; 
+
+    padding: 20px 15px;
+    font-size: 30px;
+    text-align: center;
+    margin-left: 30px;
+    color: #e30000;
+}
+
+.leave-square label {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    color: #1c84c6;
+}
+.total{
+    margin-right:120px; 
+    float: left; 
+    margin-bottom: 10px; 
+    font-size:15px;
+}
+.table1{
+    width: 96%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+tr:nth-child(odd){background-color:#F9F9F9;}
+
+th {
+      font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+
+.centerDiv { width:1000px;padding-left:105px; margin: 0 auto; }
+
+.bck{
+    padding-top:5px;
+    background-color: #F9F9F9;
+    height:80px;
+    width: 97%;
+    margin-top:20px;
+    margin-left:20px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
+
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Over Time</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    <a href="#/timesheet">Timesheet</a> <span class="fa-angle-right fa"></span> 
+                    Over Time
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class ="bck">
+    <div style="font-size: 16px; font-weight: bold;  width:1000px; margin: 0 auto; margin-top:20px;
+    ">
+        <div style="float:left;">
+            Date From: <input ng-model="filter.date_from" type="date" id="datefrom" style="width:160px; height: 34px;"/>
+            Date To: <input ng-model="filter.date_to" type="date" id="dateto" style="width:160px; height: 34px;"/>
+            
+        </div>
+       </div> 
+        <div style="float:left; margin-left:10px;">
+            <input type="button" class="btn btn-primary" value="SEARCH" ng-click="employees_overtime()" />
+        </div>
+    </div>
+            <div style="clear:both;"></div>
+  
+   
+
+   
+        
+        <div style="clear:both;"></div>
+
+
+    <div style="width:100%; height:10px;"></div>
+
+    <div class="table1">
+        <b class="total">Total: {{overtime.count}}</b>
+        <div style="margin-top:10px;">
+            <table id="datatables-example" class="table1" width="80%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Date Filed</th>
+                        <th>Time From</th>
+                        <th>Time To</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k, v) in overtime.data track by $index" style="cursor:pointer;" ng-if="overtime.status">
+                        <td>{{v.datecreated}}</td>
+                        <td>{{v.timefrom}}</td>
+                        <td>{{v.timeto}}</td>
+                        <td>
+                        <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                            {{v.status}} 
+                            </div>
+                            <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                                <button ng-click="cancel(k)" class="btn btn-primary">Cancel</button> 
+                            </div></td>
+                    </tr>
+                    <tr ng-if="!overtime.status" style= "text-align: center;">
+                        <td colspan = "9" style="text-align:center;">No Data Found</td>
+                    </tr>         
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="height:50px; width:100%;">
+
+    </div>
+    </div>
+</div>
+
+
