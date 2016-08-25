@@ -127,15 +127,12 @@ values
 	'Jehovah Witness'
 );
 
-ALTER TABLE employees ADD employee_types text;
-ALTER TABLE employees ADD civilstatus_pk text;
-ALTER TABLE employees ADD gender_pk text;
-ALTER TABLE employees ADD religion_pk text;
-ALTER TABLE employees ADD employment_type text;
-
 /*start of details fields*/
 /*
 personal - {
+	first_name
+	middle_name
+	last_name
 	birthday
 	gender
 	religion
@@ -405,18 +402,6 @@ details=jsonb_set(details, '{company}', '
 	}
 }', true) 
 where pk = 28;
-
-
-update employees set 
-details=jsonb_set(details, '{personal}', '
-{
-	"Birthday" : "2016-01-18",
-	"Civil Staut" : "4",
-	"employee_types_pk" : "1",
-	"departments_pk": "26", 
-}', true) 
-where pk = 28;
-
 
 
 */
