@@ -388,7 +388,7 @@ app.controller('Leave', function(
                 workdays : workdays,
                 leave_types_pk : $scope.leaves_filed.data[k].leave_types_pk,
                 leave_type : $scope.leaves_filed.data[k].leave_type,
-                leave_balances : $scope.profile.leave_balances,
+                leave_balances : JSON.stringify($scope.profile.leave_balances),
                 duration : $scope.leaves_filed.data[k].duration,
                 category : $scope.leaves_filed.data[k].category
             };
@@ -412,9 +412,17 @@ app.controller('Leave', function(
                 promise.then(function(data){
                     $scope.profile = data.data.result[0];
 
+                    for(var i in $scope.leave_types.data){
+                        $scope.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
+                    }
+
                     $scope.leave_balances = JSON.parse(data.data.result[0].leave_balances);
-                    leaves_filed();
-                    leave_types();
+
+                    $scope.leaves_filed.data.splice(k, 1);
+
+                    if($scope.leaves_filed.data.length < 1){
+                        $scope.leaves_filed.status = false;
+                    }
                 })
             })
             .then(null, function(data){
