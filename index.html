@@ -415,12 +415,13 @@
                 </div>
                 <div class="notification_data">
                     <ul class="nav">
+                        {{notifications.count}}
                         <li ng-repeat="(k,v) in notifications.data">
                             <a ng-click="goto(k)">
+                                
                                 {{v.notification}}
                                 <br>
                                 <span style="font-size:12px; color:#AAA;" >
-                                created by:
                                 {{v.created_by}}
                                 <br>
                                 {{v.date_created}}
