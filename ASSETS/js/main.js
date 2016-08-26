@@ -316,22 +316,43 @@
     var datetime = null,
         date = null;
 
+    var hours, seconds, ampm;
+
     var update = function () {
         
         //console.log(new Date('2016/01/01 12:00:01'));
         $.post('./FUNCTIONS/session/current_time.php', function(data){
 
           date = moment(new Date(data));
+
+          hours.empty().append(date.format('hh:mm'));
+          seconds.empty().append(date.format('ss'));
+          ampm.empty().append(date.format('A'));
           
-          datetime.empty().append(date.format('hh:mm A'));
-          datetime2.empty().append(date.format('dddd MMMM DD, YYYY'));
+          // datetime.empty().append('<div style="float:left;"><h1>' + date.format('hh:mm') + "</h1></div><div style='float:left;'>\
+          //                                                   <div>\
+          //                                                     <span style='font-size:40px;'> " + date.format('ss') +
+          //                                                     "</span>\
+          //                                                   </div>\
+          //                                                   <div>\
+          //                                                     <span style='font-size:40px;'> " + date.format('A') +
+          //                                                     "</span>\
+          //                                                   </div>\
+          //                                                 </div><div style='clear:both;'></div>\
+          //                                                 "
+          //                         );
+          datetime2.empty().append("<p>" + date.format('dddd MMMM DD, YYYY') + "</p>");
         });
         
     };
 
     $(document).ready(function(){
-        datetime = $('.time h1');
-        datetime2 = $('.time p');
+        hours = $('.time #hours');
+        seconds = $('.time #seconds');
+        ampm = $('.time #ampm');
+
+        // datetime = $('.time .timer');
+        datetime2 = $('.time .dater');
         update();
         setInterval(update, 1000);
     });
