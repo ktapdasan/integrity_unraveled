@@ -20,25 +20,47 @@ $class = new Employees(
     NULL
     );
 
-$details['company']['employee_type']    = pg_escape_string(strip_tags(trim($_POST['employee_type'])));
-$details['company']['employment_type']    = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
-$details['company']['departments_pk']    = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
-$details['company']['titles_pk']    = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
-$details['company']['supervisor_pk']    = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
-$details['personal']['civilstatus_pk']    = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
-$details['personal']['gender_pk']    = pg_escape_string(strip_tags(trim($_POST['gender_pk'])));
-$details['personal']['religion_pk']    = pg_escape_string(strip_tags(trim($_POST['religion_pk'])));
+//Company Array! Ken </3
+$company = array();
+$company['employee_type']            = pg_escape_string(strip_tags(trim($_POST['employee_type'])));
+$company['employment_type']          = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
+$company['departments_pk']           = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
+$company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
+$company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
+$company['employees.date_started ']  = pg_escape_string(strip_tags(trim($_POST['employees.date_started '])));
 
+//Personal Array!
+$personal = array();
+$personal['civilstatus_pk']          = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
+$personal['first_name']              = pg_escape_string(strip_tags(trim($_POST['first_name'])));
+$personal['middle_name']             = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
+$personal['last_name']               = pg_escape_string(strip_tags(trim($_POST['last_name'])));
+$personal['gender_pk']               = pg_escape_string(strip_tags(trim($_POST['gender_pk'])));
+$personal['religion_pk']             = pg_escape_string(strip_tags(trim($_POST['religion_pk'])));
+
+//Government Array!
+$government = array();
+$government['data_sss']              = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
+$government['data_tin']              = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
+$government['data_pagmid']           = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
+$government['data_phid']             = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
+
+//For intern validation!!
 if ($_POST['levels_pk'] == 3){
-    $details['company']['levels_pk']    = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
-    $details['company']['hours']        = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
+    $details['company']['levels_pk'] = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
+    $details['company']['hours']     = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
 }
 else{
-    $details['company']['levels_pk']    = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
+    $details['company']['levels_pk'] = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
 }   
 
-$extra['details'] = $details;
-$extra['supervisor_pk'] = $_POST['supervisor_pk'];
+$details = array();//Details Array
+$details['company'] = $company; //Declared!
+$details['personal'] = $personal; //Declared!
+$details['government'] = $government; //Declared!
+
+$extra['details'] = $details; //Declared!
+$extra['supervisor_pk'] = $_POST['supervisor_pk']; //Declared!
 
 $data = $class-> create($extra);
 
