@@ -183,6 +183,7 @@ app.controller('Management_manual_logs', function(
                                     });  
                 $scope.manual_logs.data[k].status = "Approved";
                 $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks;
+                $scope.manual_logs.data.splice(k,1);
 
             })
             .then(null, function(data){
@@ -261,6 +262,7 @@ app.controller('Management_manual_logs', function(
                                     });  
                 $scope.manual_logs.data[k].status = "Disapproved";
                 $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks.toUpperCase();
+                
                      
 
             })
