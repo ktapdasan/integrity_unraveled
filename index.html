@@ -415,7 +415,7 @@
                 </div>
                 <div class="notification_data">
                     <ul class="nav">
-                        {{notifications.count}}
+                        <!-- {{notifications.count}} -->
                         <li ng-repeat="(k,v) in notifications.data">
                             <a ng-click="goto(k)">
                                 
@@ -431,7 +431,9 @@
                         </li>
                     </ul>
                 </div>
-                    
+                <div class="notification_data" ng-if="!notifications.status">
+                <ul class="nav">No Notification</ul>
+                </div>
             </div>
                 
         </div>
