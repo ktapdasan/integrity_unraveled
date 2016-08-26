@@ -172,6 +172,7 @@ app.controller('Timesheet', function(
         promise.then(function(data){
             $scope.timesheet.status = true;
             $scope.timesheet.data = data.data[$scope.profile.employee_id];
+            console.log($scope.timesheet.data);
             
             $scope.timesheet.count=0;
             for(var i in data.data[$scope.profile.employee_id]){
@@ -206,7 +207,7 @@ app.controller('Timesheet', function(
             $scope.timesheet.data = data.data.result;
             $scope.timesheet.count = data.data.result.length;
             $scope.timesheet.status = true;
-            // console.log($scope.timesheet);
+            //console.log($scope.timesheet);
 
             var a = getDates( datefrom, dateto );
             

@@ -5,22 +5,25 @@
     color: #ff0000;
 }
 .table1{
-    width: 96%;
+    width: 98.5%; 
     margin:0 auto;
     background-color:white;
     font-size:12px;
     margin-top:3px;
+    table-layout:fixed;
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+    overflow: hidden;
+    word-break:break-all;
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
 
-th {
+th { 
       font-size:13px;
     background-color:white;
     color: #3d3d3d;
@@ -82,17 +85,17 @@ tr:hover {
         <div style="height:15px; width:100%;">
 
         </div>
-        <div class="responsive-table">
+      
             <b class="total">Total: {{timesheet.count}}</b>
-            <table id="datatables-example" class="table1" width="90%" cellspacing="0">
+            <table id="datatables-example" class="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Day</th>
-                        <th>Log In</th>
-                        <th>Log Out</th>
-                        <th># of Hours</th>
-                        <th>Status</th>
+                        <th col width="90">Date</th>
+                        <th col width="90">Day</th>
+                        <th col width="90">Log In</th>
+                        <th col width="90">Log Out</th>
+                        <th col width="90"># of Hours</th>
+                        <th col width="90">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,7 +139,7 @@ tr:hover {
                     </tr> -->
                 </tbody>
             </table>
-        </div>
+        
         <div style="height:50px; width:100%;">
 
         </div>

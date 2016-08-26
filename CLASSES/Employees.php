@@ -104,7 +104,10 @@ EOT;
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-
+        $start_date= $data['newdatefrom'];
+        $end_date= $data['newdateto'];
+        $date= $data['date'];
+        $pk = $data['employees_pk'];
         $and="";
         if($data['employees_pk'] && $data['employees_pk'] != "undefined"){
             $and = "and employees.pk = " . $data['employees_pk'];
@@ -121,7 +124,21 @@ EOT;
                         employees.last_name,
                         employees.email_address,
                         employees_titles.titles_pk,
-                        employees.details->'company'->'work_schedule' as work_schedule
+                        employees.details->'company'->'work_schedule' as work_schedule,
+                        ( select 
+                            status as current_status 
+                            
+                            from manual_logs 
+                            left join manual_logs_status on manual_logs.pk = manual_logs_status.manual_logs_pk 
+                            where employees_pk = 51 and manual_logs.time_log::date = '2016-08-12' order by manual_logs_status.date_created desc limit 1
+                             ) as current_status,
+                        ( select 
+                           type 
+                            
+                            from manual_logs 
+                            left join manual_logs_status on manual_logs.pk = manual_logs_status.manual_logs_pk 
+                            where employees_pk = $pk and manual_logs.time_log::date = '2016-08-12'
+                            order by manual_logs_status.date_created desc limit 1) as type
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
                     where employees.archived = false

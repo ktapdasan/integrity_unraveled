@@ -26,8 +26,10 @@ while(strtotime($startdate) <= strtotime($enddate)){
 		"log_day" => $day,
 		"login" => "",
 		"logout" => "",
-		"status" => ""
+		"status" => "",
+		"current_status" => ""
 	);
+	$data['date']=$date;
 	
 	$startdate = date('Y-m-d', strtotime($startdate . '+ 1 day'));
 }
@@ -46,7 +48,6 @@ $employees_class = new Employees(
 									NULL,
 									NULL
 								);
-
 
 $employees_data = $employees_class->fetch_for_timesheet($data);
 
@@ -79,6 +80,8 @@ foreach($employees_data['result'] as $key=>$value){
 		//$cutoff[$k]['work_schedule'] = $work_schedule;
 		$cutoff[$k]['status'] = $status;
 		$cutoff[$k]['work_schedule'] = $z;
+		$cutoff[$k]['current_status'] = $value['current_status'];
+
 	}
 
 	$employees[$value['employee_id']] = $cutoff;
@@ -99,8 +102,8 @@ $class = new Employees(
 							NULL,
 							NULL
 						);
-
 $data = $class->timelogs($data);
+
 
 $class2 = new Leave(
         				NULL,
