@@ -10,7 +10,7 @@
     height: 150px;
     float: left;
 
-    border: 1px solid #CCC;
+    border: 1px solid #CCC; 
     padding-top: 10px;
     margin-right: 10px;
 }
@@ -41,7 +41,7 @@
     font-size:15px;
 }
 .table1{
-    width: 96%;
+    width: 98.5%;
     margin:0 auto;
     background-color:white;
     font-size:12px;
@@ -52,6 +52,7 @@ th, td {
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+    
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
@@ -118,13 +119,13 @@ th {
     <div class="table1">
         <b class="total">Total: {{overtime.count}}</b>
         <div style="margin-top:10px;">
-            <table id="datatables-example" class="table1" width="80%" cellspacing="0">
+            <table id="datatables-example" class="table1" width="99%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Date Filed</th>
-                        <th>Time From</th>
-                        <th>Time To</th>
-                        <th>Status</th>
+                        <th col width="90">Date Filed</th>
+                        <th col width="90">Time From</th>
+                        <th col width="90">Time To</th>
+                        <th col width="90">Status</th>
                     </tr>
                 </thead>
                 <tbody>

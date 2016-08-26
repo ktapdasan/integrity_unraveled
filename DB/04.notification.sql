@@ -14,9 +14,3 @@ create table notifications
 );
 
 alter table notifications owner to chrs;
-
-
-	
-
-
-

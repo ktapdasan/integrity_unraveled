@@ -2,7 +2,7 @@
 <style type="text/css">
 .red {
     color: #ff0000;
-}
+} 
 
 .leave-square {
 
@@ -41,17 +41,19 @@
     font-size:15px;
 }
 .table1{
-    width: 96%;
+    width: 98.5%;
     margin:0 auto;
     background-color:white;
     font-size:12px;
     margin-top:3px;
+  
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
@@ -149,17 +151,17 @@ th {
     <div class="table1">
         <b class="total">Total: {{leaves_filed.count}}</b>
         <div style="margin-top:10px;">
-            <table id="datatables-example" class="table1" width="80%" cellspacing="0">
+            <table id="datatables-example" class="table1" width="98.5%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Filed Leave</th>
-                        <th>Date Filed</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Duration</th>
-                        <th>Category</th>
-                        <th>Status</th>
-                        <th>Options</th>
+                        <th col width="90">Filed Leave</th>
+                        <th col width="90">Date Filed</th>
+                        <th col width="80">Start Date</th>
+                        <th col width="80">End Date</th>
+                        <th col width="80">Duration</th>
+                        <th col width="80"> Category</th>
+                        <th col width="80">Status</th>
+                        <th col width="80">Options</th>
                     </tr>
                 </thead>
                 <tbody>

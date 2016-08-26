@@ -5,7 +5,7 @@
 }
 
 .display {
-
+ 
 }
 
 .hide {
@@ -23,12 +23,15 @@ visibility: hidden;
     background-color:white;
     font-size:12px;
     margin-top:3px;
+    table-layout:fixed;
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+     overflow: hidden;
+    word-break:break-all;
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
@@ -99,17 +102,17 @@ th {
 </div>
 </div>
 
-        <div class="responsive-table" style="margin-top:90px;">
+        <div style="margin-top:90px;">
             <b class="total">Total: {{overtime.count}}</b>
             <table id="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Employee Name</th>
-                        <th>Date Filed</th>
-                        <th>Time From</th>
-                        <th>Time To</th>
-                        <th>Remarks</th>
-                        <th>Status<th>
+                        <th col width="180">Employee Name</th>
+                        <th col width="90">Date Filed</th>
+                        <th col width="90">Time From</th>
+                        <th col width="90">Time To</th>
+                        <th col width="180">Remarks</th>
+                        <th  col width="80">Status<th>
                     </tr>
                 </thead>
                 <tbody>

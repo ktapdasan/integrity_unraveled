@@ -156,7 +156,10 @@ app.controller('New_Employees', function(
     }
 
 
+
     $scope.date = new Date();
+
+    $scope.employees.date_started = new Date();
 
     $scope.level_changed = function(){
         level_changed();
@@ -173,34 +176,6 @@ app.controller('New_Employees', function(
         }
 
     }
-
-    $scope.religions = [
-    {
-        pk:'1',
-        religion:'Roman Catholic'
-    },
-    {
-        pk:'2',
-        religion:'Christianity'
-    },
-    {
-        pk:'3',
-        religion:'Muslim'
-    },
-    {
-        pk:'4',
-        religion:'Buddhism'
-    },
-    {
-        pk:'5',
-        religion:'Confucianism'
-    },
-    {
-        pk:'6',
-        religion:'Hinduism'
-    }
-    ];
-
 
     $scope.genders = [
     {

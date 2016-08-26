@@ -65,7 +65,7 @@ body>footer .footer-main {
         <form name="myForm">
             <table style="width:70%;margin-left:140px;" >
                 <h3 style = "color:#219DEC;padding:5px;width:245px;margin-bottom:30px;border-bottom:1px solid #219dec;">Personal Info</h3>
-                
+
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-right:10px">First Name:</label> 
@@ -91,19 +91,13 @@ body>footer .footer-main {
                         <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:340px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                     </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Religion:</label>
+                     <td>
+                        <label style="display:block; float:left; padding-right:10px">Religion:</label>
                     </td>
                     <td id="css">
-                        <select name="religion" required ng-model="employee.religion_pk" style="display: block; float: left; width:340px;padding:5px;" >
-                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in religions" style="cursor:pointer;" value="{{v.religion}}">
-                                {{v.religion}}
-                            </option>
-                        </select>
-
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.religion.$error.required">Religion is Required.</span>
-                    </td>  
+                        <input name="religion" required ng-model="employee.religion_pk" type="text" style="display: block; float: left; width:340px;" />
+                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -117,8 +111,8 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birthdate :</label>
                     </td>
                     <td id="css">
-                        <input name="bday" ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:32px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bday.$error.required">Date of Birth is Required.</span>
+                        <input name="inputd" ng-model="filter.date_from" type="date" style="display: block; float: left; width:340px; height:32px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.date">Date of Birth is Required.</span>
                     </td>
                 </tr>
 
@@ -297,9 +291,11 @@ body>footer .footer-main {
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Start Date:</label>
+
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
+                        <input type="date" id="exampleInput" name="input" ng-model="employees.date_started"
+                        placeholder="yyyy-MM-dd" min="2012-01-01" max="2013-12-31" style="display: block; float: left; width:340px;padding:5px;" required />
                     </td>
                 </tr>
                 <tr>
@@ -466,8 +462,6 @@ body>footer .footer-main {
                     <input placeholder="(Optional)" class="tin form-control" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
-
-
             <td colspan = "4">
                 <center style="font-size: 18px; font-style: bold">
                     <input type="submit" ng-disabled="myForm.user.$error && myForm.user.$invalid

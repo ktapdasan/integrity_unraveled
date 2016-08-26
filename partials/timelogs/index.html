@@ -1,19 +1,21 @@
-<style type="text/css">
+ <style type="text/css">
 .red {
     color: #ff0000;
 }
 .table1{
-    width: 96%;
+    width: 99.6%;
     margin:0 auto; 
     background-color:white;
     font-size:12px;
     margin-top:3px;
+   
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
+   
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
@@ -148,18 +150,18 @@ th {
     <div style="height:10px; width:100%;">
     
     </div>
-    <div class="responsive-table">
+   
         <b style="margin-right:140px; float: left; margin-bottom: 10px; font-size:15px;">Total: {{timesheet.count}}</b>
         <table id="datatables-example" class="table1" width="90%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Employee ID</th>
-                    <th>Employee</th>
-                    <th>Date</th>
-                    <th>Day</th>
-                    <th>Log in</th>
-                    <th>Log out</th>
-                    <th>Status</th>
+                    <th col width="50">Employee ID</th>
+                    <th col width="140">Employee</th>
+                    <th col width="50">Date</th>
+                    <th col width="50">Day</th>
+                    <th col width="50">Log in</th>
+                    <th col width="50">Log out</th>
+                    <th col width="50">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -193,7 +195,7 @@ th {
 
             </tbody>
         </table>
-    </div>
+   
     <div style="height:50px; width:100%;">
 
     </div>
