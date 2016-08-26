@@ -11,7 +11,6 @@ app.controller('New_Employees', function(
     $scope.titles={};
     $scope.level_title={};
     $scope.department={};
-    $scope.start_date = new Date();
     $scope.employee={
         employee_id:'',
         first_name:'',
@@ -27,7 +26,11 @@ app.controller('New_Employees', function(
         gender_pk:'',
         religion_pk:'',
         employee_type:'',
-        employment_type:''
+        employment_type:'',
+        data_sss:'',
+        data_tin:'',
+        data_pagmid:'',
+        data_phid:''
     };
 
     $scope.employees = {};
@@ -151,14 +154,15 @@ app.controller('New_Employees', function(
             gender_pk:'',
             religion_pk:'',
             employee_type:'',
-            employment_type:''
+            employment_type:'',
+            data_sss:'',
+            data_tin:'',
+            data_pagmid:'',
+            data_phid:''
         };
     }
 
-
     $scope.employees.date_started = new Date();
-
-
      
     $scope.level_changed = function(){
         level_changed();

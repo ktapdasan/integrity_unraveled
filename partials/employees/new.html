@@ -111,8 +111,8 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birthdate :</label>
                     </td>
                     <td id="css">
-                        <input name="inputd" ng-model="filter.date_from" type="date" style="display: block; float: left; width:340px; height:32px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.date">Date of Birth is Required.</span>
+                        <input name="data" ng-model="filter.date_from" type="date" style="display: block; float: left; width:340px; height:32px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.date">Date of Birth is required.</span>
                     </td>
                 </tr>
 
@@ -127,7 +127,7 @@ body>footer .footer-main {
                                 {{v.gender}}
                             </option>
                         </select>
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is Required.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
                     </td>  
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
@@ -171,6 +171,7 @@ body>footer .footer-main {
                     </td>
                     <td id="css">
                         <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
+                        {{filter.date_from}}
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
@@ -294,8 +295,9 @@ body>footer .footer-main {
 
                     </td>
                     <td id="css">
-                        <input type="date" id="exampleInput" name="input" ng-model="employees.date_started"
+                        <input type="date" id="dateto" name="input" ng-model="employees.date_started"
                         placeholder="yyyy-MM-dd" min="2012-01-01" max="2013-12-31" style="display: block; float: left; width:340px;padding:5px;" required />
+                        
                     </td>
                 </tr>
                 <tr>
@@ -364,7 +366,7 @@ body>footer .footer-main {
                             {{v.emtype}}
                         </option>
                     </select>
-                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment Type is Required.</span>
+                    <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment Type is required.</span>
                 </td>   
 
                 <tr>
@@ -437,13 +439,13 @@ body>footer .footer-main {
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Philhealth No:</label>
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="phid form-control" maxlength="14" style="display: block; float: left; width:340px; height:36px;"/>
+                    <input placeholder="(Optional)" class="phid form-control" maxlength="14" ng-model="employee.data_phid" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
                 <td>
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">PagIbig MID No:</label>
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="pagmid form-control" maxlength="14" style="display: block; float: left; width:340px; height:36px;"/>
+                    <input placeholder="(Optional)" class="pagmid form-control" ng-model="employee.data_pagmid" maxlength="14" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
             <tr>
@@ -452,14 +454,14 @@ body>footer .footer-main {
 
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="tin form-control" name="tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
+                    <input placeholder="(Optional)" class="tin form-control" name="tin" ng-model="employee.data_tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
 
                 </td>
                 <td  id="css">
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">SSS No:</label>
                 </td>
                 <td id="css">
-                    <input placeholder="(Optional)" class="tin form-control" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
+                    <input placeholder="(Optional)" class="tin form-control" maxlength="15" ng-model="employee.data_sss" style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
             <td colspan = "4">
