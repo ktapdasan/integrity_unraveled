@@ -62,7 +62,8 @@ EOT;
                     time_to :: time as timeto,
                     time_from :: time as timefrom,
                     date_created::date as datecreated,
-                    (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
+                    (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
+                    (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
                 from overtime
                 where date_created::date between '$datefrom' and '$dateto'
                 and archived = 'f'
@@ -119,6 +120,16 @@ EOT;
                        where overtime_pk = $overtime_pk
                         ;
 EOT;
+        $sql .= <<<EOT
+                        update overtime_status set
+                        
+                            archived
+                        =
+                            't'
+                        
+                       where overtime_pk = $overtime_pk
+                        ;
+EOT;
         if($status=='Approved'){
             $sql .= <<<EOT
 
@@ -127,14 +138,16 @@ EOT;
                     overtime_pk,
                     created_by,
                     status,
-                    remarks           
+                    remarks,
+                    archived          
                 )
                 values
                 (    
                     $overtime_pk,
                     $created_by,
                     'Approved',
-                    'APPROVED'
+                    'APPROVED',
+                    'f'
                 )
                 ;
 EOT;
@@ -147,14 +160,16 @@ EOT;
                     overtime_pk,
                     created_by,
                     status,
-                    remarks           
+                    remarks,
+                    archived           
                 )
                 values
                 (    
                     $overtime_pk,
                     $created_by,
                     'Disapproved',
-                    '$remarks'
+                    '$remarks',
+                    'f'
                 )
                 ;
 EOT;

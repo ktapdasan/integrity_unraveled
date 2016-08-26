@@ -1,16 +1,14 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Overtime.php');
-
 $class = new Overtime(
 							NULL,
-							NULL,
-							NULL,
+							$_POST['time_from'],
+							$_POST['time_to'],
 							$_POST['employees_pk'],
 							NULL,
 							NULL
 						);
-
 
 $data = $class->overtime($_POST);
 

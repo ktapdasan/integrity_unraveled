@@ -51,7 +51,7 @@ app.controller('Overtime', function(
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
             fetch_myemployees();
-            employees_overtime();
+            show_employees_overtime();
             console.log($scope.profile)
         })   
     } 
@@ -102,12 +102,11 @@ app.controller('Overtime', function(
     }
 
 
-    $scope.show_overtime = function(){
-        employees_overtime();
+    $scope.show_employees_overtime = function(){
+        show_employees_overtime();
     }
 
-    function employees_overtime() {
-        var filter = {};
+    function show_employees_overtime() {
 
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();
@@ -122,6 +121,7 @@ app.controller('Overtime', function(
         var Yyyy = dateto.getFullYear();
 
        
+        var filter = {};
         filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
         
         filter.employees_pk =  $scope.profile.pk;
@@ -175,7 +175,7 @@ app.controller('Overtime', function(
            
                
                 UINotification.success({
-                                        message: 'You have successfully approve overtime', 
+                                        message: 'You have successfully approved overtime', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
@@ -187,7 +187,7 @@ app.controller('Overtime', function(
             .then(null, function(data){
                 
                 UINotification.error({
-                                        message: 'An error occured, unable to approve, please try again.', 
+                                        message: 'An error occured, unable to approve overtime, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
@@ -217,7 +217,7 @@ app.controller('Overtime', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Disapprove manual log ' +
+                                '<p>Disapprove Overtime' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -252,7 +252,7 @@ app.controller('Overtime', function(
            
 
                 UINotification.success({
-                                        message: 'You have successfully diapproved manual log', 
+                                        message: 'You have successfully diapproved overtime', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
@@ -264,7 +264,7 @@ app.controller('Overtime', function(
             .then(null, function(data){
                 
                 UINotification.error({
-                                        message: 'An error occured, unable to disapprove, please try again.', 
+                                        message: 'An error occured, unable to disapprove overtime, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
