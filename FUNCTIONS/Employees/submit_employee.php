@@ -3,7 +3,6 @@ require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 //require_once('../../CLASSES/PHPMailerAutoload.php');
 
-
 $class = new Employees(
     NULL,
     $_POST['employee_id'],
@@ -20,14 +19,16 @@ $class = new Employees(
     NULL
     );
 
-//Company Array! Ken </3
+//Company Array! Ken
 $company = array();
 $company['employee_type']            = pg_escape_string(strip_tags(trim($_POST['employee_type'])));
 $company['employment_type']          = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
 $company['departments_pk']           = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
 $company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
 $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
-$company['employees.date_started ']  = pg_escape_string(strip_tags(trim($_POST['employees.date_started '])));
+$company['employees.date_started']   = pg_escape_string(strip_tags(trim($_POST['employees.date_started'])));
+$company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
+
 
 //Personal Array!
 $personal = array();
