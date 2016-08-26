@@ -83,7 +83,7 @@
     }
 
     .div2 .bubble img {
-        width: 300px;
+        width: 300px; 
         margin-right: 150px;
     }
 
@@ -260,7 +260,7 @@
             <div class="navbar-header" style="width:100%;" ng-controller="Header">
                 <a href="#/" class="navbar-brand"> 
                     <b>Integrity</b>
-                </a>
+                </a> 
                 <ul class="nav navbar-nav navbar-left user-nav custom-menu">
                     <li ng-class="menu.home">
                         <a href="#/" ng-click="menuclicked('home')">Home</a>
@@ -415,7 +415,7 @@
                 </div>
                 <div class="notification_data">
                     <ul class="nav">
-                        {{notifications.count}}
+                        <!-- {{notifications.count}} -->
                         <li ng-repeat="(k,v) in notifications.data">
                             <a ng-click="goto(k)">
                                 
@@ -431,7 +431,9 @@
                         </li>
                     </ul>
                 </div>
-                    
+                <div class="notification_data" ng-if="!notifications.status">
+                <ul class="nav">No Notification</ul>
+                </div>
             </div>
                 
         </div>
@@ -563,7 +565,7 @@
     </script>
 
 
-    <script type="text/ng-template" id="DeactivateModal">
+    <script type="text/ng-template" id="DeactivateModal" >
         <div class="ngdialog-message" style="width: 100%;">
             <div style="margin-top: -15px;">
                 <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
@@ -712,6 +714,8 @@
         </div>
         </form>
     </script>
+
+ 
 
     <!--
     <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">
@@ -1053,12 +1057,9 @@
         </div>
     </script>
 
-    
-
-    
-
+  
     <script type="text/ng-template" id="LeaveModal">
-        <div class="ngdialog-message" >
+        <div class="ngdialog-message">
             <div>
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
@@ -1137,6 +1138,7 @@ Departments
         </div>
         </form>
     </script>
+    
 </body>
 </html>
 

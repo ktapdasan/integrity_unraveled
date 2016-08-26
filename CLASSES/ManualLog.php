@@ -45,8 +45,8 @@ class ManualLog extends ClassParent {
                     time_log :: time as time,
                     date_created::date as datecreated,
                     type,
-                    (select status from manual_log_statuses where pk = manual_log.pk) as status,
-                    (select remarks from manual_log_statuses where pk = manual_log.pk) as remarks
+                    (select status from manual_log_statuses where pk = manual_log.pk order by date_created desc limit 1) as status,
+                    (select remarks from manual_log_statuses where pk = manual_log.pk order by date_created desc limit 1) as remarks
                 from manual_log
                 where archived = false
                 ;
@@ -73,35 +73,22 @@ EOT;
     
         $sql = 'begin;';
         $sql .= <<<EOT
-                update manual_logs_status set
-                
-                    status
-                =
-                    '$status'
-                
-               where manual_logs_pk = $pk
-                ;
-EOT;
-        $sql .= <<<EOT
-                        update manual_logs_status set
-                        
-                            remarks
-                        =
-                            '$remarks'
-                        
-                       where manual_logs_pk = $pk
-                        ;
-EOT;
+                insert into manual_logs_status
+                (
+                    manual_logs_pk,
+                    status,
+                    created_by,
+                    remarks
 
-        $sql .= <<<EOT
-                        update manual_logs_status set
-                        
-                            created_by
-                        =
-                            $approver_pk
-                        
-                       where manual_logs_pk = $pk
-                        ;
+                )
+                values(
+                    $pk,
+                    '$status',
+                    $approver_pk,
+                    '$remarks'
+
+                )
+                ;
 EOT;
 
         $sql .= <<<EOT
@@ -266,8 +253,8 @@ EOT;
                     time_log :: timestamp as time,
                     date_created::date as datecreated,
                     type,
-                    (select status from manual_logs_status where pk = manual_logs_pk) as status,
-                    (select remarks from manual_logs_status where pk = manual_logs_pk) as remarks
+                    (select status from manual_logs_status where pk = manual_logs_pk order by date_created desc limit 1) as status,
+                    (select remarks from manual_logs_status where pk = manual_logs_pk order by date_created desc limit 1) as remarks
                 from manual_logs
                 left join groupings on (manual_logs.employees_pk = groupings.employees_pk)
                 where date_created::date between '$datefrom' and '$dateto'
