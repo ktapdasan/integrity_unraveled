@@ -135,7 +135,7 @@ select{
                         max-height="200px"
                             >
                     </div>
-                       <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:10px;">
+                       <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:10px;">
                     </br>
                  
 
@@ -166,7 +166,7 @@ select{
                         <th col width="100">Position</th>
                         <th col width="50">Level</th>
                         <th col width="70">Department</th>
-                        <th col width="60">Options</th>
+                        <th col width="50">Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -183,7 +183,7 @@ select{
                         <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
                         <td>{{v.department}}</td>
                         <td>
-                            <button ng-click="update_access(k) " class="btn btn-primary btn-xs">Update Access</button>
+                            <button ng-click="update_access(k) " class="medium button blue fa-fa">Update<br> Access</button>
                         </td>
                     </tr>
                     <tr ng-if="!employees.status" style = "text-align: center;">

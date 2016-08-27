@@ -104,7 +104,7 @@ th {
         </div>
         
         <div style="float:left; margin-left:10px;">
-            <input type="button" class="btn btn-primary btn-sm" value="SEARCH" ng-click="leaves_filed()" />
+            <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="leaves_filed()" />
         </div>
     </div>
         <div style="clear:both;"></div>
@@ -138,8 +138,8 @@ th {
                         {{v.status}} 
                         </div>
                         <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                            <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="btn btn-primary"/> 
-                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="btn btn-add"/> 
+                            <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="medium button blue fa-fa"/> 
+                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="medium button red fa-fa"/> 
                         </div>
                     </td>
                 </tr> 

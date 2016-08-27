@@ -97,7 +97,7 @@ th {
                             >
                     </div>
                     </div>
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_myemployees()" style="float:left;margin-top:11px;">
+                     <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_myemployees()" style="float:left;margin-top:11px;">
                 </div>
 </div>
 </div>
@@ -124,8 +124,8 @@ th {
                         <td>{{v.remarks}}</td>
                         <td>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
-                                <input type= "button" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
+                                <input type= "button" class="medium button blue fa-fa" ng-click = "approve(k)" value = "Approve" /> 
+                                <input type= "button" class="medium button red fa-fa" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
                             </div>
                             <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                                 {{v.status}} 

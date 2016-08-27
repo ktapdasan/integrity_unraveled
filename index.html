@@ -83,7 +83,7 @@
     }
 
     .div2 .bubble img {
-        width: 300px; 
+        width: 300px;
         margin-right: 150px;
     }
 
@@ -1060,7 +1060,9 @@
 
   
     <script type="text/ng-template" id="LeaveModal">
-        <div class="ngdialog-message">
+     
+                
+        <div class="ngdialog-message" style="width;100%;height:100%">
             <div>
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
             </div>
@@ -1137,7 +1139,9 @@ Departments
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button button-action" ng-class=""  data-ng-click="closeThisDialog('Save')" ng-disabled="leave.$error.required">{{modal.save}}</button>
         </div>
+    
         </form>
+    
     </script>
     
 </body>
