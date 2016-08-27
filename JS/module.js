@@ -34,7 +34,7 @@ app.config(function($routeProvider){
     })
     .when('/timesheet/overtime',
     {
-        controller: 'Overtime',
+        controller: 'Employees_overtime',
         templateUrl: 'partials/timesheet/overtime.html'
     })
     .when('/employees/list',
@@ -114,7 +114,7 @@ app.config(function($routeProvider){
     })
     .when('/management/overtime',
     {
-        controller: 'Overtime',
+        controller: 'Management_overtime',
         templateUrl: 'partials/management/over_time.html'
     })
     .otherwise(

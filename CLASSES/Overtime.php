@@ -14,6 +14,8 @@ class Overtime extends ClassParent {
                                     $time_from,
                                     $time_to,
                                     $employees_pk,
+                                    $date_from,
+                                    $date_to,
                                     $date_created,
                                     $archived
                                 )
@@ -46,14 +48,17 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function overtime($data){
+    public function overtime($data,$extra){
 
         $where = "";
-        if($this->employees_pk){
-            $where .= "and employees_pk = ".$this->employees_pk;
+        if($this->employees_pk && $this->employees_pk != 'null'){
+            $where .= "and employees_pk = '$this->employees_pk'";
         }
-        $datefrom = $data['datefrom'] ;
-        $dateto = $data['dateto'];
+        
+        $supervisor_pk = $extra['supervisor_pk'];
+        $date_from = $data['datefrom'] ;
+        $date_to = $data['dateto'];
+        $where .= "and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')";
         $sql = <<<EOT
                 select
                     pk, 
@@ -65,9 +70,33 @@ EOT;
                     (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
                     (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
                 from overtime
-                where date_created::date between '$datefrom' and '$dateto'
-                and archived = 'f'
+                where date_created::date between '$date_from' and '$date_to'
+                and archived = false
                 $where
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+
+    }
+
+    public function timesheet_overtime($data){
+        
+        
+        $date_from = $data['datefrom'] ;
+        $date_to = $data['dateto'];
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    employees_pk,
+                    time_to :: time as timeto,
+                    time_from :: time as timefrom,
+                    date_created::date as datecreated,
+                    (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
+                from overtime
+                where date_created::date between '$date_from' and '$date_to'
+                and archived = false and employees_pk='$this->employees_pk'
                 ;
 EOT;
 

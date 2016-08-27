@@ -32,7 +32,7 @@ values
 	'1',
 	'2016-08-22',
 	'2016-08-25',
-	'28'
+	'12'
 
 );
 
@@ -47,7 +47,42 @@ insert into overtime_status
 values
 (
 	'1',
-	'28',
+	'12',
+	'Pending',
+	'2016-08-21',
+	'PENDING'
+);
+
+insert into overtime
+(
+
+	pk,
+	time_from,
+	time_to,
+	employees_pk
+
+)
+values
+(
+	'2',
+	'2016-08-22',
+	'2016-08-25',
+	'85'
+
+);
+
+insert into overtime_status
+(
+	overtime_pk,
+	created_by,
+	status,
+	date_created,
+	remarks
+)
+values
+(
+	'2',
+	'85',
 	'Pending',
 	'2016-08-21',
 	'PENDING'

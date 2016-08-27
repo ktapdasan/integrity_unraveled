@@ -92,17 +92,19 @@ th {
             </div>
         </div>
     </div>
-    <div class ="bck">
-    <div style="font-size: 16px; font-weight: bold;  width:1000px; margin: 0 auto; margin-top:20px;
-    ">
-        <div style="float:left;">
-            Date From: <input ng-model="filter.date_from" type="date" id="datefrom" style="width:160px; height: 34px;"/>
-            Date To: <input ng-model="filter.date_to" type="date" id="dateto" style="width:160px; height: 34px;"/>
-            
-        </div>
-       </div> 
+    <div class="panel">
+        <div class ="bck">
+        <div style="padding-left: 20px; padding-top:20px;">
+            <div style="font-size: 18px;">
+                <div style="margin-left:5px;float:left; margin-right:10px;margin-top:-15px;">
+                     <label style="float:left;font-size: 15px;">Date From:</label><br>
+                      <input ng-model="filter.datefrom" type="date" id="datefrom" style="width:165px;"/>
+                </div>
+                <div style="float:left; margin-right:-5px;margin-top:-14px;">
+                   <label style="float:left;font-size: 15px;">Date To:</label><br> <input ng-model="filter.dateto" type="date" id="dateto" style="width:165px;"/>
+                </div>
         <div style="float:left; margin-left:10px;">
-            <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_employees_overtime()" />
+            <input type="button" class="btn btn-primary" value="SEARCH" ng-click="timesheet_overtime()" />
         </div>
     </div>
             <div style="clear:both;"></div>

@@ -97,7 +97,7 @@ th {
                             >
                     </div>
                     </div>
-                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_overtime()" style="float:left;margin-top:11px;">
+                     <input type="button" class="btn btn-primary" value="SEARCH" ng-click="show_employees_overtime()" style="float:left;margin-top:11px;">
                 </div>
 </div>
 </div>
@@ -112,7 +112,7 @@ th {
                         <th col width="90">Time From</th>
                         <th col width="90">Time To</th>
                         <th col width="180">Remarks</th>
-                        <th  col width="80">Status<th>
+                        <th  col width="80">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,8 +124,8 @@ th {
                         <td>{{v.remarks}}</td>
                         <td>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                <input type= "button" ng-click = "approve(k)" value = "Approve" /> 
-                                <input type= "button" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
+                                <input type= "button" class="btn btn-primary" ng-click = "approve(k)" value = "Approve" /> 
+                                <input type= "button" class="btn btn-add" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
                             </div>
                             <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                                 {{v.status}} 

@@ -193,7 +193,24 @@ app.factory('TimelogFactory', function($http){
 
     factory.myemployees_overtime = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Timelog/overtime.php',
+            url:'./FUNCTIONS/Overtime/overtime.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };   
+
+     factory.timesheet_overtime = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Overtime/timesheet_overtime.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -227,7 +244,7 @@ app.factory('TimelogFactory', function($http){
 
     factory.approve_overtime = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Timelog/insert_overtime.php',
+            url:'./FUNCTIONS/Overtime/insert_overtime.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -244,7 +261,7 @@ app.factory('TimelogFactory', function($http){
 
     factory.cancel = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Timelog/cancel.php',
+            url:'./FUNCTIONS/Overtime/cancel.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -278,7 +295,7 @@ app.factory('TimelogFactory', function($http){
 
     factory.disapprove_overtime = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Timelog/insert_overtime.php',
+            url:'./FUNCTIONS/Overtime/insert_overtime.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
