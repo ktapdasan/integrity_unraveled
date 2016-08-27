@@ -259,7 +259,7 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
-    factory.cancel = function(data){
+    factory.cancel_overtime = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Overtime/cancel.php',
             method: 'POST',

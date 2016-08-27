@@ -70,14 +70,13 @@ EOT;
                     (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
                     (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
                 from overtime
-                where date_created::date between '$date_from' and '$date_to'
+                where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
                 and archived = false
                 $where
                 ;
 EOT;
 
         return ClassParent::get($sql);
-
     }
 
     public function timesheet_overtime($data){
@@ -105,13 +104,26 @@ EOT;
     }
 
     public function cancel($info){
+        foreach($info as $k=>$v){
+            $info[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
 
+        $employees_pk=$info['employees_pk'];
         $overtime_pk=$info['overtime_pk'];
         $sql = 'begin;';
         $sql .= <<<EOT
-                UPDATE overtime_status
-                set archived = true
-                where overtime_pk = $overtime_pk
+                INSERT INTO overtime_status
+                (
+                    overtime_pk,
+                    created_by,
+                    remarks
+                )
+                values
+                (
+                    $overtime_pk,
+                    $employees_pk,
+                    ''
+                )
                 ;
 EOT;
          $sql .= <<<EOT

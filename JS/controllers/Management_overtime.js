@@ -52,11 +52,10 @@ app.controller('Management_overtime', function(
             DEFAULTDATES();
             fetch_myemployees();
             show_employees_overtime();
-            console.log($scope.profile)
         })   
     } 
 
-        function DEFAULTDATES(){
+    function DEFAULTDATES(){
         var today = new Date();
 
         var dd = today.getDate();
@@ -130,13 +129,13 @@ app.controller('Management_overtime', function(
         if($scope.filter.myemployees && $scope.filter.myemployees[0]){
             filter.employees_pk = $scope.filter.myemployees[0].pk
         }
-
+        
         var promise = TimelogFactory.myemployees_overtime(filter);
         promise.then(function(data){
             $scope.overtime.data = data.data.result;
             $scope.overtime.count = data.data.result.length;
             $scope.overtime.status = true;
-            console.log($scope.filter)
+            
             /*console.log($scope.overtime.data);*/
         }) 
         .then(null, function(data){
@@ -148,7 +147,7 @@ app.controller('Management_overtime', function(
     $scope.approve = function(k){
         $scope.overtime["employees_pk"] = $scope.overtime.data[k].employees_pk; 
         $scope.overtime["approver_pk"]=$scope.profile.pk;
-       $scope.modal = {
+        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to approve overtime ',
                 save : 'Yes',
@@ -171,13 +170,8 @@ app.controller('Management_overtime', function(
             $scope.overtime.pk =  $scope.overtime.data[k].pk;
             $scope.overtime.remarks= "APPROVED";
             
-            
-            
-            
             var promise = TimelogFactory.approve_overtime($scope.overtime);
             promise.then(function(data){
-            
-           
                
                 UINotification.success({
                                         message: 'You have successfully approved overtime', 
@@ -185,6 +179,7 @@ app.controller('Management_overtime', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
+
                 $scope.overtime.data[k].status = "Approved";
                 $scope.overtime.data[k].remarks= $scope.overtime.remarks;
 
@@ -217,7 +212,7 @@ app.controller('Management_overtime', function(
         ngDialog.openConfirm({
             template: 'DisapproveModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
-             preCloseCallback: function(value) {
+            preCloseCallback: function(value) {
                 var nestedConfirmDialog;                
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
@@ -250,11 +245,8 @@ app.controller('Management_overtime', function(
                 $scope.overtime.remarks =  $scope.log.remarks;
             }
 
-
             var promise = TimelogFactory.disapprove_overtime($scope.overtime);
             promise.then(function(data){
-            
-           
 
                 UINotification.success({
                                         message: 'You have successfully diapproved overtime', 
@@ -262,6 +254,7 @@ app.controller('Management_overtime', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
+                
                 $scope.overtime.data[k].status = "Disapproved";
                 $scope.overtime.data[k].remarks= $scope.overtime.remarks.toUpperCase();     
 

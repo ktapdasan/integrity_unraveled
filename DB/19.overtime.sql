@@ -13,8 +13,7 @@ create table overtime_status(
 	created_by int references employees(pk),
 	status text default 'Pending',
 	date_created timestamptz default now(),
-	remarks text not null,
-	archived boolean default false
+	remarks text not null
 );
 alter table overtime_status owner to chrs;
 

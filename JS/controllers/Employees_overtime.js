@@ -1,4 +1,3 @@
-
 app.controller('Employees_overtime', function(
                                         $scope,
                                         SessionFactory,
@@ -21,7 +20,6 @@ app.controller('Employees_overtime', function(
 
     $scope.modal = {};
 
-
     init();
 
     function init(){
@@ -31,10 +29,6 @@ app.controller('Employees_overtime', function(
             $scope.pk = data.data[_id];
 
             get_profile();
-            
-            
-
-            
         })
         .then(null, function(data){
             window.location = './login.html';
@@ -52,7 +46,7 @@ app.controller('Employees_overtime', function(
             DEFAULTDATES();
             fetch_myemployees();
             timesheet_overtime();
-            console.log($scope.profile)
+            
         })   
     } 
 
@@ -124,15 +118,13 @@ app.controller('Employees_overtime', function(
        
         filter.datefrom=yyyy+'-'+mm+'-'+dd;
         filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
-        
-        
 
         var promise = TimelogFactory.timesheet_overtime(filter);
         promise.then(function(data){
             $scope.overtime.status = true;
             $scope.overtime.data = data.data.result;
             $scope.overtime.count = data.data.result.length;
-            console.log($scope.filter)
+            
             /*console.log($scope.overtime.data);*/
         }) 
         .then(null, function(data){
@@ -142,7 +134,6 @@ app.controller('Employees_overtime', function(
     }
 
     $scope.cancel = function(k){
-
         $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to cancel your request',
@@ -157,35 +148,31 @@ app.controller('Employees_overtime', function(
             scope: $scope,
             showClose: false
         })
-
-        
         .then(function(value){
             return false;
         }, function(value){
 
-            $scope.overtime.pk =  $scope.overtime.data[k].pk;
+            var filter = {
+                employees_pk : $scope.profile.pk,
+                pk : $scope.overtime.data[k].pk
+            };
 
-            
-            var promise = TimelogFactory.cancel($scope.overtime);
+            var promise = TimelogFactory.cancel_overtime(filter);
             promise.then(function(data){
-                $scope.overtime.status = true;
-                $scope.overtime.data = data.data.result;
-                $scope.archived=false;
-                
-
                 UINotification.success({
-                                        message: 'You have successfully cancel your request', 
+                                        message: 'You have successfully cancelled your request', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-    
-                employees_overtime();
+
+                $scope.overtime.data.splice(k, 1);
+
+                if($scope.overtime.data.length < 1){
+                    $scope.overtime.status = false;
+                }
             })
-
-
             .then(null, function(data){
-                $scope.overtime.status = false;
                 UINotification.error({
                                         message: 'An error occured, unable to cancel, please try again.', 
                                         title: 'ERROR', 
@@ -198,7 +185,7 @@ app.controller('Employees_overtime', function(
         });
     }
 
-        function fetch_myemployees(){
+    function fetch_myemployees(){
         var filter  = {
             pk : $scope.profile.pk
         }
