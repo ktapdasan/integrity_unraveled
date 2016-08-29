@@ -110,30 +110,26 @@ EOT;
 
         $employees_pk=$info['employees_pk'];
         $overtime_pk=$info['overtime_pk'];
-        $sql = 'begin;';
+        $remarks=$info['remarks'];
+        $status=$info['status'];
+
         $sql .= <<<EOT
                 INSERT INTO overtime_status
                 (
                     overtime_pk,
                     created_by,
-                    remarks
+                    remarks,
+                    status
                 )
                 values
                 (
                     $overtime_pk,
                     $employees_pk,
-                    ''
+                    '$remarks',
+                    '$status'
                 )
                 ;
 EOT;
-         $sql .= <<<EOT
-                UPDATE overtime
-                set archived = true
-                where pk = $overtime_pk
-                ;
-EOT;
-
-        $sql .= "commit;";
         return ClassParent::update($sql);
     }
 
@@ -150,27 +146,6 @@ EOT;
         $remarks=strtoupper($info['remarks']);
     
         $sql = 'begin;';
-
-        $sql .= <<<EOT
-                        update overtime_status set
-                        
-                            remarks
-                        =
-                            '$remarks'
-                        
-                       where overtime_pk = $overtime_pk
-                        ;
-EOT;
-        $sql .= <<<EOT
-                        update overtime_status set
-                        
-                            archived
-                        =
-                            't'
-                        
-                       where overtime_pk = $overtime_pk
-                        ;
-EOT;
         if($status=='Approved'){
             $sql .= <<<EOT
 
@@ -179,16 +154,14 @@ EOT;
                     overtime_pk,
                     created_by,
                     status,
-                    remarks,
-                    archived          
+                    remarks          
                 )
                 values
                 (    
                     $overtime_pk,
                     $created_by,
                     'Approved',
-                    'APPROVED',
-                    'f'
+                    'APPROVED'
                 )
                 ;
 EOT;
@@ -201,16 +174,15 @@ EOT;
                     overtime_pk,
                     created_by,
                     status,
-                    remarks,
-                    archived           
+                    remarks
+
                 )
                 values
                 (    
                     $overtime_pk,
                     $created_by,
                     'Disapproved',
-                    '$remarks',
-                    'f'
+                    '$remarks'
                 )
                 ;
 EOT;

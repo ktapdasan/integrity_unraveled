@@ -134,6 +134,7 @@ app.controller('Employees_overtime', function(
     }
 
     $scope.cancel = function(k){
+        $scope.log.remarks = '';
         $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to cancel your request',
@@ -142,8 +143,24 @@ app.controller('Employees_overtime', function(
             };
         
         ngDialog.openConfirm({
-            template: 'ConfirmModal',
-            className: 'ngdialog-theme-plain',
+            template: 'DisapproveModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Cancel Overtime' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
             
             scope: $scope,
             showClose: false
@@ -152,12 +169,19 @@ app.controller('Employees_overtime', function(
             return false;
         }, function(value){
 
-            var filter = {
-                employees_pk : $scope.profile.pk,
-                pk : $scope.overtime.data[k].pk
+            
+                $scope.overtime["employees_pk"] = $scope.profile.pk,
+                $scope.overtime.pk = $scope.overtime.data[k].pk
+                $scope.overtime.status = "Cancelled";
+                $scope.overtime.pk =  $scope.overtime.data[k].pk;
+                if($scope.log.remarks==''){
+                    $scope.overtime.remarks="Cancelled";
+                }else{
+                    $scope.overtime.remarks =  $scope.log.remarks;
+            
             };
 
-            var promise = TimelogFactory.cancel_overtime(filter);
+            var promise = TimelogFactory.cancel_overtime($scope.overtime);
             promise.then(function(data){
                 UINotification.success({
                                         message: 'You have successfully cancelled your request', 

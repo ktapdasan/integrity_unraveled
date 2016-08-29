@@ -109,7 +109,7 @@ app.controller('Management_overtime', function(
         var filter = {};
         filter.supervisor_pk =  $scope.profile.pk;
         filter.employees_pk =  $scope.profile.employees_pk;
-        filter.archived = 'false';
+        
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();
         var mm = datefrom.getMonth()+1; //January is 0!
@@ -136,6 +136,7 @@ app.controller('Management_overtime', function(
             $scope.overtime.count = data.data.result.length;
             $scope.overtime.status = true;
             
+            /*console.log($scope.filter)*/
             /*console.log($scope.overtime.data);*/
         }) 
         .then(null, function(data){

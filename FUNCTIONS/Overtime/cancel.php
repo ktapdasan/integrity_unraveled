@@ -13,7 +13,9 @@ $class = new Overtime(
 
 $info = array(
                 "employees_pk" => $_POST['employees_pk'],
-                "overtime_pk" => $_POST['pk']
+                "overtime_pk" => $_POST['pk'],
+                "status" => $_POST['status'],
+                "remarks" => $_POST['remarks']
             );
 
 $data = $class-> cancel($info);
