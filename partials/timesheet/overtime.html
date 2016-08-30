@@ -129,6 +129,7 @@ th {
                         <th col width="90">Date Filed</th>
                         <th col width="90">Time From</th>
                         <th col width="90">Time To</th>
+                        <th col width="90">Remarks</th>
                         <th col width="90">Status</th>
                     </tr>
                 </thead>
@@ -137,6 +138,7 @@ th {
                         <td>{{v.datecreated}}</td>
                         <td>{{v.timefrom}}</td>
                         <td>{{v.timeto}}</td>
+                        <td>{{v.remarks}}</td>
                         <td>
                         <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                             {{v.status}} 
