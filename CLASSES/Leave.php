@@ -511,17 +511,18 @@ EOT;
         $date_from = $data['date_from'];
         $date_to = $data['date_to'];
 
-        $where = "
-                    where 
+        $where = "where";
+        if($data['date_from'] && $data['date_to']){
+            $where = "
                     (
                         (date_started::date >= '$date_from' and date_started::date <= '$date_to') or 
                         (date_ended::date >= '$date_from' and date_ended::date <= '$date_to')
-                    )
+                    ) and
                 ";
-
+        }
 
         if($this->employees_pk && $this->employees_pk != 'undefined'){
-            $where .= "and employees_pk = ".$this->employees_pk;
+            $where .= " employees_pk = ".$this->employees_pk;
         }
 
         $sql = <<<EOT
