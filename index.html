@@ -5,7 +5,9 @@
     <meta name="description" content="Career Hunter Recruitment Solutions, Time Tracking System">
     <meta name="author" content="CHRS IT">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CHRS | Integrity</title>
+    <title ng-controller="Sidebar" >CHRS | Integrity 
+         {{notifications.count}} 
+    </title>
   
     <!-- start: Css -->
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/bootstrap.min.css">
@@ -417,19 +419,17 @@
                 </div>
                 <div class="notification_data">
                     <ul class="nav">
-                        <!-- {{notifications.count}} -->
+
                         <li ng-repeat="(k,v) in notifications.data">
                             <a ng-click="goto(k)">
-                                
-                                {{v.notification}}
-                                <br>
+                                <p ng-class="v.read==='f' && 'display'|| 'hide'" >{{v.notification}}</p>
                                 <span style="font-size:12px; color:#AAA;" >
+                                <p ng-class="v.read==='f' && 'hide'|| 'display'" >{{v.notification}}</p>
                                 {{v.created_by}}
                                 <br>
                                 {{v.date_created}}
                                 </span>
                             </a>
-                           
                         </li>
                     </ul>
                 </div>
@@ -633,8 +633,6 @@
                     </td>
                 </tr>
             </table>
-
-
             </div>
         </div>
         <div class="ngdialog-buttons">

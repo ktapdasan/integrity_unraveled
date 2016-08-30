@@ -103,20 +103,22 @@ th {
 </div>
 
         <div style="margin-top:90px;">
-            <b class="total">Total: {{manual_logs.count}}</b>
+            
             <table id="table1" width="100%" cellspacing="0">
+                <b class="total">Total: {{manual_logs.count}}</b>
                 <thead>
                     <tr>
                         <th col width="140">Employee Name</th>
                         <th col width="70">Manual Log Type</th>
                         <th col width="50">Date Filed</th>
-                        <th col width="70">Time and Date of Manual Log</th>
+                        <th col width="70">Date and Time of Manual Log</th>
                         <th col width="50">Remarks</th>
                         <th col width="50">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in manual_logs.data track by $index" style="cursor:pointer;" value = "{{v.pk}}" ng-if="manual_logs.status">
+
                         <td>{{v.name}}</td>
                         <td>Log {{v.type}}</td>                       
                         <td>{{v.datecreated}}</td>

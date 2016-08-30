@@ -12,6 +12,8 @@ app.controller('Management_manual_logs', function(
 
     $scope.profile = {};
     $scope.filter = {};
+
+    $scope.filter.status= "Active";
     $scope.log = {};
     $scope.log.time_log = new Date;
    
@@ -19,7 +21,7 @@ app.controller('Management_manual_logs', function(
     $scope.manual_logs.count = 0;
 
     $scope.modal = {};
-
+    $scope.myemployees={};
 
     init();
 
@@ -29,11 +31,7 @@ app.controller('Management_manual_logs', function(
             var _id = md5.createHash('pk');
             $scope.pk = data.data[_id];
 
-            get_profile();
-            
-            
-
-            
+            get_profile();   
         })
         .then(null, function(data){
             window.location = './login.html';
@@ -50,6 +48,7 @@ app.controller('Management_manual_logs', function(
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
             fetch_myemployees();
+
             employees_manual_logs();
         })   
     } 
@@ -100,7 +99,7 @@ app.controller('Management_manual_logs', function(
     }
 
 
-    $scope.show_myemployees = function(){
+    $scope.employees_manual_logs = function(){
         employees_manual_logs();
     }
 
@@ -130,10 +129,10 @@ app.controller('Management_manual_logs', function(
         filter.supervisor_pk = $scope.profile.pk;
         var promise = TimelogFactory.myemployees_manual_logs(filter);
         promise.then(function(data){
+            $scope.manual_logs.status = true;
             $scope.manual_logs.data = data.data.result;
             $scope.manual_logs.count = data.data.result.length;
-            $scope.manual_logs.status = true;
-            // console.log($scope.manual_logs.data);
+            // console.log($scope.manual_logs);
         }) 
         .then(null, function(data){
             $scope.manual_logs.status = false;
@@ -141,142 +140,6 @@ app.controller('Management_manual_logs', function(
      
     }
 
-    $scope.approve = function(k){
-        $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
-        $scope.manual_logs["approver_pk"]=$scope.profile.pk;
-        $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to approve manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?',
-                save : 'Yes',
-                close : 'Cancel'
-
-            };
-        ngDialog.openConfirm({
-            template: 'ConfirmModal',
-            className: 'ngdialog-theme-plain',
-            
-            scope: $scope,
-            showClose: false
-        })
-        
-        .then(function(value){
-            return false;
-        }, function(value){
-
-            $scope.manual_logs.status = "Approved";
-            $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-            $scope.manual_logs.remarks= "APPROVED";
-            $scope.manual_logs.type= $scope.manual_logs.data[k].type;
-            $scope.manual_logs.time_log=$scope.manual_logs.data[k].time;
-            console.log( $scope.manual_logs.data[k].status);
-            
-            var promise = TimelogFactory.approve($scope.manual_logs);
-            promise.then(function(data){
-            
-           
-               
-                UINotification.success({
-                                        message: 'You have successfully approve manual log', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });  
-                $scope.manual_logs.data[k].status = "Approved";
-                $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks;
-                $scope.manual_logs.data.splice(k,1);
-
-            })
-            .then(null, function(data){
-                
-                UINotification.error({
-                                        message: 'An error occured, unable to approve, please try again.', 
-                                        title: 'ERROR', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-            });                                  
-        });
-    }
-
-    $scope.disapprove = function(k){
-        $scope.manual_logs["employees_pk"] = $scope.manual_logs.data[k].employees_pk; 
-        $scope.log.remarks = '';
-        $scope.manual_logs["approver_pk"]=$scope.profile.pk;
-        // console.log($scope.profile.pk);
-
-
-       $scope.modal = {
-                title : 'Disapprove Log ' + $scope.manual_logs.data[k].type,
-                save : 'Disapprove',
-                close : 'Cancel'
-
-            };
-        ngDialog.openConfirm({
-            template: 'DisapproveModal',
-            className: 'ngdialog-theme-plain custom-widththreefifty',
-             preCloseCallback: function(value) {
-                var nestedConfirmDialog;                
-                    nestedConfirmDialog = ngDialog.openConfirm({
-                        template:
-                                '<p></p>' +
-                                '<p>Disapprove manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?</p>' +
-                                '<div class="ngdialog-buttons">' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
-                                '</button></div>',
-                        plain: true,
-                        className: 'ngdialog-theme-plain custom-widththreefifty'
-                    });
-
-                return nestedConfirmDialog;
-            },
-            
-            scope: $scope,
-            showClose: false
-        })
-        
-        .then(function(value){
-            return false;
-        }, function(value){
-
-            $scope.manual_logs.status = "Disapproved";
-            $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-            if($scope.log.remarks==''){
-                $scope.manual_logs.remarks="Disapproved";
-            }else{
-                $scope.manual_logs.remarks =  $scope.log.remarks;
-            }
-            
-
-
-            var promise = TimelogFactory.disapprove($scope.manual_logs);
-            promise.then(function(data){
-            
-           
-
-                UINotification.success({
-                                        message: 'You have successfully diapproved manual log', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });  
-                $scope.manual_logs.data[k].status = "Disapproved";
-                $scope.manual_logs.data[k].remarks= $scope.manual_logs.remarks.toUpperCase();
-                
-                     
-
-            })
-            .then(null, function(data){
-                
-                UINotification.error({
-                                        message: 'An error occured, unable to disapprove, please try again.', 
-                                        title: 'ERROR', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-            });                                  
-        });
-    }
 
         function fetch_myemployees(){
         var filter  = {
@@ -300,5 +163,150 @@ app.controller('Management_manual_logs', function(
             $scope.myemployees = [];
         });
     }
+
+    $scope.approve = function(k){
+         // console.log($scope.manual_logs.status);
+        // $scope.manual_logs["employees_pk"] = ; 
+        // $scope.manual_logs["approver_pk"]=$scope.profile.pk;
+        $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to approve manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?',
+                save : 'Yes',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            var manual_logs = {
+                pk : $scope.manual_logs.data[k].pk,
+                type : $scope.manual_logs.data[k].type,
+                remarks : "APPROVED",
+                time_log : $scope.manual_logs.data[k].time,
+                approver_pk : $scope.profile.pk,
+                employees_pk : $scope.manual_logs.data[k].employees_pk
+
+            }
+            // $scope.manual_logs.pk =  
+            // $scope.manual_logs.remarks= "APPROVED";
+            // $scope.manual_logs.type= $scope.manual_logs.data[k].type;
+            // $scope.manual_logs.time_log=$scope.manual_logs.data[k].time;
+            // console.log( $scope.manual_logs.data[k].status);
+            manual_logs.status = "Approved";
+            var promise = TimelogFactory.approve(manual_logs);
+            promise.then(function(data){
+                UINotification.success({
+                                        message: 'You have successfully approve manual log', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+                $scope.manual_logs.data[k].status = "Approved";
+                $scope.manual_logs.data[k].remarks= manual_logs.remarks;
+                // $scope.manual_logs.data.splice(k,1);
+             //   console.log($scope.manual_logs.status);
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to approve, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });                                  
+        });
+    }
+
+    $scope.disapprove = function(k){
+        // console.log($scope.manual_logs.status);
+        $scope.modal.remarks = '';
+        // $scope.manual_logs["approver_pk"]=$scope.profile.pk;
+        // console.log($scope.profile.pk);
+
+
+       $scope.modal = {
+                title : '',
+                message : 'Are you sure you want to disapprove this manual log ' + $scope.manual_logs.data[k].type.toLowerCase() + '?',
+                save : 'Disapprove',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'DisapprovedModal',
+            className: 'ngdialog-theme-plain',
+            //  preCloseCallback: function(value) {
+            //     var nestedConfirmDialog;                
+            //         nestedConfirmDialog = ngDialog.openConfirm({
+            //             template:
+            //                     '<p></p>' +
+            //                     '<p>Disapprove manual log '+ $scope.manual_logs.data[k].type.toLowerCase()+' of '+ $scope.manual_logs.data[k].name+'?</p>' +
+            //                     '<div class="ngdialog-buttons">' +
+            //                         '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+            //                         '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+            //                     '</button></div>',
+            //             plain: true,
+            //             className: 'ngdialog-theme-plain custom-widththreefifty'
+            //         });
+
+            //     return nestedConfirmDialog;
+            // },
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+             if($scope.modal.remarks==''){
+                $scope.manual_logs.remarks="Disapproved";
+            }else{
+                $scope.manual_logs.remarks =  $scope.modal.remarks;
+            }
+            var manual_logs = {
+                pk : $scope.manual_logs.data[k].pk,
+                approver_pk : $scope.profile.pk,
+                employees_pk : $scope.manual_logs.data[k].employees_pk
+            }
+            manual_logs.remarks = $scope.modal.remarks;
+            manual_logs.status = "Disapproved";
+
+            
+            var promise = TimelogFactory.disapprove(manual_logs);
+            promise.then(function(data){
+                UINotification.success({
+                                        message: 'You have successfully disapproved a manual log', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+                // console.log($scope.manual_logs.status);
+                $scope.manual_logs.data[k].status = manual_logs.status;
+                $scope.manual_logs.data[k].remarks= manual_logs.remarks.toUpperCase();
+   
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to disapprove, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });                                  
+        });
+    }
+
     
 });
