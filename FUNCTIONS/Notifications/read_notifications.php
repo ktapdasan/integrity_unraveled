@@ -10,7 +10,6 @@ $class = new Notifications(
 						$_POST['read'],
 						Null
 					);
-
 $data = $class->read();
 
 header("HTTP/1.0 404 User Not Found");
