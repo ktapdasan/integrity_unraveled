@@ -283,7 +283,6 @@ app.controller('Management_leave', function(
         }
 
         if(type == "approve"){
-
             check_filed_leave(k);
             
             $scope.leaves_filed["employees_pk"] = $scope.profile.pk;
@@ -327,7 +326,7 @@ app.controller('Management_leave', function(
                                             positionY: 'top', positionX: 'right'
                                         });
                     //leaves_filed();
-
+                  
                     $scope.leaves_filed.data[k].status = leaves_filed.status;
                 })
                 .then(null, function(data){
@@ -348,7 +347,7 @@ app.controller('Management_leave', function(
                 $scope.modal = {
                     title : '',
                     message: 'Are you sure you want to '+type+' this leave?',
-                    save : 'Disapproved',
+                    save : 'Disapprove',
                     close : 'Cancel'
                 };
 
@@ -377,6 +376,7 @@ app.controller('Management_leave', function(
 
                 leaves_filed.status = 'Disapproved';
                 leaves_filed.remarks=$scope.modal.remarks;
+
 
                 var promise = LeaveFactory.leave_respond(leaves_filed);
                 promise.then(function(data){
