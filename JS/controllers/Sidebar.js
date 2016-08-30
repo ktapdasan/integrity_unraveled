@@ -14,6 +14,10 @@ app.controller('Sidebar', function(
 
     $scope.notifications = {};
 
+    $scope.read_notifs = {};
+
+   
+
     $scope.notifications.count =0;
 
     $scope.stop = false; //how to stop the shaking
@@ -38,6 +42,7 @@ app.controller('Sidebar', function(
             $scope.pk = data.data[_id];
 
             get_profile();
+
         })
     }
 
@@ -51,6 +56,8 @@ app.controller('Sidebar', function(
             $scope.profile = data.data.result[0];
             
             get_notifications();
+
+            
         })   
     } 
 
@@ -109,18 +116,27 @@ app.controller('Sidebar', function(
             employees_pk : $scope.profile.pk
         }
 
+
         var promise = NotificationsFactory.get_notifications(filter);
         promise.then(function(data){
 
-           
-
-            $scope.notifications.status = true;
             $scope.notifications.data = data.data.result;
-            $scope.notifications.count = data.data.result.length;
+            $scope.notifications.status = true;
+            var count = data.data.result.length;
+           
+            if (count<=0) {
+
+                return $scope.notifications.count="";
+            }
+            else
+            {
+                return $scope.notifications.count="( " +count +" )";
+            }
 
             $scope.animation_arrow.stop = '1';
             $scope.animation_arrow.opacity = '1';
-  
+
+            
            
         })
         .then(null, function(data){
@@ -142,10 +158,18 @@ app.controller('Sidebar', function(
         });
     }
 
+
+
+
     $scope.goto = function(k){
+
         var location="";
+        $scope.notifications.data[k].read='t';
+
+
         if($scope.notifications.data[k].table_from == "attritions"){
             location = "#/management/attrition";
+       
         }
         else if($scope.notifications.data[k].table_from == "leave_filed"){
             location = "#/management/leaves";
@@ -154,7 +178,39 @@ app.controller('Sidebar', function(
             location = "#/management/manual_logs";
         }
 
+        var data=$scope.notifications.data[k];
+
+        read_notifs(data);
+        
+        
         window.location = location;
+        
     }
+
+    function read_notifs(data){
+        
+        if (data.read == 'f') {
+
+                $scope.read_notifs.status = true;
+
+               
+            }
+
+        else{
+
+                $scope.read_notifs.status = false;
+            }
+
+        var promise = NotificationsFactory.read_notifs(data);
+        promise.then(function(data){
+           
+        })
+        .then(null, function(data){
+            
+            $scope.read_notifs.status = false;
+
+        });
+    }
+
     
 });
