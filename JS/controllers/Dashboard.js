@@ -179,6 +179,7 @@ app.controller('Dashboard', function(
 
                 var promise = TimelogFactory.submit_log(filter);
                 promise.then(function(data){
+                    console.log($scope.lastlog.date);
                     get_last_log_today();
 
                     UINotification.success({
@@ -209,6 +210,7 @@ app.controller('Dashboard', function(
             var is_leave_today = {
                 status : false
             }
+
             var pk="";
             for(var i in $scope.approved_leaves.data){
                 if($scope.current_date.date >= $scope.approved_leaves.data[i].date_started && $scope.current_date.date <= $scope.approved_leaves.data[i].date_ended){
@@ -293,7 +295,9 @@ app.controller('Dashboard', function(
                 });
             }
 
-            
+
+            //return false;
+
             
             $scope.logbutton = true;
             var promise = TimelogFactory.submit_log(filter);
