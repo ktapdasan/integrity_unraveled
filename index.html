@@ -140,7 +140,7 @@
 
     .tblleave_timesheet th{
         border:1px solid white; 
-    
+
     }
     
     
@@ -1070,6 +1070,7 @@
         <div class="ngdialog-message" style="width;100%;height:100%">
             <div>
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <div style="height:3px;width:100%;background-color:gray;margin-bottom:10px;"></div>
             </div>
             <div> 
 
@@ -1082,7 +1083,7 @@ Departments
                 <tr>
                     <th colspan="2">
                     <label style = "font-size:20px;">Type of leave</label>
-                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:400px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
+                        <select required ng-model="modal.leave_types_pk" style="display: block; float: left;font-size:16px; width:380px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5" ng-change="check_balance(); check_leave_count();">
                             <option ng-repeat="(k, v) in leave_types.data" style="cursor:pointer;" value="{{v.pk}}">
                                 {{v.name}}
                             </option>
@@ -1126,9 +1127,9 @@ Departments
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label style = "position:relative;font-size:20px;top:-80px;">Reason:</label> 
-
-                        <textarea ng-model="modal.reason" rows ='4' cols ='32' tabindex="1" autofocus required/>
+                        <label style = "font-size:20px;float:left;">Reason:</label> 
+                       
+                        <textarea style="float-left;" ng-model="modal.reason" rows ='4' cols ='40' tabindex="1" autofocus required/>
 
                         <div>
                             <span ng-if="modal.remaining.status">Remaining Balance: {{modal.remaining.count - modal.total.count}}</span>
