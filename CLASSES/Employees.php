@@ -130,14 +130,14 @@ EOT;
                             
                             from manual_logs 
                             left join manual_logs_status on manual_logs.pk = manual_logs_status.manual_logs_pk 
-                            where employees_pk = 51 and manual_logs.time_log::date = '2016-08-12' order by manual_logs_status.date_created desc limit 1
+                            where employees_pk = employees.pk and manual_logs.time_log::date = '2016-08-12' order by manual_logs_status.date_created desc limit 1
                              ) as current_status,
                         ( select 
                            type 
                             
                             from manual_logs 
                             left join manual_logs_status on manual_logs.pk = manual_logs_status.manual_logs_pk 
-                            where employees_pk = $pk and manual_logs.time_log::date = '2016-08-12'
+                            where employees_pk = employees.pk and manual_logs.time_log::date = '2016-08-12'
                             order by manual_logs_status.date_created desc limit 1) as type
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
