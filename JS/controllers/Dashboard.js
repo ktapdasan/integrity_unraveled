@@ -209,14 +209,16 @@ app.controller('Dashboard', function(
             var is_leave_today = {
                 status : false
             }
-
+            var pk="";
             for(var i in $scope.approved_leaves.data){
                 if($scope.current_date.date >= $scope.approved_leaves.data[i].date_started && $scope.current_date.date <= $scope.approved_leaves.data[i].date_ended){
                     is_leave_today.status = true;
                     is_leave_today.leave = $scope.approved_leaves.data[i].name
+                    pk = $scope.approved_leaves.data[i].pk;
                 }
             }
 
+            
             if(is_leave_today.status == true){
                 $scope.modal = {
                         title : '',
@@ -224,7 +226,7 @@ app.controller('Dashboard', function(
                         save : 'Request now',
                         close : 'Request later'
                     };
-
+                    
                 ngDialog.openConfirm({
                     template: 'ConfirmModal',
                     className: 'ngdialog-theme-plain',
@@ -251,12 +253,47 @@ app.controller('Dashboard', function(
                     .then(function(value){
                         return false;
                     }, function(value){
+                            
+                            $scope.modal["pk"] = pk;
+                            $scope.modal["employees_pk"] = $scope.profile.pk;
+                            $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
+                           
                         
+                            
+
+                            var promise = TimelogFactory.cancel_leave($scope.modal);
+                            promise.then(function(data){
+                
+                            $scope.archived=true;
+
+                                UINotification.success({
+                                                        message: 'You have successfully cancel your leave.', 
+                                                        title: 'SUCCESS', 
+                                                        delay : 5000,
+                                                        positionY: 'top', positionX: 'right'
+                                                    });
+                                employees();
+
+
+                            })
+                            .then(null, function(data){
+                                
+                                UINotification.error({
+                                                        message: 'An error occured, unable to save changes, please try again.', 
+                                                        title: 'ERROR', 
+                                                        delay : 5000,
+                                                        positionY: 'top', positionX: 'right'
+                                                    });
+                            });        
+
+
+
+
                     }); 
                 });
             }
 
-            return false;
+            
             
             $scope.logbutton = true;
             var promise = TimelogFactory.submit_log(filter);
@@ -350,7 +387,6 @@ app.controller('Dashboard', function(
 
         var promise = LeaveFactory.approved_leaves(filter);
         promise.then(function(data){
-            console.log(data.data.result);
             $scope.approved_leaves.status = true;
             $scope.approved_leaves.data = data.data.result;
         })

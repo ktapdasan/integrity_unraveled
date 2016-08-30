@@ -539,6 +539,7 @@ EOT;
                     $where 
                 )
                 select
+                    pk,
                     employees_pk,
                     date_started,
                     date_ended,
@@ -550,6 +551,78 @@ EOT;
 
         return ClassParent::get($sql);
 
+    }
+
+     public function cancel_leave($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        
+        $supervisor_pk  = $extra['supervisor_pk'];
+        $employees_pk   = $extra['employees_pk'];
+        $remarkss        = $extra['remarks'];
+        $pk             = $extra['pk'];
+        
+
+
+        $sql = 'begin;';
+
+        
+        $sql .= <<<EOT
+                insert into leave_cancellation
+                (
+                    leave_filed_pk,
+                    employees_pk
+                )
+                values
+                (    
+                    $pk,
+                    $employees_pk
+                )
+                ;
+EOT;
+
+        $sql .= <<<EOT
+                insert into leave_cancellation_status
+                (
+                    leave_cancellation_pk,
+                    created_by,
+                    remarks,
+                    status       
+                )
+                values
+                (    
+                    currval('leave_cancellation_pk_seq'),
+                    $employees_pk,
+                    '$remarkss',
+                    'Pending'
+
+                )
+                ;
+EOT;
+       
+        $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk,
+                    created_by        
+                )
+                values
+                (    
+                    'Cancel Leave',
+                    'leave_cancellation',
+                    $pk,
+                    $supervisor_pk,
+                    $employees_pk
+
+                )
+                ;
+EOT;
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
     }
 }
 
