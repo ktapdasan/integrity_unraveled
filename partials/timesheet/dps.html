@@ -1,0 +1,136 @@
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+.total{
+    font-size: 14px;
+    margin: 1px 0 -100px 0px;
+}
+.table1{
+    width: 99%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+    table-layout:fixed;
+}
+.table1 th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+    overflow: hidden;
+
+}
+
+.table1 tr:nth-child(odd){background-color:#F9F9F9;}
+
+.table1 th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+.bck{
+    background-color: #F9F9F9;
+    height:80px;
+    width: 99%;
+
+    margin-left:5px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 4px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h3 class="animated fadeInLeft">Daily Pass Slip</h3>
+                <p class="animated fadeInDown">
+                    My Timesheet <span class="fa-angle-right fa"></span> 
+                    Daily Pass Slip
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class ="bck">
+            <div style="padding-left: 20px; padding-top:20px;">
+                <div style="font-size: 18px;">
+                    <div style="margin-left:5px;float:left; margin-right:10px;margin-top:-15px;">
+                        <label style="float:left;font-size: 15px;">Date From:</label><br>
+                        <input ng-model="filter.date_from" type="date" id="datefrom" style="width:165px;"/>
+                    </div>
+                    <div style="float:left; margin-right:-5px;margin-top:-14px;">
+                       <label style="float:left;font-size: 15px;">Date To:</label><br> <input ng-model="filter.date_to" type="date" id="dateto" style="width:165px;"/>
+                    </div>
+                    <div style="float:left; margin-left:10px;">
+                        <select ng-model="filter.status" ng-change= "show_dps()" style="float:left">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <div style="float:left; margin-left:10px;">
+                        <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:10px;">
+                    </div>
+
+                    <div style="clear:both;"></div>
+                </div>
+                
+            </div>
+
+            <div style="height:10px; width:100%;">
+
+            </div>
+
+            <div>
+                <b class="total">Total: {{dps.count}}</b>
+                <table id="datatables-example" class="table1" width="90%" cellspacing="0" style="word-break:break-all;">
+                    <thead>
+                        <tr>
+                            <th>Date Filed</th>
+                            <th>Time From</th>
+                            <th>Time To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(k, v) in dps.data" style="cursor:pointer;" ng-if="dps.status">
+                            <td>{{v.date_created}}</td>
+                            <td>{{v.time_from}}</td>
+                            <td>{{v.time_to}}</td>
+                            <td ng-bind-html="v.reason"></td>
+                            <td>
+                                <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                                    {{v.status}} 
+                                </div>
+                                <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                                    <button ng-click="cancel(k)" class="medium button blue fa-fa">Cancel</button> 
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!dps.status" style = "text-align: center;">
+                            <td colspan = "5" style="text-align:center;">No data found</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div style="height:50px; width:100%;">
+
+            </div>
+        </div>
+    </div>
+</div>

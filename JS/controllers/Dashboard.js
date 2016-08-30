@@ -4,6 +4,7 @@ app.controller('Dashboard', function(
                                         TimelogFactory,
                                         EmployeesFactory,
                                         NotificationsFactory,
+                                        LeaveFactory,
                                         md5,
                                         $timeout,
                                         ngDialog,
@@ -30,6 +31,10 @@ app.controller('Dashboard', function(
     $scope.headerBackground="stop";
 
     $scope.current_date={};
+
+    $scope.approved_leaves = {};
+
+    
 
     init();
     //get_notifs();
@@ -70,9 +75,10 @@ app.controller('Dashboard', function(
             $scope.profile.details = JSON.parse($scope.profile.details);
             $scope.profile.permission = JSON.parse($scope.profile.permission);
             $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
-
+            //console.log($scope.profile);
             get_last_log_today();
             get_current_date();
+            get_approved_leaves();
         })   
     }
 
@@ -200,58 +206,83 @@ app.controller('Dashboard', function(
             });
         }
         else {
-            // $scope.modal = {
-            //     title : 'Cheers!',
-            //     message: 'Today, March 16, 2016 is the official launching of Integrity. Please help us remind everybody that there is no need to Log in using your GMail.',
-            //     save : 'Log  in',
-            //     close : 'Cancel'
-            // };
+            var is_leave_today = {
+                status : false
+            }
 
-            // ngDialog.openConfirm({
-            //     template: 'ConfirmModal',
-            //     className: 'ngdialog-theme-plain',
-            //     scope: $scope,
-            //     showClose: false
-            // })
-            // .then(function(value){
-            //     return false;
-            // }, function(value){
-                $scope.logbutton = true;
-                var promise = TimelogFactory.submit_log(filter);
-                promise.then(function(data){
-                    get_last_log_today();
+            for(var i in $scope.approved_leaves.data){
+                if($scope.current_date.date >= $scope.approved_leaves.data[i].date_started && $scope.current_date.date <= $scope.approved_leaves.data[i].date_ended){
+                    is_leave_today.status = true;
+                    is_leave_today.leave = $scope.approved_leaves.data[i].name
+                }
+            }
 
-                    UINotification.success({
-                                    message: 'You have successfully logged in.', 
-                                    title: 'SUCCESS', 
-                                    delay : 5000,
-                                    positionY: 'top', positionX: 'right'
-                                });
+            if(is_leave_today.status == true){
+                $scope.modal = {
+                        title : '',
+                        message: 'Today, you are on ' + is_leave_today.leave + ". Would you like to request for cancellation?",
+                        save : 'Request now',
+                        close : 'Request later'
+                    };
 
-                    var to = $timeout(function() {
-                        $timeout.cancel(to);
-                        $scope.logbutton = false;
-                    }, 5000);
+                ngDialog.openConfirm({
+                    template: 'ConfirmModal',
+                    className: 'ngdialog-theme-plain',
+                    
+                    scope: $scope,
+                    showClose: false
                 })
-                .then(null, function(data){
-                    UINotification.error({
-                                    message: 'An error occurred while saving your log in. Please try again.', 
-                                    title: 'ERROR',
-                                    delay : 5000,
-                                    positionY: 'top', positionX: 'right'
-                                });
-                });
-            //});
-            // $scope.logbutton = true;
-            // var promise = TimelogFactory.submit_log(filter);
-            // promise.then(function(data){
-            //     get_last_log_today();
+                .then(function(value){
+                    return false;
+                }, function(value){
+                    $scope.modal = {
+                        title : '',
+                        message: 'Please state the reason why you are cancelling your leave.',
+                        save : 'Save',
+                        close : 'Cancel'
+                    };
 
-            //     var to = $timeout(function() {
-            //         $timeout.cancel(to);
-            //         $scope.logbutton = false;
-            //     }, 5000);
-            // })
+                    ngDialog.openConfirm({
+                        template: 'DisapprovedModal',
+                        className: 'ngdialog-theme-plain',
+                        scope: $scope,
+                        showClose: false
+                    })
+                    .then(function(value){
+                        return false;
+                    }, function(value){
+                        
+                    }); 
+                });
+            }
+
+            return false;
+            
+            $scope.logbutton = true;
+            var promise = TimelogFactory.submit_log(filter);
+            promise.then(function(data){
+                get_last_log_today();
+
+                UINotification.success({
+                                message: 'You have successfully logged in.', 
+                                title: 'SUCCESS', 
+                                delay : 5000,
+                                positionY: 'top', positionX: 'right'
+                            });
+
+                var to = $timeout(function() {
+                    $timeout.cancel(to);
+                    $scope.logbutton = false;
+                }, 5000);
+            })
+            .then(null, function(data){
+                UINotification.error({
+                                message: 'An error occurred while saving your log in. Please try again.', 
+                                title: 'ERROR',
+                                delay : 5000,
+                                positionY: 'top', positionX: 'right'
+                            });
+            });
         }
 
         
@@ -309,6 +340,22 @@ app.controller('Dashboard', function(
                                 positionY: 'top', positionX: 'right'
                             });
             });
+        });
+    }
+
+    function get_approved_leaves(){
+        var filter = {
+            employees_pk : $scope.profile.pk
+        };
+
+        var promise = LeaveFactory.approved_leaves(filter);
+        promise.then(function(data){
+            console.log(data.data.result);
+            $scope.approved_leaves.status = true;
+            $scope.approved_leaves.data = data.data.result;
+        })
+        .then(null, function(data){
+            $scope.approved_leaves.status = false;
         });
     }
 

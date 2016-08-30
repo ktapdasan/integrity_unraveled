@@ -7,7 +7,8 @@ var app = angular.module('onload', [
                                     'ui-notification',
                                     'ngSanitize',
                                     'mgcrea.ngStrap',
-                                    'angularFileUpload'
+                                    'angularFileUpload',
+                                    'chart.js'
                                 ]);
 
 app.config(function($routeProvider){
@@ -36,6 +37,11 @@ app.config(function($routeProvider){
     {
         controller: 'Employees_overtime',
         templateUrl: 'partials/timesheet/overtime.html'
+    })
+    .when('/timesheet/dps',
+    {
+        controller: 'DailyPassSlip',
+        templateUrl: 'partials/timesheet/dps.html'
     })
     .when('/employees/list',
     {
@@ -116,6 +122,11 @@ app.config(function($routeProvider){
     {
         controller: 'Management_overtime',
         templateUrl: 'partials/management/over_time.html'
+    })
+    .when('/management/dps',
+    {
+        controller: 'Management_DailyPassSlip',
+        templateUrl: 'partials/management/dps.html'
     })
     .otherwise(
     {

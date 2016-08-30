@@ -21,6 +21,8 @@ app.controller('Management_leave', function(
     $scope.leaves_filed = {};
     $scope.leaves_filed.count = 0;
 
+    $scope.workdays = [];
+
     $scope.myemployees={};
 
     init();
@@ -45,6 +47,7 @@ app.controller('Management_leave', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
+            
             fetch_myemployees();
             leaves_filed();
         })           
@@ -93,7 +96,7 @@ app.controller('Management_leave', function(
         var monday = yyyy+'-'+mm+'-'+dd;
 
         return monday;
-    } 
+    }
 
     function leavetypes(){
         $scope.leave_types.status = false;
@@ -243,7 +246,41 @@ app.controller('Management_leave', function(
     //     });
     // }
 
+    function get_day_num(day){
+        var num;
+        if(day == "sunday"){
+            num = 0;
+        }
+        else if(day == "monday"){
+            num = 1;
+        }
+        else if(day == "tuesday"){
+            num = 2;
+        }
+        else if(day == "wednesday"){
+            num = 3;
+        }
+        else if(day == "thursday"){
+            num = 4;
+        }
+        else if(day == "friday"){
+            num = 5;
+        }
+        else if(day == "saturday"){
+            num = 6;
+        }
+        return num;
+    }
+
     $scope.respond = function(k, type){
+        var a = JSON.parse($scope.leaves_filed.data[k].work_schedule);
+
+        var work_schedule=[];
+        for(var i in a){
+            if(a[i] != null){
+                work_schedule.push(get_day_num(i));
+            }
+        }
 
         if(type == "approve"){
 
@@ -267,7 +304,7 @@ app.controller('Management_leave', function(
             .then(function(value){
                 return false;
             }, function(value){
-                var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
+                var workdays = countCertainDays(work_schedule,new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
                 
                 var leaves_filed = {
                     pk              : $scope.leaves_filed.data[k].pk,
@@ -326,7 +363,7 @@ app.controller('Management_leave', function(
                     .then(function(value){
                     return false;
                 }, function(value){
-                    var workdays = countCertainDays([1,2,3,4,5],new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
+                    var workdays = countCertainDays(work_schedule,new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
                     
                     var leaves_filed = {
                         pk              : $scope.leaves_filed.data[k].pk,
@@ -340,8 +377,6 @@ app.controller('Management_leave', function(
 
                 leaves_filed.status = 'Disapproved';
                 leaves_filed.remarks=$scope.modal.remarks;
-                
-                console.log(leaves_filed);
 
                 var promise = LeaveFactory.leave_respond(leaves_filed);
                 promise.then(function(data){
@@ -362,23 +397,9 @@ app.controller('Management_leave', function(
                                             positionY: 'top', positionX: 'right'
                                         });
                 });                                  
-            });
-       
-               
+            });      
         }
-
-
-            
     }
-
-
-
-
-
-
-
-
-
 
     function check_filed_leave(k){
         var filter = {

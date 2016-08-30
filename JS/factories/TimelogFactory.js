@@ -378,6 +378,40 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
+    factory.fetch_dps= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/fetch.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.fetch_employees_dps= function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/myemployees_fetch.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     return factory;
 
 

@@ -341,7 +341,7 @@
           //                                                 </div><div style='clear:both;'></div>\
           //                                                 "
           //                         );
-          datetime2.empty().append("<p>" + date.format('dddd MMMM DD, YYYY') + "</p>");
+          datetime2.empty().append("<p>" + date.format('dddd, MMMM DD, YYYY') + "</p>");
         });
         
     };

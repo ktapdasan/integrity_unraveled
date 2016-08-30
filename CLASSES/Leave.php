@@ -139,7 +139,10 @@ EOT;
                     ) as status,
                     (
                         select remarks from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
-                    ) as reason
+                    ) as reason,
+                    (
+                        select details->'company'->'work_schedule' from employees where pk = leave_filed.employees_pk
+                    ) as work_schedule
                 from leave_filed
                 where archived = false
                 and date_created::date between '$this->date_started' and '$this->date_ended'

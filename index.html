@@ -273,6 +273,7 @@
                             <!-- <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li> --> 
                             <li><a style="cursor:pointer;" href="#/timesheet/leaves" ng-click="menuclicked('timesheet')">Leaves</a></li>
                             <li><a style="cursor:pointer;" href="#/timesheet/overtime" ng-click="menuclicked('timesheet')">Over Time</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/dps" ng-click="menuclicked('dps')">Daily Pass Slip</a></li>
                         </ul>
                     </li>
 
@@ -298,6 +299,7 @@
                             <li><a style="cursor:pointer;" href="#/management/analytics" ng-click="menuclicked('management')">Analytics</a></li>
                             <li><a style="cursor:pointer;" href="#/management/attrition" ng-click="menuclicked('management')">Attrition</a></li>
                             <li><a style="cursor:pointer;" href="#/management/overtime" ng-click="menuclicked('management')">Over Time</a></li>
+                            <li><a style="cursor:pointer;" href="#/management/dps" ng-click="menuclicked('management')">Daily Pass Slip</a></li>
                         </ul>
                     </li>
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
@@ -505,6 +507,8 @@
     <script src="./JS/controllers/Analytics.js"></script>
     <script src="./JS/controllers/Management_overtime.js"></script>
     <script src="./JS/controllers/Employees_overtime.js"></script>
+    <script src="./JS/controllers/DailyPassSlip.js"></script>
+    <script src="./JS/controllers/Management_DailyPassSlip.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -535,6 +539,9 @@
     <script src="./ASSETS/js/plugins/dropdown/isteven-multi-select.js"></script>
     <script src="./ASSETS/js/plugins/notification/angular-ui-notification.min.js"></script>
     <script src="./ASSETS/js/plugins/uploader/angular-file-upload.min.js"></script>
+    <!-- <script src="./ASSETS/js/plugins/chart/Chart.bundle.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <script src="./ASSETS/js/plugins/chart/angular-chart.min.js"></script>
 
 
     <!--timepicker-->
