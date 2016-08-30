@@ -163,7 +163,21 @@ app.controller('New_Employees', function(
     }
 
     $scope.employees.date_started = new Date();
-     
+
+    $scope.choices = [{primary_education: 'choice1'}];
+
+    $scope.addNewChoice = function() {
+        var newItemNo = $scope.choices.length+1;
+        if ($scope.choices.length == 0) {
+            $scope.choices.push({'primary_education':+newItemNo});
+        }
+        else if($scope.choices.length == 1){
+            $scope.choices.push({'secondary_education':+newItemNo});
+        }
+        else if($scope.choices.length == 2){
+            $scope.choices.push({'tertiary_education':+newItemNo});
+        }
+    };
     $scope.level_changed = function(){
         level_changed();
     }

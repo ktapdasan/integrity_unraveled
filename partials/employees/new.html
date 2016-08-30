@@ -91,12 +91,12 @@ body>footer .footer-main {
                         <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:340px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                     </td>
-                     <td>
+                    <td>
                         <label style="display:block; float:left; padding-right:10px">Religion:</label>
                     </td>
                     <td id="css">
                         <input name="religion" required ng-model="employee.religion_pk" type="text" style="display: block; float: left; width:340px;" />
-                         <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
+                        <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
                     </td>
                 </tr>
                 <tr>
@@ -139,7 +139,6 @@ body>footer .footer-main {
                                 {{v.civilstatus}}
                             </option>
                         </select>
-                        <span></span>
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is Required.</span>
                     </td> 
                 </tr>
@@ -148,23 +147,26 @@ body>footer .footer-main {
                         <h3 style="margin-left:-148px;color:#219DEC;padding:5px;border-bottom:1px solid #219dec;">Education</h3>
                     </td>
                 </tr>
-                <tr>
+              
+                <tr data-ng-repeat="choice in choices">
                     <td><h4 style="margin-left:-45px;color:#219DEC;">Primary</h4></td>
                 </tr>
-                <tr>
+                <tr data-ng-repeat="choice in choices">
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
+
                     </td>
                     <td id="css" >
-                        <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
+                        <input type="text" ng-model="choice.name" is-number  style="display: block; float: left; width:340px; max-height:36px;"/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
                     </td>
                     <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
+                        <input  type="text" ng-model="choice.location" is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                 </tr>
+</fieldset>
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
@@ -182,74 +184,9 @@ body>footer .footer-main {
 
                 </tr>
                 <tr>
-                    <td><h4 style="margin-left:-45px;color:#219DEC;">Secondary</h4></td>
-                </tr>
-                <tr>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
-                    </td>
-                    <td id="css" >
-                        <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
-                    </td>
-                    <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
-                    </td>
-                    <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
-                    </td>
-                    <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
-                    </td>
+                        <button class="addfields" ng-click="addNewChoice()">Add fields</button>
 
-                </tr>
-                <tr>
-                    <td><h4 style="margin-left:-45px;color:#219DEC;">Tertiary</h4></td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
-                    </td>
-                    <td id="css" >
-                        <input type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Course:</label>
-                    </td>
-                    <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
-                    </td>
-                    <td id="css" >
-                        <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
-                    </td>
-                    <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
-                    </td>
-                </tr>
-                <tr>   
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
-                    </td>
-                    <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                 </tr>
                 <tr>
@@ -297,7 +234,7 @@ body>footer .footer-main {
                     <td id="css">
                         <input type="date" id="dateto" name="input" ng-model="employees.date_started"
                         placeholder="yyyy-MM-dd" min="2012-01-01" max="2013-12-31" style="display: block; float: left; width:340px;padding:5px;" required />
-                        
+
                     </td>
                 </tr>
                 <tr>
@@ -485,4 +422,4 @@ body>footer .footer-main {
     </table>
 </form>
 </div>
-</div>
+</div>]]
