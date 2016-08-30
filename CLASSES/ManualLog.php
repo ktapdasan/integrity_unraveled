@@ -297,7 +297,45 @@ EOT;
         return $randomString;
     }
 
-  
+    public function pending_manuallogs($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $data['date_from'];
+        $date_to = $data['date_to'];
+
+        $where = "
+                    where time_log::date >= '$date_from' and time_log::date <= '$date_to'
+                ";
+
+        if($this->employees_pk && $this->employees_pk != 'undefined'){
+            $where .= "and employees_pk = ".$this->employees_pk;
+        }
+
+        $sql = <<<EOT
+                with Q as
+                (
+                    select
+                        manual_logs.pk,
+                        employees_pk,
+                        type,
+                        time_log::timestamp(0) as time_log,
+                        (select status from manual_logs_status where manual_logs_pk = manual_logs.pk order by date_created desc limit 1) as status
+                    from manual_logs
+                    $where 
+                )
+                select
+                    employees_pk,
+                    type,
+                    time_log,
+                    status
+                from Q where status = 'Pending'
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
 
 
 

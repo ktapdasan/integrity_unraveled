@@ -2,6 +2,7 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 require_once('../../CLASSES/Leave.php');
+require_once('../../CLASSES/ManualLog.php');
 
 $data = array(
 				"pk" => $_POST['pk'],
@@ -80,7 +81,7 @@ foreach($employees_data['result'] as $key=>$value){
 		//$cutoff[$k]['work_schedule'] = $work_schedule;
 		$cutoff[$k]['status'] = $status;
 		$cutoff[$k]['work_schedule'] = $z;
-		$cutoff[$k]['current_status'] = $value['current_status'];
+		//$cutoff[$k]['current_status'] = $value['current_status'];
 
 	}
 
@@ -104,7 +105,10 @@ $class = new Employees(
 						);
 $data = $class->timelogs($data);
 
-
+$date_range = array(
+	"date_from" => $_POST['newdatefrom'],
+	"date_to" => $_POST['newdateto']
+);
 $class2 = new Leave(
         				NULL,
         				$_POST['employees_pk'],
@@ -117,8 +121,21 @@ $class2 = new Leave(
                         NULL
         			);
 
-$data2 = $class2->approved_leaves();
+$data2 = $class2->approved_leaves($date_range);
 $approved_leaves = $data2['result'];
+
+$class3 = new ManualLog(
+        				NULL,
+        				$_POST['employees_pk'],
+                        NULL,
+                        NULL,
+        				NULL,
+        				NULL,
+                        NULL
+        			);
+
+$data3 = $class3->pending_manuallogs($date_range);
+$pending_manuallogs = $data3['result'];
 
 foreach ($employees as $employee_id => $value) {
 	foreach ($data['result'] as $k => $v) {
@@ -139,6 +156,20 @@ foreach ($employees as $employee_id => $value) {
 	
 	foreach ($employees[$employee_id] as $x => $y) {
 		
+		foreach ($pending_manuallogs as $a => $b) {
+			$z = explode(' ', $b['time_log']);
+			
+			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] == $z[0]){
+
+				if($b['type'] == "In"){
+					$y['login'] = "Pending";
+				}
+				else {
+					$y['logout'] = "Pending";
+				}
+			}
+		}
+		
 		foreach ($approved_leaves as $a => $b) {
 			//print_r($b);
 			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['date_started'] && $y['log_date'] <= $b['date_ended']){
@@ -148,7 +179,8 @@ foreach ($employees as $employee_id => $value) {
 				$y['logout'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 			}
 		}
-		
+
+
 		// foreach ($employees[$employee_id][$x] as $key => $value) {
 		// 	//print_r($employees[$employee_id][$x][$key]);
 		// 	//echo trim(strtolower($employees[$employee_id][$x]['log_day']));

@@ -503,10 +503,25 @@ EOT;
         return ClassParent::insert($sql);
     }
 
-    public function approved_leaves(){
-        $where="";
+    public function approved_leaves($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $data['date_from'];
+        $date_to = $data['date_to'];
+
+        $where = "
+                    where 
+                    (
+                        (date_started::date >= '$date_from' and date_started::date <= '$date_to') or 
+                        (date_ended::date >= '$date_from' and date_ended::date <= '$date_to')
+                    )
+                ";
+
+
         if($this->employees_pk && $this->employees_pk != 'undefined'){
-            $where = "where employees_pk = ".$this->employees_pk;
+            $where .= "and employees_pk = ".$this->employees_pk;
         }
 
         $sql = <<<EOT
