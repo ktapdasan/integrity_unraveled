@@ -166,8 +166,8 @@ body>footer .footer-main {
                         <input  type="text" ng-model="choice.location" is-number style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                 </tr>
-</fieldset>
-                <tr>
+
+                <tr data-ng-repeat="choice in choices">
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
                     </td>
@@ -185,7 +185,7 @@ body>footer .footer-main {
                 </tr>
                 <tr>
                     <td>
-                        <button class="addfields" ng-click="addNewChoice()">Add fields</button>
+                        <button class="addfields" ng-click="addNewChoice()">Add Education</button>
 
                     </td>
                 </tr>
