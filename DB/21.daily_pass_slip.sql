@@ -1,5 +1,6 @@
 create table daily_pass_slip (
 	pk serial primary key,
+	type text default 'Official',
 	employees_pk int references employees(pk),
 	time_from timestamptz,
 	time_to timestamptz,

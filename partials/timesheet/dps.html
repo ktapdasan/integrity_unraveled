@@ -50,6 +50,10 @@ select{
     font-size: 14px;
 
 }
+
+.remarks div span {
+    color: #918c8c;
+}
 </style>
 
 <div id="content2">
@@ -111,8 +115,8 @@ select{
                             <td>{{v.date_created}}</td>
                             <td>{{v.time_from}}</td>
                             <td>{{v.time_to}}</td>
-                            <td ng-bind-html="v.reason"></td>
-                            <td>
+                            <td ng-bind-html="v.reason" class="remarks"></td>
+                            <td> 
                                 <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                                     {{v.status}} 
                                 </div>

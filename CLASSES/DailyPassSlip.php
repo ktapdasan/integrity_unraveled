@@ -66,7 +66,7 @@ class DailyPassSlip extends ClassParent {
                         (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by pk desc limit 1) as status,
                         (
                             select 
-                                remarks || ' <br /> ' || date_created::timestamp(0)
+                                array_to_string(array_agg('<div>' || remarks || '</div> <div><span>' || date_created::timestamp(0) || '</span></div>'), '<br />')
                             from daily_pass_slip_status 
                             where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk 
                             order by pk desc
