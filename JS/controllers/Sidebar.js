@@ -119,16 +119,11 @@ app.controller('Sidebar', function(
 
         var promise = NotificationsFactory.get_notifications(filter);
         promise.then(function(data){
-            // $scope.notifications.status = $scope.notifications.data.read;
-            
-            
 
             $scope.notifications.data = data.data.result;
+            $scope.notifications.status = true;
             var count = data.data.result.length;
            
-
-
-
             if (count<=0) {
 
                 return $scope.notifications.count="";
