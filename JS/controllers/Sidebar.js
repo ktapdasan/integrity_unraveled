@@ -130,7 +130,7 @@ app.controller('Sidebar', function(
             }
             else
             {
-                return $scope.notifications.count="( " +count +" )";
+                return $scope.notifications.count="(" +count +")";
             }
 
             $scope.animation_arrow.stop = '1';

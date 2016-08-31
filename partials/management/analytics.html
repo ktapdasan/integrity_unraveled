@@ -1,3 +1,76 @@
-<div>
-    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas> 
+
+
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+.total{
+    font-size: 14px;
+    margin: 1px 0 -100px 0px;
+}
+.table1{
+    width: 100%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+    table-layout:fixed;
+}
+.table1 th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+    overflow: hidden;
+
+}
+
+.table1 tr:nth-child(odd){background-color:#F9F9F9;}
+
+.table1 th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+.bck{
+    background-color: #F9F9F9;
+    height:80px;
+    width: 99%;
+
+    margin-left:5px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 4px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h3 class="animated fadeInLeft">Analytics</h3>
+                <p class="animated fadeInDown">
+                    Management <span class="fa-angle-right fa"></span> 
+                    Analytics
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class ="bck">
+            <div>
+			    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas> 
+			</div>
+        </div>
+    </div>
 </div>

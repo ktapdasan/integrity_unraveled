@@ -95,6 +95,11 @@ tr:hover {
                         <th col width="90">Log In</th>
                         <th col width="90">Log Out</th>
                         <th col width="90"># of Hours</th>
+                        <th col width="90">Tardiness</th>
+                        <th col width="90">Undertime</th>
+                        <th col width="90">Overtime</th>
+                        <th col width="90">Suspension</th>
+                        <th col width="90">Leave</th>
                         <th col width="90">Status</th>
                     </tr>
                 </thead>
@@ -132,6 +137,11 @@ tr:hover {
                             {{v.hrs}}
                             </span>
                         </td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
                         <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
                     </tr>               
                     <!-- <tr ng-if="!timesheet.status" style= "text-align: center;">
