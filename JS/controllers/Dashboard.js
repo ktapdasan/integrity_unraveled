@@ -380,8 +380,6 @@ app.controller('Dashboard', function(
                         time_from : yyyy+"-"+mm+"-"+dd + " " + z[$scope.current_date.day.toLowerCase()].out,
                         time_to : a[1].time_log
                     };
-
-                    console.log(filter);
                     
                     var promise = TimelogFactory.file_overtime(filter);
                     promise.then(function(data){
