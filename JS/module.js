@@ -98,6 +98,11 @@ app.config(function($routeProvider){
         controller: 'Levels',
         templateUrl: 'partials/admin/levels/index.html'
     })
+    .when('/admin/holidays',
+    {
+        controller: 'admin_Holidays',
+        templateUrl: 'partials/admin/holidays/index.html'
+    })
     .when('/management/leaves',
     {
         controller: 'Management_leave',
