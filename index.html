@@ -540,7 +540,7 @@
     <script src="./ASSETS/js/plugins/notification/angular-ui-notification.min.js"></script>
     <script src="./ASSETS/js/plugins/uploader/angular-file-upload.min.js"></script>
     <!-- <script src="./ASSETS/js/plugins/chart/Chart.bundle.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <script src="./ASSETS/js/plugins/chart/Chart.min.js"></script>
     <script src="./ASSETS/js/plugins/chart/angular-chart.min.js"></script>
 
 
@@ -925,7 +925,8 @@
                 <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
             </div>
             <div>
-                <textarea ng-model="modal.remarks" cols="45" rows="5" required></textarea>
+                <label style= "font-size:22px; float: left;">Reason</label>
+                <textarea ng-model="modal.remarks" cols="42" rows="5" required></textarea>
             </div>
         </div>
         <div class="ngdialog-buttons">
