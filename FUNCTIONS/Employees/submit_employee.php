@@ -14,6 +14,7 @@ $class = new Employees(
     $_POST['titles_pk'],
     $_POST['levels_pk'],
     $_POST['departments_pk'],
+    $_POST['employee.forms'],
     NULL,
     NULL,
     NULL
@@ -59,6 +60,7 @@ $details = array();//Details Array
 $details['company'] = $company; //Declared!
 $details['personal'] = $personal; //Declared!
 $details['government'] = $government; //Declared!
+$details['education'] = $education; //Declared!
 
 $extra['details'] = $details; //Declared!
 $extra['supervisor_pk'] = $_POST['supervisor_pk']; //Declared!
