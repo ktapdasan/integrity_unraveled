@@ -14,6 +14,9 @@ $class = new Employees(
     $_POST['titles_pk'],
     $_POST['levels_pk'],
     $_POST['departments_pk'],
+    $_POST['employment_type'],
+    $_POST['employees.date_started'],
+    $_POST['employee_type'],
     NULL,
     NULL,
     NULL
@@ -46,6 +49,8 @@ $government['data_tin']              = pg_escape_string(strip_tags(trim($_POST['
 $government['data_pagmid']           = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
 $government['data_phid']             = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
+$education['school_type']            = pg_escape_string(strip_tags(trim($_POST['forms'])));
+
 //For intern validation!!
 if ($_POST['levels_pk'] == 3){
     $details['company']['levels_pk'] = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
@@ -59,6 +64,7 @@ $details = array();//Details Array
 $details['company'] = $company; //Declared!
 $details['personal'] = $personal; //Declared!
 $details['government'] = $government; //Declared!
+$details['education'] = $education; //Declared!
 
 $extra['details'] = $details; //Declared!
 $extra['supervisor_pk'] = $_POST['supervisor_pk']; //Declared!

@@ -148,9 +148,10 @@ body>footer .footer-main {
                     </td>
                 </tr>
             </table>
-            <table style="width:70%;margin-left:140px;" ng-repeat="choice in choices">
+            <table style="width:70%;margin-left:140px;" ng-repeat="form in employee.forms" ng-init="name = form.educ_level
+            ">
                 <tr >
-                    <td><h4 style="margin-left:-45px;color:#219DEC;">{{}}</h4></td>
+                    <td><h4 style="margin-left:-45px;color:#219DEC;" >{{form.educ_level}}</h4></td>
                 </tr>
                 <tr >
                     <td>
@@ -158,13 +159,13 @@ body>footer .footer-main {
 
                     </td>
                     <td id="css" >
-                        <input type="text" ng-model="choice.name" is-number  style="display: block; float: left; width:340px; max-height:36px;"/>
+                        <input type="text" ng-model="form.school_name"   style="display: block; float: left; width:340px; max-height:36px;"/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
                     </td>
                     <td id="css" >
-                        <input  type="text" ng-model="choice.location" is-number style="display: block; float: left; width:340px; height:36px;"/>
+                        <input  type="text" ng-model="form.school_location"  style="display: block; float: left; width:340px; height:36px;"/>
                     </td>
                 </tr>
                     <tr>
@@ -173,7 +174,7 @@ body>footer .footer-main {
                     </td>
                     <td id="css">
                         <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
-                        {{filter.date_from}}
+                       
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
@@ -181,14 +182,22 @@ body>footer .footer-main {
                     <td id="css">
                         <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
-
+{{forms}}
                 </tr>
             </table>
             <table style="width:70%;margin-left:140px;" >
                 <tr>
                     <td>
-                        <button class="addfields" ng-click="addNewChoice()">Add Education</button>
+                        <button type="button "class="addfields" ng-click="addNewChoice()" style="display: block; float: left; width:100px;padding:5px; height:34px;" >Add</button>
 
+                    </td>
+                    <td>
+                         <select name="school" required ng-model="employee.school_type" style="display: block; float: left; width:200px;padding:5px;" >
+                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                            <option ng-repeat="v in stype" style="cursor:pointer;" value="{{v.pk}}">
+                                {{v.sctype}}
+                            </option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -227,6 +236,7 @@ body>footer .footer-main {
                                 {{v.title}}
                             </option>
                         </select>
+
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.position.$error.required">Position is required.</span>
                     </td>
                     <td>
@@ -306,8 +316,8 @@ body>footer .footer-main {
                         </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment Type is required.</span>
-                </td>   
 
+                </td>   
                 <tr>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Salary Type:</label>

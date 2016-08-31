@@ -30,9 +30,10 @@ app.controller('New_Employees', function(
         data_sss:'',
         data_tin:'',
         data_pagmid:'',
-        data_phid:''
+        data_phid:'',
+        forms: [{educ_level: "Tertiary"}]
     };
-
+    console.log($scope.employee);
     $scope.employees = {};
     $scope.filter={};
 
@@ -114,6 +115,22 @@ app.controller('New_Employees', function(
         });
     }
 
+    $scope.addNewChoice = function() {
+        if ($scope.employee.school_type == 1){
+            $scope.employee.forms.push({educ_level: "Primary"});
+            
+            }
+        else if ($scope.employee.school_type == 2){
+            $scope.employee.forms.push({educ_level: "Secondary" });
+             
+            }
+        else if ($scope.employee.school_type == 3){
+            $scope.employee.forms.push({educ_level: "Tertiary" });
+             
+            }
+    };
+
+
     $scope.submit_employee = function(){
 
         get_supervisors();
@@ -158,29 +175,13 @@ app.controller('New_Employees', function(
             data_sss:'',
             data_tin:'',
             data_pagmid:'',
-            data_phid:''
+            data_phid:'',
+            forms: [{educ_level: "Tertiary"}]
         };
     }
 
     $scope.employees.date_started = new Date();
-
-    $scope.choices = [{primary_education: '1'}];
-
-    $scope.addNewChoice = function() {
-        var newItemNo = $scope.choices.length+1;
-        if ($scope.choices.length == 0) {
-            $scope.choices.push({'primary_education':+newItemNo});
-            
-        }
-        else if($scope.choices.length == 1){
-            $scope.choices.push({'secondary_education':+newItemNo});
-            
-        }
-        else if($scope.choices.length == 2){
-            $scope.choices.push({'tertiary_education':+newItemNo});
-            
-        }
-    };
+   
 
     $scope.level_changed = function(){
         level_changed();
@@ -263,6 +264,21 @@ app.controller('New_Employees', function(
     {
         pk:'2',
         emtype:'Non-Exempt'
+    }
+    ];
+    
+    $scope.stype = [
+    {
+        pk:'1',
+        sctype:'Primary'
+    },
+    {
+        pk:'2',
+        sctype:'Secondary'
+    },
+     {
+        pk:'3',
+        sctype:'Tertiary'
     }
     ];
 });
