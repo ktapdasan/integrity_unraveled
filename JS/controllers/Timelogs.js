@@ -185,7 +185,9 @@ app.controller('Timelogs', function(
         $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
-        
+        if($scope.filter.employee[0]){
+            $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        }
 
         $scope.timesheet.data = [];
         var promise = TimelogFactory.timesheet($scope.filter);
