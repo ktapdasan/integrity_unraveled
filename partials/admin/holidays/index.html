@@ -1,0 +1,56 @@
+
+<style type="text/css">
+
+#egg:disabled{
+    cursor: not-allowed;
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+
+            <div class="col-md-12">
+                <h2 class="animated fadeInLeft">Holidays</h2>
+                <p class="animated fadeInDown">
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Administration <span class="fa-angle-right fa"></span> 
+                    Holidays
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+      
+    </div>
+
+        <div style="height:50px; width:100%;">
+        <div style="float:left; margin-right:-5px;margin-top:-100px;">
+                
+                <form name="holiday_form"><table>
+                <tr>
+                
+                <div style= "">
+                    <td><label style="float:left;font-size: 15px; padding-right:2%">Holiday:</label></td>
+                    <td><input name="holiday"  ng-model="holiday.holiday_name" type="text" style="display: block; float: left; width:340px;" required/></td>
+                </div>
+                </tr>
+                <tr>
+                <div style= "padding-top:15%">
+                   <td><label style="float:left;font-size: 15px; padding-right:2%">Date: </label></td>
+                   <td><input ng-model="holiday.date" type="date" style="display: block; float: left; width:165px; height:30px; " required/></td>
+                </div>
+                </tr>
+                <tr>
+                <td colspan=2><input id="egg" style= "" type="submit" class="large button green fa-fa" ng-click="submit_holiday()"  ng-disabled="holiday_form.$error.required"/></td>
+                
+                </tr>
+                </table>
+                </form>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+
