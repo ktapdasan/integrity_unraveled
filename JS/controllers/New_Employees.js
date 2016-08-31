@@ -31,8 +31,9 @@ app.controller('New_Employees', function(
         data_tin:'',
         data_pagmid:'',
         data_phid:'',
+        forms: [{educ_level: "Tertiary"}]
     };
-
+    console.log($scope.employee);
     $scope.employees = {};
     $scope.filter={};
 
@@ -114,8 +115,6 @@ app.controller('New_Employees', function(
         });
     }
 
-    $scope.employee.forms = [{educ_level: "Tertiary"}];
-
     $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){
             $scope.employee.forms.push({educ_level: "Primary"});
@@ -176,7 +175,8 @@ app.controller('New_Employees', function(
             data_sss:'',
             data_tin:'',
             data_pagmid:'',
-            data_phid:''
+            data_phid:'',
+            forms: [{educ_level: "Tertiary"}]
         };
     }
 
