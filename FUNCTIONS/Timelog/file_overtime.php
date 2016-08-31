@@ -2,12 +2,10 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Overtime.php');
 
-$work_schedule = (array)json_decode($_POST['work_schedule']);
-
 $class = new Overtime(
 						NULL,
-						$work_schedule['out'],
-						$_POST['last_log'],
+						$_POST['time_from'],
+						$_POST['time_to'],
 						$_POST['employees_pk'],
 						NULL,
 						NULL

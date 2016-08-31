@@ -120,6 +120,7 @@ app.controller('Dashboard', function(
 
                 $scope.lastlog.message = "Your last log out was on " + date.format('dddd, MMMM Do YYYY') + " " + log.time;
             }
+
         })
         .then(null, function(data){
             $scope.logtype = "login";
@@ -132,6 +133,7 @@ app.controller('Dashboard', function(
         promise.then(function(data){
             var log = data.data.result[0];
             
+            $scope.lastlog.pk = log.pk;
             $scope.lastlog.date = log.date + " " + log.time;
             if(log.type == 'In'){
                 $scope.logtype = "logout";
@@ -143,6 +145,7 @@ app.controller('Dashboard', function(
 
                 $scope.lastlog.message = "Your last log out was today " + log.time;
             }
+
         })
         .then(null, function(data){
             get_last_log();
@@ -179,7 +182,6 @@ app.controller('Dashboard', function(
 
                 var promise = TimelogFactory.submit_log(filter);
                 promise.then(function(data){
-                    console.log($scope.lastlog.date);
                     get_last_log_today();
 
                     UINotification.success({
@@ -189,7 +191,7 @@ app.controller('Dashboard', function(
                                     positionY: 'top', positionX: 'right'
                                 });
 
-                    //is_overtime();
+                    is_overtime();
 
                     var to = $timeout(function() {
                         $timeout.cancel(to);
@@ -259,10 +261,7 @@ app.controller('Dashboard', function(
                             $scope.modal["pk"] = pk;
                             $scope.modal["employees_pk"] = $scope.profile.pk;
                             $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
-                           
                         
-                            
-
                             var promise = TimelogFactory.cancel_leave($scope.modal);
                             promise.then(function(data){
                 
@@ -330,7 +329,6 @@ app.controller('Dashboard', function(
     }
 
     $scope.switch = function(logtype){
-
         if(logtype == 'logout'){
             $scope.logtype = "login";
         }
@@ -340,48 +338,72 @@ app.controller('Dashboard', function(
     }
 
     function is_overtime(){
-        $scope.modal = {
-            title : 'It seems that you have excess hours, please file an overtime',
-            save : 'File Overtime',
-            close : 'Maybe later'
+        var filter = {
+            pk : $scope.lastlog.pk
         };
 
-        ngDialog.openConfirm({
-            template: 'OvertimeModal',
-            className: 'ngdialog-theme-plain',
-            scope: $scope,
-            showClose: false
-        })
-        .then(function(value){
-            return false;
-        }, function(value){
-            var a = $scope.profile.details.company.work_schedule;
-
-            var filter = {
-                employees_pk : $scope.profile.pk,
-                remarks : $scope.modal.remarks,
-                last_log : $scope.lastlog.date,
-                work_schedule : JSON.stringify(a[$scope.current_date.day.toLowerCase()])
-            };
+        var promise = TimelogFactory.paired_log(filter);
+        promise.then(function(data){
+            var a = data.data.result;
             
-            var promise = TimelogFactory.file_overtime(filter);
-            promise.then(function(data){
-                UINotification.success({
-                                message: 'Your overtime has been filed.', 
-                                title: 'SUCCESS', 
-                                delay : 5000,
-                                positionY: 'top', positionX: 'right'
-                            });
-            })
-            .then(null, function(data){
-                UINotification.error({
-                                message: 'An error occurred while saving your overtime. Please try again.', 
-                                title: 'ERROR', 
-                                delay : 5000,
-                                positionY: 'top', positionX: 'right'
-                            });
-            });
-        });
+            var timeFrom = new Date(a[0].time_log);
+            var timeTo = new Date(a[1].time_log);
+            
+            var difference = timeTo.getTime() - timeFrom.getTime();
+            var hours = (((difference / 1000) / 60) /60).toFixed(1);
+
+            if(parseFloat(hours) >= 11){
+                $scope.modal = {
+                    title : 'The system detected that you have '+(parseFloat(hours) - 9).toFixed(1)+' excess hours for today, would you like to file an overtime now?',
+                    save : 'File Overtime',
+                    close : 'Later'
+                };
+
+                ngDialog.openConfirm({
+                    template: 'OvertimeModal',
+                    className: 'ngdialog-theme-plain',
+                    scope: $scope,
+                    showClose: false
+                })
+                .then(function(value){
+                    return false;
+                }, function(value){
+                    var z = $scope.profile.details.company.work_schedule;
+
+                    var dd = timeTo.getDate();
+                    var mm = timeTo.getMonth()+1; //January is 0!
+                    var yyyy = timeTo.getFullYear();
+
+                    var filter = {
+                        employees_pk : $scope.profile.pk,
+                        remarks : $scope.modal.remarks,
+                        time_from : yyyy+"-"+mm+"-"+dd + " " + z[$scope.current_date.day.toLowerCase()].out,
+                        time_to : a[1].time_log
+                    };
+                    
+                    var promise = TimelogFactory.file_overtime(filter);
+                    promise.then(function(data){
+                        UINotification.success({
+                                        message: 'Your overtime has been filed.', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                    })
+                    .then(null, function(data){
+                        UINotification.error({
+                                        message: 'An error occurred while saving your overtime. Please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                    });
+                });
+            }
+        })
+        .then(null, function(data){
+            
+        }); 
     }
 
     function get_approved_leaves(){

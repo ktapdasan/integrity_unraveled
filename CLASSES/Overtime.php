@@ -139,58 +139,38 @@ EOT;
             $info[$k] = pg_escape_string(trim(strip_tags($v)));
         }
     
-        
         $employees_pk=$info['employees_pk'];
         $overtime_pk=$info['overtime_pk'];
         $created_by=$info['created_by'];
         $status=$info['status'];
-        $remarks=strtoupper($info['remarks']);
-    
-        $sql = 'begin;';
+        $remarks=$info['remarks'];
+
+        $remarks="";
         if($status=='Approved'){
-            $sql .= <<<EOT
-
-                insert into overtime_status
-                (
-                    overtime_pk,
-                    created_by,
-                    status,
-                    remarks          
-                )
-                values
-                (    
-                    $overtime_pk,
-                    $created_by,
-                    'Approved',
-                    'APPROVED'
-                )
-                ;
-EOT;
-        }else{
-
-            $sql .= <<<EOT
-
-                insert into overtime_status
-                (
-                    overtime_pk,
-                    created_by,
-                    status,
-                    remarks
-
-                )
-                values
-                (    
-                    $overtime_pk,
-                    $created_by,
-                    'Disapproved',
-                    '$remarks'
-                )
-                ;
-EOT;
+            $remarks = "APPROVED";
         }
-    
+        else {
+            $remarks = $remarks;
+        }
 
-    $sql .= "commit;";
+        $sql = <<<EOT
+            insert into overtime_status
+            (
+                overtime_pk,
+                created_by,
+                status,
+                remarks          
+            )
+            values
+            (    
+                $overtime_pk,
+                $created_by,
+                '$status',
+                '$remarks'
+            )
+            ;
+EOT;
+
         return ClassParent::insert($sql);
 
     }
@@ -198,7 +178,7 @@ EOT;
     public function insert($data){
         $remarks = pg_escape_string(strip_tags(trim($data['remarks'])));
 
-        $time_from = date('Y-m-d') . " " . $this->time_from;
+        //$time_from = date('Y-m-d') . " " . $this->time_from;
         $sql = "begin;";
         $sql .= <<<EOT
                 insert into overtime
@@ -209,7 +189,7 @@ EOT;
                 )
                 values
                 (
-                    '$time_from',
+                    '$this->time_from',
                     '$this->time_to',
                     $this->employees_pk
                 )

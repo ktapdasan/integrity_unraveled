@@ -248,21 +248,18 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function last_log($data){
-        foreach($data as $k=>$v){
-            $data[$k] = pg_escape_string(trim(strip_tags($v)));
-        }
-
-        $pk = $data['pk'];
+    public function last_log(){
         $sql = <<<EOT
                 select 
+                    pk,
                     employees_pk,
                     type,
                     time_log::date as date,
                     time_log::time(0) as time,
+                    random_hash,
                     date_created
                 from time_log
-                where employees_pk = $pk
+                where employees_pk = $this->pk
                 order by time_log desc limit 1
                 ;
 EOT;
@@ -270,15 +267,12 @@ EOT;
         return ClassParent::get($sql);   
     }
 
-    public function log_today($data){
-        foreach($data as $k=>$v){
-            $data[$k] = pg_escape_string(trim(strip_tags($v)));
-        }
-
+    public function log_today(){
         $today = date('Y-m-d');
         $pk = $data['pk'];
         $sql = <<<EOT
                 select 
+                    pk,
                     employees_pk,
                     type,
                     time_log::date as date,
@@ -286,13 +280,27 @@ EOT;
                     date_created,
                     random_hash
                 from time_log
-                where employees_pk = $pk
-                and time_log::date = '$today'
+                where employees_pk = $this->pk
+                and time_log::date <= '$today'
                 order by date_created desc limit 1
                 ;
 EOT;
 
-        return ClassParent::get($sql);   
+        return ClassParent::get($sql);
+    }
+
+    public function paired_log($pk){
+        $sql = <<<EOT
+                select 
+                    type,
+                    time_log::timestamp(0) as time_log,
+                    random_hash
+                from time_log where random_hash in (select random_hash from time_log where pk = $pk)
+                order by pk
+                ;
+
+EOT;
+        return ClassParent::get($sql);
     }
 
     public function manual_log($data)
