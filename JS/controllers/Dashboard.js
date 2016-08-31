@@ -345,6 +345,7 @@ app.controller('Dashboard', function(
         var promise = TimelogFactory.paired_log(filter);
         promise.then(function(data){
             var a = data.data.result;
+            var z = $scope.profile.details.company.work_schedule;
             
             var timeFrom = new Date(a[0].time_log);
             var timeTo = new Date(a[1].time_log);
@@ -352,7 +353,13 @@ app.controller('Dashboard', function(
             var difference = timeTo.getTime() - timeFrom.getTime();
             var hours = (((difference / 1000) / 60) /60).toFixed(1);
 
-            if(parseFloat(hours) >= 11){
+            var fromdd = timeFrom.getDate();
+            var frommm = timeFrom.getMonth()+1; //January is 0!
+            var fromyyyy = timeFrom.getFullYear();
+
+            var schedule_from = fromyyyy+"-"+frommm+"-"+fromdd + " " + z[$scope.current_date.day.toLowerCase()]['in'];
+
+            if(timeFrom <= new Date(schedule_from) && parseFloat(hours) >= 11){
                 $scope.modal = {
                     title : 'The system detected that you have '+(parseFloat(hours) - 9).toFixed(1)+' excess hours for today, would you like to file an overtime now?',
                     save : 'File Overtime',
@@ -368,16 +375,15 @@ app.controller('Dashboard', function(
                 .then(function(value){
                     return false;
                 }, function(value){
-                    var z = $scope.profile.details.company.work_schedule;
 
-                    var dd = timeTo.getDate();
-                    var mm = timeTo.getMonth()+1; //January is 0!
-                    var yyyy = timeTo.getFullYear();
+                    var todd = timeTo.getDate();
+                    var tomm = timeTo.getMonth()+1; //January is 0!
+                    var toyyyy = timeTo.getFullYear();
 
                     var filter = {
                         employees_pk : $scope.profile.pk,
                         remarks : $scope.modal.remarks,
-                        time_from : yyyy+"-"+mm+"-"+dd + " " + z[$scope.current_date.day.toLowerCase()].out,
+                        time_from : toyyyy+"-"+tomm+"-"+todd + " " + z[$scope.current_date.day.toLowerCase()].out,
                         time_to : a[1].time_log
                     };
                     
