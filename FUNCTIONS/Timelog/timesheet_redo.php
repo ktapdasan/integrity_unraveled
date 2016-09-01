@@ -204,7 +204,7 @@ foreach ($employees as $employee_id => $value) {
 			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
 			$tardiness = (strtotime($y['login']) - strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")) / 60;
 			//
-			$y['tardiness'] = $tardiness . " mins";
+			$y['tardiness'] = round($tardiness,1) . " mins";
 		}
 
 		if(
@@ -220,7 +220,7 @@ foreach ($employees as $employee_id => $value) {
 			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
 			$undertime = (strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
 			//
-			$y['undertime'] = $undertime . " mins";
+			$y['undertime'] = round($undertime,1) . " mins";
 		}
 		// foreach ($employees[$employee_id][$x] as $key => $value) {
 		// 	//print_r($employees[$employee_id][$x][$key]);
