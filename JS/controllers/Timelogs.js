@@ -7,7 +7,8 @@ app.controller('Timelogs', function(
                                         md5,
                                         UINotification,
                                         ngDialog,
-                                        FileUploader
+                                        FileUploader,
+                                        $filter
   									){
 
     $scope.profile = {};
@@ -172,25 +173,33 @@ app.controller('Timelogs', function(
     }
 
     function timesheet(){
-        var datefrom = new Date($scope.filter.datefrom);
-        var dd = datefrom.getDate();
-        var mm = datefrom.getMonth()+1; //January is 0!
-        var yyyy = datefrom.getFullYear();
+        var datefrom =  $filter('date')($scope.filter.datefrom, "yyyy-MM-dd");
+        var dateto =  $filter('date')($scope.filter.dateto, "yyyy-MM-dd");
 
-        var dateto = new Date($scope.filter.dateto);
-        var Dd = dateto.getDate();
-        var Mm = dateto.getMonth()+1; //January is 0!
-        var Yyyy = dateto.getFullYear();
+        // var datefrom = new Date($scope.filter.datefrom);
+        // var dd = datefrom.getDate();
+        // var mm = datefrom.getMonth()+1; //January is 0!
+        // var yyyy = datefrom.getFullYear();
 
-        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
-        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+        // var dateto = new Date($scope.filter.dateto);
+        // var Dd = dateto.getDate();
+        // var Mm = dateto.getMonth()+1; //January is 0!
+        // var Yyyy = dateto.getFullYear();
 
-        if($scope.filter.employee[0]){
-            $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        // $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
+        // $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+
+        // if($scope.filter.employee[0]){
+        //     $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        // }
+        var filter = {
+            newdatefrom : datefrom,
+            newdateto : dateto,
+            employees_pk : $scope.filter.employee[0].pk
         }
 
         $scope.timesheet.data = [];
-        var promise = TimelogFactory.timesheet($scope.filter);
+        var promise = TimelogFactory.timesheet(filter);
         promise.then(function(data){
             $scope.timesheet.status = true;
 

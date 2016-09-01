@@ -6,14 +6,12 @@ require_once('../../CLASSES/ManualLog.php');
 
 $data = array(
 				"employees_pk" => $_POST['employees_pk'],
-				"newdatefrom" => date("Y-m-d h:i:s",strtotime($_POST['datefrom'])),
-				"newdateto" => date("Y-m-d h:i:s",strtotime($_POST['dateto']))
+				"newdatefrom" => $_POST['newdatefrom'],
+				"newdateto" => $_POST['newdateto']
 			);
 
-print_r($data);
-
-$startdate = $_POST['datefrom'];
-$enddate = $_POST['dateto'];
+$startdate = $_POST['newdatefrom'];
+$enddate = $_POST['newdateto'];
 $cutoff=array();
 while(strtotime($startdate) <= strtotime($enddate)){
 	$date = date('Y-m-d', strtotime($startdate));
