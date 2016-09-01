@@ -16,8 +16,6 @@ app.controller('Sidebar', function(
 
     $scope.read_notifs = {};
 
-   
-
     $scope.notifications.count =0;
 
     $scope.stop = false; //how to stop the shaking
@@ -123,14 +121,23 @@ app.controller('Sidebar', function(
             $scope.notifications.data = data.data.result;
             $scope.notifications.status = true;
             var count = data.data.result.length;
-           
-            if (count<=0) {
+            var counts=count;
+
+           for (var i = 0; i < count; i++) {
+
+               if ($scope.notifications.data[i].read=='t') {
+                    counts--;
+               };
+               
+           };
+   
+            if (counts<=0) {
 
                 return $scope.notifications.count="";
             }
             else
             {
-                return $scope.notifications.count="(" +count +")";
+                return $scope.notifications.count="(" +counts +")";
             }
 
             $scope.animation_arrow.stop = '1';
@@ -166,7 +173,6 @@ app.controller('Sidebar', function(
         var location="";
         $scope.notifications.data[k].read='t';
 
-
         if($scope.notifications.data[k].table_from == "attritions"){
             location = "#/management/attrition";
        
@@ -189,6 +195,10 @@ app.controller('Sidebar', function(
         else if($scope.notifications.data[k].table_from == "overtime_result"){
             location = "#/timesheet/overtime";
         }
+        }
+        else if($scope.notifications.data[k].table_from == "leave_cancellation"){
+            location = "#/management/leaves";
+        }
 
         var data=$scope.notifications.data[k];
 
@@ -203,9 +213,7 @@ app.controller('Sidebar', function(
         
         if (data.read == 'f') {
 
-                $scope.read_notifs.status = true;
-
-               
+                $scope.read_notifs.status = true;               
             }
 
         else{

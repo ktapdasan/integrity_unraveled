@@ -148,6 +148,42 @@ th {
                     </tr> 
             </tbody>
         </table>
+
+        <br><br><br>
+
+        <div class="panel box-shadow-none content-header">
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <h2 class="animated fadeInLeft">Cancel Leave</h2>
+                    <p class="animated fadeInDown">
+                        Management <span class="fa-angle-right fa"></span> 
+                        Leave
+                    </p>
+                </div>
+            </div>
+        </div>
+        <b class="total">Total: {{cancellation_leave.count}}</b>
+        <table id="table1" width="99%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date Created</th>
+                    <th>Remarks</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="width:20px;" ng-repeat="(k, v) in cancellation_leave.data" style="cursor:pointer;" ng-if="cancellation_leave.status">
+                    <td col width="50">{{v.name}}</td>
+                    <td col width="50">{{v.date_created}}</td>
+                    <td col width="50">{{v.remarks}}</td>
+                    <td col width="50">{{v.status}}</td>
+                </tr> 
+                <tr ng-if="!cancellation_leave.status" style= "text-align: center;">
+                        <td colspan = "9">No Data Found</td>
+                    </tr> 
+            </tbody>
+        </table>
     </div>
   </div>  
     <div style="height:50px; width:100%;">

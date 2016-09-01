@@ -240,7 +240,7 @@ EOT;
                 values
                 (    
                     'Leave $status',
-                    'leave_filed_result',
+                    'leave_filed',
                     $this->pk,
                     $employees_pk,
                     $created_by
@@ -559,9 +559,8 @@ EOT;
         }
         
         $supervisor_pk  = $extra['supervisor_pk'];
-        $employees_pk   = $extra['employees_pk'];
         $remarkss        = $extra['remarks'];
-        $pk             = $extra['pk'];
+        
         
 
 
@@ -576,8 +575,8 @@ EOT;
                 )
                 values
                 (    
-                    $pk,
-                    $employees_pk
+                    $this->pk,
+                    $this->employees_pk
                 )
                 ;
 EOT;
@@ -593,7 +592,7 @@ EOT;
                 values
                 (    
                     currval('leave_cancellation_pk_seq'),
-                    $employees_pk,
+                    $this->employees_pk,
                     '$remarkss',
                     'Pending'
 
@@ -614,15 +613,40 @@ EOT;
                 (    
                     'Cancel Leave',
                     'leave_cancellation',
-                    $pk,
+                    $this->pk,
                     $supervisor_pk,
-                    $employees_pk
+                     $this->employees_pk
 
                 )
                 ;
 EOT;
         $sql .= "commit;";
         return ClassParent::insert($sql);
+    }
+
+    public function cancellation_leave(){
+        
+        
+         $sql = <<<EOT
+                    select
+                    leave_cancellation_pk,
+                    created_by,
+                    (select first_name||' '||last_name from employees where pk = created_by) as name,
+                    date_created::timestamp(0) as date_created,
+                    remarks,
+                    status
+                    from 
+                    leave_cancellation_status 
+                    where 
+                    created_by in 
+                    (select employees_pk from groupings where supervisor_pk = '$this->employees_pk');
+   
+EOT;
+// (select name from leave_types where pk = leave_filed_pk) as leave_type,
+// leave_filed_pk,
+// (select leave_types_pk from leave_filed where pk = leave_filed_pk) as leave_types_pk,
+
+        return ClassParent::get($sql);
     }
 }
 

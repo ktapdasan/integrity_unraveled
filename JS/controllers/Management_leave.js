@@ -19,8 +19,9 @@ app.controller('Management_leave', function(
     $scope.modal = {};
 
     $scope.leaves_filed = {};
+    $scope.cancellation_leave = {};
     $scope.leaves_filed.count = 0;
-
+    $scope.cancellation_leave.count =0;
     $scope.workdays = [];
 
     $scope.myemployees={};
@@ -35,6 +36,7 @@ app.controller('Management_leave', function(
 
             leavetypes();
             get_profile();
+            
         });
     }
 
@@ -47,9 +49,10 @@ app.controller('Management_leave', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
-            
+            cancellation_leave();
             fetch_myemployees();
             leaves_filed();
+            
         })           
     }
 
@@ -448,4 +451,30 @@ app.controller('Management_leave', function(
             $scope.myemployees = [];
         });
     }
+
+    $scope.cancellation_leave = function(){
+        cancellation_leave();        
+    }
+
+    function cancellation_leave() {
+        
+         var filters = { 
+            'employees_pk' : $scope.profile.pk
+        };
+       
+       
+        
+        var promise = LeaveFactory.cancellation_leave(filters);
+        promise.then(function(data){
+            $scope.cancellation_leave.status = true;
+            $scope.cancellation_leave.data = data.data.result;
+            $scope.cancellation_leave.count = data.data.result.length;
+           
+        })
+        .then(null, function(data){
+            $scope.cancellation_leave.status = false;
+        }); 
+    }
+
+
 });
