@@ -4,7 +4,7 @@ require_once('../../CLASSES/Leave.php');
 
 $class = new Leave(
 	
-				null,
+				$_POST['pk'],
 				$_POST['employees_pk'],
                 NULL,
                 NULL,
@@ -18,7 +18,6 @@ $class = new Leave(
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
 $extra['employees_pk'] = $_POST['employees_pk'];
 $extra['remarks'] = $_POST['remarks'];
-$extra['pk'] = $_POST['pk'];
 
 
 $data = $class-> cancel_leave($extra);
