@@ -62,14 +62,14 @@ body>footer .footer-main {
 #tabs a {
   position: relative;
   background: #ddd;
-  background-image: linear-gradient(to bottom, #fff, #ddd);  
+  /*background-image: linear-gradient(to bottom, #fff, #ddd);*/  
   padding: .7em 3.5em;
   float: left;
   text-decoration: none;
   color: #444;
   text-shadow: 0 1px 0 rgba(255,255,255,.8);
   border-radius: 5px 0 0 0;
-  box-shadow: 0 2px 2px rgba(0,0,0,.4);
+/*  box-shadow: 0 2px 2px rgba(0,0,0,.4);*/
 }
 
 #tabs a:hover,
@@ -77,6 +77,10 @@ body>footer .footer-main {
 #tabs a:focus,
 #tabs a:focus::after {
   background: #fff;
+  z-index: 3;
+  color:black;
+  text-shadow: 0 1px 0 #fff;
+
 }
 
 #tabs a:focus {
@@ -92,7 +96,7 @@ body>footer .footer-main {
   bottom: 0;
   width: 1em;
   background: #ddd;
-  background-image: linear-gradient(to bottom, #fff, #ddd);  
+  /*background-image: linear-gradient(to bottom, #fff, #ddd); */ 
   box-shadow: 2px 2px 2px rgba(0,0,0,.4);
   transform: skew(10deg);
   border-radius: 0 5px 0 0;  
@@ -100,8 +104,11 @@ body>footer .footer-main {
 
 #tabs .current a,
 #tabs .current a::after {
-  background: #fff;
+  background: #2196F3;
   z-index: 3;
+  color:white;
+  text-shadow: 0 1px 0 #2196F3;
+/*  background-image: linear-gradient(to bottom, #fff, #2196F3); */
 }
 
 #content {
@@ -141,7 +148,7 @@ body>footer .footer-main {
         <div>
             <div ng-if="tab.personal">
                 <form name="myForm">
-                    <table style="width:85%;margin-left:140px;" >
+                    <table style="width:85%;margin-left:140px;margin-top:30px;" >
                         <tr>
                             <td>
                                 <label style="display:block; float:left; padding-right:10px">First Name:</label> 
@@ -315,7 +322,7 @@ body>footer .footer-main {
                 </table>
             </div>
             <div ng-if="tab.company">
-                <table style="width:70%;margin-left:140px;" >
+                <table style="width:70%;margin-left:140px;margin-top:30px" >
                     <tr>
                         <td> 
                             <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
@@ -516,7 +523,7 @@ body>footer .footer-main {
                 </table>
             </div>
             <div ng-if="tab.government">
-                <table style="width:77%;margin-left:140px;">
+                <table style="width:77%;margin-left:140px;margin-top:30px">
                     <tr>
                         <td  id="css">
                             <label style="display:block; float:left; padding-top:10px; padding-right:10px">Philhealth No:</label>
@@ -572,7 +579,7 @@ body>footer .footer-main {
 
         <!--
         <form name="myForm">
-                <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:40px;">Personal Information
+                <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:40px;">PERSONAL INFORMATION
                 </div>
             <table style="width:85%;margin-left:140px;" >
             
@@ -654,7 +661,7 @@ body>footer .footer-main {
                 </tr>
                
             </table>
-             <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:30px;">Educational Attainment
+             <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:30px;">EDUCATIONAL ATTAINMENT
              </div>
             <table style="width:70%;margin-left:140px;" ng-repeat="form in employee.forms" ng-init="name = form.educ_level
             ">
@@ -709,7 +716,7 @@ body>footer .footer-main {
                 </td>
              </tr>
          </table>
-                <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:30px;">Company Profile
+                <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:30px;">COMPANY PROFILE
              </div>
             <table style="width:70%;margin-left:140px;" >
 
@@ -892,7 +899,7 @@ body>footer .footer-main {
                 </td>
             </tr>
         </table>
-        <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:30px;">Government Details</div>
+        <div style ="width:100%px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;text-align:center;font-size:25px;padding-bottom:20px;margin-bottom:30px;margin-top:30px;">GOVERNMENT DETAILS</div>
         <table style="width:77%;margin-left:140px;">
       
                 <td  id="css">
