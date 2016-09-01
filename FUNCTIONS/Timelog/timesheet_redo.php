@@ -5,10 +5,9 @@ require_once('../../CLASSES/Leave.php');
 require_once('../../CLASSES/ManualLog.php');
 
 $data = array(
-				"pk" => $_POST['pk'],
 				"employees_pk" => $_POST['employees_pk'],
-				"newdatefrom" => $_POST['newdatefrom'],
-				"newdateto" => $_POST['newdateto']
+				"newdatefrom" => date("Y-m-d h:i:s",strtotime($_POST['datefrom'])),
+				"newdateto" => date("Y-m-d h:i:s",strtotime($_POST['dateto']))
 			);
 
 $startdate = $_POST['datefrom'];
