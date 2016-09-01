@@ -191,14 +191,32 @@ foreach ($employees as $employee_id => $value) {
 
 		$y['schedule'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in ." - ".$y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 
-		if($y['work_schedule'][trim(strtolower($y['log_day']))]->in && strtotime($y['login']) > strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in)){
+		if(
+			$y['work_schedule'][trim(strtolower($y['log_day']))]->in && 
+			$y['logout'] && 
+			$y['logout'] != 'None' && 
+			$y['logout'] != 'Pending' && 
+			$y['login'] && 
+			$y['login'] != 'None' && 
+			$y['login'] != 'Pending' && 
+			strtotime($y['login']) > strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in)
+		){
 			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
 			$tardiness = (strtotime($y['login']) - strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")) / 60;
 			//
 			$y['tardiness'] = $tardiness . " mins";
 		}
 
-		if($y['work_schedule'][trim(strtolower($y['log_day']))]->out && $y['logout'] && strtotime($y['logout']) < strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out)){
+		if(
+			$y['work_schedule'][trim(strtolower($y['log_day']))]->out && 
+			$y['logout'] && 
+			$y['logout'] != 'None' && 
+			$y['logout'] != 'Pending' && 
+			$y['login'] && 
+			$y['login'] != 'None' && 
+			$y['login'] != 'Pending' && 
+			strtotime($y['logout']) < strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out)
+		){
 			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
 			$undertime = (strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
 			//
