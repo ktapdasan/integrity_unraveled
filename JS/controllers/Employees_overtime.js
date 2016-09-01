@@ -190,11 +190,12 @@ app.controller('Employees_overtime', function(
                                         positionY: 'top', positionX: 'right'
                                     });
 
-                $scope.overtime.data.splice(k, 1);
+                /*$scope.overtime.data.splice(k, 1);
 
                 if($scope.overtime.data.length < 1){
                     $scope.overtime.status = false;
-                }
+                }*/
+                timesheet_overtime();
             })
             .then(null, function(data){
                 UINotification.error({

@@ -81,7 +81,7 @@ EOT;
 
     public function timesheet_overtime($data){
         
-        
+        $employees_pk = $this->employees_pk;
         $date_from = $data['datefrom'] ;
         $date_to = $data['dateto'];
 
@@ -93,10 +93,16 @@ EOT;
                     time_from :: time as timefrom,
                     date_created::date as datecreated,
                     (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
-                    (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
+                    (
+                        select 
+                            array_to_string(array_agg('<div>' || remarks || '</div> <div><span>' || date_created::timestamp(0) || '</span></div>' order by date_created desc), '<hr />') 
+                            from overtime_status 
+                            where overtime_pk = pk
+                            order by pk desc limit 1
+                            ) as remarks
                 from overtime
                 where date_created::date between '$date_from' and '$date_to'
-                and archived = false and employees_pk='$this->employees_pk'
+                and archived = 'f' and employees_pk='$this->employees_pk'
                 ;
 EOT;
 

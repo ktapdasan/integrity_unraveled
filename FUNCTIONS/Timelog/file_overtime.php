@@ -8,6 +8,8 @@ $class = new Overtime(
 						$_POST['time_to'],
 						$_POST['employees_pk'],
 						NULL,
+						NULL,
+						NULL,
 						NULL
 					);
 

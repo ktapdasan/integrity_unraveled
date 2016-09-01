@@ -130,7 +130,7 @@ th {
                                 <td>{{v.datecreated}}</td>
                                 <td>{{v.timefrom}}</td>
                                 <td>{{v.timeto}}</td>
-                                <td>{{v.remarks}}</td>
+                                <td ng-bind-html="v.remarks" class="remarks"></td>
                                 <td>
                                 <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                                     {{v.status}} 
@@ -140,7 +140,7 @@ th {
                                     </div></td>
                             </tr>
                             <tr ng-if="!overtime.status" style= "text-align: center;">
-                                <td colspan = "9" style="text-align:center;">No Data Found</td>
+                                <td colspan = "5" style="text-align:center;">No Data Found</td>
                             </tr>         
                         </tbody>
                     </table>
