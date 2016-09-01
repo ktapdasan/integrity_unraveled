@@ -10,6 +10,8 @@ $data = array(
 				"newdateto" => date("Y-m-d h:i:s",strtotime($_POST['dateto']))
 			);
 
+print_r($data);
+
 $startdate = $_POST['datefrom'];
 $enddate = $_POST['dateto'];
 $cutoff=array();
