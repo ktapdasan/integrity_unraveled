@@ -111,7 +111,7 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birthdate :</label>
                     </td>
                     <td id="css">
-                        <input name="data" ng-model="filter.date_from" type="date" style="display: block; float: left; width:340px; height:32px;" />
+                        <input name="data" ng-model="employee.bday" type="date" style="display: block; float: left; width:340px; height:32px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.date">Date of Birth is required.</span>
                     </td>
                 </tr>
@@ -139,7 +139,7 @@ body>footer .footer-main {
                                 {{v.civilstatus}}
                             </option>
                         </select>
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is Required.</span>
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
                     </td> 
                 </tr>
                 <tr>
@@ -158,14 +158,16 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
 
                     </td>
-                    <td id="css" >
-                        <input type="text" ng-model="form.school_name"   style="display: block; float: left; width:340px; max-height:36px;"/>
+                   <td id="css">
+                        <input name="snschool" required ng-model="form.school_name" type = "text" style="display: block; float: left; width:340px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.snschool.$error.required">School Name is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Location:</label>
                     </td>
-                    <td id="css" >
-                        <input  type="text" ng-model="form.school_location"  style="display: block; float: left; width:340px; height:36px;"/>
+                    <td id="css">
+                        <input name="slschool" required ng-model="form.school_location" type = "text" style="display: block; float: left; width:340px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.slschool.$error.required">School Location is required.</span>
                     </td>
                 </tr>
                     <tr>
@@ -173,22 +175,21 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
+                        <input ng-model="employee.date_from_school" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                        
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
                     </td>
                     <td id="css">
-                        <input ng-model="filter.date_from" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
+                        <input ng-model="employee.date_to_school" type="date" id="datefrom" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
-{{forms}}
                 </tr>
             </table>
             <table style="width:70%;margin-left:140px;" >
                 <tr>
                     <td>
-                        <button type="button "class="addfields" ng-click="addNewChoice()" style="display: block; float: left; width:100px;padding:5px; height:34px;" >Add</button>
+                        <button type="button "class="addfields" ng-click="addNewChoice()" style="display: block; float: left; width:120px;padding:5px; height:32px;" >Add Education</button>
 
                     </td>
                     <td>
