@@ -31,15 +31,16 @@ app.controller('New_Employees', function(
         data_tin:'',
         data_pagmid:'',
         data_phid:'',
-        forms: [{educ_level: "Tertiary"}]
+        forms: [{educ_level: "Primary"}]
     };
-    console.log($scope.employee);
+
     $scope.employees = {};
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
     $scope.show_hours = false;
-
+    $scope.fname1 = '';
+    $scope.lname1 = '';
 
     init();
 
@@ -130,7 +131,6 @@ app.controller('New_Employees', function(
             }
     };
 
-
     $scope.submit_employee = function(){
 
         get_supervisors();
@@ -138,8 +138,14 @@ app.controller('New_Employees', function(
         var promise = EmployeesFactory.submit_employee($scope.employee);
         promise.then(function(data){
 
+            // UINotification.success({
+            //     message: 'You have successfully submitted a new employee.', 
+            //     title: 'SUCCESS', 
+            //     delay : 5000,
+            //     positionY: 'top', positionX: 'right'
+            // });
             UINotification.success({
-                message: 'You have successfully submitted a new employee.', 
+                message: $scope.fname1 + ' ' + $scope.lname1 + ' was successfully added.', 
                 title: 'SUCCESS', 
                 delay : 5000,
                 positionY: 'top', positionX: 'right'
@@ -176,7 +182,7 @@ app.controller('New_Employees', function(
             data_tin:'',
             data_pagmid:'',
             data_phid:'',
-            forms: [{educ_level: "Tertiary"}]
+            forms: [{educ_level: "Primary"}]
         };
     }
 
