@@ -71,7 +71,7 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-right:10px">First Name:</label> 
                     </td>
                     <td id="css">    
-                        <input name="firstName"required ng-model="employee.first_name" type="text" style="display: block; float: left; width:340px;" />
+                        <input name="firstName"required ng-model="employee.first_name" ng-change="fname1=employee.first_name" type="text" style="display: block; float: left; width:340px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                     </td>
                     <td>
@@ -81,7 +81,7 @@ body>footer .footer-main {
                         <input name="emailAddress" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:340px;height:32px;" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
 
                         <span style="color:red; display: block; float: left; width:340px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
-                    </td>                        
+                    </td>               
                 </tr>
                 <tr>
                     <td>
@@ -104,7 +104,7 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-right:10px">Last Name:</label>
                     </td>
                     <td id="css">
-                        <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:340px;" />
+                        <input name="lastName" required ng-model="employee.last_name" ng-change="lname1=employee.last_name" type="text" style="display: block; float: left; width:340px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                     </td>
                     <td>
@@ -384,6 +384,11 @@ body>footer .footer-main {
                     <input  type="text"  is-number style="display: block; float: left; width:340px; height:36px;"/>
                 </td>
             </tr>
+             <tr>
+                    <td>
+                        <h3 style="margin-left:-148px;color:#219DEC;padding:5px;border-bottom:1px solid #219dec;">Government</h3>
+                    </td>
+                </tr>
             <tr>
                 <td  id="css">
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Philhealth No:</label>
