@@ -195,7 +195,6 @@ app.controller('Sidebar', function(
         else if($scope.notifications.data[k].table_from == "overtime_result"){
             location = "#/timesheet/overtime";
         }
-        }
         else if($scope.notifications.data[k].table_from == "leave_cancellation"){
             location = "#/management/leaves";
         }
