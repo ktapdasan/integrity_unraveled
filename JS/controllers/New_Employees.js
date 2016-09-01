@@ -1,12 +1,26 @@
 app.controller('New_Employees', function(
-    $scope,
-    SessionFactory,
-    EmployeesFactory,
-    md5,
-    UINotification
-    ){
+                                            $scope,
+                                            SessionFactory,
+                                            EmployeesFactory,
+                                            md5,
+                                            UINotification
+                                        ){
 
     $scope.pk='';
+
+    $scope.tab = {
+        personal : true,
+        education : false,
+        company : false,
+        government : false
+    };
+
+    $scope.current = {
+        personal : 'current',
+        education : '',
+        company : '',
+        government : ''
+    };
 
     $scope.titles={};
     $scope.level_title={};
@@ -59,6 +73,16 @@ app.controller('New_Employees', function(
         .then(null, function(data){
             window.location = './login.html';
         });
+    }
+
+    $scope.change_tab = function(tab){
+        for(var i in $scope.tab){
+            $scope.tab[i] = false
+            $scope.current[i] = '';
+        }
+
+        $scope.tab[tab] = true;
+        $scope.current[tab] = 'current';
     }
 
     function get_positions(){
