@@ -179,7 +179,31 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 
+		// echo $y['login'];
+		// echo "\n";
+		// echo $y['logout'];
+		// echo "\n";
+		// echo $y['work_schedule'][trim(strtolower($y['log_day']))]->in;
+		// echo "\n";
+		// echo $y['work_schedule'][trim(strtolower($y['log_day']))]->out;
+		// echo "\n";
+		// echo "\n";
 
+		$y['schedule'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in ." - ".$y['work_schedule'][trim(strtolower($y['log_day']))]->out;
+
+		if($y['work_schedule'][trim(strtolower($y['log_day']))]->in && strtotime($y['login']) > strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in)){
+			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
+			$tardiness = (strtotime($y['login']) - strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")) / 60;
+			//
+			$y['tardiness'] = $tardiness . " mins";
+		}
+
+		if($y['work_schedule'][trim(strtolower($y['log_day']))]->out && strtotime($y['logout']) < strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out)){
+			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
+			$undertime = (strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
+			//
+			$y['undertime'] = $undertime . " mins";
+		}
 		// foreach ($employees[$employee_id][$x] as $key => $value) {
 		// 	//print_r($employees[$employee_id][$x][$key]);
 		// 	//echo trim(strtolower($employees[$employee_id][$x]['log_day']));
