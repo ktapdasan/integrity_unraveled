@@ -198,7 +198,7 @@ foreach ($employees as $employee_id => $value) {
 			$y['tardiness'] = $tardiness . " mins";
 		}
 
-		if($y['work_schedule'][trim(strtolower($y['log_day']))]->out && strtotime($y['logout']) < strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out)){
+		if($y['work_schedule'][trim(strtolower($y['log_day']))]->out && $y['logout'] && strtotime($y['logout']) < strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out)){
 			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
 			$undertime = (strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
 			//
