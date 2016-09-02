@@ -105,7 +105,16 @@ app.controller('New_Employees', function(
 
         });
     }
+    
+    function get_genders(){
+        var promise = EmployeesFactory.get_genders();
+        promise.then(function(data){
+            $scope.genders.data = data.data.result;
+        })
+        .then(null, function(data){
 
+        });
+    }
 
     function get_levels(){
         var promise = EmployeesFactory.get_levels();
@@ -162,12 +171,6 @@ app.controller('New_Employees', function(
         var promise = EmployeesFactory.submit_employee($scope.employee);
         promise.then(function(data){
 
-            // UINotification.success({
-            //     message: 'You have successfully submitted a new employee.', 
-            //     title: 'SUCCESS', 
-            //     delay : 5000,
-            //     positionY: 'top', positionX: 'right'
-            // });
             UINotification.success({
                 message: $scope.fname1 + ' ' + $scope.lname1 + ' was successfully added.', 
                 title: 'SUCCESS', 

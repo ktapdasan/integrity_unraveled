@@ -137,6 +137,7 @@ app.factory('EmployeesFactory', function($http){
 
         return promise;
     };
+
     factory.get_levels = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/get_levels.php',
