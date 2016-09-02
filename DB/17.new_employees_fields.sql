@@ -28,6 +28,24 @@ values
 	'Consultant'
 );
 
+create table gender_type
+(
+	pk serial primary key,
+	genders text not null,
+	archived boolean default false
+);
+
+alter table gender_type owner to chrs;
+
+insert into gender_type (genders)
+values
+(
+	'Male'
+),
+(
+	'Female'
+);
+
 create table employee_types
 (
 	pk serial primary key,

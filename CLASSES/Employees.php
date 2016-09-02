@@ -145,9 +145,9 @@ EOT;
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
         $str=$data['searchstring'];
-        $lvl=$data[levels_pk];
-        $dept=$data[departments_pk];
-        $posi=$data[titles_pk];
+        $lvl=$data['levels_pk'];
+        $dept=$data['departments_pk'];
+        $posi=$data['titles_pk'];
         $where = "";
 
         if ($str){
