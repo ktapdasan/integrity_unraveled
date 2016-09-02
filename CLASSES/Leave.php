@@ -158,7 +158,7 @@ EOT;
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }
         
-        $status         = $extra['status'];
+        
         $employees_pk   = $extra['employees_pk'];
         $created_by     = $extra['created_by'];
         $status         = $extra['status'];
@@ -553,7 +553,7 @@ EOT;
 
     }
 
-     public function cancel_leave($extra){
+    public function cancel_leave($extra){
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }
@@ -615,7 +615,7 @@ EOT;
                     'leave_cancellation',
                     $this->pk,
                     $supervisor_pk,
-                     $this->employees_pk
+                    $this->employees_pk
 
                 )
                 ;
@@ -627,26 +627,100 @@ EOT;
     public function cancellation_leave(){
         
         
-         $sql = <<<EOT
+//          $sql = <<<EOT
+//                     select
+//                     leave_cancellation_pk,
+//                     created_by,
+//                     (select first_name||' '||last_name from employees where pk = created_by) as name,
+//                     date_created::timestamp(0) as date_created,
+//                     remarks,
+//                     status
+//                     from 
+//                     leave_cancellation_status 
+//                     where 
+//                     created_by in 
+//                     (select employees_pk from groupings where supervisor_pk = '$this->employees_pk');
+   
+// EOT;
+
+        $sql = <<<EOT
                     select
-                    leave_cancellation_pk,
-                    created_by,
-                    (select first_name||' '||last_name from employees where pk = created_by) as name,
+                    pk,
+                    employees_pk,
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
                     date_created::timestamp(0) as date_created,
-                    remarks,
-                    status
+                    (
+                        select remarks from leave_cancellation_status where leave_cancellation_pk = leave_cancellation.pk order by date_created desc limit 1
+                    ) as remarks,
+                    (
+                        select status from leave_cancellation_status where leave_cancellation_pk = leave_cancellation.pk order by date_created desc limit 1
+                    ) as status
                     from 
-                    leave_cancellation_status 
+                    leave_cancellation
                     where 
-                    created_by in 
+                    employees_pk in 
                     (select employees_pk from groupings where supervisor_pk = '$this->employees_pk');
    
 EOT;
-// (select name from leave_types where pk = leave_filed_pk) as leave_type,
-// leave_filed_pk,
-// (select leave_types_pk from leave_filed where pk = leave_filed_pk) as leave_types_pk,
 
         return ClassParent::get($sql);
+    }
+
+    public function cancellation_respond($extra){
+
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        
+        $created_by  = $extra['created_by'];
+        $remarkss    = $extra['remarks'];
+        $status      = $extra['status'];
+        
+        $sql = 'begin;';
+
+        $sql .= <<<EOT
+
+                insert into leave_cancellation_status
+                (
+                    leave_cancellation_pk,
+                    created_by,
+                    remarks,
+                    status       
+                )
+                values
+                (    
+                    $this->pk,
+                    $created_by,
+                    '$remarkss',
+                    '$status'
+
+                )
+                ;
+EOT;
+       
+        $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk,
+                    created_by        
+                )
+                values
+                (    
+                    'Cancel Leave $status',
+                    'leave_cancellation',
+                    $this->pk,
+                    $this->employees_pk,
+                    $created_by
+
+                )
+                ;
+EOT;
+        $sql .= "commit;";
+
+        return ClassParent::insert($sql);
     }
 }
 

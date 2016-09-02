@@ -109,7 +109,8 @@ th {
     </div>
         <div style="clear:both;"></div>
     </div>
-    <div  style="margin-top:20px;margin-left:20px;">
+    <div  style="margin-top:50px;margin-left:20px;" >
+        <h4 class="animated fadeInLeft" >Approval of Leave</h4>
          <b class="total">Total: {{leaves_filed.count}}</b>
         <table id="table1" width="99%" cellspacing="0">
             <thead>
@@ -149,19 +150,9 @@ th {
             </tbody>
         </table>
 
-        <br><br><br>
+        
 
-        <div class="panel box-shadow-none content-header">
-            <div class="panel-body">
-                <div class="col-md-12">
-                    <h2 class="animated fadeInLeft">Cancel Leave</h2>
-                    <p class="animated fadeInDown">
-                        Management <span class="fa-angle-right fa"></span> 
-                        Leave
-                    </p>
-                </div>
-            </div>
-        </div>
+       <h4 class="animated fadeInLeft" style="margin-top:30px">Cancellation of Leave</h4>
         <b class="total">Total: {{cancellation_leave.count}}</b>
         <table id="table1" width="99%" cellspacing="0">
             <thead>
@@ -176,8 +167,16 @@ th {
                 <tr style="width:20px;" ng-repeat="(k, v) in cancellation_leave.data" style="cursor:pointer;" ng-if="cancellation_leave.status">
                     <td col width="50">{{v.name}}</td>
                     <td col width="50">{{v.date_created}}</td>
-                    <td col width="50">{{v.remarks}}</td>
-                    <td col width="50">{{v.status}}</td>
+                    <td col width="180">{{v.remarks}}</td>
+                    <td col width="50"> 
+                        <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                        {{v.status}} 
+                        </div>
+                        <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
+                            <input type= "button" ng-click = "cancel_respond(k, 'approve')" value = "Approve" class="medium button blue fa-fa"/> 
+                            <input type= "button" ng-hide = "rejected" ng-click = "cancel_respond(k, 'disapprove')" value = "Disapprove" class="medium button red fa-fa"/> 
+                        </div>
+                    </td>
                 </tr> 
                 <tr ng-if="!cancellation_leave.status" style= "text-align: center;">
                         <td colspan = "9">No Data Found</td>

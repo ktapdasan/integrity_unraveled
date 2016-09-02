@@ -307,7 +307,7 @@ app.controller('Management_leave', function(
                 return false;
             }, function(value){
                 var workdays = countCertainDays(work_schedule,new Date($scope.leaves_filed.data[k].date_started),new Date($scope.leaves_filed.data[k].date_ended)); //CODE_0001
-                
+                 
                 var leaves_filed = {
                     pk              : $scope.leaves_filed.data[k].pk,
                     employees_pk    : $scope.leaves_filed.data[k].employees_pk,
@@ -380,7 +380,7 @@ app.controller('Management_leave', function(
                 leaves_filed.status = 'Disapproved';
                 leaves_filed.remarks=$scope.modal.remarks;
 
-
+                console.log(leaves_filed);
                 var promise = LeaveFactory.leave_respond(leaves_filed);
                 promise.then(function(data){
                     UINotification.success({
@@ -474,6 +474,114 @@ app.controller('Management_leave', function(
         .then(null, function(data){
             $scope.cancellation_leave.status = false;
         }); 
+    }
+
+    $scope.cancel_respond = function(k, type){
+        
+        if(type == "approve"){
+           
+            $scope.modal = {
+                    title : '',
+                    message: 'Are you sure you want to '+type+' this cancellation of leave?',
+                    save : 'Yes',
+                    close : 'Cancel'
+                };
+
+            ngDialog.openConfirm({
+                template: 'ConfirmModal',
+                className: 'ngdialog-theme-plain',
+                
+                scope: $scope,
+                showClose: false
+            })
+            .then(function(value){
+                return false;
+            }, function(value){
+                
+                var cancellation_leave = {
+                    
+                    pk          : $scope.cancellation_leave.data[k].pk,
+                    created_by  : $scope.profile.pk,
+                    remarks     : "Approved",
+                    employees_pk: $scope.cancellation_leave.data[k].employees_pk,
+                    status      : 'Approved'
+                };
+                
+                var promise = LeaveFactory.cancellation_respond(cancellation_leave);
+                promise.then(function(data){
+                    UINotification.success({
+                                            message: 'You have successfully approved filed leave.', 
+                                            title: 'SUCCESS', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                    //leaves_filed();
+                  
+                    $scope.cancellation_leave.data[k].status = cancellation_leave.status;
+                })
+                .then(null, function(data){
+                    UINotification.error({
+                                            message: 'An error occured, unable to approve, please try again.', 
+                                            title: 'ERROR', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                });                                  
+            });
+        }
+        else {
+
+               
+                $scope.modal = {
+                    title : '',
+                    message: 'Are you sure you want to '+type+' cancellation of leave?',
+                    save : 'Disapprove',
+                    close : 'Cancel'
+                };
+
+                ngDialog.openConfirm({
+                template: 'DisapprovedModal',
+                className: 'ngdialog-theme-plain',
+                
+                    scope: $scope,
+                    showClose: false
+                })
+
+                    .then(function(value){
+                    return false;
+                }, function(value){
+                    
+                    var cancellation_leave = {
+                    
+                        pk          : $scope.cancellation_leave.data[k].pk,
+                        created_by  : $scope.profile.pk,
+                        remarks     : $scope.modal.remarks,
+                        employees_pk: $scope.cancellation_leave.data[k].employees_pk,
+                        status      : 'Disapproved'
+                };
+
+
+                var promise = LeaveFactory.cancellation_respond(cancellation_leave);
+                promise.then(function(data){
+                    UINotification.success({
+                                            message: 'You have successfully approved filed leave.', 
+                                            title: 'SUCCESS', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                    //leaves_filed();
+                    $scope.cancellation_leave.data[k].status = cancellation_leave.status;
+                })
+                .then(null, function(data){
+                    UINotification.error({
+                                            message: 'An error occured, unable to approve, please try again.', 
+                                            title: 'ERROR', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });
+                });                                  
+            });      
+        }
     }
 
 
