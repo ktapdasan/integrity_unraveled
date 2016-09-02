@@ -380,7 +380,7 @@ app.controller('Management_leave', function(
                 leaves_filed.status = 'Disapproved';
                 leaves_filed.remarks=$scope.modal.remarks;
 
-                console.log(leaves_filed);
+            
                 var promise = LeaveFactory.leave_respond(leaves_filed);
                 promise.then(function(data){
                     UINotification.success({
