@@ -47,6 +47,7 @@ class Notifications extends ClassParent {
                     date_created::timestamp (0) as date_created
                 from notifications
                 where employees_pk = $this->employees_pk
+                and read='f'
                 order by pk desc
                 ;
 EOT;

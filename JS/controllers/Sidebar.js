@@ -16,7 +16,7 @@ app.controller('Sidebar', function(
 
     $scope.read_notifs = {};
 
-    $scope.notifications.count =0;
+    $scope.notifications.count ="";
 
     $scope.stop = false; //how to stop the shaking
     
@@ -121,24 +121,17 @@ app.controller('Sidebar', function(
             $scope.notifications.data = data.data.result;
             $scope.notifications.status = true;
             var count = data.data.result.length;
-            var counts=count;
+            
 
-           for (var i = 0; i < count; i++) {
+            
+            if (count==0) {
 
-               if ($scope.notifications.data[i].read=='t') {
-                    counts--;
-               };
-               
-           };
-   
-            if (counts<=0) {
-
-                return $scope.notifications.count="";
+                return $scope.notifications.count=" ";
             }
             else
             {
-                return $scope.notifications.count="(" +counts +")";
-            }
+                return $scope.notifications.count="(" +count +")";
+            };
 
             $scope.animation_arrow.stop = '1';
             $scope.animation_arrow.opacity = '1';

@@ -421,11 +421,11 @@
                 <div class="notification_data">
                     <ul class="nav">
 
-                        <li ng-repeat="(k,v) in notifications.data">
-                            <a ng-click="goto(k)">
-                                <p ng-class="v.read==='f' && 'display'|| 'hide'" >{{v.notification}}</p>
+                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
+                            <a ng-click="goto(k)" >
+                                <p>{{v.notification}}</p>
                                 <span style="font-size:12px; color:#AAA;" >
-                                <p ng-class="v.read==='f' && 'hide'|| 'display'" >{{v.notification}}</p>
+                                
                                 {{v.created_by}}
                                 <br>
                                 {{v.date_created}}
@@ -435,8 +435,9 @@
                     </ul>
                 </div>
                 <div class="notification_data" ng-if="!notifications.status">
-                <ul class="nav">No Notification</ul>
+                    <ul class="nav">No Notification</ul>
                 </div>
+            </div>
             </div>
                 
         </div>
