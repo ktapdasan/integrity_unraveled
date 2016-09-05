@@ -110,26 +110,34 @@ th {
             <table id="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th col width="50">Date Filed</th>
                         <th col width="180">Employee Name</th>
-                        <th col width="90">Date Filed</th>
-                        <th col width="90">Time From</th>
-                        <th col width="90">Time To</th>
-                        <th col width="180">Remarks</th>
-                        <th  col width="80">Status</th>
+                        <th col width="50">Time From</th>
+                        <th col width="50">Time To</th>
+                        <th col width="50"># of hours</th>
+                        <th col width="220">Remarks</th>
+                        <th col width="30">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in overtime.data track by $index" style="cursor:pointer;" value = "{{v.pk}}" ng-if="overtime.status">
+                        <td ng-bind-html="v.datecreated_html"></td>                       
                         <td>{{v.name}}</td>
-                        <td>{{v.datecreated}}</td>                       
-                        <td>{{v.timefrom}}</td>
-                        <td>{{v.timeto}}</td>
-                        <td>{{v.remarks}}</td>
+                        <td ng-bind-html="v.timefrom_html"></td>
+                        <td ng-bind-html="v.timeto_html"></td>
+                        <td>{{v.hrs}}</td>
+                        <td><pre>{{v.remarks}}</pre></td>
                         <td>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-
-                                <input type= "button" class="medium button blue fa-fa" ng-click = "approve(k)" value = "Approve" /> 
-                                <input type= "button" class="medium button red fa-fa" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/> 
+                                
+                                <button class="medium button red fa-fa" ng-click = "disapprove(k)" ng-hide = "rejected" title="Disapprove">
+                                    <img src="./ASSETS/img/thumbs_down.png" style="width:24px;"/>
+                                </button>
+                                <button class="medium button green fa-fa" ng-click = "approve(k)" title="Approve">
+                                    <img src="./ASSETS/img/thumbs_up.png" style="width:24px;"/>
+                                </button>
+                                <!-- <input type= "button" class="medium button green fa-fa" ng-click = "approve(k)" value = "Approve" /> 
+                                <input type= "button" class="medium button red fa-fa" ng-hide = "rejected" ng-click = "disapprove(k)" value = "Disapprove"/>  -->
 
                             </div>
                             <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">

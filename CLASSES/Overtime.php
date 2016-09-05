@@ -63,20 +63,58 @@ EOT;
         $date_to = $data['dateto'];
 
         $sql = <<<EOT
-                select
-                    pk, 
-                    employees_pk,
-                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
-                    time_to :: time as timeto,
-                    time_from :: time as timefrom,
-                    date_created::date as datecreated,
-                    (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
-                    (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
-                from overtime
-                where archived = false
-                and (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
-                and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
-                $where
+                with Q as
+                (
+                    select
+                        pk, 
+                        employees_pk,
+                        (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                        date_created::timestamp(0) as datecreated,
+                        to_char(date_created, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as datecreated_html,
+                        time_from::timestamp(0) as timefrom,
+                        to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
+                        time_to::timestamp(0) as timeto,
+                        to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
+                        age(time_to, time_from) as hrs,
+                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
+                        (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
+                    from overtime
+                    where archived = false
+                    and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')   
+                    $where
+                ),
+                A as
+                (
+                    select
+                        *
+                    from Q where status = 'Pending'
+                ),
+                B as
+                (
+                    select
+                        pk, 
+                        employees_pk,
+                        (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                        date_created::timestamp(0) as datecreated,
+                        to_char(date_created, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as datecreated_html,
+                        time_from::timestamp(0) as timefrom,
+                        to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
+                        time_to::timestamp(0) as timeto,
+                        to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
+                        age(time_to, time_from) as hrs,
+                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
+                        (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
+                    from overtime
+                    where archived = false
+                    and (
+                            time_from::date between '$date_from' and '$date_to' 
+                            or 
+                            time_to::date between '$date_from' and '$date_to'
+                        )
+                    and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
+                    $where
+                )
+                select * from A union select * from B
                 ;
 EOT;
 
