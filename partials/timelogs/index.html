@@ -155,10 +155,11 @@ th {
         <table id="datatables-example" class="table1" width="90%" cellspacing="0">
             <thead>
                 <tr>
-                    <th col width="50">Employee ID</th>
+                    <th col width="40">Employee ID</th>
                     <th col width="140">Employee</th>
                     <th col width="50">Date</th>
                     <th col width="50">Day</th>
+                    <th col width="90">Schedule</th>
                     <th col width="50">Log in</th>
                     <th col width="50">Log out</th>
                     <th col width="90"># of Hours</th>
@@ -175,12 +176,13 @@ th {
                     <td>{{v.employee}}</td>
                     <td>{{v.log_date}}</td>
                     <td>{{v.log_day}}</td>
+                    <td>{{v.schedule}}</td>
                     <td>
                         <span ng-if = "v.login == 'None' || v.login == ''">
                             <font color="red" title = "File Manual Log">None</font>
                         </span>
                         <span ng-if = 'v.login != "None" && v.login != ""'>
-                            {{v.login}}
+                            {{v.login_time}}
                         </span>
                     </td>
                     <td>
@@ -189,15 +191,21 @@ th {
                         </span>
 
                         <span ng-if="v.logout != 'None' && v.logout != ''">
-                            {{v.logout}}
+                            {{v.logout_time}}
                         </span>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td>
+                    <td>
+                        <span >
+                        {{v.hrs}}
+                        </span>
+                    </td> 
+                    <td>{{v.tardiness}}</td> 
+                    <td>{{v.undertime}}</td> 
+                    <td>
+                        <span ng-if="v.overtime!='false'">{{v.overtime_value}}</span>
+                    </td> 
+                    <td>{{v.suspension}}</td> 
+                    <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
                 </tr>
                 <tr ng-if="!timesheet.status" style= "text-align: center;">
                     <td colspan = "13" style="text-align:center;">No Data Found</td>

@@ -108,7 +108,7 @@ app.controller('Management_overtime', function(
     function show_employees_overtime() {
         var filter = {};
         filter.supervisor_pk =  $scope.profile.pk;
-        filter.employees_pk =  $scope.profile.employees_pk;
+        //filter.employees_pk =  $scope.profile.employees_pk;
         
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();

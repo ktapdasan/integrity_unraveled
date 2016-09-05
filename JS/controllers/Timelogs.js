@@ -194,9 +194,13 @@ app.controller('Timelogs', function(
         // }
         var filter = {
             newdatefrom : datefrom,
-            newdateto : dateto,
-            employees_pk : $scope.filter.employee[0].pk
+            newdateto : dateto
         }
+
+        if($scope.filter.employee[0]){
+            filter.employees_pk = $scope.filter.employee[0].pk;
+        }
+
 
         $scope.timesheet.data = [];
         var promise = TimelogFactory.timesheet(filter);
@@ -298,26 +302,20 @@ app.controller('Timelogs', function(
 
 
     $scope.export_timesheet = function(){
-        $scope.filter.pk = $scope.profile.pk;
-        
-        delete $scope.filter.employees_pk;
-        if($scope.filter.employee.length > 0){
-            $scope.filter.employees_pk = $scope.filter.employee[0].pk;
+        var datefrom =  $filter('date')($scope.filter.datefrom, "yyyy-MM-dd");
+        var dateto =  $filter('date')($scope.filter.dateto, "yyyy-MM-dd");
+
+        var filter = {
+            newdatefrom : datefrom,
+            newdateto : dateto,
+            employees_pk : $scope.filter.employee[0].pk
         }
 
-        var datefrom = new Date($scope.filter.datefrom);
-        var dd = datefrom.getDate();
-        var mm = datefrom.getMonth()+1; //January is 0!
-        var yyyy = datefrom.getFullYear();
-
-        var dateto = new Date($scope.filter.dateto);
-        var Dd = dateto.getDate();
-        var Mm = dateto.getMonth()+1; //January is 0!
-        var Yyyy = dateto.getFullYear();
-
-        $scope.filter.datefrom=yyyy+'-'+mm+'-'+dd;
-        $scope.filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
-        window.location = './FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&newdatefrom='+$scope.filter.datefrom+"&newdateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk;
+        window.location = './FUNCTIONS/Timelog/timelogs_export.php?'+
+                            'pk='+$scope.filter.pk+
+                            '&newdatefrom='+datefrom+
+                            "&newdateto="+dateto+
+                            '&employees_pk='+$scope.filter.employee[0].pk;
         //window.open('./FUNCTIONS/Timelog/timelogs_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto+'&newdatefrom='+$scope.filter.datefrom+"&newdateto="+$scope.filter.dateto+'&employees_pk='+$scope.filter.employees_pk);
     }
 

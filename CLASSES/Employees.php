@@ -500,7 +500,7 @@ EOT;
                         (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
                         type,
                         time_log::date as log_date,
-                        time_log::time(0) as log_time,
+                        time_log::timestamp(0) as log_time,
                         employees.details->'company'->'work_schedule' as work_schedule
                     from time_log
                     left join employees on (employees.pk = time_log.employees_pk)

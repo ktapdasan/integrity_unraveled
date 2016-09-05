@@ -2,16 +2,17 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 require_once('../../CLASSES/Leave.php');
-// print_r($_GET);
+require_once('../../CLASSES/ManualLog.php');
+require_once('../../CLASSES/Overtime.php');
+
 $data = array(
-				"pk" => $_GET['pk'],
 				"employees_pk" => $_GET['employees_pk'],
 				"newdatefrom" => $_GET['newdatefrom'],
 				"newdateto" => $_GET['newdateto']
 			);
 
-$startdate = $_GET['datefrom'];
-$enddate = $_GET['dateto'];
+$startdate = $_GET['newdatefrom'];
+$enddate = $_GET['newdateto'];
 $cutoff=array();
 while(strtotime($startdate) <= strtotime($enddate)){
 	$date = date('Y-m-d', strtotime($startdate));
@@ -26,8 +27,10 @@ while(strtotime($startdate) <= strtotime($enddate)){
 		"log_day" => $day,
 		"login" => "",
 		"logout" => "",
-		"status" => ""
+		"status" => "",
+		"current_status" => ""
 	);
+	$data['date']=$date;
 	
 	$startdate = date('Y-m-d', strtotime($startdate . '+ 1 day'));
 }
@@ -46,7 +49,6 @@ $employees_class = new Employees(
 									NULL,
 									NULL
 								);
-
 
 $employees_data = $employees_class->fetch_for_timesheet($data);
 
@@ -76,13 +78,12 @@ foreach($employees_data['result'] as $key=>$value){
 		$cutoff[$k]['employee'] = $value['last_name'].", ".$value['first_name']. " ". $value['middle_name'];
 		$cutoff[$k]['employee_id'] = $value['employee_id'];
 		$cutoff[$k]['employees_pk'] = $value['pk'];
-		//$cutoff[$k]['work_schedule'] = $work_schedule;
 		$cutoff[$k]['status'] = $status;
 		$cutoff[$k]['work_schedule'] = $z;
+
 	}
 
 	$employees[$value['employee_id']] = $cutoff;
-	//$employees[$value['employee_id']]['work_schedule'] = $z;
 }
 
 $class = new Employees(
@@ -99,9 +100,12 @@ $class = new Employees(
 							NULL,
 							NULL
 						);
-
 $data = $class->timelogs($data);
 
+$date_range = array(
+	"date_from" => $_GET['newdatefrom'],
+	"date_to" => $_GET['newdateto']
+);
 $class2 = new Leave(
         				NULL,
         				$_GET['employees_pk'],
@@ -114,8 +118,34 @@ $class2 = new Leave(
                         NULL
         			);
 
-$data2 = $class2->approved_leaves();
+$data2 = $class2->approved_leaves($date_range);
 $approved_leaves = $data2['result'];
+
+$class3 = new ManualLog(
+        				NULL,
+        				$_GET['employees_pk'],
+                        NULL,
+                        NULL,
+        				NULL,
+        				NULL,
+                        NULL
+        			);
+
+$data3 = $class3->pending_manuallogs($date_range);
+$pending_manuallogs = $data3['result'];
+
+$class4 = new Overtime(
+        				NULL,
+                        NULL,
+                        NULL,
+        				$_GET['employees_pk'],
+        				NULL,
+                        NULL
+        			);
+
+$data4 = $class4->approved_overtimes($date_range);
+$approved_overtimes = $data4['result'];
+
 
 foreach ($employees as $employee_id => $value) {
 	foreach ($data['result'] as $k => $v) {
@@ -129,12 +159,28 @@ foreach ($employees as $employee_id => $value) {
 			$value[$v['log_date']]['log_day'] 		= $v['log_day'];
 			$value[$v['log_date']]['login'] 		= $v['log_in'];
 			$value[$v['log_date']]['logout'] 		= $v['log_out'];
+			$value[$v['log_date']]['login_time'] 	= date('h:i:s A', strtotime($v['log_in']));
+			$value[$v['log_date']]['logout_time'] 	= date('h:i:s A', strtotime($v['log_out']));
 		}
 	}
 
 	$employees[$employee_id] = $value;
 	
 	foreach ($employees[$employee_id] as $x => $y) {
+		
+		foreach ($pending_manuallogs as $a => $b) {
+			$z = explode(' ', $b['time_log']);
+			
+			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] == $z[0]){
+
+				if($b['type'] == "In"){
+					$y['login'] = "Pending";
+				}
+				else {
+					$y['logout'] = "Pending";
+				}
+			}
+		}
 		
 		foreach ($approved_leaves as $a => $b) {
 			//print_r($b);
@@ -145,18 +191,58 @@ foreach ($employees as $employee_id => $value) {
 				$y['logout'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 			}
 		}
-		
-		// foreach ($employees[$employee_id][$x] as $key => $value) {
-		// 	//print_r($employees[$employee_id][$x][$key]);
-		// 	//echo trim(strtolower($employees[$employee_id][$x]['log_day']));
-		// 	//print_r($employees[$employee_id][$x]['work_schedule']);
-		// 	print_r((array)$employees[$employee_id][$x]['work_schedule'][trim(strtolower($employees[$employee_id][$x]['log_day']))]);
-		// 	echo "<hr />\n";
 
-		// 	if($employees[$employee_id][$x][$key]['work_schedule'][trim(strtolower($y[$employees[$employee_id][$x][$key]['log_day']]))]){
+		$y['schedule'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in ." - ".$y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 
-		// 	}
-		// }
+		if(
+			$y['work_schedule'][trim(strtolower($y['log_day']))]->in && 
+			$y['logout'] && 
+			$y['logout'] != 'None' && 
+			$y['logout'] != 'Pending' && 
+			$y['login'] && 
+			$y['login'] != 'None' && 
+			$y['login'] != 'Pending' && 
+			strtotime($y['login']) > strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")
+		){
+			$tardiness = (strtotime($y['login']) - strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")) / 60;
+			$y['tardiness'] = round($tardiness) . " mins";
+		}
+
+		if(
+			$y['work_schedule'][trim(strtolower($y['log_day']))]->out && 
+			$y['logout'] && 
+			$y['logout'] != 'None' && 
+			$y['logout'] != 'Pending' && 
+			$y['login'] && 
+			$y['login'] != 'None' && 
+			$y['login'] != 'Pending' && 
+			strtotime($y['logout']) < strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")
+		){
+			$undertime = (strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
+			$y['undertime'] = round($undertime) . " mins";
+		}
+
+		if(
+			$y['logout'] && 
+			$y['logout'] != 'None' && 
+			$y['logout'] != 'Pending' && 
+			$y['login'] && 
+			$y['login'] != 'None' && 
+			$y['login'] != 'Pending' && 
+			strtotime($y['login']) <= strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00") &&
+			strtotime($y['logout']) > strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") &&
+			(strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) >= 7200
+		){
+
+			$overtime = (strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) / 60;
+
+			foreach ($approved_overtimes as $a => $b) {
+				//echo $y['employees_pk']." == ".$b['employees_pk']." && ".$y['log_date']." >= ".$b['datefrom']." && ".$y['log_date']." <= ".$b['dateto'];
+				if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
+					$y['overtime_value'] = round($overtime) . " mins";
+				}
+			}
+		}
 
 		$employees[$employee_id][$x] = $y;
 	}
@@ -164,7 +250,7 @@ foreach ($employees as $employee_id => $value) {
 	
 }
 
-$header	=	'Employee ID, Employee Name, Day, Date, Time In, Time Out, Hours, Status';
+$header	=	'Employee ID, Employee Name, Date, Day, Schedule, Log In, Log Out, # of Hours, Tardiness, Undertime, Overtime, Suspension, Status';
 $body	=	"";
 // echo "<pre>";
 // print_r($employees);
@@ -172,11 +258,16 @@ foreach($employees as $k=>$v){
 	foreach ($v as $key => $value) {
 		$body .= $value['employee_id'].','.
 				'"'.$value['employee'].'",'.
-				$value['log_day'].','.
 				$value['log_date'].','.
+				$value['log_day'].','.
+				$value['schedule'].','.
 				$value['login'].','.
 				$value['logout'].','.
 				$value['hrs'].','.
+				$value['tardiness'].','.
+				$value['undertime'].','.
+				$value['overtime_value'].','.
+				$value['suspension'].','.
 				$value['status']."\n";	
 	}
 	$body .= "\n\n";
