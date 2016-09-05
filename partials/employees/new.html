@@ -154,7 +154,7 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">First Name:</label> 
                             </td>
                             <td id="css">    
-                                <input name="firstName"required ng-model="personal.first_name" ng-change="fname1=employee.first_name" type="text" style="display: block; float: left; width:340px;" />
+                                <input name="firstName"required ng-model="personal.first_name" ng-change="fname1=personal.first_name" type="text" style="display: block; float: left; width:340px;" capitalize-first />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                             </td>
                             <td>
@@ -171,14 +171,14 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Middle Name:</label>
                             </td>
                             <td id="css">
-                                <input name="middleName" required ng-model="personal.middle_name" type="text" style="display: block; float: left; width:340px;" />
+                                <input name="middleName" required ng-model="personal.middle_name" type="text" style="display: block; float: left; width:340px;" capitalize-first/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                             </td>
                             <td>
                                 <label style="display:block; float:left; padding-right:10px">Religion:</label>
                             </td>
                             <td id="css">
-                                <input name="religion" required ng-model="personal.religion_pk" type="text" style="display: block; float: left; width:340px;" />
+                                <input name="religion" required ng-model="personal.religion_pk" type="text"  style="display: block; float: left; width:340px;"/>
                                 <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
                             </td>
                         </tr>
@@ -187,7 +187,7 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Last Name:</label>
                             </td>
                             <td id="css">
-                                <input name="lastName" required ng-model="personal.last_name" ng-change="lname1=employee.last_name" type="text" style="display: block; float: left; width:340px;" />
+                                <input name="lastName" required ng-model="personal.last_name" ng-change="lname1=personal.last_name" type="text" style="display: block; float: left; width:340px;" capitalize-first/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                             </td>
                             <td>
