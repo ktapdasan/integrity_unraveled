@@ -491,7 +491,7 @@ EOT;
         $datefrom = $data['newdatefrom'];
         $dateto = $data['newdateto'];
 
-        echo $sql = <<<EOT
+        $sql = <<<EOT
                 with Q as
                 (
                     select
