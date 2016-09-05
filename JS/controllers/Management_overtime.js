@@ -146,8 +146,11 @@ app.controller('Management_overtime', function(
     }
 
     $scope.approve = function(k){
-        $scope.overtime["employees_pk"] = $scope.overtime.data[k].employees_pk; 
-        $scope.overtime["approver_pk"]=$scope.profile.pk;
+        var overtime = {};
+
+        overtime.employees_pk = $scope.overtime.data[k].employees_pk; 
+        overtime.approver_pk = $scope.profile.pk;
+
         $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to approve overtime ',
@@ -155,6 +158,7 @@ app.controller('Management_overtime', function(
                 close : 'Cancel'
 
             };
+
         ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
@@ -167,11 +171,11 @@ app.controller('Management_overtime', function(
             return false;
         }, function(value){
 
-            $scope.overtime.status = "Approved";
-            $scope.overtime.pk =  $scope.overtime.data[k].pk;
-            $scope.overtime.remarks= "APPROVED";
+            overtime.status = "Approved";
+            overtime.pk =  $scope.overtime.data[k].pk;
+            overtime.remarks= "APPROVED";
             
-            var promise = TimelogFactory.approve_overtime($scope.overtime);
+            var promise = TimelogFactory.approve_overtime(overtime);
             promise.then(function(data){
                
                 UINotification.success({
