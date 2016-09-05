@@ -21,7 +21,7 @@ $class = new Department(
 					);
 
 $data = $class->get_departments($_POST);
-print_r($_POST);
+
 
 
 header("HTTP/1.0 404 User Not Found");
