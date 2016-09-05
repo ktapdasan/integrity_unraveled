@@ -22,11 +22,6 @@ class Employees extends ClassParent
                                     $middle_name,
                                     $last_name,
                                     $email_address,
-                                    $business_email_address,
-                                    $titles_pk,
-                                    $levels_pk,
-                                    $department,
-                                    $date_created,
                                     $archived
                                 )
     {
@@ -665,7 +660,7 @@ EOT;
         return ClassParent::insert($sql);
     }
 
-    public function create($extra){
+    public function createp($extra){
         foreach($extra as $k=>$v){
             if(is_string($v)){
                 $extra[$k] = pg_escape_string(trim(strip_tags($v)));    
@@ -674,8 +669,6 @@ EOT;
                 $extra[$k] = $v;
             }
         }
-
-        $this->department = "{".$this->department."}";
 
         $array = $extra['details'];
         $details = json_encode($array);
@@ -705,20 +698,6 @@ EOT;
                     '$this->employee_id',
                     md5('user123456')
                 );
-EOT;
-        $supervisor_pk = $extra['supervisor_pk'];
-        $sql .= <<<EOT
-                insert into groupings
-                (   
-                    employees_pk,
-                    supervisor_pk
-                )
-                values
-                (
-                    currval('employees_pk_seq'),
-                    $supervisor_pk
-                )
-                ;
 EOT;
 
         $sql .= "commit;";

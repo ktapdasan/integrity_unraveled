@@ -331,7 +331,7 @@ insert into employees = jsonb_set(details, '{company}', '
 }', true) 
 where pk = 12;
 
-update employees set 
+update employees_backup set 
 details=jsonb_set(details, '{company}', '
 {
 	"start_date" : "2016-01-18",
