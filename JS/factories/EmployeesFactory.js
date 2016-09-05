@@ -156,9 +156,9 @@ app.factory('EmployeesFactory', function($http){
     };
 
     
-    factory.submit_personal = function(data){
+    factory.submit_employees = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Employees/submit_personal.php',
+            url:'./FUNCTIONS/Employees/submit_employees.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

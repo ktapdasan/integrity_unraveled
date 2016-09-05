@@ -29,18 +29,18 @@ $company['employment_type']          = pg_escape_string(strip_tags(trim($_POST['
 $company['departments_pk']           = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
 $company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
 $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
-$company['employees.date_started']   = pg_escape_string(strip_tags(trim($_POST['employees.date_started'])));
+$company['employees.date_started']   = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 $company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
-
 
 //Personal Array!
 $personal = array();
-$personal['civilstatus_pk']          = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
+$personal['civilstatus']          = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
 $personal['first_name']              = pg_escape_string(strip_tags(trim($_POST['first_name'])));
 $personal['middle_name']             = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
 $personal['last_name']               = pg_escape_string(strip_tags(trim($_POST['last_name'])));
-$personal['gender_pk']               = pg_escape_string(strip_tags(trim($_POST['gender_pk'])));
-$personal['religion_pk']             = pg_escape_string(strip_tags(trim($_POST['religion_pk'])));
+$personal['gender']               = pg_escape_string(strip_tags(trim($_POST['gender'])));
+$personal['religion']             = pg_escape_string(strip_tags(trim($_POST['religion'])));
+$personal['birth_date']             = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 
 //Government Array!
 $government = array();

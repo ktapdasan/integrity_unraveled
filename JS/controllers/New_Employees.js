@@ -29,18 +29,27 @@ app.controller('New_Employees', function(
     $scope.titles={};
     $scope.level_title={};
     $scope.department={};
-    $scope.personal={
-        eid:'',
+    
+    $scope.employees={
         first_name:'',
         middle_name:'',
         last_name:'',
         email_address:'',
         gender:'',
         religion:'',
-        civilstatus:''
+        civilstatus:'',
+        employee_id:'',
+        date_started:'',
+        business_email_address:'',
+        birth_date:'',
+        titles_pk:'',
+        levels_pk:'',
+        supervisor_pk:'',
+        departments_pk:'',
+        employee_type:'',
+        employment_type:''
     };
 
-    $scope.employees = {};
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
@@ -146,9 +155,10 @@ app.controller('New_Employees', function(
         }
     };
 
-    $scope.submit_personal = function(){
+    $scope.submit_employees = function(){
 
-        var promise = EmployeesFactory.submit_personal($scope.personal);
+        get_supervisors();
+        var promise = EmployeesFactory.submit_employees($scope.employees);
         promise.then(function(data){
 
             UINotification.success({
@@ -169,19 +179,29 @@ app.controller('New_Employees', function(
             });
         });
 
-        $scope.personal={
-            eid:'',
-            first_name:'',
-            middle_name:'',
-            last_name:'',
-            email_address:'',
-            gender:'',
-            religion:'',
-            civilstatus:'',
+    $scope.employees={
+        employee_id:'',
+        first_name:'',
+        middle_name:'',
+        last_name:'',
+        email_address:'',
+        gender:'',
+        birth_date:'',
+        religion:'',
+        civilstatus:'',
+        employee_id:'',
+        business_email_address:'',
+        titles_pk:'',
+        date_started:'',
+        levels_pk:'',
+        supervisor_pk:'',
+        departments_pk:'',
+        employee_type:'',
+        employment_type:''
         };
     }
 
-    $scope.employees.date_started = new Date();
+    // $scope.employees.date_started = new Date();
 
 
     $scope.level_changed = function(){
@@ -189,7 +209,7 @@ app.controller('New_Employees', function(
     }
 
     function level_changed(){
-        if ($scope.employee.levels_pk == 3) {
+        if ($scope.employees.levels_pk == 3) {
             $scope.level_class = 'hours';
             $scope.show_hours = true;
         }

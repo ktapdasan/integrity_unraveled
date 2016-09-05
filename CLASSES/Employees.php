@@ -22,6 +22,11 @@ class Employees extends ClassParent
                                     $middle_name,
                                     $last_name,
                                     $email_address,
+                                    $business_email_address,
+                                    $titles_pk,
+                                    $levels_pk,
+                                    $department,
+                                    $date_created,
                                     $archived
                                 )
     {
@@ -660,7 +665,7 @@ EOT;
         return ClassParent::insert($sql);
     }
 
-    public function createp($extra){
+    public function create($extra){
         foreach($extra as $k=>$v){
             if(is_string($v)){
                 $extra[$k] = pg_escape_string(trim(strip_tags($v)));    
