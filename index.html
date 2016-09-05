@@ -952,9 +952,19 @@
             </div>
             <div>
                 <p>You have an excess hours of {{modal.overtime}}</p>
-                <label style= "font-size:22px; float: left;">Reason</label>
+            </div>
+            <div>
+                <label style= "font-size:15px;">Type: </label>
+                <select ng-model="modal.type">
+                    <option>Paid</option>
+                    <option>Non-paid</option>
+                </select>
+            </div>
+            <div>
+                <label style= "font-size:15px;">Reason: </label>
                 <textarea ng-model="modal.remarks" cols="42" rows="5" required></textarea>
             </div>
+            
         </div>
         <div class="ngdialog-buttons">
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>

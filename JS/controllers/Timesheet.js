@@ -670,7 +670,7 @@ app.controller('Timesheet', function(
             title : 'File Overtime',
             save : 'Submit',
             close : 'Cancel',
-            
+            type : 'Paid',
             overtime : moment_time
         };
 

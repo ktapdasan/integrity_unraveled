@@ -1,5 +1,6 @@
 create table overtime(
 	pk serial primary key,
+	type text default 'Paid',
 	time_from timestamptz not null,
 	time_to timestamptz not null,
 	employees_pk int references employees(pk),
