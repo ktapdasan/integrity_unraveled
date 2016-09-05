@@ -3,6 +3,7 @@ require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 require_once('../../CLASSES/Leave.php');
 require_once('../../CLASSES/ManualLog.php');
+require_once('../../CLASSES/Overtime.php');
 
 $data = array(
 				"employees_pk" => $_POST['employees_pk'],
@@ -77,15 +78,12 @@ foreach($employees_data['result'] as $key=>$value){
 		$cutoff[$k]['employee'] = $value['last_name'].", ".$value['first_name']. " ". $value['middle_name'];
 		$cutoff[$k]['employee_id'] = $value['employee_id'];
 		$cutoff[$k]['employees_pk'] = $value['pk'];
-		//$cutoff[$k]['work_schedule'] = $work_schedule;
 		$cutoff[$k]['status'] = $status;
 		$cutoff[$k]['work_schedule'] = $z;
-		//$cutoff[$k]['current_status'] = $value['current_status'];
 
 	}
 
 	$employees[$value['employee_id']] = $cutoff;
-	//$employees[$value['employee_id']]['work_schedule'] = $z;
 }
 
 $class = new Employees(
@@ -136,6 +134,19 @@ $class3 = new ManualLog(
 $data3 = $class3->pending_manuallogs($date_range);
 $pending_manuallogs = $data3['result'];
 
+$class4 = new Overtime(
+        				NULL,
+                        NULL,
+                        NULL,
+        				$_POST['employees_pk'],
+        				NULL,
+                        NULL
+        			);
+
+$data4 = $class4->approved_overtimes($date_range);
+$approved_overtimes = $data4['result'];
+
+
 foreach ($employees as $employee_id => $value) {
 	foreach ($data['result'] as $k => $v) {
 		//print_r($v);
@@ -148,6 +159,8 @@ foreach ($employees as $employee_id => $value) {
 			$value[$v['log_date']]['log_day'] 		= $v['log_day'];
 			$value[$v['log_date']]['login'] 		= $v['log_in'];
 			$value[$v['log_date']]['logout'] 		= $v['log_out'];
+			$value[$v['log_date']]['login_time'] 	= date('h:i:s A', strtotime($v['log_in']));
+			$value[$v['log_date']]['logout_time'] 	= date('h:i:s A', strtotime($v['log_out']));
 		}
 	}
 
@@ -179,16 +192,6 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 
-		// echo $y['login'];
-		// echo "\n";
-		// echo $y['logout'];
-		// echo "\n";
-		// echo $y['work_schedule'][trim(strtolower($y['log_day']))]->in;
-		// echo "\n";
-		// echo $y['work_schedule'][trim(strtolower($y['log_day']))]->out;
-		// echo "\n";
-		// echo "\n";
-
 		$y['schedule'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in ." - ".$y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 
 		if(
@@ -199,12 +202,10 @@ foreach ($employees as $employee_id => $value) {
 			$y['login'] && 
 			$y['login'] != 'None' && 
 			$y['login'] != 'Pending' && 
-			strtotime($y['login']) > strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in)
+			strtotime($y['login']) > strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")
 		){
-			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
-			$tardiness = (strtotime($y['login']) - strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")) / 60;
-			//
-			$y['tardiness'] = round($tardiness,1) . " mins";
+			$tardiness = (strtotime($y['login']) - strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00")) / 60;
+			$y['tardiness'] = round($tardiness) . " mins";
 		}
 
 		if(
@@ -215,32 +216,42 @@ foreach ($employees as $employee_id => $value) {
 			$y['login'] && 
 			$y['login'] != 'None' && 
 			$y['login'] != 'Pending' && 
-			strtotime($y['logout']) < strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out)
+			strtotime($y['logout']) < strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")
 		){
-			//echo strtotime($y['login'])." - ".strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->in);
-			$undertime = (strtotime($y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
-			//
-			$y['undertime'] = round($undertime,1) . " mins";
+			$undertime = (strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
+			$y['undertime'] = round($undertime) . " mins";
 		}
-		// foreach ($employees[$employee_id][$x] as $key => $value) {
-		// 	//print_r($employees[$employee_id][$x][$key]);
-		// 	//echo trim(strtolower($employees[$employee_id][$x]['log_day']));
-		// 	//print_r($employees[$employee_id][$x]['work_schedule']);
-		// 	print_r((array)$employees[$employee_id][$x]['work_schedule'][trim(strtolower($employees[$employee_id][$x]['log_day']))]);
-		// 	echo "<hr />\n";
 
-		// 	if($employees[$employee_id][$x][$key]['work_schedule'][trim(strtolower($y[$employees[$employee_id][$x][$key]['log_day']]))]){
+		if(
+			$y['logout'] && 
+			$y['logout'] != 'None' && 
+			$y['logout'] != 'Pending' && 
+			$y['login'] && 
+			$y['login'] != 'None' && 
+			$y['login'] != 'Pending' && 
+			strtotime($y['login']) <= strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00") &&
+			strtotime($y['logout']) > strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") &&
+			(strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) >= 7200
+		){
 
-		// 	}
-		// }
+			$overtime = (strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) / 60;
+
+			$y['overtime_value'] = round($overtime) . " mins";
+			$y['overtime'] = 'false';
+
+			foreach ($approved_overtimes as $a => $b) {
+				//echo $y['employees_pk']." == ".$b['employees_pk']." && ".$y['log_date']." >= ".$b['datefrom']." && ".$y['log_date']." <= ".$b['dateto'];
+				if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
+					$y['overtime'] = 'true';
+				}
+			}
+		}
 
 		$employees[$employee_id][$x] = $y;
 	}
 
 	
 }
-
-//print_r($employees);
 
 header("HTTP/1.0 500 Internal Server Error");
 if($employees){

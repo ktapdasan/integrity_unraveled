@@ -472,7 +472,11 @@ app.controller('Timesheet', function(
         $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
         $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
-        window.open('./FUNCTIONS/Timelog/timesheet_export.php?pk='+$scope.filter.pk+'&newdatefrom='+$scope.filter.newdatefrom+"&newdateto="+$scope.filter.newdateto);
+        window.open('./FUNCTIONS/Timelog/timesheet_export.php?'+
+                    'pk='+$scope.filter.pk+
+                    '&newdatefrom='+$scope.filter.newdatefrom+
+                    "&newdateto="+$scope.filter.newdateto
+                );
     }
 
     $scope.savelog = function(k){
@@ -522,166 +526,7 @@ app.controller('Timesheet', function(
             });                 
         });
     }
-        
-    // $scope.add_manual_logs = function(k){
-    //     $scope.log.reason = '';
-    //     $scope.log.time_log = new Date;
-
-    //     $scope.log.date_log = $scope.timesheet.data[key].log_date;
-    //     $scope.log.selectedTimeAsString;
-    //     //$scope.employee = $scope.timesheet.data[key];
-    //     $scope.modal = {
-
-    //         title : 'Manual Log ' + type,
-    //         save : 'Submit',
-    //         close : 'Cancel',
-           
-    //     };
-
-    //     ngDialog.openConfirm({
-    //         template: 'ManualLogModal',
-    //         className: 'ngdialog-theme-plain custom-widththreefifty',
-    //         preCloseCallback: function(value) {
-    //             var nestedConfirmDialog;                
-    //                 nestedConfirmDialog = ngDialog.openConfirm({
-    //                     template:
-    //                             '<p></p>' +
-    //                             '<p>Are you sure you want to apply changes to this employee account?</p>' +
-    //                             '<div class="ngdialog-buttons">' +
-    //                                 '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
-    //                                 '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
-    //                             '</button></div>',
-    //                     plain: true,
-    //                     className: 'ngdialog-theme-plain custom-widththreefifty'
-    //                 });
-
-    //             return nestedConfirmDialog;
-    //         },
-    //         scope: $scope,
-    //         showClose: false
-    //     })
-    //     .then(function(value){
-    //         return false;
-    //     }, function(value){
-    //         var a = new Date($scope.log.time_log);
-    //         var H = a.getHours();
-    //         var M = a.getMinutes(); 
-
-    //         $scope.log["employees_pk"] = $scope.profile.pk;
-    //         $scope.log["supervisor_pk"] = $scope.profile.supervisor_pk;
-    //         $scope.log.time_log = H + ":" +M ;
-    //         $scope.log.type = type;
-
-        
-    //         var promise = TimelogFactory.save_manual_log($scope.log);
-    //         promise.then(function(data){
-
-    //             UINotification.success({
-    //                                     message: 'You have successfully filed manual log', 
-    //                                     title: 'SUCCESS', 
-    //                                     delay : 5000,
-    //                                     positionY: 'top', positionX: 'right'
-
-    //                                 });
-            
-    //         })
-    //         .then(null, function(data){
-                
-    //             UINotification.error({
-    //                                     message: 'An error occured, unable to file manual log, please try again.', 
-    //                                     title: 'ERROR', 
-    //                                     delay : 5000,
-    //                                     positionY: 'top', positionX: 'right'
-    //                                 });
-    //         });  
-
-            
-    //     }); 
-    // }
-
-// <<<<<<< Updated upstream
-//     $scope.show_approve = function(k){
-//         $scope.manual_logs["employees_pk"] = $scope.profile.pk;
-//        $scope.modal = {
-//                 title : '',
-//                 message: 'Are you sure you want to approve manual log?',
-//                 save : 'Yes',
-//                 close : 'Cancel'
-
-//             };
-//         ngDialog.openConfirm({
-//             template: 'ConfirmModal',
-//             className: 'ngdialog-theme-plain',
-            
-//             scope: $scope,
-//             showClose: false
-//         })
-        
-//         .then(function(value){
-//             return false;
-//         }, function(value){
-
-//             $scope.manual_logs.status = "Approved";
-//             $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-// =======
     
-
-
-// >>>>>>> Stashed changes
-
-
-    // $scope.show_disapprove = function(k){
-    //     $scope.manual_logs["employees_pk"] = $scope.profile.pk; 
-    //    $scope.modal = {
-    //             title : '',
-    //             message: 'Are you sure you want to disapprove manual log?',
-    //             save : 'Yes',
-    //             close : 'Cancel'
-
-    //         };
-    //     ngDialog.openConfirm({
-    //         template: 'ConfirmModal',
-    //         className: 'ngdialog-theme-plain',
-            
-    //         scope: $scope,
-    //         showClose: false
-    //     })
-        
-    //     .then(function(value){
-    //         return false;
-    //     }, function(value){
-
-    //         $scope.manual_logs.status = "Disapproved";
-    //         $scope.manual_logs.pk =  $scope.manual_logs.data[k].pk;
-
-            
-    //         var promise = TimelogFactory.disapprove($scope.manual_logs);
-    //         promise.then(function(data){
-            
-           
-
-    //             UINotification.success({
-    //                                     message: 'You have successfully diapproved manual log', 
-    //                                     title: 'SUCCESS', 
-    //                                     delay : 5000,
-    //                                     positionY: 'top', positionX: 'right'
-    //                                 });  
-    //             timesheet();
-                     
-
-    //         })
-    //         .then(null, function(data){
-                
-    //             UINotification.error({
-    //                                     message: 'An error occured, unable to disapprove, please try again.', 
-    //                                     title: 'ERROR', 
-    //                                     delay : 5000,
-    //                                     positionY: 'top', positionX: 'right'
-    //                                 });
-    //         });                                  
-    //     });
-    // }
-
     $scope.open_manual_log = function(type, key){
         $scope.log.reason = '';
         $scope.log.time_log = new Date;
@@ -811,4 +656,52 @@ app.controller('Timesheet', function(
         // })
     }
     
+    $scope.open_overtime = function(k){
+        var schedule = $scope.timesheet.data[k].schedule.split(' - ');
+        var logout = $scope.timesheet.data[k].logout.split(' ');
+
+        var sched_logout = new Date(logout[0] +" "+schedule[1]);
+        var actual_logout = new Date($scope.timesheet.data[k].logout);
+
+        var moment_time = moment.utc(moment(actual_logout,"DD/MM/YYYY HH:mm:ss").diff(moment(sched_logout,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
+
+        $scope.modal = {
+
+            title : 'File Overtime',
+            save : 'Submit',
+            close : 'Cancel',
+            
+            overtime : moment_time
+        };
+
+        ngDialog.openConfirm({
+            template: 'OvertimeModal',
+            className: 'ngdialog-theme-plain custom-widthfourfifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Apply Manual Log?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widthfourfifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+             
+
+            
+        });
+    }
 });

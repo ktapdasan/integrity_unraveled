@@ -118,7 +118,7 @@ tr:hover {
                             
                             <span ng-if = 'v.login != "None" && v.login != ""'>
 
-                                {{v.login}}
+                                {{v.login_time}}
                             </span>
                         </td>
                         <td>
@@ -130,7 +130,7 @@ tr:hover {
 
                             <span ng-if="v.logout != 'None' && v.logout != ''">
 
-                                {{v.logout}}
+                                {{v.logout_time}}
                             </span>
                         </td>
                         <td>
@@ -140,7 +140,15 @@ tr:hover {
                         </td> 
                         <td>{{v.tardiness}}</td> 
                         <td>{{v.undertime}}</td> 
-                        <td>{{v.overtime}}</td> 
+                        <td>
+                            <span ng-if="v.overtime=='false'">
+                                
+                                <a ng-click="open_overtime(k)">
+                                    <font color="red" title = "File Overtime"><u>File Overtime</u></font>
+                                </a>
+                            </span>
+                            <span ng-if="v.overtime!='false'">{{v.overtime_value}}</span>
+                        </td> 
                         <td>{{v.suspension}}</td> 
                         <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
                     </tr>               

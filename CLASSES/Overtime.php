@@ -48,17 +48,20 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function overtime($data,$extra){
+    public function overtime($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
 
         $where = "";
         if($this->employees_pk && $this->employees_pk != 'null'){
             $where .= "and employees_pk = '$this->employees_pk'";
         }
         
-        $supervisor_pk = $extra['supervisor_pk'];
+        $supervisor_pk = $data['supervisor_pk'];
         $date_from = $data['datefrom'] ;
         $date_to = $data['dateto'];
-        $where .= "and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')";
+
         $sql = <<<EOT
                 select
                     pk, 
@@ -70,8 +73,9 @@ EOT;
                     (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
                     (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
                 from overtime
-                where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
-                and archived = false
+                where archived = false
+                and (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
+                and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
                 $where
                 ;
 EOT;
@@ -79,9 +83,12 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    
     public function timesheet_overtime($data){
-        
-        $employees_pk = $this->employees_pk;
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
         $date_from = $data['datefrom'] ;
         $date_to = $data['dateto'];
 
@@ -109,6 +116,53 @@ EOT;
         return ClassParent::get($sql);
 
     }
+
+    public function approved_overtimes($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $data['date_from'] ;
+        $date_to = $data['date_to'];
+
+        $sql = <<<EOT
+                with Q as 
+                (
+                    select
+                        pk, 
+                        employees_pk,
+                        (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                        time_to :: time as timeto,
+                        time_to::date as dateto,
+                        time_from :: time as timefrom,
+                        time_from::date as datefrom,
+                        date_created::date as datecreated,
+                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
+                        (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
+                    from overtime
+                    where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
+                    and archived = false
+                    and employees_pk = $this->employees_pk
+                )
+                select
+                    pk,
+                    employees_pk,
+                    name,
+                    timeto,
+                    dateto,
+                    timefrom,
+                    datefrom,
+                    datecreated,
+                    status,
+                    remarks
+                from Q
+                where status = 'Approved'
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
 
     public function cancel($info){
         foreach($info as $k=>$v){

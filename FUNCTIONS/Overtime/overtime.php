@@ -4,14 +4,18 @@ require_once('../../CLASSES/Overtime.php');
 
 $class = new Overtime(
 							NULL,
-							$_POST['time_from'],
-							$_POST['time_to'],
+							NULL,
+							NULL,
 							$_POST['employees_pk'],
 							NULL,
 							NULL
 						);
+
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
-$data = $class->overtime($_POST,$extra);
+$extra['datefrom'] = $_POST['datefrom'];
+$extra['dateto'] = $_POST['dateto'];
+
+$data = $class->overtime($extra);
 
 header("HTTP/1.0 404 User Internal Server Error");
 if($data['status']){
