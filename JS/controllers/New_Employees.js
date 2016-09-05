@@ -105,16 +105,6 @@ app.controller('New_Employees', function(
 
         });
     }
-    
-    function get_genders(){
-        var promise = EmployeesFactory.get_genders();
-        promise.then(function(data){
-            $scope.genders.data = data.data.result;
-        })
-        .then(null, function(data){
-
-        });
-    }
 
     function get_levels(){
         var promise = EmployeesFactory.get_levels();

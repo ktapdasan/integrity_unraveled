@@ -145,6 +145,20 @@ values
 	'Jehovah Witness'
 );
 
+insert into employees
+(
+	details
+)
+values
+(
+	'Bank'
+),
+(
+	'Cash'
+),
+(
+	'Wire Transfer'
+);
 /*start of details fields*/
 /*
 personal - {
@@ -269,26 +283,25 @@ education - {
 /*
 EXAMPLES
 
-update employees set 
-details=jsonb_set(details, '{company}', '
+insert into employees = jsonb_set(details, '{company}', '
 {
-	"start_date" : "2016-01-18",
+	"start_date" : "2016-03-01",
 	"employment_statuses_pk" : "3",
 	"employee_types_pk" : "2",
 	"departments_pk": "26", 
-	"levels_pk": "3", 
-	"titles_pk": "21", 
+	"levels_pk": "7", 
+	"titles_pk": "14", 
 	"supervisor": "28", 
-	"email_address": "jgfuntera.chrs@gmail.com", 
-	"business_email_address": "john.funtera@chrsglobal.com",
+	"email_address": "ktapdasan.chrs@gmail.com", 
+	"business_email_address": "ken.tapdasan@chrsglobal.com",
 	"salary" : {
 		"salary_types_pk" : "2",
 		"details" : {
-			"amount" : "20000"
+			"amount" : "13000"
 		},
 		"allowances" : {
-			"1" : "150",
-			"2" : "100"
+			"1" : "1000",
+			"2" : "1000"
 		}
 	},
 	"work_schedule" : {
@@ -314,10 +327,9 @@ details=jsonb_set(details, '{company}', '
 			"out" : "17:00"
 		},
 		"saturday" : null
-	},
-	"hours": "250"
+	}
 }', true) 
-where pk = 51;
+where pk = 12;
 
 update employees set 
 details=jsonb_set(details, '{company}', '

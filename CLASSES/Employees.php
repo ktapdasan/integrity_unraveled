@@ -682,30 +682,14 @@ EOT;
 
         $sql = "begin;";
         $sql .= <<<EOT
-                insert into employees
+                insert into employees_backup
                 (
                     employee_id,
-                    first_name,
-                    middle_name,
-                    last_name,
-                    business_email_address,
-                    email_address,
-                    titles_pk,
-                    department,
-                    levels_pk,
                     details
                 )
                 values
                 (
                     '$this->employee_id',
-                    '$this->first_name',
-                    '$this->middle_name',
-                    '$this->last_name',
-                    '$this->business_email_address',
-                    '$this->email_address',
-                    '$this->titles_pk',
-                    '$this->department',
-                    '$this->levels_pk',
                     '$details'
 
                 );
