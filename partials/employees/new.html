@@ -123,7 +123,6 @@ body>footer .footer-main {
 </style>
 <script src="./ASSETS/js/main.js"></script>
 
-
 <div id="content2">
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
@@ -148,6 +147,7 @@ body>footer .footer-main {
         <div>
             <div ng-if="tab.personal">
                 <form name="myForm">
+
                     <table style="width:70%;margin-left:140px;margin-top:30px;" >
                         <tr>
                             <td>
@@ -504,35 +504,36 @@ body>footer .footer-main {
     </div>
     <div ng-if="tab.government">
         <form name="myForm3">
+           <!--  <input id="input_4" class="form-textbox" maxlength="15" name="atn" size="25" onKeyup='addDashes(this)' /> -->
             <table style="width:77%;margin-left:140px;margin-top:30px">
                 <tr>
                     <td  id="css">
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Philhealth No:</label>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">PHIC:</label>
                     </td>
                     <td id="css">
-                        <input placeholder="(Optional)" class="phid form-control" maxlength="14" ng-model="employees.data_phid" style="display: block; float: left; width:340px; height:36px;"/>
+                        <input placeholder="(Optional)" id="phone" class="form-control" maxlength="14" ng-model="employees.data_phid" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                     <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">PagIbig MID No:</label>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">HDMF:</label>
                     </td>
                     <td id="css">
-                        <input placeholder="(Optional)" class="pagmid form-control" ng-model="employees.data_pagmid" maxlength="14" style="display: block; float: left; width:340px; height:36px;"/>
+                        <input placeholder="(Optional)" class="form-control" ng-model="employees.data_pagmid" maxlength="14" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                 </tr>
                 <tr>
                     <td id="css">
-                        <label  style="display:block; float:left; padding-top:10px; padding-right:10px">TIN ID No:</label>
+                        <label  style="display:block; float:left; padding-top:10px; padding-right:10px">TIN:</label>
 
                     </td>
                     <td id="css">
-                        <input placeholder="(Optional)" class="tin form-control" name="tin" ng-model="employees.data_tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;"/>
+                        <input placeholder="(Optional)" class="form-control" name="tin" ng-model="employees.data_tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;" />
 
                     </td>
                     <td  id="css">
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">SSS No:</label>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">SSS:</label>
                     </td>
                     <td id="css">
-                        <input placeholder="(Optional)" class="tin form-control" maxlength="15" ng-model="employees.data_sss" style="display: block; float: left; width:340px; height:36px;"/>
+                        <input placeholder="(Optional)" class="form-control" maxlength="12" ng-model="employees.data_sss" style="display: block; float: left; width:340px; height:36px;" />
                     </td>
                 </tr>
                 <tr>
