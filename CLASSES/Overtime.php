@@ -232,7 +232,7 @@ EOT;
         return ClassParent::update($sql);
     }
 
-    public function insert_overtime($info){
+    public function update_overtime($info){
         foreach($info as $k=>$v){
             $info[$k] = pg_escape_string(trim(strip_tags($v)));
         }

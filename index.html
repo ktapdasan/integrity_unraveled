@@ -1263,7 +1263,49 @@
     
     </script>
 
+    <script type="text/ng-template" id="DpsModal">
+     
+                
+        <div class="ngdialog-message" style="width;100%;height:100%">
+            <div>
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+            <div> 
 
+            <form name="dps">
+            
+                <div label="form-group" ng-class="{'has-error': timepickerForm.time.$invalid}" > 
+                 <table class="tblDps">
+                 <tr><td>
+                 <label style= "font-size:20px;">Type:</label>
+                 
+                        <select ng-model="log.type" ng-change="type_changed()">
+                            <option>Official</option>
+                            <option>Personal</option>
+                        </select></td>
+                </tr>
+                <tr><td><label style= "font-size:20px; float: left;">Date:</label>
+                <input type="date" class="form-control" size="8" ng-model="log.date" name="time" style="width: 160px;margin-left: 80px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; float: left;">Time From:</label>
+                <input type="text" class="form-control" size="8" ng-model="log.time_from" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; float: left;">Time To:</label>
+                <input type="text" class="form-control" size="8" ng-model="log.time_to" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/></td></tr>
+                <tr><td><label style = "font-size:20px;width:200px;">Reason:</label> 
+                <textarea ng-model="log.remarks" rows ='6' cols ='32' tabindex="1" autofocus required/></td></tr>
+            </div>
+        </div>
+        <tr>
+        <td>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="manualLog.$error.required">{{modal.save}}</button>
+        </div>
+        </tr>
+        </td>
+        </table>
+        </form>
+    
+    </script>
     
 </body>
 </html>

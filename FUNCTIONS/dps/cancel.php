@@ -3,26 +3,25 @@ require_once('../connect.php');
 require_once('../../CLASSES/DailyPassSlip.php');
 
 $class = new DailyPassSlip(
-								NULL,
-								$_POST['employees_pk'],
-								NULL,
-		                        NULL,
-		                        NULL
-							);
+                                NULL,
+                                $_POST['employees_pk'],
+                                NULL,
+                                NULL,
+                                NULL
+                    );
 
-$extra = array(
-				"date_from" => $_POST['date_from'],
-				"date_to" => $_POST['date_to'],
-				"status" => $_POST['status'],
-				"supervisor_pk" => $_POST['supervisor_pk'],
-				"type" => $_POST['type']
-			);
+$info = array(
+                "employees_pk" => $_POST['employees_pk'],
+                "daily_pass_slip_pk" => $_POST['pk'],
+                "status" => $_POST['status'],
+                "remarks" => $_POST['remarks']
+            );
 
-$data = $class->myemployees_fetch($extra);
+$data = $class->cancel($info);
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
-	header("HTTP/1.0 200 OK");
+    header("HTTP/1.0 200 OK");
 }
 
 header('Content-Type: application/json');

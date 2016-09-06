@@ -27,6 +27,23 @@ app.factory('TimelogFactory', function($http){
         return promise;
     };
 
+    factory.add_dps = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/add_dps.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     factory.log_today = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/log_today.php',
@@ -244,7 +261,41 @@ app.factory('TimelogFactory', function($http){
 
     factory.approve_overtime = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Overtime/insert_overtime.php',
+            url:'./FUNCTIONS/Overtime/update_overtime.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.approve_dps = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/update_dps.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.disapprove_dps = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/update_dps.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -262,6 +313,23 @@ app.factory('TimelogFactory', function($http){
     factory.cancel_overtime = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Overtime/cancel.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.cancel_dps = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/cancel.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -295,7 +363,7 @@ app.factory('TimelogFactory', function($http){
 
     factory.disapprove_overtime = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Overtime/insert_overtime.php',
+            url:'./FUNCTIONS/Overtime/update_overtime.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -330,6 +398,23 @@ app.factory('TimelogFactory', function($http){
     factory.get_myemployees = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/get_myemployees.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.get_myemployeesdps = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/dps/get_myemployees.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

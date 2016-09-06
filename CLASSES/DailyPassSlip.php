@@ -38,15 +38,16 @@ class DailyPassSlip extends ClassParent {
         return(true);
     }
 
-    public function fetch($data){
-        foreach($data as $k=>$v){
-            $data[$k] = pg_escape_string(trim(strip_tags($v)));
-        }
+    public function fetch($extra){
+        
+        $employees_pk = $this->employees_pk;
+        $date_from = $extra['date_from'];
+        $date_to = $extra['date_to'];
+        $status = $extra['status'];
+        $type = $extra['type'];
+        $remarks = $extra['remarks'];
 
-        $date_from = $data['date_from'];
-        $date_to = $data['date_to'];
-
-        if($data['status'] == "Active"){
+        if($extra['status'] == "Active"){
             $status = 'false';
         }
         else {
@@ -59,20 +60,22 @@ class DailyPassSlip extends ClassParent {
                     select 
                         pk,
                         employees_pk,
+                        type,
                         (select first_name ||' '||last_name from employees where pk = employees_pk) as employee,
                         time_from::timestamp(0) as time_from,
                         time_to::timestamp(0) as time_to,
                         date_created::timestamp(0) as date_created,
-                        (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by pk desc limit 1) as status,
+                        (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by daily_pass_slip_status.date_created desc limit 1) as status,
                         (
                             select 
-                                array_to_string(array_agg('<div>' || remarks || '</div> <div><span>' || date_created::timestamp(0) || '</span></div>' order by date_created desc), '<hr />')
+                            array_to_string(array_agg('<div>' || remarks || '</div> <div><span>' || date_created::timestamp(0) || '</span></div>'), '<hr />')
                             from daily_pass_slip_status 
                             where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk 
-                            order by pk desc
+                            order by pk desc limit 1
                         ) as reason
                     from daily_pass_slip
-                    where archived = $status
+                    where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
+                    and archived = $status 
                 )
                 select
                     pk,
@@ -82,25 +85,157 @@ class DailyPassSlip extends ClassParent {
                     time_to,
                     date_created,
                     status,
+                    type,
                     reason
                 from Q
                 where (time_from >= '$date_from 0000' and time_from <= '$date_to 2359' or time_to >= '$date_from 0000' and time_to <= '$date_to 2359')
-                    and employees_pk = $this->employees_pk
+                    and employees_pk = $this->employees_pk 
                 ;
 EOT;
 
         return ClassParent::get($sql);
     }
 
-    public function myemployees_fetch($data){
-        foreach($data as $k=>$v){
-            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+    public function cancel($info){
+        foreach($info as $k=>$v){
+            $info[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
-        $date_from = $data['date_from'];
-        $date_to = $data['date_to'];
+        $employees_pk=$info['employees_pk'];
+        $daily_pass_slip_pk=$info['daily_pass_slip_pk'];
+        $remarks=$info['remarks'];
+        $status=$info['status'];
 
-        if($data['status'] == "Active"){
+        $sql .= <<<EOT
+                INSERT INTO daily_pass_slip_status
+                (
+                    daily_pass_slip_pk,
+                    created_by,
+                    remarks,
+                    status
+                )
+                values
+                (
+                    $daily_pass_slip_pk,
+                    $employees_pk,
+                    '$remarks',
+                    '$status'
+                )
+                ;
+EOT;
+        return ClassParent::update($sql);
+    }
+
+    public function update_dps($info){
+        foreach($info as $k=>$v){
+            $info[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+    
+        $employees_pk=$info['employees_pk'];
+        $daily_pass_slip_pk=$info['dps_pk'];
+        $created_by=$info['created_by'];
+        $status=$info['status'];
+        $remarks=$info['remarks'];
+
+        
+        if($status=='Approved'){
+            $remarks = "APPROVED";
+        }
+        else {
+            $remarks = $remarks;
+        }
+
+        $sql = <<<EOT
+            insert into daily_pass_slip_status
+            (
+                daily_pass_slip_pk,
+                created_by,
+                status,
+                remarks          
+            )
+            values
+            (    
+                $daily_pass_slip_pk,
+                $created_by,
+                '$status',
+                '$remarks'
+            )
+            ;
+EOT;
+
+        return ClassParent::insert($sql);
+
+    }
+
+    public function add_dps($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $employees_pk = $this->employees_pk;
+        $time_from=$extra['time_from'];
+        $time_to=$extra['time_to'];
+        $remarks=$extra['remarks'];
+        $type=$extra['type'];
+        $date = $extra['date'];
+        $date_from = $date . " " . $time_from;
+        $date_to = $date . " " . $time_to;
+        $sql = 'begin;';
+        $sql .= <<<EOT
+                INSERT INTO daily_pass_slip
+                (
+                    employees_pk,
+                    time_from,
+                    time_to,
+                    type
+                )
+                values
+                (
+                    $employees_pk,
+                    '$date_from',
+                    '$date_to',
+                    '$type'
+                )
+                ;
+EOT;
+
+        $sql .= <<<EOT
+                INSERT INTO daily_pass_slip_status
+                (
+                    daily_pass_slip_pk,
+                    status,
+                    created_by,
+                    remarks
+                )
+                values
+                (
+                    currval('daily_pass_slip_pk_seq'),
+                    'Pending',
+                    $employees_pk,
+                    '$remarks'
+                )
+                ;
+EOT;
+        $sql .= "commit;";
+        return ClassParent::update($sql);
+    }
+
+    public function myemployees_fetch($extra){
+        
+
+        $where = "";
+        if($this->employees_pk && $this->employees_pk != 'null'){
+            $where .= "and employees_pk = '$this->employees_pk'";
+        }
+        $supervisor_pk = $extra['supervisor_pk'];
+        $date_from = $extra['date_from'];
+        $date_to = $extra['date_to'];
+        $status = $extra['status'];
+        $type = $extra['type'];
+        
+        
+
+        if($extra['status'] == "Active"){
             $status = 'false';
         }
         else {
@@ -113,20 +248,24 @@ EOT;
                     select 
                         pk,
                         employees_pk,
+                        type,
                         (select first_name ||' '||last_name from employees where pk = employees_pk) as employee,
                         time_from::timestamp(0) as time_from,
                         time_to::timestamp(0) as time_to,
                         date_created::timestamp(0) as date_created,
-                        (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by pk desc limit 1) as status,
+                        (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by daily_pass_slip_status.date_created desc limit 1) as status,
                         (
                             select 
                                 remarks || ' <br /> ' || date_created::timestamp(0)
                             from daily_pass_slip_status 
                             where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk 
-                            order by pk desc
+                            order by pk desc limit 1
                         ) as reason
                     from daily_pass_slip
-                    where archived = $status
+                    where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
+                    and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
+                    and archived = $status
+                    $where
                 )
                 select
                     pk,
@@ -136,10 +275,12 @@ EOT;
                     time_to,
                     date_created,
                     status,
+                    type,
                     reason
                 from Q
                 where (time_from >= '$date_from 0000' and time_from <= '$date_to 2359' or time_to >= '$date_from 0000' and time_to <= '$date_to 2359')
-                    and employees_pk in (select employees_pk from groupings where supervisor_pk = $this->employees_pk)
+                    and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
+                $where
                 ;
 EOT;
 

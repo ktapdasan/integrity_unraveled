@@ -19,7 +19,7 @@ $info = array(
     		);
 
 
-$data = $class->insert_overtime($info);
+$data = $class->update_overtime($info);
 
 
 header("HTTP/1.0 404 User Not Found");

@@ -4,7 +4,7 @@ create table daily_pass_slip (
 	employees_pk int references employees(pk),
 	time_from timestamptz,
 	time_to timestamptz,
-	date_created timestamptz default now();
+	date_created timestamptz default now(),
 	archived boolean default false
 );
 alter table daily_pass_slip owner to chrs;

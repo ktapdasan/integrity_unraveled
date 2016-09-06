@@ -13,7 +13,10 @@ $class = new DailyPassSlip(
 $extra = array(
 				"date_from" => $_POST['date_from'],
 				"date_to" => $_POST['date_to'],
-				"status" => $_POST['status']
+				"status" => $_POST['status'],
+				"type" => $_POST['type'],
+				"remarks" => $_POST['remarks']
+
 			);
 
 $data = $class->fetch($extra);

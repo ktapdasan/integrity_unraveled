@@ -88,6 +88,10 @@ select{
                     <div style="float:left; margin-left:5px;margin-top:27px;">
                         <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:1px;">
                     </div>
+                     <div style="float:left; margin-left:10px;">
+                        <input type="button" class="medium button red fa-fa" value="File Daily Pass Slip" ng-click="add_dps()" />
+                    </div>
+                    </div>
 
                     <div style="clear:both;"></div>
                 </div>
@@ -103,6 +107,7 @@ select{
                 <table id="datatables-example" class="table1" width="90%" cellspacing="0" style="word-break:break-all;">
                     <thead>
                         <tr>
+                            <th>Type</th>
                             <th>Date Filed</th>
                             <th>Time From</th>
                             <th>Time To</th>
@@ -111,7 +116,8 @@ select{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="(k, v) in dps.data" style="cursor:pointer;" ng-if="dps.status">
+                        <tr ng-repeat="(k, v) in dps.data track by $index" style="cursor:pointer;" ng-if="dps.status">
+                            <td>{{v.type}}</td>
                             <td>{{v.date_created}}</td>
                             <td>{{v.time_from}}</td>
                             <td>{{v.time_to}}</td>
@@ -126,7 +132,7 @@ select{
                             </td>
                         </tr>
                         <tr ng-if="!dps.status" style = "text-align: center;">
-                            <td colspan = "5" style="text-align:center;">No data found</td>
+                            <td colspan = "6" style="text-align:center;">No data found</td>
                         </tr>
 
                     </tbody>

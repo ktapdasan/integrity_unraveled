@@ -81,13 +81,30 @@ select{
                             <option>Inactive</option>
                         </select>
                     </div>
-                    <div style="float:left; margin-left:5px;margin-top:11px">
+
+                <div style="float:left; margin-left:5px;margin-top:11px">
+                    <label style="float:left;font-size: 15px;">Select an Employee</label>
+                    <br>
+                    <div
+                        isteven-multi-select
+                        input-model="myemployees"
+                        output-model="filter.myemployees"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:250px; float:left;"
+                        max-height="200px" 
+
+                            >
+                    </div>
+                    </div>
                         <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: 1px;margin-left:1px;">
                     </div>
 
                     <div style="clear:both;"></div>
                 </div>
-                
+                </div>
             </div>
 
             <div style="height:10px; width:100%;">
@@ -113,14 +130,14 @@ select{
                             <td>{{v.employee}}</td>
                             <td>{{v.time_from}}</td>
                             <td>{{v.time_to}}</td>
-                            <td ng-bind-html="v.reason"></td>
+                            <td ng-bind-html="v.reason" class="remarks"></td>
                             <td>
                                 <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                                     {{v.status}} 
                                 </div>
                                 <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                    <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="medium button blue fa-fa"/> 
-                                    <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="medium button red fa-fa"/> 
+                                    <input type= "button" ng-click = "approve (k)" value = "Approve" class="medium button blue fa-fa"/> 
+                                    <input type= "button" ng-hide = "rejected" ng-click = "disapprove (k)" value = "Disapprove" class="medium button red fa-fa"/> 
                                 </div>
                             </td>
                         </tr>
