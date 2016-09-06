@@ -6,6 +6,10 @@ app.controller('New_Employees', function(
     UINotification
     ){
 
+    $scope.employee = {
+        school_type: ''
+    };
+
     $scope.pk='';
 
     $scope.tab = {
@@ -47,15 +51,23 @@ app.controller('New_Employees', function(
         supervisor_pk:'',
         departments_pk:'',
         employee_type:'',
-        employment_type:''
+        employment_type:'',
+        forms: [{educ_level: "Primary"}],
+        data_sss: null,
+        data_phid: null,
+        data_pagmid: null,
+        data_tin: null,
+        intern_hours:''
     };
 
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
     $scope.show_hours = false;
-    $scope.fname1 = '';
-    $scope.lname1 = '';
+    $scope.data_data = {
+        fname:'',
+        lname1:''
+    };
 
     init();
 
@@ -139,22 +151,20 @@ app.controller('New_Employees', function(
 
         });
     }
+	
 
     $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){
-            $scope.employee.forms.push({educ_level: "Primary"});
-
+            $scope.employees.forms.push({educ_level: "Primary"});
         }
         else if ($scope.employee.school_type == 2){
-            $scope.employee.forms.push({educ_level: "Secondary" });
-
+            $scope.employees.forms.push({educ_level: "Secondary" });
         }
         else if ($scope.employee.school_type == 3){
-            $scope.employee.forms.push({educ_level: "Tertiary" });
-
+            $scope.employees.forms.push({educ_level: "Tertiary" });
         }
     };
-
+   
     $scope.submit_employees = function(){
 
         get_supervisors();
@@ -162,7 +172,7 @@ app.controller('New_Employees', function(
         promise.then(function(data){
 
             UINotification.success({
-                message: $scope.fname1 + ' ' + $scope.lname1 + ' was successfully added.', 
+                message: $scope.data_data.fname + ' ' + $scope.data_data.lname1 + ' was successfully added.', 
                 title: 'SUCCESS', 
                 delay : 5000,
                 positionY: 'top', positionX: 'right'
@@ -197,7 +207,12 @@ app.controller('New_Employees', function(
         supervisor_pk:'',
         departments_pk:'',
         employee_type:'',
-        employment_type:''
+        employment_type:'',
+        forms: [{educ_level: "Primary"}],
+        data_sss: '',
+        data_phid: '',
+        data_pagmid: '',
+        data_tin: '',
         };
     }
 

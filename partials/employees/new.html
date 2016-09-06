@@ -153,8 +153,8 @@ body>footer .footer-main {
                             <td>
                                 <label style="display:block; float:left; padding-right:10px">First Name:</label> 
                             </td>
-                            <td id="css">    
-                                <input name="firstName"required ng-model="employees.first_name" ng-change="fname1 = employees.first_name" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                            <td id="css">     
+                                <input name="firstName" required ng-model="employees.first_name" ng-change="data_data.fname = employees.first_name" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                             </td>
                             <td>
@@ -187,7 +187,7 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Last Name:</label>
                             </td>
                             <td id="css">
-                                <input name="lastName" required ng-model="employees.last_name" ng-change="lname1 = employees.last_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <input name="lastName" required ng-model="employees.last_name" ng-change="data_data.lname1 = employees.last_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                             </td>
                             <td>
@@ -283,12 +283,13 @@ body>footer .footer-main {
                 <table style="width:33%;margin-left:140px;" >
                     <tr>
                         <td >
-                            <select name="school" required ng-model="employees.school_type" style="display: block; float: left; width:200px;padding:5px;margin-top:20px;" >
+                            <select name="school" required ng-model="employee.school_type" style="display: block; float: left; width:200px;padding:5px;margin-top:20px;" >
                                 <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                                 <option ng-repeat="v in stype" style="cursor:pointer;" value="{{v.pk}}">
                                     {{v.sctype}}
                                 </option>
                             </select>
+
                         </td>
                         <td>
                             <button type="button" ng-click="addNewChoice()" class="large button green fa-fa" style="margin-top:20px;" >+ Add Education</button>
@@ -363,7 +364,7 @@ body>footer .footer-main {
                                 {{v.level_title}}
                             </option>
                         </select>
-                        <input type="text" placeholder = 'no. of hours' ng-model = 'employees.intern_hours' is-number maxlength = "3" size = "8" ng-show="show_hours" required/>   
+                        <input type="text" placeholder = 'no. of hours' ng-model ="employees.intern_hours" is-number maxlength = "3" size = "8" ng-show="show_hours" required/>   
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm2.level.$error.required">Level is required.</span>
                     </td>
                     <td>
