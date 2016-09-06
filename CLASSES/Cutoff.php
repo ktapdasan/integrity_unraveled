@@ -48,6 +48,7 @@ EOT;
         $sql = <<<EOT
                 select
                     cutoff_types_pk, 
+                    (select type from cutoff_types where pk = cutoff_dates.cutoff_types_pk) as cutoff_type,
                     dates
                 from cutoff_dates
                 ;

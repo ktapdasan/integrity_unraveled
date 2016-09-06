@@ -8,6 +8,7 @@ $class = new Overtime(
                         NULL,
                         NULL,
                         NULL,
+                        NULL,
                         NULL
                     );
 

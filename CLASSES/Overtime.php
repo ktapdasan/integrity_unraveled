@@ -3,6 +3,7 @@ require_once('../../CLASSES/ClassParent.php');
 class Overtime extends ClassParent {
 
     var $pk             = NULL;
+    var $type           = NULL;
     var $time_from      = NULL;
     var $time_to        = NULL;
     var $employees_pk   = NULL;
@@ -11,11 +12,10 @@ class Overtime extends ClassParent {
 
     public function __construct(
                                     $pk,
+                                    $type,
                                     $time_from,
                                     $time_to,
                                     $employees_pk,
-                                    $date_from,
-                                    $date_to,
                                     $date_created,
                                     $archived
                                 )
@@ -161,7 +161,12 @@ EOT;
         }
 
         $date_from = $data['date_from'] ;
-        $date_to = $data['date_to'];
+        $date_to = date('Y-m-d', strtotime($data['date_to']));
+
+        if($data['date_to'] != $date_to){
+            $a = strtotime('-1 day', strtotime($date_to));
+            $date_to = date('Y-m-d', $a);
+        }
 
         $sql = <<<EOT
                 with Q as 
@@ -194,6 +199,59 @@ EOT;
                     status,
                     remarks
                 from Q
+                where status = 'Approved'
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function count_approved_overtimes($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $data['date_from'] ;
+        $date_to = date('Y-m-d', strtotime($data['date_to']));
+
+        if($data['date_to'] != $date_to){
+            $a = strtotime('-1 day', strtotime($date_to));
+            $date_to = date('Y-m-d', $a);
+        }
+
+        $sql = <<<EOT
+                with A as 
+                (
+                    select
+                        time_to, 
+                        time_from,
+                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
+                    from overtime
+                    where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
+                    and archived = false
+                    and employees_pk = $this->employees_pk
+                ),
+                B as
+                (
+                    select
+                        time_to,
+                        time_from,
+                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
+                    from overtime
+                    where (time_from::date between (to_char(now(), 'YYYY-01-01'))::date and '$date_to' or time_to::date between (to_char(now(), 'YYYY-01-01'))::date and '$date_to')
+                    and archived = false
+                    and employees_pk = $this->employees_pk
+                )
+                select
+                    'monthly' as type,
+                    sum(age(time_to, time_from)) as amount
+                from A
+                where status = 'Approved'
+                union
+                select
+                    'yearly' as type,
+                    sum(age(time_to, time_from)) as amount
+                from B
                 where status = 'Approved'
                 ;
 EOT;
