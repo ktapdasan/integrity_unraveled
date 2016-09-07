@@ -555,9 +555,9 @@ EOT;
         }
 
         $str=$data['searchstring'];
-        $lvl=$data[levels_pk];
-        $dept=$data[departments_pk];
-        $posi=$data[titles_pk];
+        $lvl=$data['levels_pk'];
+        $dept=$data['departments_pk'];
+        $posi=$data['titles_pk'];
         $where = "";
         if ($str){
             $where .= " AND (first_name ILIKE '$str%' OR middle_name ILIKE '$str%' 

@@ -20,6 +20,7 @@ $class = new Employees(
     $_POST['data_tin'],
     $_POST['data_pagmid'],
     $_POST['data_phid'],
+    $_POST['forms'],
     NULL,
     NULL,
     NULL
@@ -60,7 +61,6 @@ if ($_POST['data_pagmid'] == null){
 if ($_POST['data_phid'] == null){
     $government['PHILHEALTH']        = 'N/A';
 }
-
 if ($_POST['data_sss'] != null){
     $government['SSS']               = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
 }
@@ -73,7 +73,6 @@ if ($_POST['data_pagmid'] != null){
 if ($_POST['data_phid'] != null){
     $government['PHILHEALTH']        = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 }
-
 if ($_POST['levels_pk'] == 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
     $company['hours']                = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
@@ -82,13 +81,14 @@ if ($_POST['levels_pk'] != 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
 }
 
+$education['school_type']            = $_POST['stype'];
+
 $details = array();
 $details['company']                  = $company;
 $details['personal']                 = $personal; 
+$details['education']                = $education;
 $details['government']               = $government; 
-
 $extra['details']                    = $details; 
-$extra['supervisor_pk']              = $_POST['supervisor_pk'];
 
 $data = $class-> create($extra);
 

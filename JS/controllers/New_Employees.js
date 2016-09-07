@@ -6,10 +6,6 @@ app.controller('New_Employees', function(
     UINotification
     ){
 
-    $scope.employee = {
-        school_type: ''
-    };
-
     $scope.pk='';
 
     $scope.tab = {
@@ -18,10 +14,6 @@ app.controller('New_Employees', function(
         company : false,
         government : false
     };
-
-    $scope.data = {
-        email:''
-    }
 
     $scope.current = {
         personal : 'current',
@@ -33,6 +25,7 @@ app.controller('New_Employees', function(
     $scope.titles={};
     $scope.level_title={};
     $scope.department={};
+    
     
     $scope.employees={
         first_name:'',
@@ -48,6 +41,7 @@ app.controller('New_Employees', function(
         birth_date:'',
         titles_pk:'',
         levels_pk:'',
+        stype:'',
         supervisor_pk:'',
         departments_pk:'',
         employee_type:'',
@@ -60,6 +54,8 @@ app.controller('New_Employees', function(
         intern_hours:''
     };
 
+    $scope.employees.stype = JSON.stringify($scope.employees.forms);
+    
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
@@ -203,21 +199,20 @@ app.controller('New_Employees', function(
         business_email_address:'',
         titles_pk:'',
         date_started:'',
+        stype:'',
         levels_pk:'',
         supervisor_pk:'',
         departments_pk:'',
         employee_type:'',
         employment_type:'',
         forms: [{educ_level: "Primary"}],
-        data_sss: '',
-        data_phid: '',
-        data_pagmid: '',
-        data_tin: '',
+        data_sss: null,
+        data_phid: null,
+        data_pagmid: null,
+        data_tin: null,
+        intern_hours:''
         };
     }
-
-    // $scope.employees.date_started = new Date();
-
 
     $scope.level_changed = function(){
         level_changed();
