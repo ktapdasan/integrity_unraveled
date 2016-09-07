@@ -5,7 +5,8 @@ app.controller('admin_Holidays', function(
                                         ngDialog,
                                         UINotification,
                                         HolidaysFactory,
-                                        md5
+                                        md5,
+                                        $filter
                                     ){
     $scope.holiday = {};
     $scope.modal = {};
@@ -97,7 +98,7 @@ app.controller('admin_Holidays', function(
 
 
         ngDialog.openConfirm({
-            template: 'HolidayNewModal',
+            template: 'HolidayModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
@@ -125,10 +126,11 @@ app.controller('admin_Holidays', function(
         }, function(value){
 
             $scope.holiday.creator_pk = $scope.profile.pk;
-            $scope.holiday.holiday_name = $scope.modal.holiday_name;
-            $scope.holiday.holiday_type = $scope.modal.holiday_type;
+            $scope.holiday.holiday_name = $scope.modal.name;
+            $scope.holiday.holiday_type = $scope.modal.type;
 
-            var date = new Date($scope.modal.holiday_date);
+
+            var date = new Date($scope.modal.datex);
             var dd = date.getDate();
             var mm = date.getMonth()+1; 
             var yyyy = date.getFullYear();
@@ -164,20 +166,27 @@ app.controller('admin_Holidays', function(
     
     $scope.edit_holiday = function(k){
         
-        
+        var date = new Date( $scope.holiday.data[k].datex);
+            var dd = date.getDate();
+            var mm = date.getMonth()+1; 
+            var yyyy = date.getFullYear();
+
+        $scope.holiday.new_date = new Date(mm+"-"+dd+"-"+yyyy);
+            
         $scope.modal = {
 
             title : 'Edit Holiday',
             save : 'Apply Changes',
             close : 'Cancel',
             name : $scope.holiday.data[k].name,
-            datex : $scope.holiday.data[k].datex,
+            datex : $scope.holiday.new_date,
+            type :$scope.holiday.data[k].type,
             archived : $scope.holiday.data[k].archived,
             pk: $scope.holiday.data[k].pk
         };
 
         ngDialog.openConfirm({
-            template: 'EditHolidayModal',
+            template: 'HolidayModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
@@ -203,6 +212,8 @@ app.controller('admin_Holidays', function(
         .then(function(value){
             return false;
         }, function(value){
+            
+             $scope.modal.datex =  $filter('date')( $scope.modal.datex, "yyyy-MM-dd");
 
             var promise = HolidaysFactory.update_holiday($scope.modal);
             promise.then(function(data){
