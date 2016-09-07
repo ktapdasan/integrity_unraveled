@@ -192,13 +192,18 @@
             <p class="animated fadeInRight">Would you like to log in now?</p>
             <div>
             <a ng-disabled="logbutton" ng-click="submitlog('In')"style="margin-top:10px;">
-            <img src ="./ASSETS/img/lgnbtn.png"/>
+            <img src ="./ASSETS/img/lgnbtn.png" width="160px" height="160px"/>
             </a>
             </div>
         </li>
         <li class="msg" ng-if="logtype=='logout'">
             <p class="animated fadeInRight">Would you like to log out?</p>
-            <input ng-disabled="logbutton" ng-click="submitlog('Out')" type="button" class=" btn btn-lg btn-round btn-primary" value="LOG OUT" style="margin-top:50px;">
+      <!--       <input ng-disabled="logbutton" ng-click="submitlog('Out')" type="button" class=" btn btn-lg btn-round btn-primary" value="LOG OUT" style="margin-top:50px;"> -->
+            <div>
+            <a ng-disabled="logbutton" ng-click="submitlog('Out')"style="margin-top:10px;">
+            <img src ="./ASSETS/img/logout.png" width="160px" height="160px"/>
+            </a>
+            </div>
         </li>
         <li class="msg">
             <img src="./ASSETS/img/exchange.gif" style="width:40px; cursor:pointer;" title="Switch to {{(logtype == 'login')?'Log Out':'Log In'}}" ng-click="switch(logtype)"/>
