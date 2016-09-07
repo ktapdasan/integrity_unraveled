@@ -117,8 +117,13 @@ tr:hover {
 
                             
                             <span ng-if = 'v.login != "None" && v.login != ""'>
-
-                                {{v.login_time}}
+                                <span ng-if='v.login == "Pending"'>
+                                    {{v.login}}
+                                </span>
+                                <span ng-if='v.login != "Pending"'>
+                                    {{v.login_time}}
+                                </span>
+                                
                             </span>
                         </td>
                         <td>
@@ -129,8 +134,13 @@ tr:hover {
                             </span>
 
                             <span ng-if="v.logout != 'None' && v.logout != ''">
-
-                                {{v.logout_time}}
+                                <span ng-if='v.logout == "Pending"'>
+                                    {{v.logout}}
+                                </span>
+                                <span ng-if='v.logout != "Pending"'>
+                                    {{v.logout_time}}
+                                </span>
+                                
                             </span>
                         </td>
                         <td>
@@ -142,12 +152,13 @@ tr:hover {
                         <td>{{v.undertime}}</td> 
                         <td>
                             <span ng-if="v.overtime=='false'">
-                                
                                 <a ng-click="open_overtime(k)">
                                     <font color="red" title = "File Overtime"><u>File Overtime</u></font>
                                 </a>
                             </span>
-                            <span ng-if="v.overtime!='false'">{{v.overtime_value}}</span>
+                            <span ng-if="v.overtime=='Approved'">{{v.overtime_value}}</span>
+                            <span ng-if="v.overtime=='Pending'">{{v.overtime}}</span>
+                            <span ng-if="v.overtime=='Disapproved'">{{v.overtime}}</span>
                         </td> 
                         <td>{{v.suspension}}</td> 
                         <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
