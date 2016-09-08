@@ -3,6 +3,7 @@ create table overtime(
 	type text default 'Paid',
 	time_from timestamptz not null,
 	time_to timestamptz not null,
+	hrs numeric not null,
 	employees_pk int references employees(pk),
 	date_created timestamptz default now(),
 	archived boolean default false
@@ -17,6 +18,7 @@ create table overtime_status(
 	remarks text not null
 );
 alter table overtime_status owner to chrs;
+ALTER TABLE overtime_status ADD CONSTRAINT overtime_status_overtime_pk_fkey FOREIGN KEY (overtime_pk) REFERENCES overtime(pk);
 
 insert into overtime
 (

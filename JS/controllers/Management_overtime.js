@@ -106,6 +106,10 @@ app.controller('Management_overtime', function(
     }
 
     function show_employees_overtime() {
+        $scope.overtime.data = [];
+        $scope.overtime.count = 0;
+        $scope.overtime.status = false;
+
         var filter = {};
         filter.supervisor_pk =  $scope.profile.pk;
         //filter.employees_pk =  $scope.profile.employees_pk;
@@ -153,7 +157,7 @@ app.controller('Management_overtime', function(
 
         $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to approve overtime ',
+                message: 'Are you sure you want to approve this overtime?',
                 save : 'Yes',
                 close : 'Cancel'
 
@@ -174,12 +178,13 @@ app.controller('Management_overtime', function(
             overtime.status = "Approved";
             overtime.pk =  $scope.overtime.data[k].pk;
             overtime.remarks= "APPROVED";
+            overtime.hours = $scope.overtime.data[k].hrs;
             
             var promise = TimelogFactory.approve_overtime(overtime);
             promise.then(function(data){
                
                 UINotification.success({
-                                        message: 'You have successfully approved overtime', 
+                                        message: 'Overtime successfully approved', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'

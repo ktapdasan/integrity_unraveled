@@ -910,6 +910,20 @@ EOT;
 
         return ClassParent::update($sql);
     }
+
+    public function update_leave_balances($data){
+        
+
+        $leave_balances = json_encode($data['leave_balances']);
+        $sql = <<<EOT
+                update employees set leave_balances = '$leave_balances'
+                where pk = $this->pk
+                ;
+EOT;
+
+        return ClassParent::update($sql);
+    }
+
 //      public function open_manual_log($data){
 //        foreach($data as $k=>$v){
 //             $data[$k] = pg_escape_string(trim(strip_tags($v)));

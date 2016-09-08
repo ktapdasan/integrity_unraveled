@@ -957,13 +957,14 @@
                 <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>                
             </div>
             <div>
-                <p>You have an excess hours of {{modal.overtime}}</p>
+                <label style= "font-size:15px;">Total hours: </label>
+                <label style= "font-size:15px;">{{modal.overtime}}</label>
             </div>
             <div>
                 <label style= "font-size:15px;">Type: </label>
                 <select ng-model="modal.type">
                     <option>Paid</option>
-                    <option>Non-paid</option>
+                    <option>Unpaid</option>
                 </select>
             </div>
             <div>

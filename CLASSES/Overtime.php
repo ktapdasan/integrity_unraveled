@@ -6,6 +6,7 @@ class Overtime extends ClassParent {
     var $type           = NULL;
     var $time_from      = NULL;
     var $time_to        = NULL;
+    var $hrs        = NULL;
     var $employees_pk   = NULL;
     var $date_created   = NULL;
     var $archived       = NULL;
@@ -15,6 +16,7 @@ class Overtime extends ClassParent {
                                     $type,
                                     $time_from,
                                     $time_to,
+                                    $hrs,
                                     $employees_pk,
                                     $date_created,
                                     $archived
@@ -75,9 +77,9 @@ EOT;
                         to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
                         time_to::timestamp(0) as timeto,
                         to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
-                        age(time_to, time_from) as hrs,
-                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
-                        (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
+                        hrs,
+                        (select status from overtime_status where overtime_pk = overtime.pk order by date_created desc limit 1) as status,
+                        (select remarks from overtime_status where overtime_pk = overtime.pk order by date_created desc limit 1) as remarks
                     from overtime
                     where archived = false
                     and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')   
@@ -92,29 +94,18 @@ EOT;
                 B as
                 (
                     select
-                        pk, 
-                        employees_pk,
-                        (select first_name||' '||last_name from employees where pk = employees_pk) as name,
-                        date_created::timestamp(0) as datecreated,
-                        to_char(date_created, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as datecreated_html,
-                        time_from::timestamp(0) as timefrom,
-                        to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
-                        time_to::timestamp(0) as timeto,
-                        to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
-                        age(time_to, time_from) as hrs,
-                        (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
-                        (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
-                    from overtime
-                    where archived = false
-                    and (
-                            time_from::date between '$date_from' and '$date_to' 
+                        *
+                    from Q
+                    where  (
+                            timefrom::date between '$date_from' and '$date_to' 
                             or 
-                            time_to::date between '$date_from' and '$date_to'
+                            timeto::date between '$date_from' and '$date_to'
                         )
-                    and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
-                    $where
+                        and status != 'Pending'
+                        
                 )
                 select * from A union select * from B
+                order by timeto
                 ;
 EOT;
 
@@ -225,6 +216,7 @@ EOT;
                     select
                         time_to, 
                         time_from,
+                        hrs,
                         (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
                     from overtime
                     where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
@@ -236,6 +228,7 @@ EOT;
                     select
                         time_to,
                         time_from,
+                        hrs,
                         (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status
                     from overtime
                     where (time_from::date between (to_char(now(), 'YYYY-01-01'))::date and '$date_to' or time_to::date between (to_char(now(), 'YYYY-01-01'))::date and '$date_to')
@@ -244,15 +237,50 @@ EOT;
                 )
                 select
                     'monthly' as type,
-                    sum(age(time_to, time_from)) as amount
+                    coalesce(sum(hrs),0) as amount
                 from A
                 where status = 'Approved'
                 union
                 select
                     'yearly' as type,
-                    sum(age(time_to, time_from)) as amount
+                    coalesce(sum(hrs),0) as amount
                 from B
                 where status = 'Approved'
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function filed_overtimes($data){
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $data['date_from'] ;
+        $date_to = date('Y-m-d', strtotime($data['date_to']));
+
+        if($data['date_to'] != $date_to){
+            $a = strtotime('-1 day', strtotime($date_to));
+            $date_to = date('Y-m-d', $a);
+        }
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    employees_pk,
+                    (select first_name||' '||last_name from employees where pk = employees_pk) as name,
+                    time_to :: time as timeto,
+                    time_to::date as dateto,
+                    time_from :: time as timefrom,
+                    time_from::date as datefrom,
+                    date_created::date as datecreated,
+                    (select status from overtime_status where pk = overtime_pk order by date_created desc limit 1) as status,
+                    (select remarks from overtime_status where pk = overtime_pk order by date_created desc limit 1) as remarks
+                from overtime
+                where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
+                and archived = false
+                and employees_pk = $this->employees_pk
                 ;
 EOT;
 
@@ -351,21 +379,29 @@ EOT;
     }
 
     public function insert($data){
-        $remarks = pg_escape_string(strip_tags(trim($data['remarks'])));
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $remarks = $data['remarks'];
 
         //$time_from = date('Y-m-d') . " " . $this->time_from;
         $sql = "begin;";
         $sql .= <<<EOT
                 insert into overtime
                 (
+                    type,
                     time_from,
                     time_to,
+                    hrs,
                     employees_pk
                 )
                 values
                 (
+                    '$this->type',
                     '$this->time_from',
                     '$this->time_to',
+                    $this->hrs,
                     $this->employees_pk
                 )
                 ;

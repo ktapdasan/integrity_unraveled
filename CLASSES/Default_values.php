@@ -5,11 +5,13 @@ class Default_values extends ClassParent {
     var $pk         = NULL;
     var $name       = NULL;
     var $details    = NULL;
+    var $archived    = NULL;
 
     public function __construct(
                                     $pk,
                                     $name,
-                                    $details
+                                    $details,
+                                    $archived
                                 ){
         
         $fields = get_defined_vars();

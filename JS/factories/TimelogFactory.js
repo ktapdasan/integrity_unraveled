@@ -146,6 +146,23 @@ app.factory('TimelogFactory', function($http){
         return promise;
     }
 
+    factory.save_overtime = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Timelog/save_overtime.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    }
+
     factory.get_positions = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Timelog/get_positions.php',

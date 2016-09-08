@@ -657,13 +657,15 @@ app.controller('Timesheet', function(
     }
     
     $scope.open_overtime = function(k){
+        // console.log($scope.timesheet.data[k]);
+        // return false;
         var schedule = $scope.timesheet.data[k].schedule.split(' - ');
         var logout = $scope.timesheet.data[k].logout.split(' ');
 
         var sched_logout = new Date(logout[0] +" "+schedule[1]);
         var actual_logout = new Date($scope.timesheet.data[k].logout);
 
-        var moment_time = moment.utc(moment(actual_logout,"DD/MM/YYYY HH:mm:ss").diff(moment(sched_logout,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
+        var moment_time = $scope.timesheet.data[k].overtime_value;//moment.utc(moment(actual_logout,"DD/MM/YYYY HH:mm:ss").diff(moment(sched_logout,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
 
         $scope.modal = {
 
@@ -699,7 +701,37 @@ app.controller('Timesheet', function(
         .then(function(value){
             return false;
         }, function(value){
-             
+            var filter = {
+                type : $scope.modal.type,
+                time_from : $filter('date')(sched_logout, "yyyy-MM-dd"),
+                time_to : $filter('date')(actual_logout, "yyyy-MM-dd"),
+                hrs : moment_time,
+                employees_pk : $scope.profile.pk,
+                remarks : $scope.modal.remarks
+            };
+
+            var promise = TimelogFactory.save_overtime(filter);
+            promise.then(function(data){
+
+                UINotification.success({
+                                        message: 'You have successfully filed overtime', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+
+                $scope.timesheet.data[k].overtime = 'Pending';
+
+            })
+            .then(null, function(data){                
+                UINotification.error({
+                                        message: 'An error occured, unable to file overtime, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+
+            });
 
             
         });

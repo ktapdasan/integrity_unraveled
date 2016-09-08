@@ -136,6 +136,8 @@ $pending_manuallogs = $data3['result'];
 
 $class4 = new Overtime(
         				NULL,
+        				NULL,
+        				NULL,
                         NULL,
                         NULL,
         				$_POST['employees_pk'],
@@ -143,8 +145,8 @@ $class4 = new Overtime(
                         NULL
         			);
 
-$data4 = $class4->approved_overtimes($date_range);
-$approved_overtimes = $data4['result'];
+$data4 = $class4->filed_overtimes($date_range);
+$filed_overtimes = $data4['result'];
 
 
 foreach ($employees as $employee_id => $value) {
@@ -236,13 +238,39 @@ foreach ($employees as $employee_id => $value) {
 
 			$overtime = (strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) / 60;
 
-			$y['overtime_value'] = round($overtime) . " mins";
+			//compute overtime number of hours
+			//$overtime is the difference between actual log out and scheduled log out
+			//situation: for every 3 hrs the next 1 hr will be considered as break.
+			//in this equation we round off the overtime (currently in minutes)
+			//divide by 60 to get the # of hours
+			//divide by 4 because for every 4 hrs we have 3 valid hrs
+			//the result will be multiplied to 3 to get the actual # of hrs
+			//for example:
+			//6 hrs of overtime will divided by 4 = 1.5
+			//1 * 3 = 3
+			//we now have 3 valid overtime hrs
+			//the remainder will be converted and treated as percentage
+			//since we are dividing by 4, the remainders are only limited to .25, .5, .75 and 0
+			//.25 = 1 hr
+			//.5 = 2 hrs
+			//.75 = 3 hrs
+			//in this case we have 3 valid hrs + 2
+			//the total overtime hrs is 5
+
+			$z = round($overtime) / 60;
+			$z = $z / 4;
+			
+			$whole = floor($z);
+			$fraction = (float)$z - (int)$whole;
+				
+			$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
+
+			$y['overtime_value'] = $overtime;
 			$y['overtime'] = 'false';
 
-			foreach ($approved_overtimes as $a => $b) {
-				//echo $y['employees_pk']." == ".$b['employees_pk']." && ".$y['log_date']." >= ".$b['datefrom']." && ".$y['log_date']." <= ".$b['dateto'];
+			foreach ($filed_overtimes as $a => $b) {
 				if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
-					$y['overtime'] = 'true';
+					$y['overtime'] = 'Pending';
 				}
 			}
 		}
