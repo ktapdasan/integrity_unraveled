@@ -4,6 +4,7 @@ require_once('../../CLASSES/Employees.php');
 require_once('../../CLASSES/Leave.php');
 require_once('../../CLASSES/ManualLog.php');
 require_once('../../CLASSES/Overtime.php');
+require_once('../../CLASSES/DailyPassSlip.php');
 
 $data = array(
 				"employees_pk" => $_POST['employees_pk'],
@@ -148,6 +149,17 @@ $class4 = new Overtime(
 $data4 = $class4->filed_overtimes($date_range);
 $filed_overtimes = $data4['result'];
 
+$class5 = new DailyPassSlip(
+                        NULL,
+        				$_POST['employees_pk'],
+        				NULL,
+        				NULL,
+                        NULL
+        			);
+
+$data5 = $class5->approved_dps($date_range);
+$approved_dps = $data5['result'];
+//print_r($approved_dps);
 
 foreach ($employees as $employee_id => $value) {
 	foreach ($data['result'] as $k => $v) {
@@ -161,8 +173,8 @@ foreach ($employees as $employee_id => $value) {
 			$value[$v['log_date']]['log_day'] 		= $v['log_day'];
 			$value[$v['log_date']]['login'] 		= $v['log_in'];
 			$value[$v['log_date']]['logout'] 		= $v['log_out'];
-			$value[$v['log_date']]['login_time'] 	= date('h:i:s A', strtotime($v['log_in']));
-			$value[$v['log_date']]['logout_time'] 	= date('h:i:s A', strtotime($v['log_out']));
+			$value[$v['log_date']]['login_time'] 	= date('H:i:s', strtotime($v['log_in']));
+			$value[$v['log_date']]['logout_time'] 	= date('H:i:s', strtotime($v['log_out']));
 		}
 	}
 
@@ -270,8 +282,15 @@ foreach ($employees as $employee_id => $value) {
 
 			foreach ($filed_overtimes as $a => $b) {
 				if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
-					$y['overtime'] = 'Pending';
+					$y['overtime'] = $b['status'];
 				}
+			}
+		}
+
+		
+		foreach ($approved_dps as $a => $b) {
+			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] == date('Y-m-d', strtotime($b['time_from']))){
+				$y['dps'] = $b['time_from']."<br />".$b['time_to'];
 			}
 		}
 

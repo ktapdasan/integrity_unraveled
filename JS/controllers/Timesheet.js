@@ -182,7 +182,7 @@ app.controller('Timesheet', function(
         promise.then(function(data){
             $scope.timesheet.status = true;
             $scope.timesheet.data = data.data[$scope.profile.employee_id];
-            
+            console.log($scope.timesheet.data);
             $scope.timesheet.count=0;
             for(var i in $scope.timesheet.data){
                 $scope.timesheet.count++;                

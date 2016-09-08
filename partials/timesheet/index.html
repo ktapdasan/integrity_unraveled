@@ -90,17 +90,18 @@ tr:hover {
             <table id="datatables-example" class="table1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th col width="90">Date</th>
-                        <th col width="90">Day</th>
-                        <th col width="90">Schedule</th>
-                        <th col width="90">Log In</th>
-                        <th col width="90">Log Out</th>
-                        <th col width="90"># of Hours</th>
-                        <th col width="90">Tardiness</th>
-                        <th col width="90">Undertime</th>
-                        <th col width="90">Overtime</th>
-                        <th col width="90">Suspension</th>
-                        <th col width="90">Status</th>
+                        <th style="width:7%;">Date</th>
+                        <th style="width:8%;">Day</th>
+                        <th style="width:8%;">Schedule</th>
+                        <th style="width:8%;">Log In</th>
+                        <th style="width:8%;">Log Out</th>
+                        <th style="width:8%;"># of Hours</th>
+                        <th style="width:7%;">Tardiness</th>
+                        <th style="width:7%;">Undertime</th>
+                        <th style="width:10%;">Overtime</th>
+                        <th style="width:12%;">DPS</th>
+                        <th style="width:10%;">Suspension</th>
+                        <th style="width:10%;">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,10 +157,11 @@ tr:hover {
                                     <font color="red" title = "File Overtime"><u>File Overtime</u></font>
                                 </a>
                             </span>
-                            <span ng-if="v.overtime=='Approved'">{{v.overtime_value}}</span>
+                            <span ng-if="v.overtime=='Approved'">{{v.overtime_value}} hours</span>
                             <span ng-if="v.overtime=='Pending'">{{v.overtime}}</span>
                             <span ng-if="v.overtime=='Disapproved'">{{v.overtime}}</span>
                         </td> 
+                        <td ng-bind-html="v.dps"></td> 
                         <td>{{v.suspension}}</td> 
                         <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
                     </tr>               
