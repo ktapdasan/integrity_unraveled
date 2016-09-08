@@ -7,7 +7,9 @@ app.controller('New_Employees', function(
     ){
 
     $scope.pk='';
-
+    $scope.employee={
+        school_type:''
+    };
     $scope.tab = {
         personal : true,
         education : false,
@@ -25,8 +27,8 @@ app.controller('New_Employees', function(
     $scope.titles={};
     $scope.level_title={};
     $scope.department={};
-    
-    
+
+
     $scope.employees={
         first_name:'',
         middle_name:'',
@@ -46,7 +48,7 @@ app.controller('New_Employees', function(
         departments_pk:'',
         employee_type:'',
         employment_type:'',
-        forms: [{educ_level: "Primary"}],
+        forms:[{educ_level: "Primary"}],
         data_sss: null,
         data_phid: null,
         data_pagmid: null,
@@ -55,7 +57,7 @@ app.controller('New_Employees', function(
     };
 
     $scope.employees.stype = JSON.stringify($scope.employees.forms);
-    
+   
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
@@ -147,7 +149,7 @@ app.controller('New_Employees', function(
 
         });
     }
-	
+
 
     $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){
@@ -160,7 +162,7 @@ app.controller('New_Employees', function(
             $scope.employees.forms.push({educ_level: "Tertiary" });
         }
     };
-   
+
     $scope.submit_employees = function(){
 
         get_supervisors();
@@ -185,32 +187,32 @@ app.controller('New_Employees', function(
             });
         });
 
-    $scope.employees={
-        employee_id:'',
-        first_name:'',
-        middle_name:'',
-        last_name:'',
-        email_address:'',
-        gender:'',
-        birth_date:'',
-        religion:'',
-        civilstatus:'',
-        employee_id:'',
-        business_email_address:'',
-        titles_pk:'',
-        date_started:'',
-        stype:'',
-        levels_pk:'',
-        supervisor_pk:'',
-        departments_pk:'',
-        employee_type:'',
-        employment_type:'',
-        forms: [{educ_level: "Primary"}],
-        data_sss: null,
-        data_phid: null,
-        data_pagmid: null,
-        data_tin: null,
-        intern_hours:''
+        $scope.employees={
+            employee_id:'',
+            first_name:'',
+            middle_name:'',
+            last_name:'',
+            email_address:'',
+            gender:'',
+            birth_date:'',
+            religion:'',
+            civilstatus:'',
+            employee_id:'',
+            business_email_address:'',
+            titles_pk:'',
+            date_started:'',
+            stype:'',
+            levels_pk:'',
+            supervisor_pk:'',
+            departments_pk:'',
+            employee_type:'',
+            employment_type:'',
+            forms: [{educ_level: "Primary"}],
+            data_sss: null,
+            data_phid: null,
+            data_pagmid: null,
+            data_tin: null,
+            intern_hours:''
         };
     }
 
