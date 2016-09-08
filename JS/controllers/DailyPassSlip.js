@@ -93,7 +93,7 @@ app.controller('DailyPassSlip', function(
     }
 
     $scope.add_dps = function(){
-
+        $scope.log.date = new Date();
         $scope.log.remarks = '';
         $scope.log.type = "Official";
         $scope.modal = {
@@ -154,7 +154,7 @@ app.controller('DailyPassSlip', function(
                 tom = '0' + tom;
             }
 
-            $scope.log.date = new Date();
+            
             var date = new Date($scope.log.date);
             var dd = date.getDate();
             var mm = date.getMonth()+1; //January is 0!
