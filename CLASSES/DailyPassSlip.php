@@ -101,11 +101,22 @@ EOT;
             $info[$k] = pg_escape_string(trim(strip_tags($v)));
         }
 
+        $pk=$info['pk'];
         $employees_pk=$info['employees_pk'];
         $daily_pass_slip_pk=$info['daily_pass_slip_pk'];
         $remarks=$info['remarks'];
         $status=$info['status'];
 
+        $sql = 'begin;';
+
+        $sql .= <<<EOT
+                update daily_pass_slip set
+                archived
+                =
+                't'
+                where pk = $pk
+                ;
+EOT;
         $sql .= <<<EOT
                 INSERT INTO daily_pass_slip_status
                 (
@@ -123,6 +134,7 @@ EOT;
                 )
                 ;
 EOT;
+        $sql .= "commit;";
         return ClassParent::update($sql);
     }
 
@@ -144,17 +156,6 @@ EOT;
         else {
             $remarks = $remarks;
         }
-        $sql = 'begin;';
-
-        $sql .= <<<EOT
-                update daily_pass_slip set
-                archived
-                =
-                't'
-                where pk = $this->pk
-                ;
-EOT;
-
         $sql .= <<<EOT
             insert into daily_pass_slip_status
             (
@@ -173,7 +174,6 @@ EOT;
             ;
 EOT;
             
-        $sql .= "commit;";
         return ClassParent::update($sql);
 
     }

@@ -11,6 +11,7 @@ $class = new DailyPassSlip(
                     );
 
 $info = array(
+                "pk" => $_POST['pk'],
                 "employees_pk" => $_POST['employees_pk'],
                 "daily_pass_slip_pk" => $_POST['pk'],
                 "status" => $_POST['status'],
