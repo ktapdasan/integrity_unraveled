@@ -78,6 +78,7 @@ EOT;
                         time_to::timestamp(0) as timeto,
                         to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
                         hrs,
+                        overtime.type,
                         (select status from overtime_status where overtime_pk = overtime.pk order by date_created desc limit 1) as status,
                         (select remarks from overtime_status where overtime_pk = overtime.pk order by date_created desc limit 1) as remarks
                     from overtime

@@ -115,7 +115,8 @@ th {
                         <th style="width:15%;">Employee Name</th>
                         <th style="width:10%;">Time From</th>
                         <th style="width:10%;">Time To</th>
-                        <th style="width:10%;"># of hours</th>
+                        <th style="width:5%;">Hours</th>
+                        <th style="width:5%;">Type</th>
                         <th style="width:35%;">Remarks</th>
                         <th style="width:10%;">Status</th>
                     </tr>
@@ -127,6 +128,7 @@ th {
                         <td ng-bind-html="v.timefrom_html"></td>
                         <td ng-bind-html="v.timeto_html"></td>
                         <td>{{v.hrs}}</td>
+                        <td>{{v.type}}</td>
                         <td><pre>{{v.remarks}}</pre></td>
                         <td>
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 

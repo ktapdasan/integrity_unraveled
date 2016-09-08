@@ -179,6 +179,7 @@ app.controller('Management_overtime', function(
             overtime.pk =  $scope.overtime.data[k].pk;
             overtime.remarks= "APPROVED";
             overtime.hours = $scope.overtime.data[k].hrs;
+            overtime.type = $scope.overtime.data[k].type;
             
             var promise = TimelogFactory.approve_overtime(overtime);
             promise.then(function(data){

@@ -107,14 +107,93 @@ $employees_data = $employees_class->profile();
 $leave_balances = (array)json_decode($employees_data['result'][0]['leave_balances']);
 $details = (array)json_decode($employees_data['result'][0]['details']);
 
-//if employee is exempt
-//all leaves will be converted to
-//leave credits
-//employee_types
-//1 Exempt
-//2 Non-exempt
-if($details['company']->employee_types_pk == 1){
-	//add the excess overtime to leave balance
+if($_POST['type'] == "Paid"){
+	//if employee is exempt
+	//all leaves will be converted to
+	//leave credits
+	//employee_types
+	//1 Exempt
+	//2 Non-exempt
+	if($details['company']->employee_types_pk == 1){
+		//add overtime to leave balances
+
+		//re-assign leave balances to a new array
+		$new_leave_balances=array();
+		foreach ($leave_balances as $key => $value) {
+			$new_leave_balances[(int) $key] = $value;
+		}
+
+		$leave_filed_pk = (int) $leave_filed_pk;
+		if(!isset($new_leave_balances[$leave_filed_pk])){
+			$new_leave_balances[$leave_filed_pk] = 0;
+		}
+
+		$new_hours = (float)$_POST['hours'];
+
+		$new_leave_balances[$leave_filed_pk] += $new_hours;
+
+		$employees_class2 = new Employees(	
+											$_POST['employees_pk'],
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL
+										);
+
+		$info = array('leave_balances' => $new_leave_balances);
+		$update_employees_data = $employees_class2->update_leave_balances($info);
+	}
+	//if Non-exempt and if overtime hours exceeds maximum - hours will be added to the default leave
+	else if($month > $default_max_overtime->month || $year > $default_max_overtime->year){
+		$month_remainder = $month - $default_max_overtime->month;
+		$year_remainder = $year - $default_max_overtime->year;
+
+		//hours more than 40 will be deducted 
+		//and saved as leave credit
+		//$leave_filed_pk
+		$hours_for_convertion = 0;
+		if($month_remainder < $default_max_overtime->month){
+			$hours_for_convertion = $month_remainder;
+		}
+		else {
+			$hours_for_convertion = $month;
+		}
+
+		//add the excess overtime to leave balance
+		if(!isset($leave_balances[$leave_filed_pk])){
+			$leave_balances[$leave_filed_pk] = 0;
+		}
+
+		$leave_balances[$leave_filed_pk] += round($hours_for_convertion / 9,2);
+
+		$employees_class2 = new Employees(	
+											$_POST['employees_pk'],
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL,
+											NULL
+										);
+
+		$info = array('leave_balances' => $leave_balances);
+		$update_employees_data = $employees_class2->update_leave_balances($info);
+	}
+}
+else {
+	//add overtime to leave balances
 
 	//re-assign leave balances to a new array
 	$new_leave_balances=array();
@@ -147,47 +226,6 @@ if($details['company']->employee_types_pk == 1){
 									);
 
 	$info = array('leave_balances' => $new_leave_balances);
-	$update_employees_data = $employees_class2->update_leave_balances($info);
-}
-//if Non-exempt and if overtime hours exceeds maximum - hours will be added to the default leave
-else if($month > $default_max_overtime->month || $year > $default_max_overtime->year){
-	$month_remainder = $month - $default_max_overtime->month;
-	$year_remainder = $year - $default_max_overtime->year;
-
-	//hours more than 40 will be deducted 
-	//and saved as leave credit
-	//$leave_filed_pk
-	$hours_for_convertion = 0;
-	if($month_remainder < $default_max_overtime->month){
-		$hours_for_convertion = $month_remainder;
-	}
-	else {
-		$hours_for_convertion = $month;
-	}
-
-	//add the excess overtime to leave balance
-	if(!isset($leave_balances[$leave_filed_pk])){
-		$leave_balances[$leave_filed_pk] = 0;
-	}
-
-	$leave_balances[$leave_filed_pk] += round($hours_for_convertion / 9,2);
-
-	$employees_class2 = new Employees(	
-										$_POST['employees_pk'],
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL,
-										NULL
-									);
-
-	$info = array('leave_balances' => $leave_balances);
 	$update_employees_data = $employees_class2->update_leave_balances($info);
 }
 
