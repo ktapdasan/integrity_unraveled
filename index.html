@@ -385,10 +385,11 @@
         
         <!-- end: Left Menu -->
 <!-- <ng-timepicker ng-model="log.time_log" show-meridian="true"></ng-timepicker> -->
-        <div ng-view=""></div>
+        <div id="ng_view" ng-view=""></div>
     </div>  
 
-    <div ng-controller="Sidebar">
+    <div id="sidebar" ng-controller="Sidebar">
+        <input type="text" id="hidden-text" value="false"/>
         <div id="styleSelector" class="{{switcher.main}}">
           
             <div class="selector-toggle">
@@ -565,6 +566,33 @@
 
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>
+
+    <script type="text/javascript">
+        $(function(){               
+                
+            var $win = $(window); // or $box parent container
+            var $box = $("#sidebar");
+                        
+            $win.on("click.Bst", function(event){  
+                var hid = $('#hidden-text').val(); 
+
+                if ( 
+                    $box.has(event.target).length == 0 //checks if descendants of $box was clicked
+                    &&
+                    !$box.is(event.target) //checks if the $box itself was clicked
+                ){
+
+                    $('#styleSelector').removeClass('open');
+                    $('#hidden-text').val('false');
+                } else {
+                    //$('#hidden-text').val('true');
+                    //$('#styleSelector').addClass('open');
+                }
+            });
+          
+        });
+            
+    </script>
     
 
      <script type="text/ng-template" id="ConfirmModal">

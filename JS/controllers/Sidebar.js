@@ -11,6 +11,7 @@ app.controller('Sidebar', function(
 
     $scope.switcher = {};
     $scope.switcher.main = "";
+    $scope.switcher.status = false;
 
     $scope.notifications = {};
 
@@ -63,15 +64,25 @@ app.controller('Sidebar', function(
 
 
     $scope.toggle_switcher = function(){
-        if($scope.switcher.main == ""){
-            $scope.switcher.main = "open";
+        //console.log($scope.switcher.status);
+        
+        var hid = $('#hidden-text').val();
+        //if($scope.switcher.status == false){
+        if(hid == 'false'){
+            $scope.switcher.status = true;
+            $('#styleSelector').addClass('open');
+            $('#hidden-text').val('true');
+            //$scope.switcher.main = "open";
             $scope.switcher.content = true;
             $scope.stop = true;    
             
         }
         else {
-            $scope.switcher.main = "";   
-            $scope.switcher.content = false;
+            $scope.switcher.status = false;
+            $('#styleSelector').removeClass('open');
+            $('#hidden-text').val('false');
+            //$scope.switcher.main = "";   
+            $scope.switcher.content = true;
             $scope.stop = true;
             
         }
