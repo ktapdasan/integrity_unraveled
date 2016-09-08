@@ -1286,11 +1286,11 @@
                         </select></td>
                 </tr>
                 <tr><td><label style= "font-size:20px; float: left;">Date:</label>
-                <input type="date" class="form-control" size="8" ng-model="log.date" name="time" style="width: 160px;margin-left: 80px;"/></td></tr>
+                <input type="date"  class="form-control" size="8" ng-model="log.date" name="time" style="width: 160px;margin-left: 55px;"/></td></tr>
                 <tr><td><label style= "font-size:20px; float: left;">Time From:</label>
-                <input type="text" class="form-control" size="8" ng-model="log.time_from" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/></td></tr>
+                <input type="text" class="form-control" size="8" bs-timepicker ng-model="log.time_from" name="time" style="width: 100px;margin-left: 85px;"/></td></tr>
                 <tr><td><label style= "font-size:20px; float: left;">Time To:</label>
-                <input type="text" class="form-control" size="8" ng-model="log.time_to" name="time" bs-timepicker style="width: 100px;margin-left: 80px;"/></td></tr>
+                <input type="text" class="form-control" size="8" bs-timepicker ng-model="log.time_to" name="time" style="width: 100px;margin-left: 85px;"/></td></tr>
                 <tr><td><label style = "font-size:20px;width:200px;">Reason:</label> 
                 <textarea ng-model="log.remarks" rows ='6' cols ='32' tabindex="1" autofocus required/></td></tr>
             </div>
@@ -1299,7 +1299,7 @@
         <td>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="manualLog.$error.required">{{modal.save}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="dps.$error.required">{{modal.save}}</button>
         </div>
         </tr>
         </td>

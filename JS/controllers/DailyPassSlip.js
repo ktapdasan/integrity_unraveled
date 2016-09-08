@@ -66,6 +66,7 @@ app.controller('DailyPassSlip', function(
 
         $scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); //getMonday(new Date());
         $scope.filter.date_to = new Date();
+        $scope.log.date = new Date(yyyy+'-'+mm+'-'+dd);
     }
 
     function getMonday(d) {
@@ -92,6 +93,7 @@ app.controller('DailyPassSlip', function(
     }
 
     $scope.add_dps = function(){
+        $scope.log.date = new Date();
         $scope.log.remarks = '';
         $scope.log.type = "Official";
         $scope.modal = {
@@ -104,7 +106,7 @@ app.controller('DailyPassSlip', function(
 
         ngDialog.openConfirm({
             template: 'DpsModal',
-            className: 'ngdialog-theme-plain custom-widthfourfifty',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;                
                     nestedConfirmDialog = ngDialog.openConfirm({
@@ -116,7 +118,7 @@ app.controller('DailyPassSlip', function(
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
                                 '</button></div>',
                         plain: true,
-                        className: 'ngdialog-theme-plain custom-widthfourfifty'
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
                     });
 
                 return nestedConfirmDialog;
@@ -152,6 +154,7 @@ app.controller('DailyPassSlip', function(
                 tom = '0' + tom;
             }
 
+            
             var date = new Date($scope.log.date);
             var dd = date.getDate();
             var mm = date.getMonth()+1; //January is 0!

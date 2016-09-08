@@ -159,6 +159,8 @@ values
 (
 	'Wire Transfer'
 );
+
+ALTER TABLE employees DROP COLUMN civilstatus_pk, DROP COLUMN gender_pk, DROP COLUMN religion_pk, DROP COLUMN employment_type; 
 /*start of details fields*/
 /*
 personal - {
@@ -282,156 +284,79 @@ education - {
 
 /*
 EXAMPLES
-
-insert into employees = jsonb_set(details, '{company}', '
-{
-	"start_date" : "2016-03-01",
-	"employment_statuses_pk" : "3",
-	"employee_types_pk" : "2",
-	"departments_pk": "26", 
-	"levels_pk": "7", 
-	"titles_pk": "14", 
-	"supervisor": "28", 
-	"email_address": "ktapdasan.chrs@gmail.com", 
+update employees set
+details = jsonb_set(details, '{company}', ' {
+	"start_date": "2015-02-16",
+	"employment_statuses_pk": "3",
+	"employee_types_pk": "2",
+	"departments_pk": "26",
+	"levels_pk": "7",
+	"titles_pk": "18",
+	"supervisor": "28",
+	"email_address": "ktapdasan.chrs@gmail.com",
 	"business_email_address": "ken.tapdasan@chrsglobal.com",
-	"salary" : {
-		"salary_types_pk" : "2",
-		"details" : {
-			"amount" : "13000"
+	"salary": {
+		"details": {
+			"bank": "BDO",
+			"amount": "13000",
+			"account_number": "100010001"
 		},
-		"allowances" : {
-			"1" : "1000",
-			"2" : "1000"
-		}
+		"allowances": {
+			"1": "1000",
+			"2": "1000"
+		},
+		"salary_types_pk": "1"
 	},
-	"work_schedule" : {
-		"sunday" : null,
-		"monday" : {
-			"in" : "08:00",
-			"out" : "17:00"
+	"work_schedule": {
+		"sunday": null,
+		"monday": {
+			"in": "08:00",
+			"out": "17:00"
 		},
-		"tuesday" : {
-			"in" : "08:00",
-			"out" : "17:00"
+		"tuesday": {
+			"in": "08:00",
+			"out": "17:00"
 		},
-		"wednesday" : {
-			"in" : "08:00",
-			"out" : "17:00"
+		"wednesday": {
+			"in": "08:00",
+			"out": "17:00"
 		},
-		"thursday" : {
-			"in" : "08:00",
-			"out" : "17:00"
+		"thursday": {
+			"in": "08:00",
+			"out": "17:00"
 		},
-		"friday" : {
-			"in" : "08:00",
-			"out" : "17:00"
+		"friday": {
+			"in": "08:00",
+			"out": "17:00"
 		},
-		"saturday" : null
+		"saturday": null
+	},
+	"company.work_schedule": {
+		"friday": {
+			"in": "08:00",
+			"out": "17:00"
+		},
+		"monday": {
+			"in": "08:00",
+			"out": "17:00"
+		},
+		"sunday": null,
+		"tuesday": {
+			"in": "08:00",
+			"out": "17:00"
+		},
+		"saturday": null,
+		"thursday": {
+			"in": "08:00",
+			"out": "17:00"
+		},
+		"wednesday": {
+			"in": "08:00",
+			"out": "17:00"
+		}
 	}
-}', true) 
+
+}
+', true) 
 where pk = 12;
 
-update employees_backup set 
-details=jsonb_set(details, '{company}', '
-{
-	"start_date" : "2016-01-18",
-	"employment_statuses_pk" : "4",
-	"employee_types_pk" : "1",
-	"departments_pk": "26", 
-	"levels_pk": "4", 
-	"titles_pk": "15", 
-	"supervisor": "10", 
-	"email_address": "rafael.pascual@chrsglobal.com", 
-	"business_email_address": "rpascual0812@gmail.com",
-	"salary" : {
-		"salary_types_pk" : "1",
-		"details" : {
-			"bank" : "BDO",
-			"account_number" : "100010001",
-			"amount" : "1000000"
-		},
-		"allowances" : {
-			"1" : "100",
-			"2" : "100"
-		}
-	},
-	"work_schedule" : {
-		"sunday" : null,
-		"monday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"tuesday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"wednesday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"thursday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"friday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"saturday" : null
-	}
-}', true) 
-where pk = 28;
-
-update employees set 
-details=jsonb_set(details, '{company}', '
-{
-	"start_date" : "2016-01-20",
-	"employment_statuses_pk" : "4",
-	"employee_types_pk" : "1",
-	"departments_pk": "26", 
-	"levels_pk": "4", 
-	"titles_pk": "15", 
-	"supervisor": "10", 
-	"email_address": "rafael.pascual@chrsglobal.com", 
-	"business_email_address": "rpascual0812@gmail.com",
-	"salary" : {
-		"salary_types_pk" : "1",
-		"details" : {
-			"bank" : "BDO",
-			"account_number" : "100010001",
-			"amount" : "1000000"
-		},
-		"allowances" : {
-			"1" : "100",
-			"2" : "100"
-		}
-	},
-	"work_schedule" : {
-		"sunday" : null,
-		"monday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"tuesday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"wednesday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"thursday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"friday" : {
-			"in" : "08:00",
-			"out" : "17:00"
-		},
-		"saturday" : null
-	}
-}', true) 
-where pk = 28;
-
-
-*/
