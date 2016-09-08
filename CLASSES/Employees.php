@@ -692,18 +692,18 @@ EOT;
 
                 );
 EOT;
-        $sql .= <<<EOT
-                insert into accounts
-                (
-                    employee_id,
-                    password
-                )
-                values
-                (
-                    '$this->employee_id',
-                    md5('user123456')
-                );
-EOT;
+//         $sql .= <<<EOT
+//                 insert into accounts
+//                 (
+//                     employee_id,
+//                     password
+//                 )
+//                 values
+//                 (
+//                     '$this->employee_id',
+//                     md5('user123456')
+//                 );
+// EOT;
 
         $sql .= "commit;";
 

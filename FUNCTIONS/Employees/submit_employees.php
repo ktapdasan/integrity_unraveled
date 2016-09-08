@@ -80,7 +80,7 @@ if ($_POST['levels_pk'] == 3){
 if ($_POST['levels_pk'] != 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
 }
-
+$education = array();
 $education['school_type']            = $_POST['stype'];
 
 $details = array();

@@ -2,165 +2,17 @@
 employees table new jsonb fields
 *****/
 
-create table employment_statuses
+create table employees_backup
 (
 	pk serial primary key,
-	status text not null,
+	employee_id text not null,
+	details jsonb,
+	leave_balances jsonb,
+	date_created timestamptz default now(),
 	archived boolean default false
 );
-alter table employment_statuses owner to chrs;
+alter table employees_backup owner to chrs;
 
-insert into employment_statuses (status)
-values
-(
-	'Probationary'
-),
-(
-	'Trainee'
-),
-(
-	'Contractual'
-),
-(
-	'Regular'
-),
-(
-	'Consultant'
-);
-
-create table gender_type
-(
-	pk serial primary key,
-	genders text not null,
-	archived boolean default false
-);
-
-alter table gender_type owner to chrs;
-
-insert into gender_type (genders)
-values
-(
-	'Male'
-),
-(
-	'Female'
-);
-
-create table employee_types
-(
-	pk serial primary key,
-	type text not null,
-	archived boolean default false
-);
-alter table employee_types owner to chrs;
-
-insert into employee_types (type)
-values
-(
-	'Exempt'
-),
-(
-	'Non-exempt'
-);
-
-create table allowances
-(
-	pk serial primary key,
-	allowance text not null,
-	archived boolean default false
-);
-alter table employment_type owner to chrs;
-
-create table civil_statuses
-(
-	pk serial primary key,
-	status text not null,
-	archived boolean default false
-);
-alter table civil_statuses owner to chrs;
-
-create table allowances
-(
-	pk serial primary key,
-	allowance text not null,
-	archived boolean default false
-);
-alter table allowances owner to chrs;
-
-insert into allowances
-(
-	allowance
-)
-values
-(
-	'Transportation'
-),
-(
-	'Food'
-);
-
-create table salary_types
-(
-	pk serial primary key,
-	type text not null,
-	archived boolean default false
-);
-alter table salary_types owner to chrs;
-
-insert into salary_types
-(
-	type
-)
-values
-(
-	'Bank'
-),
-(
-	'Cash'
-),
-(
-	'Wire Transfer'
-);
-
-create table religions
-(
-	pk serial primary key,
-	religion text not null,
-	archived boolean default false
-);
-alter table religions owner to chrs;
-
-insert into religions
-(
-	religion
-)
-values
-(
-	'Roman Catholic'
-),
-(
-	'Iglesia Ni Cristo'
-),
-(
-	'Jehovah Witness'
-);
-
-insert into employees
-(
-	details
-)
-values
-(
-	'Bank'
-),
-(
-	'Cash'
-),
-(
-	'Wire Transfer'
-);
-
-ALTER TABLE employees DROP COLUMN civilstatus_pk, DROP COLUMN gender_pk, DROP COLUMN religion_pk, DROP COLUMN employment_type; 
 /*start of details fields*/
 /*
 personal - {
@@ -286,77 +138,63 @@ education - {
 EXAMPLES
 update employees set
 details = jsonb_set(details, '{company}', ' {
-	"start_date": "2015-02-16",
-	"employment_statuses_pk": "3",
-	"employee_types_pk": "2",
-	"departments_pk": "26",
-	"levels_pk": "7",
-	"titles_pk": "18",
-	"supervisor": "28",
-	"email_address": "ktapdasan.chrs@gmail.com",
-	"business_email_address": "ken.tapdasan@chrsglobal.com",
-	"salary": {
-		"details": {
-			"bank": "BDO",
-			"amount": "13000",
-			"account_number": "100010001"
-		},
-		"allowances": {
-			"1": "1000",
-			"2": "1000"
-		},
-		"salary_types_pk": "1"
-	},
+	"hours": "250",
+	"departments_pk": "39",
+	"levels_pk": "3",
+	"titles_pk": "13",
+	"supervisor": "17",
+	"email_address": "mrcristobal.chrs@gmail.com",
+	"business_email_address": "maria.cristobal@chrsglobal.com",
 	"work_schedule": {
 		"sunday": null,
 		"monday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"tuesday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"wednesday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"thursday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"friday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"saturday": null
 	},
 	"company.work_schedule": {
 		"friday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"monday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"sunday": null,
 		"tuesday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"saturday": null,
 		"thursday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		},
 		"wednesday": {
-			"in": "08:00",
-			"out": "17:00"
+			"in": "09:00",
+			"out": "18:00"
 		}
 	}
 
 }
 ', true) 
-where pk = 12;
+where pk = 98;
 

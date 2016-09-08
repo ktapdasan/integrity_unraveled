@@ -241,6 +241,7 @@ body>footer .footer-main {
                     </table>
                 </form>
             </div>
+
             <form name="myForm1">
                 <div ng-if="tab.education">
                     <table style="width:70%;margin-left:140px;" ng-repeat="form in employees.forms" ng-init="name = form.educ_level
@@ -249,6 +250,7 @@ body>footer .footer-main {
                         <td><h4 style="margin-left:-45px;color:#219DEC;" >{{form.educ_level}}</h4></td>
                     </tr>
                     <tr >
+                        {{employees.forms}}
                         <td>
                             <label style="display:block; float:left; padding-top:10px; padding-right:10px">School Name:</label>
 
@@ -280,6 +282,7 @@ body>footer .footer-main {
                         </td>
                     </tr>
                 </table>
+                <table id="divID"></table>
                 <table style="width:33%;margin-left:140px;" >
                     <tr>
                         <td >
@@ -349,7 +352,7 @@ body>footer .footer-main {
                         <td id="css">
                             <input name="inputd" ng-model="employees.date_started" type="date" style="display: block; float: left; width:340px; height:36px;" ng-required="true"/>
                             <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm2.inputd.$error.required">Start Date is required.</span>
-                        </tr>
+                        </tr>{{employees.date_started}}
                         <tr>
                             <td>
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Level:</label>
