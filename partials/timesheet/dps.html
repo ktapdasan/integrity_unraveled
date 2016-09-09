@@ -119,9 +119,9 @@ select{
                     <tbody>
                         <tr ng-repeat="(k, v) in dps.data track by $index" style="cursor:pointer;" ng-if="dps.status">
                             <td>{{v.type}}</td>
-                            <td>{{v.date_created}}</td>
-                            <td>{{v.time_from}}</td>
-                            <td>{{v.time_to}}</td>
+                            <td ng-bind-html="v.datecreated_html"></td>
+                            <td ng-bind-html="v.timefrom_html"></td>
+                            <td ng-bind-html="v.timeto_html"></td>
                             <td ng-bind-html="v.reason" class="remarks"></td>
                             <td> 
                                 <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
