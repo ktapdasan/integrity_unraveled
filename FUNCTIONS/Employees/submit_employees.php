@@ -3,6 +3,14 @@ require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 //require_once('../../CLASSES/PHPMailerAutoload.php');
 
+$education = json_decode($_POST['education'], true);
+print_r($education);
+foreach ($education as $key => $value) {
+    print_r($value);
+
+}
+
+//print_r($education);
 $class = new Employees(
     NULL,
     $_POST['employee_id'],
@@ -20,7 +28,7 @@ $class = new Employees(
     $_POST['data_tin'],
     $_POST['data_pagmid'],
     $_POST['data_phid'],
-    $_POST['forms'],
+    $_POST['education'],
     NULL,
     NULL,
     NULL
@@ -57,8 +65,8 @@ if ($_POST['data_tin'] == null){
 }
 if ($_POST['data_pagmid'] == null){
     $government['PAG-IBIG']          = 'N/A';
-}
-if ($_POST['data_phid'] == null){
+
+}if ($_POST['data_phid'] == null){
     $government['PHILHEALTH']        = 'N/A';
 }
 if ($_POST['data_sss'] != null){
@@ -80,13 +88,12 @@ if ($_POST['levels_pk'] == 3){
 if ($_POST['levels_pk'] != 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
 }
-$education = array();
-$education['school_type']            = $_POST['stype'];
 
+$educations['school_type'] = $education;
 $details = array();
 $details['company']                  = $company;
 $details['personal']                 = $personal; 
-$details['education']                = $education;
+$details['education']                = $educations; 
 $details['government']               = $government; 
 $extra['details']                    = $details; 
 

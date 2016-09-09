@@ -9,7 +9,8 @@ create table employees_backup
 	details jsonb,
 	leave_balances jsonb,
 	date_created timestamptz default now(),
-	archived boolean default false
+	archived boolean default false,
+	image bytea
 );
 alter table employees_backup owner to chrs;
 

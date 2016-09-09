@@ -1,10 +1,11 @@
 app.controller('New_Employees', function(
-    $scope,
-    SessionFactory,
-    EmployeesFactory,
-    md5,
-    UINotification
-    ){
+                                            $scope,
+                                            SessionFactory,
+                                            EmployeesFactory,
+                                            md5,
+                                            UINotification,
+                                            $filter
+                                        ){
 
     $scope.pk='';
     $scope.employee={
@@ -43,12 +44,10 @@ app.controller('New_Employees', function(
         birth_date:'',
         titles_pk:'',
         levels_pk:'',
-        stype:'',
         supervisor_pk:'',
         departments_pk:'',
         employee_type:'',
         employment_type:'',
-        forms:[{educ_level: "Primary"}],
         data_sss: null,
         data_phid: null,
         data_pagmid: null,
@@ -56,8 +55,8 @@ app.controller('New_Employees', function(
         intern_hours:''
     };
 
-    $scope.employees.stype = JSON.stringify($scope.employees.forms);
-   
+    $scope.employees.education = [{educ_level: "Primary"}];
+    
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
@@ -153,19 +152,28 @@ app.controller('New_Employees', function(
 
     $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){
-            $scope.employees.forms.push({educ_level: "Primary"});
+            $scope.employees.education.push({educ_level: "Primary"});
         }
         else if ($scope.employee.school_type == 2){
-            $scope.employees.forms.push({educ_level: "Secondary" });
+            $scope.employees.education.push({educ_level: "Secondary" });
         }
         else if ($scope.employee.school_type == 3){
-            $scope.employees.forms.push({educ_level: "Tertiary" });
+            $scope.employees.education.push({educ_level: "Tertiary" });
         }
     };
 
     $scope.submit_employees = function(){
 
         get_supervisors();
+        for(var i in $scope.employees.education){
+            $scope.employees.education[i].date_from_school = $filter('date')($scope.employees.education[i].date_from_school, "yyyy-MM-dd");
+            $scope.employees.education[i].date_to_school = $filter('date')($scope.employees.education[i].date_to_school, "yyyy-MM-dd");
+        }
+        $scope.employees.date_started = $filter('date')($scope.employees.date_started, "yyyy-MM-dd");
+        $scope.employees.birth_date = $filter('date')($scope.employees.birth_date, "yyyy-MM-dd");
+
+        $scope.employees.education = JSON.stringify($scope.employees.education);
+        //get_supervisors();
         var promise = EmployeesFactory.submit_employees($scope.employees);
         promise.then(function(data){
 
@@ -201,13 +209,12 @@ app.controller('New_Employees', function(
             business_email_address:'',
             titles_pk:'',
             date_started:'',
-            stype:'',
             levels_pk:'',
             supervisor_pk:'',
             departments_pk:'',
             employee_type:'',
             employment_type:'',
-            forms: [{educ_level: "Primary"}],
+            education: [{educ_level: "Primary"}],
             data_sss: null,
             data_phid: null,
             data_pagmid: null,
