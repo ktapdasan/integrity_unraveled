@@ -64,15 +64,23 @@ app.controller('Sidebar', function(
 
 
     $scope.toggle_switcher = function(){
-        if($scope.switcher.main == ""){
-            $scope.switcher.main = "open";
+        var hid = $('#hidden-text').val();
+        //if($scope.switcher.main == ""){
+        if(hid == 'false'){
+            $scope.switcher.status = true;
+            $('#styleSelector').addClass('open');
+            $('#hidden-text').val('true');
+            //$scope.switcher.main = "open";
             $scope.switcher.content = true;
             $scope.stop = true;    
             
         }
         else {
-            $scope.switcher.main = "";   
-            $scope.switcher.content = false;
+            $scope.switcher.status = false;
+            $('#styleSelector').removeClass('open');
+            $('#hidden-text').val('false');
+            //$scope.switcher.main = "";   
+            $scope.switcher.content = true;
             $scope.stop = true;
             
         }
