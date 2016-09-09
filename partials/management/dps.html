@@ -58,7 +58,8 @@ select{
             <div class="col-md-12">
                 <h3 class="animated fadeInLeft">Daily Pass Slip</h3>
                 <p class="animated fadeInDown">
-                    My Timesheet <span class="fa-angle-right fa"></span> 
+                    <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
+                    Management <span class="fa-angle-right fa"></span>  
                     Daily Pass Slip
                 </p>
             </div>
@@ -81,8 +82,8 @@ select{
                             <option>Inactive</option>
                         </select>
                     </div>
-
-                <div style="float:left; margin-left:5px;margin-top:11px">
+                 <div class="col-md-6" style="padding-top:0px;">
+                <div style="float:left; margin-right:10px;margin-top:-15px">
                     <label style="float:left;font-size: 15px;">Select an Employee</label>
                     <br>
                     <div
@@ -99,7 +100,7 @@ select{
                             >
                     </div>
                     </div>
-                        <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: 1px;margin-left:1px;">
+                        <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: 14px;margin-left:1px;">
                     </div>
 
                     <div style="clear:both;"></div>
@@ -113,31 +114,35 @@ select{
 
             <div style="margin-top:30px;">
                 <b class="total">Total: {{dps.count}}</b>
-                <table id="datatables-example" class="table1" width="90%" cellspacing="0" style="word-break:break-all;">
+                <table id="datatables-example" class="table1" width="80%" cellspacing="0" style="word-break:break-all;">
                     <thead>
                         <tr>
-                            <th>Date Filed</th>
-                            <th>Employees</th>
-                            <th>Time From</th>
-                            <th>Time To</th>
-                            <th>Reason</th>
-                            <th>Status</th>
+                            <th style="width:10%;">Date Filed</th>
+                            <th style="width:15%;">Employees</th>
+                            <th style="width:10%;">Time From</th>
+                            <th style="width:10%;">Time To</th>
+                            <th style="width:35%;">Reason</th>
+                            <th style="width:10%;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="(k, v) in dps.data" style="cursor:pointer;" ng-if="dps.status">
-                            <td>{{v.date_created}}</td>
+                            <td ng-bind-html="v.datecreated_html"></td>
                             <td>{{v.employee}}</td>
-                            <td>{{v.time_from}}</td>
-                            <td>{{v.time_to}}</td>
+                            <td ng-bind-html="v.timefrom_html"></td>
+                            <td ng-bind-html="v.timeto_html"></td>
                             <td ng-bind-html="v.reason" class="remarks"></td>
                             <td>
                                 <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
                                     {{v.status}} 
                                 </div>
                                 <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                    <input type= "button" ng-click = "approve (k)" value = "Approve" class="medium button blue fa-fa"/> 
-                                    <input type= "button" ng-hide = "rejected" ng-click = "disapprove (k)" value = "Disapprove" class="medium button red fa-fa"/> 
+                                <button class="medium button red fa-fa" ng-hide = "rejected" ng-click = "disapprove (k)" value = "Disapprove" > 
+                                    <img src="./ASSETS/img/thumbs_down.png" style="width:24px;"/>
+                                </button>
+                                <button class="medium button green fa-fa" ng-click = "approve (k)" value = "Approve" > 
+                                    <img src="./ASSETS/img/thumbs_up.png" style="width:24px;"/>
+                                </button>
                                 </div>
                             </td>
                         </tr>

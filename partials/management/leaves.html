@@ -139,8 +139,12 @@ th {
                         {{v.status}} 
                         </div>
                         <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                            <input type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="medium button blue fa-fa"/> 
-                            <input type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="medium button red fa-fa"/> 
+                        <button type= "button" ng-hide = "rejected" ng-click = "respond(k, 'disapprove')" value = "Disapprove" class="medium button red fa-fa"> 
+                            <img src="./ASSETS/img/thumbs_down.png" style="width:24px;"/>
+                        </button>
+                        <button  type= "button" ng-click = "respond(k, 'approve')" value = "Approve" class="medium button blue fa-fa"> 
+                            <img src="./ASSETS/img/thumbs_up.png" style="width:24px;"/>
+                       </button> 
                         </div>
                     </td>
                 </tr> 
