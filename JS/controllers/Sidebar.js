@@ -3,7 +3,8 @@ app.controller('Sidebar', function(
                                         SessionFactory,
                                         EmployeesFactory,
                                         NotificationsFactory,
-                                        md5
+                                        md5,
+                                        $timeout
   									){
 
 
@@ -11,7 +12,6 @@ app.controller('Sidebar', function(
 
     $scope.switcher = {};
     $scope.switcher.main = "";
-    $scope.switcher.status = false;
 
     $scope.notifications = {};
 
@@ -30,7 +30,7 @@ app.controller('Sidebar', function(
         stop : '0' ,
         duration : '2.6s' 
     }
-
+   
 
     init();
 
@@ -64,25 +64,15 @@ app.controller('Sidebar', function(
 
 
     $scope.toggle_switcher = function(){
-        //console.log($scope.switcher.status);
-        
-        var hid = $('#hidden-text').val();
-        //if($scope.switcher.status == false){
-        if(hid == 'false'){
-            $scope.switcher.status = true;
-            $('#styleSelector').addClass('open');
-            $('#hidden-text').val('true');
-            //$scope.switcher.main = "open";
+        if($scope.switcher.main == ""){
+            $scope.switcher.main = "open";
             $scope.switcher.content = true;
             $scope.stop = true;    
             
         }
         else {
-            $scope.switcher.status = false;
-            $('#styleSelector').removeClass('open');
-            $('#hidden-text').val('false');
-            //$scope.switcher.main = "";   
-            $scope.switcher.content = true;
+            $scope.switcher.main = "";   
+            $scope.switcher.content = false;
             $scope.stop = true;
             
         }
@@ -131,6 +121,7 @@ app.controller('Sidebar', function(
 
             $scope.notifications.data = data.data.result;
             $scope.notifications.status = true;
+            $scope.notifications.hide = true;
             var count = data.data.result.length;
             
 
@@ -151,6 +142,7 @@ app.controller('Sidebar', function(
            
         })
         .then(null, function(data){
+
             $scope.notifications.status = false;
 
             $scope.animation.stop = '0s';
@@ -175,7 +167,14 @@ app.controller('Sidebar', function(
     $scope.goto = function(k){
 
         var location="";
-        $scope.notifications.data[k].read='t';
+       
+
+            $timeout(function(){
+                $scope.notifications.data[k].read='t';
+            }, 2000);
+           
+       
+        
 
         if($scope.notifications.data[k].table_from == "attritions"){
             location = "#/management/attrition";
@@ -202,7 +201,6 @@ app.controller('Sidebar', function(
         else if($scope.notifications.data[k].table_from == "leave_cancellation"){
             location = "#/management/leaves";
         }
-
         var data=$scope.notifications.data[k];
 
         read_notifs(data);
@@ -213,10 +211,11 @@ app.controller('Sidebar', function(
     }
 
     function read_notifs(data){
-        
+        $scope.startFade=false;
         if (data.read == 'f') {
 
-                $scope.read_notifs.status = true;               
+                $scope.read_notifs.status = true;   
+                          
             }
 
         else{
@@ -226,6 +225,7 @@ app.controller('Sidebar', function(
 
         var promise = NotificationsFactory.read_notifs(data);
         promise.then(function(data){
+
            
         })
         .then(null, function(data){
