@@ -80,13 +80,13 @@ select{
                     <div style="float:left; margin-right:-5px;margin-top:-14px;">
                        <label style="float:left;font-size: 15px;">Date To:</label><br> <input ng-model="filter.date_to" type="date" id="dateto" style="width:165px;"/>
                     </div>
-                    <div style="float:left; margin-left:10px;margin-top:11px;">
+                    <!-- <div style="float:left; margin-left:10px;margin-top:11px;">
                         <select ng-model="filter.status" ng-change= "show_dps()" style="float:left">
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
-                    </div>
-                    <div style="float:left; margin-left:5px;margin-top:27px;">
+                    </div> -->
+                    <div style="float:left; margin-left:8px;margin-top:27px;">
                         <input type="button" class="medium button blue fa-fa" value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; margin-top: -16px;margin-left:1px;">
                     </div>
                      <div style="float:left; margin-left:10px;margin-top:9px;">
@@ -119,9 +119,9 @@ select{
                     <tbody>
                         <tr ng-repeat="(k, v) in dps.data track by $index" style="cursor:pointer;" ng-if="dps.status">
                             <td>{{v.type}}</td>
-                            <td>{{v.date_created}}</td>
-                            <td>{{v.time_from}}</td>
-                            <td>{{v.time_to}}</td>
+                            <td ng-bind-html="v.datecreated_html"></td>
+                            <td ng-bind-html="v.timefrom_html"></td>
+                            <td ng-bind-html="v.timeto_html"></td>
                             <td ng-bind-html="v.reason" class="remarks"></td>
                             <td> 
                                 <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">

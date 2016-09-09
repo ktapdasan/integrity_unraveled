@@ -62,9 +62,12 @@ class DailyPassSlip extends ClassParent {
                         employees_pk,
                         type,
                         (select first_name ||' '||last_name from employees where pk = employees_pk) as employee,
-                        time_from::timestamp(0) as time_from,
-                        time_to::timestamp(0) as time_to,
                         date_created::timestamp(0) as date_created,
+                        to_char(date_created, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as datecreated_html,
+                        time_from::timestamp(0) as time_from,
+                        to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
+                        time_to::timestamp(0) as time_to,
+                        to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
                         (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by daily_pass_slip_status.date_created desc limit 1) as status,
                         (
                             select 
@@ -81,9 +84,12 @@ class DailyPassSlip extends ClassParent {
                     pk,
                     employees_pk,
                     employee,
-                    time_from,
-                    time_to,
-                    date_created,
+                    date_created::timestamp(0) as date_created,
+                        to_char(date_created, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as datecreated_html,
+                        time_from::timestamp(0) as time_from,
+                        to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
+                        time_to::timestamp(0) as time_to,
+                        to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
                     status,
                     type,
                     reason
@@ -107,16 +113,7 @@ EOT;
         $remarks=$info['remarks'];
         $status=$info['status'];
 
-        $sql = 'begin;';
-
-        $sql .= <<<EOT
-                update daily_pass_slip set
-                archived
-                =
-                't'
-                where pk = $pk
-                ;
-EOT;
+        
         $sql .= <<<EOT
                 INSERT INTO daily_pass_slip_status
                 (
@@ -134,7 +131,7 @@ EOT;
                 )
                 ;
 EOT;
-        $sql .= "commit;";
+        
         return ClassParent::update($sql);
     }
 
