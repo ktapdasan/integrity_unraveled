@@ -354,7 +354,7 @@ $(document).ready(function(){
 // datetime = $('.time .timer');
 datetime2 = $('.time .dater');
 update();
-//setInterval(update, 1000);
+setInterval(update, 1000);
 });
 
 
