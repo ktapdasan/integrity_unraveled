@@ -319,124 +319,83 @@ select{
                     </div>
                     <form name="myForm" novalidate>
                     <table class="tblemployees">
-                            
-                            <tr>
-                                <td> 
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">Employee ID:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="user" required ng-model = "employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:320px; height:25px;" tabindex="1"/>
+                             <tr>
+                            <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">First Name:</label> 
+                            </td>
+                            <td id="css">     
+                                <input name="firstName" required ng-model="employees.first_name" ng-change="data_data.fname = employees.first_name" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
+                            </td>
+                            <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">E-mail Address:</label>
+                            </td>
+                            <td id="css">
+                                <input name="emailAddress" required ng-model="employees.email_address" ng-change="data.email = employees.email_address" type="email" style="display: block; float: left; width:340px;height:36px;" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
 
-                                    <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
-                                    <span ng-show="myForm.user.$error.required">Employee ID is required.</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> Business E-mail Address:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="6"/>
-                                    
-                                    <span style="color:red" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
-                                    <span style="color:red" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">First Name:</label> 
-                               </td>
-                                <td id="css">    
-                                    <input name="firstName" required ng-model="employee.first_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="2"/>
-                                    <span style="color:red" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
-                                    <span ng-show="myForm.firstName.$error.required">First Name is required.</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">E-mail Address:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="email" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="7"/>
-                                    
-                                    <span style="color:red" ng-show="myForm.email.$error.required">E-mail Address is required.</span>
-                                    <span style="color:red" ng-show="myForm.email.$error.email">Please, write a valid E-mail Address address.</span>
-                                </td>                        
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Middle Name:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="3"/>
-                                    <span style="color:red" ng-show="myForm.middleName.$dirty && myForm.middleName.$invalid">
-                                    <span ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Department:</label>
-                                </td>
-                                <td id="css">
-                                    <select required ng-model="employee.departments_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="8">
-                                        <!-- <option style="display:none">-- Please Select One --</option> -->
-                                        <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
+                                <span style="color:red; display: block; float: left; width:340px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
+                            </td>               
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="display:block; float:left; padding-right:10px">Middle Name:</label>
+                            </td>
+                            <td id="css">
+                                <input name="middleName" required ng-model="employees.middle_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
+                            </td>
+                            <td>
+                                <label style="display:block; float:left; padding-right:10px">Religion:</label>
+                            </td>
+                            <td id="css">
+                                <input name="religion" required ng-model="employees.religion" type="text"  style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="display:block; float:left; padding-right:10px">Last Name:</label>
+                            </td>
+                            <td id="css">
+                                <input name="lastName" required ng-model="employees.last_name" ng-change="data_data.lname1 = employees.last_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
+                            </td>
+                            <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
+                            </td>
+                            <td id="css">
+                                <input name="inputd" ng-model="employees.birth_date" type="date" style="display: block; float: left; width:340px; height:36px;" ng-required="true"/>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.required">Birth Date is required.</span>
+                            </td>
+                        </tr>
 
-                                            {{v.department}}
-
-                                        </option>
-
-                                    </select>
-                                    
-                                </td>  
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Last Name:</label>
-                                </td>
-                                 <td id="css">
-                                    <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="4"/>
-                                    <span style="color:red" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
-                                    <span ng-show="myForm.lastName.$error.required">Last Name is required.</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Level:</label>
-                                </td>
-                                <td id="css">
-                                    <select required ng-model="employee.levels_pk" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px;" tabindex="9" ng-change = "level_changed()" ng-class = "level_class">
-                                            <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}" >
-                                                {{v.level_title}}
-                                            </option>
-                                    </select> 
-                                    
-                                    <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "10" ng-model = "employee.intern_hours"  ng-show="show_hours" required/>   
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Position:</label>
-                                </td>
-                                <td id="css">
-                                    <select required ng-model="employee.titles_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                                        <!-- <option style="display:none">-- Please Select One --</option> -->
-                                        <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
-                                            {{v.title}}
-                                        </option>
-                                    </select>           
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Supervisor:</label>
-                                </td>
-                                <td id="css">
-                                    <select required ng-model="employee.supervisor_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                                        <!-- <option style="display:none">-- Please Select One --</option> -->
-                                        <option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
-                                            {{v.name}}
-                                        </option>
-                                    </select>           
-                                </td>
-
-
-                            </tr>
-                            <tr>
+                        <tr>
+                            <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
+                            </td>
+                            <td id="css">
+                                <select name="gender" required ng-model="employees.gender" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                    <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.gender}}">
+                                        {{v.gender}}
+                                    </option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
+                            </td>  
+                            <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
+                            </td>
+                            <td id="css">
+                                <select name="cistatus" required ng-model="employees.civilstatus" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                    <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.civilstatus}}">
+                                        {{v.civilstatus}}
+                                    </option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
+                            </td> 
+                        </tr>
+                        <tr>
                                 <td colspan = "4">
                                     <center style="font-size: 18px; font-style: bold">
                                         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
@@ -450,6 +409,7 @@ select{
                                     </center>
                                 </td>
                             </tr>
+                            
                     </table>
                     </form>
                 </div>
