@@ -107,16 +107,7 @@ EOT;
         $remarks=$info['remarks'];
         $status=$info['status'];
 
-        $sql = 'begin;';
-
-        $sql .= <<<EOT
-                update daily_pass_slip set
-                archived
-                =
-                't'
-                where pk = $pk
-                ;
-EOT;
+        
         $sql .= <<<EOT
                 INSERT INTO daily_pass_slip_status
                 (
@@ -134,7 +125,7 @@ EOT;
                 )
                 ;
 EOT;
-        $sql .= "commit;";
+        
         return ClassParent::update($sql);
     }
 
