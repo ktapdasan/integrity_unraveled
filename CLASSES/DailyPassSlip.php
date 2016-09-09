@@ -173,7 +173,7 @@ EOT;
             )
             ;
 EOT;
-            
+        
         return ClassParent::update($sql);
 
     }
@@ -244,14 +244,6 @@ EOT;
         $status = $extra['status'];
         $type = $extra['type'];
         
-        
-
-        if($extra['status'] == "Active"){
-            $status = 'false';
-        }
-        else {
-            $status = 'true';   
-        }
 
         $sql = <<<EOT
                 with Q as
@@ -278,26 +270,30 @@ EOT;
                     from daily_pass_slip
                     where (time_from::date between '$date_from' and '$date_to' or time_to::date between '$date_from' and '$date_to')
                     and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
-                    and archived = $status
+                    and archived = false 
                     $where
+                ),
+                A as
+                (
+                    select
+                        *
+                    from Q where status = 'Pending'
+                ),
+                B as
+                (
+                    select
+                        *
+                    from Q
+                    where  (
+                            time_from::date between '$date_from' and '$date_to' 
+                            or 
+                            time_to::date between '$date_from' and '$date_to'
+                        )
+                        and status != 'Pending'
+                        
                 )
-                select
-                    pk,
-                    employees_pk,
-                    employee,
-                    date_created::timestamp(0) as date_created,
-                        to_char(date_created, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as datecreated_html,
-                        time_from::timestamp(0) as time_from,
-                        to_char(time_from, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timefrom_html,
-                        time_to::timestamp(0) as time_to,
-                        to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
-                    status,
-                    type,
-                    reason
-                from Q
-                where (time_from >= '$date_from 0000' and time_from <= '$date_to 2359' or time_to >= '$date_from 0000' and time_to <= '$date_to 2359')
-                    and employees_pk in (select employees_pk from groupings where supervisor_pk = '$supervisor_pk')
-                $where
+                select * from A union select * from B
+                order by time_to desc
                 ;
 EOT;
 
