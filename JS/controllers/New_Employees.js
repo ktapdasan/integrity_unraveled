@@ -52,7 +52,26 @@ app.controller('New_Employees', function(
         data_phid: null,
         data_pagmid: null,
         data_tin: null,
-        intern_hours:''
+        intern_hours:'',
+        salary_type:'bank',
+        bank_name:'',
+        account_number:'',
+        amount:'',
+        mode_payment:'',
+        timein_sunday:'',
+        timein_monday:'',
+        timein_tuesday:'',
+        timein_wednesday:'',
+        timein_thursday:'',
+        timein_friday:'',
+        timein_saturday:'',
+        timeout_sunday:'',
+        timeout_monday:'',
+        timeout_tuesday:'',
+        timeout_wednesday:'',
+        timeout_thursday:'',
+        timeout_friday:'',
+        timeout_saturday:''
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
@@ -219,7 +238,26 @@ app.controller('New_Employees', function(
             data_phid: null,
             data_pagmid: null,
             data_tin: null,
-            intern_hours:''
+            intern_hours:'',
+            salary_type:'bank',
+            bank_name:'',
+            account_number:'',
+            amount:'',
+            mode_payment:'',
+            timein_sunday:'',
+            timein_monday:'',
+            timein_tuesday:'',
+            timein_wednesday:'',
+            timein_thursday:'',
+            timein_friday:'',
+            timein_saturday:'',
+            timeout_sunday:'',
+            timeout_monday:'',
+            timeout_tuesday:'',
+            timeout_wednesday:'',
+            timeout_thursday:'',
+            timeout_friday:'',
+            timeout_saturday:''
         };
     }
 
@@ -238,6 +276,10 @@ app.controller('New_Employees', function(
         }
 
     }
+
+    $scope.isShown = function(salarys_type) {
+        return salarys_type === $scope.employees.salary_type;
+    };
 
     $scope.genders = [
     {

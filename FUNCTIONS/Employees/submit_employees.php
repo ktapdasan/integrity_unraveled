@@ -4,13 +4,6 @@ require_once('../../CLASSES/Employees.php');
 //require_once('../../CLASSES/PHPMailerAutoload.php');
 
 $education = json_decode($_POST['education'], true);
-print_r($education);
-foreach ($education as $key => $value) {
-    print_r($value);
-
-}
-
-//print_r($education);
 $class = new Employees(
     NULL,
     $_POST['employee_id'],
@@ -29,6 +22,11 @@ $class = new Employees(
     $_POST['data_pagmid'],
     $_POST['data_phid'],
     $_POST['education'],
+    $_POST['salary_type'],
+    $_POST['bank_name'],
+    $_POST['account_number'],
+    $_POST['amount'],
+    $_POST['mode_payment'],
     NULL,
     NULL,
     NULL
@@ -44,6 +42,20 @@ $company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['
 $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
 $company['date_started']             = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 $company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
+
+if ($_POST['salary_type'] == 'bank'){
+    $company['salary_type']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['bank_name'])));
+    $company['salary_type']['account_number']       = pg_escape_string(strip_tags(trim($_POST['account_number'])));
+    $company['salary_type']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
+}
+if ($_POST['salary_type'] == 'wire'){
+    $company['salary_type']['mode_payment']         = pg_escape_string(strip_tags(trim($_POST['mode_payment'])));
+    $company['salary_type']['account_number']       = pg_escape_string(strip_tags(trim($_POST['account_number'])));
+    $company['salary_type']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
+}
+if ($_POST['salary_type'] == 'cash'){
+    $company['salary_type']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
+}
 
 //Personal Array!
 $personal = array();
@@ -89,7 +101,7 @@ if ($_POST['levels_pk'] != 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
 }
 
-$educations['school_type'] = $education;
+$educations['school_type']           = $education;
 $details = array();
 $details['company']                  = $company;
 $details['personal']                 = $personal; 
