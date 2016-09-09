@@ -160,18 +160,8 @@
     font-weight: normal ;
 }
 
-body{
-    background:url("ASSETS/img/integrity_watermark.png")no-repeat center center fixed;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-size:cover;
-}
-
- 
-
 </style>
-<body>
+
 <div class="dashboard">
     <ul class="nav nav-list" style="background-color#FF0000;">
         <li class="time" style="line-height: 25px; ">
@@ -201,9 +191,9 @@ body{
         </li>
         <li class="msg" ng-if="logtype=='login'">
             <p class="animated fadeInRight">Would you like to log in now?</p>
-            <div>
-            <a ng-disabled="logbutton" ng-click="submitlog('In')"style="margin-top:10px;">
-            <img src ="./ASSETS/img/login.gif" width="140px" />
+            <div class="animated bounceIn">
+            <a class ="animated flip" ng-disabled="logbutton" ng-click="submitlog('In')"style="margin-top:10px;">
+            <img src ="{{ buttons.login }}"   ng-mouseover="button_hover()" ng-mouseout="button_mouseout()" width="140px" />
             </a>
             </div>
         </li>
@@ -265,7 +255,7 @@ body{
 <script src="./ASSETS/js/main.js"></script>
 <script src="./ASSETS/js/jquery.backstretch.js"></script>
 <script type="text/javascript">
-//     $(document).ready(function(){
-//         $.backstretch("ASSETS/img/integrity_watermark.png");
-//     });
- </script>
+    $(document).ready(function(){
+        $.backstretch("ASSETS/img/integrity_watermark.png");
+    });
+</script>
