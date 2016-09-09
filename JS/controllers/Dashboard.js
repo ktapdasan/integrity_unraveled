@@ -441,6 +441,16 @@ app.controller('Dashboard', function(
 
     }
 
+    $scope.button_logout_hover = function(){
+        $scope.buttons.logout ="./ASSETS/img/logouthover.gif"
+
+    }
+
+     $scope.button_logout_mouseout = function(){
+        $scope.buttons.logout ="./ASSETS/img/logout.gif"
+
+    }
+
 
 
     // $scope.show_notifs = function(){
