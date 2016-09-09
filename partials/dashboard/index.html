@@ -212,7 +212,7 @@ body{
       <!--       <input ng-disabled="logbutton" ng-click="submitlog('Out')" type="button" class=" btn btn-lg btn-round btn-primary" value="LOG OUT" style="margin-top:50px;"> -->
             <div>
             <a ng-disabled="logbutton" ng-click="submitlog('Out')"style="margin-top:10px;">
-            <img src ="./ASSETS/img/logout.gif" width="140px" />
+            <img src ="{{ buttons.logout }}" ng-mouseover="button_logout_hover()"  ng-mouseout="button_logout_mouseout()"  width="140px" />
             </a>
             </div>
         </li>
