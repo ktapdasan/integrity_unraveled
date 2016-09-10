@@ -58,20 +58,20 @@ app.controller('New_Employees', function(
         account_number:'',
         amount:'',
         mode_payment:'',
-        timein_sunday:'',
-        timein_monday:'',
-        timein_tuesday:'',
-        timein_wednesday:'',
-        timein_thursday:'',
-        timein_friday:'',
-        timein_saturday:'',
-        timeout_sunday:'',
-        timeout_monday:'',
-        timeout_tuesday:'',
-        timeout_wednesday:'',
-        timeout_thursday:'',
-        timeout_friday:'',
-        timeout_saturday:''
+        timein_sunday:null,
+        timein_monday:null,
+        timein_tuesday:null,
+        timein_wednesday:null,
+        timein_thursday:null,
+        timein_friday:null,
+        timein_saturday:null,
+        timeout_sunday:null,
+        timeout_monday:null,
+        timeout_tuesday:null,
+        timeout_wednesday:null,
+        timeout_thursday:null,
+        timeout_friday:null,
+        timeout_saturday:null
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
@@ -182,7 +182,6 @@ app.controller('New_Employees', function(
     };
 
     $scope.submit_employees = function(){
-
         get_supervisors();
         for(var i in $scope.employees.education){
             $scope.employees.education[i].date_from_school = $filter('date')($scope.employees.education[i].date_from_school, "yyyy-MM-dd");
@@ -190,9 +189,24 @@ app.controller('New_Employees', function(
         }
         $scope.employees.date_started = $filter('date')($scope.employees.date_started, "yyyy-MM-dd");
         $scope.employees.birth_date = $filter('date')($scope.employees.birth_date, "yyyy-MM-dd");
-
+        
+        $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "HH:mm");
+        $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "HH:mm");
+        $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
+         $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
+        $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "HH:mm");
+        $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "HH:mm");
+        $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "HH:mm");
+        $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "HH:mm");
+        $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "HH:mm");
+        $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "HH:mm");
+        $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "HH:mm");
+        $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "HH:mm");
+        $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "HH:mm");
+        $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "HH:mm");
+        
         $scope.employees.education = JSON.stringify($scope.employees.education);
-        //get_supervisors();
+       
         var promise = EmployeesFactory.submit_employees($scope.employees);
         promise.then(function(data){
 

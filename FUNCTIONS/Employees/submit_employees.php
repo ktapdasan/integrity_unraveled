@@ -4,6 +4,7 @@ require_once('../../CLASSES/Employees.php');
 //require_once('../../CLASSES/PHPMailerAutoload.php');
 
 $education = json_decode($_POST['education'], true);
+
 $class = new Employees(
     NULL,
     $_POST['employee_id'],
@@ -27,6 +28,20 @@ $class = new Employees(
     $_POST['account_number'],
     $_POST['amount'],
     $_POST['mode_payment'],
+    $_POST['timein_sunday'],
+    $_POST['timein_monday'],
+    $_POST['timein_tuesday'],
+    $_POST['timein_wednesday'],
+    $_POST['timein_thursday'],
+    $_POST['timein_friday'],
+    $_POST['timein_saturday'],
+    $_POST['timeout_sunday'],
+    $_POST['timeout_monday'],
+    $_POST['timeout_tuesday'],
+    $_POST['timeout_wednesday'],
+    $_POST['timeout_thursday'],
+    $_POST['timeout_friday'],
+    $_POST['timeout_saturday'],
     NULL,
     NULL,
     NULL
@@ -43,6 +58,7 @@ $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['
 $company['date_started']             = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 $company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
 
+//Salary Type
 if ($_POST['salary_type'] == 'bank'){
     $company['salary_type']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['bank_name'])));
     $company['salary_type']['account_number']       = pg_escape_string(strip_tags(trim($_POST['account_number'])));
@@ -56,6 +72,22 @@ if ($_POST['salary_type'] == 'wire'){
 if ($_POST['salary_type'] == 'cash'){
     $company['salary_type']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
 }
+//TIMEIN and OUT
+$company['work_schedule']['sunday']['in']           = pg_escape_string($_POST['timein_sunday']);
+$company['work_schedule']['sunday']['out']          = pg_escape_string($_POST['timeout_sunday']);
+$company['work_schedule']['monday']['in']           = pg_escape_string($_POST['timein_monday']);
+$company['work_schedule']['monday']['out']          = pg_escape_string($_POST['timeout_monday']);
+$company['work_schedule']['tuesday']['in']          = pg_escape_string($_POST['timein_tuesday']);
+$company['work_schedule']['tuesday']['out']         = pg_escape_string($_POST['timeout_tuesday']);
+$company['work_schedule']['wednesday']['in']        = pg_escape_string($_POST['timein_wednesday']);
+$company['work_schedule']['wednesday']['out']       = pg_escape_string($_POST['timeout_wednesday']);
+$company['work_schedule']['thursday']['in']         = pg_escape_string($_POST['timein_thursday']);
+$company['work_schedule']['thursday']['out']        = pg_escape_string($_POST['timeout_thursday']);
+$company['work_schedule']['friday']['in']           = pg_escape_string($_POST['timein_friday']);
+$company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
+$company['work_schedule']['saturday']['in']         = pg_escape_string($_POST['timein_saturday']);
+$company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
+
 
 //Personal Array!
 $personal = array();
