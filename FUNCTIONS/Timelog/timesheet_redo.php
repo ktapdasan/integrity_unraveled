@@ -183,7 +183,7 @@ $class7 = new Suspension(
 	                        NULL
 	        			);
 
-$data7 = $class7->fetch();
+$data7 = $class7->fetch(array('status'=>'Active'));
 $suspension = $data7['result'];
 
 foreach ($employees as $employee_id => $value) {
