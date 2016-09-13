@@ -209,6 +209,7 @@ EOT;
 EOT;
 
         return ClassParent::get($sql);
+        
     }
 
     public function profile(){
@@ -691,6 +692,8 @@ EOT;
                     '$details'
 
                 );
+
+            
 EOT;
 //         $sql .= <<<EOT
 //                 insert into accounts
@@ -784,11 +787,12 @@ EOT;
         return ClassParent::update($sql);
     }
 
-    public function deactivate($info,$extra){
+    public function deactivate($info,$extra, $attr){
 
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));
         }  
+        $attr = json_encode($attr);
         $employees_pk = $this->employees_pk;
         $supervisor_pk = $extra['supervisor_pk'];
         $created_by = $extra['created_by'];
@@ -801,12 +805,17 @@ EOT;
                 insert into attritions
                 (
                     employees_pk,
-                    hr_details
+                    hr_details,
+                    supervisor_details,
+                    created_by
                 )
                 values
                 (
+
                     $this->pk,
-                    '$hr'
+                    '$hr',
+                    '$attr',
+                    $created_by
                 );
 EOT;
 
@@ -826,7 +835,7 @@ EOT;
                     'New attrition filed',
                     'attritions',
                     currval('attritions_pk_seq'),
-                    $supervisor_pk,
+                    (select supervisor_pk from groupings where employees_pk = $this->pk),
                     $created_by
                 )
                 ;

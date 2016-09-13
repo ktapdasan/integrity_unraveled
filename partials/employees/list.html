@@ -25,7 +25,7 @@
 .tblemployees td{
     border:0px;
     background-color:#F0F0F0;
-
+    width: 150px;
 }
 
 .table1{
@@ -296,7 +296,7 @@ select{
                 border:1px solid Green;
                 }
                 #css .ng-dirty.ng-invalid {
-                    border:1px solid Red;
+                     border:1px solid Red;
                 }
 
             </style>
@@ -324,16 +324,16 @@ select{
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">First Name:</label> 
                             </td>
                             <td id="css">     
-                                <input name="firstName" required ng-model="employees.first_name" ng-change="data_data.fname = employees.first_name" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
+                                <input name="firstName" required ng-model="employees.first_name" ng-change="data_data.fname = employees.first_name" type="text" style="display: block; float: left; width:300px; height:36px;"  capitalize-first />
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                             </td>
                             <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">E-mail Address:</label>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px; border:0px solid #f0f0f0;">E-mail Address:</label>
                             </td>
                             <td id="css">
-                                <input name="emailAddress" required ng-model="employees.email_address" ng-change="data.email = employees.email_address" type="email" style="display: block; float: left; width:340px;height:36px;" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
+                                <input name="emailAddress" required ng-model="employees.email_address" ng-change="data.email = employees.email_address" type="email" style="display: block; float: left; width:300px;height:36px;" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
 
-                                <span style="color:red; display: block; float: left; width:340px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
+                                <span style="color:red; display: block; float: left; width:300px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
                             </td>               
                         </tr>
                         <tr>
@@ -341,15 +341,15 @@ select{
                                 <label style="display:block; float:left; padding-right:10px">Middle Name:</label>
                             </td>
                             <td id="css">
-                                <input name="middleName" required ng-model="employees.middle_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
+                                <input name="middleName" required ng-model="employees.middle_name" type="text" style="display: block; float: left; width:300px; height:36px;" capitalize-first/>
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                             </td>
                             <td>
                                 <label style="display:block; float:left; padding-right:10px">Religion:</label>
                             </td>
                             <td id="css">
-                                <input name="religion" required ng-model="employees.religion" type="text"  style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
-                                <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
+                                <input name="religion" required ng-model="employees.religion" type="text"  style="display: block; float: left; width:300px; height:36px;" capitalize-first/>
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
                             </td>
                         </tr>
                         <tr>
@@ -357,15 +357,15 @@ select{
                                 <label style="display:block; float:left; padding-right:10px">Last Name:</label>
                             </td>
                             <td id="css">
-                                <input name="lastName" required ng-model="employees.last_name" ng-change="data_data.lname1 = employees.last_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
+                                <input name="lastName" required ng-model="employees.last_name" ng-change="data_data.lname1 = employees.last_name" type="text" style="display: block; float: left; width:300px; height:36px;" capitalize-first/>
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                             </td>
                             <td>
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
                             </td>
                             <td id="css">
-                                <input name="inputd" ng-model="employees.birth_date" type="date" style="display: block; float: left; width:340px; height:36px;" ng-required="true"/>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.required">Birth Date is required.</span>
+                                <input name="inputd" ng-model="employees.birth_date" type="date" style="display: block; float: left; width:300px; height:36px;" ng-required="true"/>
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.inputd.$error.required">Birth Date is required.</span>
                             </td>
                         </tr>
 
@@ -374,25 +374,25 @@ select{
                                 <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
                             </td>
                             <td id="css">
-                                <select name="gender" required ng-model="employees.gender" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                <select name="gender" required ng-model="employees.gender" style="display: block; float: left; width:300px;padding:5px; height:36px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                                     <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.gender}}">
                                         {{v.gender}}
                                     </option>
                                 </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
                             </td>  
                             <td>
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
                             </td>
                             <td id="css">
-                                <select name="cistatus" required ng-model="employees.civilstatus" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                <select name="cistatus" required ng-model="employees.civilstatus" style="display: block; float: left; width:300px;padding:5px; height:36px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                                     <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.civilstatus}}">
                                         {{v.civilstatus}}
                                     </option>
                                 </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
+                                <span style="color:red;display: block; float: left; width:300px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
                             </td> 
                         </tr>
                         <tr>
