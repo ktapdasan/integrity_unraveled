@@ -103,6 +103,11 @@ app.config(function($routeProvider){
         controller: 'admin_Holidays',
         templateUrl: 'partials/admin/holidays/index.html'
     })
+    .when('/admin/suspension',
+    {
+        controller: 'admin_suspension',
+        templateUrl: 'partials/admin/suspension/index.html'
+    })
     .when('/management/leaves',
     {
         controller: 'Management_leave',

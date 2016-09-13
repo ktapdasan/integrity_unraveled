@@ -319,6 +319,7 @@
                             <li><a style="cursor:pointer;" href="#/admin/leaves" ng-click="menuclicked('admin')">Leaves</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/work_days" ng-click="menuclicked('admin')">Work Days</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/holidays" ng-click="menuclicked('admin')">Holidays</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/suspension" ng-click="menuclicked('admin')">Suspension</a></li>
                         </ul>
 
                     </li>
@@ -517,6 +518,7 @@
     <script src="./JS/controllers/DailyPassSlip.js"></script>
     <script src="./JS/controllers/Management_DailyPassSlip.js"></script>
     <script src="./JS/controllers/admin_Holidays.js"></script>
+    <script src="./JS/controllers/admin_suspension.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -534,6 +536,7 @@
     <script src="./JS/factories/CutoffFactory.js"></script>  
     <script src="./JS/factories/WorkdaysFactory.js"></script> 
     <script src="./JS/factories/HolidaysFactory.js"></script>  
+    <script src="./JS/factories/SuspensionFactory.js"></script>  
 
 
     <!-- DIRECTIVES -->
@@ -1335,6 +1338,67 @@
         </form>
     
     </script>
+
+    <script type="text/ng-template" id="SuspensionModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+                <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>
+            <form name="myForm">
+                <div>  
+                <tr><td><label style= "font-size:20px; margin-top: 7.5px; float: left;">Date From:</label>
+                <input type="date"  class="form-control" size="8" ng-model="modal.date_from" name="time" style="width: 160px; margin-top: 4px;margin-left: 55px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; margin-top: 7.5px; float: left; margin-left: -105px;">Time From:</label>
+                <input type="text" class="form-control" size="8" bs-timepicker ng-model="modal.time_from" name="time" style="width: 100px; margin-top: 4px;margin-left: 85px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; margin-top: 7.5px; float: left;">Date To:</label>
+                <input type="date"  class="form-control" size="8" ng-model="modal.date_to" name="time" style="width: 160px; margin-top: 4px;margin-left: 55px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; margin-top: 7.5px; float: left;">Time To:</label>
+                <input type="text" class="form-control" size="8" bs-timepicker ng-model="modal.time_to" name="time" style="width: 100px;margin-left: 85px;margin-top: 4px;"/></td></tr>
+                <tr><td><label style = "font-size:20px;width:200px;">Remarks:</label> 
+                <textarea ng-model="modal.remarks" rows ='6' cols ='32' tabindex="1" autofocus required/></td></tr>  
+                </div>
+            </form>
+        </div>
+         <hr style="height:2px">
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="EditSuspensionModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
+        <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>            
+        <form name="myForm">
+            <div> 
+
+                <label style="margin-top: 10px;font-size:20px;">New Holiday Name:</label>
+                <input required type="text" size="10" ng-model="modal.name" style="width: 300px;font-size:18px;"/>
+                <tr><td><label style= "font-size:20px; float: left;">Date From:</label>
+                <input type="date"  class="form-control" size="8" ng-model="modal.date_from" name="time" style="width: 160px;margin-left: 55px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; float: left;">Date To:</label>
+                <input type="date"  class="form-control" size="8" ng-model="modal.date_to" name="time" style="width: 160px;margin-left: 55px;"/></td></tr>
+                <input required type="text" size="10" ng-model="modal.name" style="width: 300px;font-size:18px;"/>
+                <tr><td><label style= "font-size:20px; float: left;">Time From:</label>
+                <input type="text" class="form-control" size="8" bs-timepicker ng-model="modal.time_from" name="time" style="width: 100px;margin-left: 85px;"/></td></tr>
+                <tr><td><label style= "font-size:20px; float: left;">Time To:</label>
+                <input type="text" class="form-control" size="8" bs-timepicker ng-model="modal.time_to" name="time" style="width: 100px;margin-left: 85px;"/></td></tr>    
+               
+            </div>
+        </form>
+        </div>
+        <div class="ngdialog-buttons">
+        <hr style="height:2px">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+
+
     
 </body>
 </html>
