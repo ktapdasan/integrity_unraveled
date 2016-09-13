@@ -199,3 +199,16 @@ details = jsonb_set(details, '{company}', ' {
 ', true) 
 where pk = 98;
 
+update employees set
+details = jsonb_set(details, '{personal}', ' 
+{
+"gender": "Male", 
+"religion": "Catholic", 
+"last_name": "Tapdasan", 
+"birth_date": "1995-07-27", 
+"first_name": "Ken", 
+"civilstatus": "Single", 
+"middle_name": "Villanueva"
+}
+', true) 
+where pk = 12;

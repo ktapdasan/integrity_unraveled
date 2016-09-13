@@ -121,6 +121,7 @@ body>footer .footer-main {
     box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, .5);
 }
 
+
 .labelbck{
     background-color: #2196F3;border:2px solid #2196F3;height:30px;width:145px;padding:5px;padding-left:20px;font-weight:900;
     border-radius:3px 14px 0px 0px;color:#fff;
@@ -131,7 +132,10 @@ body>footer .footer-main {
  -webkit-transform: scale(1) skewX(50deg);
 }
 
+
+
 </style>
+
 <script src="./ASSETS/js/main.js"></script>
 
 <div id="content2">
@@ -150,12 +154,11 @@ body>footer .footer-main {
     <div>
         <form name="myForm">
         <ul id="tabs">
-            <li ng-class="current.personal"><a ng-click="change_tab('personal')" name="tab1">Personal Information</a></li>
+            <li ng-class="current.personal" ><a ng-click="change_tab('personal')" name="tab1">Personal Information</a></li>
             <li ng-class="current.education"><a ng-click="change_tab('education')"  name="tab2">Educational Attainment</a></li>
             <li ng-class="current.company"><a ng-click="change_tab('company')" name="tab3">Company Profile</a></li>
             <li ng-class="current.government"><a ng-click="change_tab('government')" name="tab4">Government Mandated Benefits</a></li>    
         </ul>
-
             <div>
                 <div ng-if="tab.personal">
 
@@ -367,7 +370,6 @@ body>footer .footer-main {
             </div>
            
         <div ng-if="tab.company">
-
             <table style="width:70%;margin-left:140px;margin-top:30px" >
                 <tr>
                     <td> 
@@ -405,7 +407,6 @@ body>footer .footer-main {
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Start Date:</label>
-
                     </td>
                     <td id="css">
                         <input name="inputd" ng-model="employees.date_started" type="date" style="display: block; float: left; width:340px; height:36px;" ng-required="true"/>
@@ -492,39 +493,44 @@ body>footer .footer-main {
                     </tr>
                 </tr>
                 <tr ng-show="isShown('bank')">
-                    <td>
+                    <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Bank Name:</label>
                     </td>
-                    <td id="css" >
-                        <input type="text" ng-model="employees.bank_name" is-number style="display: block; float: left; width:340px; height:36px;"/>
+                    <td id="css">
+                        <input name="bname" required ng-model="employees.bank_name" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bname.$error.required">Bank Name is required.</span>
                     </td>
-                    <td>
+                   <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Account Number:</label>
                     </td>
-                    <td id="css" >
-                        <input  type="text"  ng-model="employees.account_number" is-number style="display: block; float: left; width:340px; height:36px;"/>
+                    <td id="css">
+                        <input name="anumber" is-number required ng-model="employees.account_number" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.anumber.$error.required">Account number is required.</span>
                     </td>
                 </tr>
                 <tr ng-show="isShown('bank')">
-                    <td>
+                      <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                     </td>
-                    <td id="css" >
-                        <input  type="text" ng-model="employees.amount" is-number style="display: block; float: left; width:340px; height:36px;"/>
+                   <td id="css">
+                        <input name="amount" is-number required ng-model="employees.amount" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.amount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
                 <tr ng-show="isShown('wire')">
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Mode of Payment:</label>
                     </td>
-                    <td id="css" >
-                        <input type="text" ng-model="employees.mode_payment" style="display: block; float: left; width:340px; height:36px;"/>
+                    <td id="css">
+                        <input name="mopayment" required ng-model="employees.amount" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.mopayment.$error.required">Mode of payment is required.</span>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Account Number:</label>
                     </td>
-                    <td id="css" >
-                        <input  type="text" ng-model="employees.account_number" is-number style="display: block; float: left; width:340px; height:36px;"/>
+                     <td id="css">
+                        <input name="amount" is-number required ng-model="employees.amount" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.amount.$error.required">Account number is required.</span>
                     </td>
 
                 </tr>
@@ -532,8 +538,9 @@ body>footer .footer-main {
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                     </td>
-                    <td id="css" >
-                        <input  type="text" ng-model="employees.amount" is-number style="display: block; float: left; width:340px; height:36px;"/>
+                   <td id="css">
+                        <input name="amount" is-number required ng-model="employees.amount" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.amount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
                 <tr ng-show="isShown('cash')">
@@ -541,7 +548,8 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                     </td>
                     <td id="css">
-                        <input  type="text" ng-model="employees.amount" is-number style="display: block; float: left; width:340px; height:34px;"/>
+                        <input name="amount" is-number required ng-model="employees.amount" type = "text" style="display: block; float: left; width:340px; height:38px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.amount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
                 <tr>
@@ -553,7 +561,7 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Sunday:</label>
                     </td>
                     <td>
-                        <input  type="text"  ng-model="employees.timein_sunday" style="display: block; float: left; width:200px; height:34px;" bs-timepicker/>{{employees.timein_sunday}}
+                        <input  type="text"  ng-model="employees.timein_sunday" style="display: block; float: left; width:200px; height:34px;" bs-timepicker/>
 
                         <input  type="text"  ng-model="employees.timeout_sunday" style="display: block; float: left; width:200px; height:34px;" bs-timepicker/>
                     </td>
