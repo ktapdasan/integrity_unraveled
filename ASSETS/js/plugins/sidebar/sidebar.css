@@ -1,4 +1,4 @@
-#styleSelector {
+#rightSidebar {
     border: 1px solid #e9e9e9;
   
     position: fixed;
@@ -12,17 +12,17 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
 }
-#styleSelector.open {
+#rightSidebar.open {
     background: #FFF none repeat scroll 0 0;
     right: 0;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     min-height: 550px;
 }
-.selector-toggle {
+#rightSidebar .selector-toggle {
     position: relative;
 
 }
-.selector-toggle > a {
+#rightSidebar .selector-toggle > a {
     padding-top: 7px;
     border: 1px solid #e9e9e9;
     border-right: 0;
@@ -40,9 +40,6 @@
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
     animation: bell 2.6s linear infinite;
     transform-origin: 50% 50%;
-
-
-
 }
 @-webkit-keyframes bell {
 
@@ -81,7 +78,7 @@
 }
 
 
-.selector-toggle > a:before {
+#rightSidebar .selector-toggle > a:before {
     font-family: FontAwesome;
     content: "\f0a2";
     font-size: 30px;
@@ -93,7 +90,7 @@
 
 }
 
-.open .selector-toggle > a:before {
+#rightSidebar .open .selector-toggle > a:before {
     font-family: FontAwesome;
     content: "\f0a2";
     font-size: 30px;
@@ -134,7 +131,7 @@
     visibility: visible;
 }*/
 
-  .selector-toggle .tooltiptext {
+#rightSidebar .selector-toggle .tooltiptext {
     visibility: visible;
     width: 50px;
     
@@ -152,7 +149,7 @@
 
 }
 
-.selector-toggle .tooltiptext::after {
+#rightSidebar .selector-toggle .tooltiptext::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -160,7 +157,7 @@
     margin-top: -5px;
   ;
 }
-.selector-toggle:hover .tooltiptext {
+#rightSidebar .selector-toggle:hover .tooltiptext {
     visibility: hidden;
 }
 
@@ -189,7 +186,7 @@
 
 }
 /*hoverUp*/
-.selector-toggle .tooltiptext1 {
+#rightSidebar .selector-toggle .tooltiptext1 {
     visibility: visible;
     width: 50px;
     color: #3FB6ED;
@@ -207,7 +204,7 @@
     transform-origin: 50% 50%;
 }
 
-.selector-toggle .tooltiptext1::after {
+#rightSidebar .selector-toggle .tooltiptext1::after {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -216,7 +213,7 @@
 
 }
 
-.selector-toggle:hover .tooltiptext1 {
+#rightSidebar .selector-toggle:hover .tooltiptext1 {
     visibility: hidden;
 }
 
@@ -246,7 +243,7 @@
 
 /*hoverDown*/
 
-.selector-toggle .tooltiptext2 {
+#rightSidebar .selector-toggle .tooltiptext2 {
     visibility: visible;
     width: 50px;
     color: #3FB6ED;
@@ -265,7 +262,7 @@
 
 }
 
-.selector-toggle .tooltiptext2::after {
+#rightSidebar .selector-toggle .tooltiptext2::after {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -274,7 +271,7 @@
 
 }
 
-.selector-toggle:hover .tooltiptext2 {
+#rightSidebar .selector-toggle:hover .tooltiptext2 {
     visibility: hidden;
 }
 @keyframes arrow-down {
@@ -305,45 +302,213 @@
 
 
 
-/*#styleSelector ul {
-    border: 0 none;
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+/**********************************************/
+
+#leftSidebar {
+    border: 1px solid #e9e9e9;
+  
+    position: fixed;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 230px;
+    height: auto;
+    top: 75px;
+    left: -230px;  
+    z-index: 500;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
 }
-#styleSelector ul li {
-    border-bottom: 0px solid #e9e9e9;
-    display: block;
-    margin: 0;
-    padding: 0px 5px 5px 5px;
-    text-align: left;
-    width: 100%;
+#leftSidebar.open {
+    background: #FFF none repeat scroll 0 0;
+    left: 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+    min-height: 550px;
 }
-#styleSelector ul li p.selector-title {
-    border-bottom: 1px solid #e9e9e9;
-    color: #9c9c9c;
-    font-size: 14px;
-    margin: 0;
-    padding: 6px;
-    text-align: center;
-}
-#styleSelector > ul > li > .sub-title {
-    color: #9c9c9c;
-    font-size: 13px;
-    line-height: 30px;
-    margin: 0;
-    padding: 6px 2px;
+#leftSidebar .selector-toggle {
     position: relative;
-    text-align: center;
+
 }
-.leftpanel-effect > .checkbox,
-.leftpanel-effect > .radio {
+#leftSidebar .selector-toggle > a {
+    padding-top: 7px;
+    border: 1px solid #e9e9e9;
+    border-left: 0;
+    position: absolute;
+    top: -1px;
+    right: -60px;
+    width: 60px;
+    height: 60px;
     display: block;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    padding: 0 10px;
-    position: relative;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0px 50px 50px 0px;
+    background-color:white;
+    
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    animation: bell 2.6s linear infinite;
+    transform-origin: 50% 50%;
+
+
+
 }
-#styleSelector li {
-    padding: 5px;
+
+#leftSidebar .selector-toggle > a:before {
+    font-family: FontAwesome;
+    font-size: 30px;
+    position: relative;
+    float: left; 
+    left: 17px;
+    top:5px;
+    line-height: 35px;
+
+}
+
+#leftSidebar .open .selector-toggle > a:before {
+    font-family: FontAwesome;
+    font-size: 30px;
+    position: relative;
+    float: left;
+    left: 17px;
+    top:5px;
+    line-height: 35px;
+  }
+
+#leftSidebar .selector-toggle .tooltiptext {
+    visibility: visible;
+    width: 50px;
+    
+    color: #3FB6ED;height:25px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 3px 0;
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    font-size: 20px;
+    right: 120%;
+    animation: arrow-right 2.6s ease infinite;
+    transform-origin: 50% 50%;
+
+}
+
+#leftSidebar .selector-toggle .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+  ;
+}
+#leftSidebar .selector-toggle:hover .tooltiptext {
+    visibility: hidden;
+}
+
+/*hoverUp*/
+#leftSidebar .selector-toggle .tooltiptext1 {
+    visibility: visible;
+    width: 50px;
+    color: #3FB6ED;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 52px;
+    right: 230px;
+    font-size: 20px;
+    margin-left: -60px;
+
+    animation: arrow-up 2.6s ease infinite;
+    transform-origin: 50% 50%;
+}
+
+#leftSidebar .selector-toggle .tooltiptext1::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+
+}
+
+#leftSidebar .selector-toggle:hover .tooltiptext1 {
+    visibility: hidden;
+}
+
+/*hoverDown*/
+
+#leftSidebar .selector-toggle .tooltiptext2 {
+    visibility: visible;
+    width: 50px;
+    color: #3FB6ED;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -30px;
+    right: 230px;
+    font-size: 20px;
+    margin-left: -60px;
+    animation: arrow-down 2.6s ease infinite;
+    transform-origin: 50% 50%;
+
+
+}
+
+.selector-toggle .tooltiptext2::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+
+}
+
+.selector-toggle:hover .tooltiptext2 {
+    visibility: hidden;
 }
