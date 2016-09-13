@@ -13,12 +13,16 @@ app.controller('Analytics', function(
     //////////////////////////////////
     //////////////////////////////////
     //////////////////////////////////
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.labels = [];
         //$scope.series = ['Series A', 'Series B'];
         $scope.series = [];
         $scope.data = [
-            [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90]
+        // [65,22],
+        // [64,23],
+        // [0,1],
+        // [6,0],
+        // [23,14],
+        // [0,1]
         ];
         $scope.onClick = function (points, evt) {
             console.log(points, evt);
@@ -92,8 +96,27 @@ app.controller('Analytics', function(
         promise.then(function(data){
             var a = data.data.result;
             for(var i in a){
-                $scope.series.push(a[i].name);    
+            // console.log(a);
+            // console.log($scope.labels);
+            // console.log($scope.series);
+            // console.log($scope.data);
+              if($scope.labels.includes(a[i].employee)){
+               }else{
+                $scope.labels.push(a[i].employee);
+              }
+              console.log(a[i].count);
+              if($scope.series.includes(a[i].name)){
+                $scope.data[$scope.series.indexOf(a[i].name)][$scope.labels.indexOf(a[i].employee)]=a[i].count;
+              }
+              else{
+                $scope.series.push(a[i].name);
+                $scope.temp_array=[];
+                $scope.temp_array[$scope.labels.indexOf(a[i].employee)]=a[i].count;
+                $scope.data[i]=$scope.temp_array;
+              }
+
             }
+            
             
         })
         .then(null, function(data){
