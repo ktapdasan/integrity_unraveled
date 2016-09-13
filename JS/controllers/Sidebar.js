@@ -65,7 +65,7 @@ app.controller('Sidebar', function(
         //if($scope.switcher.main == ""){
         if(hid == 'false'){
             $scope.switcher.status = true;
-            $('#styleSelector').addClass('open');
+            $('#rightSidebar').addClass('open');
             $('#hidden-text').val('true');
             //$scope.switcher.main = "open";
             $scope.switcher.content = true;
@@ -74,7 +74,7 @@ app.controller('Sidebar', function(
         }
         else {
             $scope.switcher.status = false;
-            $('#styleSelector').removeClass('open');
+            $('#rightSidebar').removeClass('open');
             $('#hidden-text').val('false');
             //$scope.switcher.main = "";   
             $scope.switcher.content = true;

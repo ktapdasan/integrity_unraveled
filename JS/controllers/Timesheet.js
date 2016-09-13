@@ -726,4 +726,8 @@ app.controller('Timesheet', function(
             
         });
     }
+
+    $scope.pdf_timesheet = function(){
+        window.open('./FUNCTIONS/Timelog/pdf_export.php');
+    }
 });

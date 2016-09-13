@@ -87,6 +87,7 @@ app.controller('New_Employees', function(
         lname1:''
     };
 
+
     $scope.uploader = {};
     $scope.uploader.queue = {};
 
@@ -118,6 +119,8 @@ app.controller('New_Employees', function(
         $scope.tab[tab] = true;
         $scope.current[tab] = 'current';
     }
+
+    
 
     function get_positions(){
         var promise = EmployeesFactory.get_positions();

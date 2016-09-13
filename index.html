@@ -390,7 +390,7 @@
 
     <div id="sidebar" ng-controller="Sidebar">
         <input type="hidden" id="hidden-text" value="false"/>
-        <div id="styleSelector" class="{{switcher.main}}">
+        <div id="rightSidebar" class="{{switcher.main}}">
           
             <div class="selector-toggle">
                 <a href="javascript:void(0)" ng-click="toggle_switcher()" ng-style="{'animation-duration' : getStop() } ">
@@ -582,11 +582,11 @@
                     !$box.is(event.target) //checks if the $box itself was clicked
                 ){
 
-                    $('#styleSelector').removeClass('open');
+                    $('#rightSidebar').removeClass('open');
                     $('#hidden-text').val('false');
                 } else {
                     //$('#hidden-text').val('true');
-                    //$('#styleSelector').addClass('open');
+                    //$('#rightSidebar').addClass('open');
                 }
             });
           
