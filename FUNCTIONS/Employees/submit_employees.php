@@ -72,6 +72,7 @@ if ($_POST['salary_type'] == 'wire'){
 if ($_POST['salary_type'] == 'cash'){
     $company['salary_type']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
 }
+
 //TIMEIN and OUT
 $company['work_schedule']['sunday']['in']           = pg_escape_string($_POST['timein_sunday']);
 $company['work_schedule']['sunday']['out']          = pg_escape_string($_POST['timeout_sunday']);
@@ -101,30 +102,11 @@ $personal['birth_date']              = pg_escape_string(strip_tags(trim($_POST['
 
 //Government Array!
 $government = array();
-if ($_POST['data_sss'] == null){
-    $government['SSS']               = 'N/A';
-}
-if ($_POST['data_tin'] == null){
-    $government['TIN']               = 'N/A';
-}
-if ($_POST['data_pagmid'] == null){
-    $government['PAG-IBIG']          = 'N/A';
+$government['SSS']                   = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
+$government['TIN']                   = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
+$government['PAG-IBIG']              = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
+$government['PHILHEALTH']            = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
-}if ($_POST['data_phid'] == null){
-    $government['PHILHEALTH']        = 'N/A';
-}
-if ($_POST['data_sss'] != null){
-    $government['SSS']               = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
-}
-if ($_POST['data_tin'] != null){
-    $government['TIN']               = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
-}
-if ($_POST['data_pagmid'] != null){
-    $government['PAG-IBIG']          = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
-}
-if ($_POST['data_phid'] != null){
-    $government['PHILHEALTH']        = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
-}
 if ($_POST['levels_pk'] == 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
     $company['hours']                = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
@@ -134,6 +116,7 @@ if ($_POST['levels_pk'] != 3){
 }
 
 $educations['school_type']           = $education;
+
 $details = array();
 $details['company']                  = $company;
 $details['personal']                 = $personal; 
