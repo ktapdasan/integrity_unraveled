@@ -212,3 +212,5 @@ details = jsonb_set(details, '{personal}', '
 }
 ', true) 
 where pk = 12;
+
+
