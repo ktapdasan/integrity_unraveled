@@ -60,9 +60,6 @@ app.controller('Sidebar', function(
         })   
     } 
 
- 
-
-
     $scope.toggle_switcher = function(){
         var hid = $('#hidden-text').val();
         //if($scope.switcher.main == ""){

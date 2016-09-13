@@ -10,11 +10,11 @@ class Holidays extends ClassParent {
 
 
 	public function __construct(
-                                $pk='',
-								$name='',
-                                $type='',
-								$datex='',
-								$archived=''
+                                    $pk,
+    								$name,
+                                    $type,
+    								$datex,
+    								$archived
                                 ){
         
         $fields = get_defined_vars();
@@ -53,6 +53,31 @@ class Holidays extends ClassParent {
                 where archived = $this->archived
                 $where
                 order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_active_holidays($extra){      
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $extra['date_from'];
+        $date_to = $extra['date_to'];
+
+        $sql = <<<EOT
+                select 
+                    pk,
+                    name,
+                    type,
+                    datex::date as datex,
+                    archived
+                from holidays
+                where archived = false
+                    and datex::date between '$date_from' and '$date_to'
+                order by datex
                 ;
 EOT;
 

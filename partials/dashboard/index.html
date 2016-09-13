@@ -202,18 +202,24 @@ body{
         <li class="msg" ng-if="logtype=='login'">
             <p class="animated fadeInRight">Would you like to log in now?</p>
             <div class="animated bounceIn">
-            <a class ="animated flip" ng-disabled="logbutton" ng-click="submitlog('In')"style="margin-top:10px;">
-            <img src ="{{ buttons.login }}"   ng-mouseover="button_hover()" ng-mouseout="button_mouseout()" width="140px" />
-            </a>
+                <a class ="animated flip" ng-disabled="logbutton" ng-click="submitlog('In')"style="margin-top:10px;" ng-show="buttons.login">
+                    <img src ="./ASSETS/img/login.gif" ng-mouseover="button_hover()" width="140px" />
+                </a>
+                <a class ="animated flip" ng-disabled="logbutton" ng-click="submitlog('In')"style="margin-top:10px;" ng-show="buttons.loginhover">
+                    <img src ="./ASSETS/img/loginhover.gif" ng-mouseout="button_mouseout()" width="140px" />
+                </a>
             </div>
         </li>
         <li class="msg" ng-if="logtype=='logout'">
             <p class="animated fadeInRight">Would you like to log out?</p>
       <!--       <input ng-disabled="logbutton" ng-click="submitlog('Out')" type="button" class=" btn btn-lg btn-round btn-primary" value="LOG OUT" style="margin-top:50px;"> -->
             <div class="animated bounceIn">
-            <a ng-disabled="logbutton" ng-click="submitlog('Out')"style="margin-top:10px;">
-            <img src ="{{ buttons.logout }}" ng-mouseover="button_logout_hover()"  ng-mouseout="button_logout_mouseout()"  width="140px" />
-            </a>
+                <a ng-disabled="logbutton" ng-click="submitlog('Out')"style="margin-top:10px;" ng-show="buttons.logout">
+                    <img src ="./ASSETS/img/logout.gif" ng-mouseover="button_hover()" width="140px" />
+                </a>
+                <a ng-disabled="logbutton" ng-click="submitlog('Out')"style="margin-top:10px;" ng-show="buttons.logouthover">
+                    <img src ="./ASSETS/img/logouthover.gif" ng-mouseout="button_mouseout()"  width="140px" />
+                </a>
             </div>
         </li>
         <li class="msg">

@@ -33,10 +33,12 @@ app.controller('Dashboard', function(
     $scope.current_date={};
 
     $scope.approved_leaves = {};
+
     $scope.buttons = {
-        login:'./ASSETS/img/login.gif',
-        logout: './ASSETS/img/logout.gif'
-     
+        login:true,
+        loginhover:false,
+        logout:true,
+        logouthover:false
     };
 
     
@@ -431,25 +433,25 @@ app.controller('Dashboard', function(
         });
     }
 
-    $scope.button_hover = function(){
-        $scope.buttons.login ="./ASSETS/img/loginhover.gif"
-
+    $scope.button_hover = function(type){
+        $scope.buttons = {
+            login:false,
+            loginhover:true,
+            logout:false,
+            logouthover:true
+        };
     }
 
-     $scope.button_mouseout = function(){
-        $scope.buttons.login ="./ASSETS/img/login.gif"
-
+    $scope.button_mouseout = function(type){
+        $scope.buttons = {
+            login:true,
+            loginhover:false,
+            logout:true,
+            logouthover:false
+        };
     }
 
-    $scope.button_logout_hover = function(){
-        $scope.buttons.logout ="./ASSETS/img/logouthover.gif"
-
-    }
-
-     $scope.button_logout_mouseout = function(){
-        $scope.buttons.logout ="./ASSETS/img/logout.gif"
-
-    }
+    
 
 
 

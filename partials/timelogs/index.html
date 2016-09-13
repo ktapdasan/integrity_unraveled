@@ -36,6 +36,14 @@ th {
     border-radius: 5px;
     border:1px solid #dbd9d9;
 } 
+
+.holiday-yellow {
+    color:#9c9c00;
+}
+
+.holiday-blue {
+    color:#280df0;
+}
 </style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
@@ -205,7 +213,7 @@ th {
                         <span ng-if="v.overtime!='false'">{{v.overtime_value}}</span>
                     </td> 
                     <td>{{v.suspension}}</td> 
-                    <td style="{{(v.status=='Rest Day')?'color:#280df0;':''}}">{{v.status}}</td> 
+                    <td ng-bind-html="v.status"></td> 
                 </tr>
                 <tr ng-if="!timesheet.status" style= "text-align: center;">
                     <td colspan = "13" style="text-align:center;">No Data Found</td>

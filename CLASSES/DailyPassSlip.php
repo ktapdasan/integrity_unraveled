@@ -39,6 +39,9 @@ class DailyPassSlip extends ClassParent {
     }
 
     public function fetch($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
         
         $employees_pk = $this->employees_pk;
         $date_from = $extra['date_from'];

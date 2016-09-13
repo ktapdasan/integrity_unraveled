@@ -182,7 +182,7 @@ app.controller('Timesheet', function(
         promise.then(function(data){
             $scope.timesheet.status = true;
             $scope.timesheet.data = data.data[$scope.profile.employee_id];
-            console.log($scope.timesheet.data);
+            
             $scope.timesheet.count=0;
             for(var i in $scope.timesheet.data){
                 $scope.timesheet.count++;                
@@ -459,24 +459,14 @@ app.controller('Timesheet', function(
     }
 
     $scope.export_timesheet = function(){
-        var datefrom = new Date($scope.filter.datefrom);
-        var dd = datefrom.getDate();
-        var mm = datefrom.getMonth()+1; //January is 0!
-        var yyyy = datefrom.getFullYear();
+        var datefrom =  $filter('date')($scope.filter.datefrom, "yyyy-MM-dd");
+        var dateto =  $filter('date')($scope.filter.dateto, "yyyy-MM-dd");
 
-        var dateto = new Date($scope.filter.dateto);
-        var Dd = dateto.getDate();
-        var Mm = dateto.getMonth()+1; //January is 0!
-        var Yyyy = dateto.getFullYear();
+        window.location = './FUNCTIONS/Timelog/timesheet_export.php?'+
+                            '&newdatefrom='+datefrom+
+                            "&newdateto="+dateto+
+                            '&employees_pk='+$scope.profile.pk;
 
-        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
-        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
-
-        window.open('./FUNCTIONS/Timelog/timesheet_export.php?'+
-                    'pk='+$scope.filter.pk+
-                    '&newdatefrom='+$scope.filter.newdatefrom+
-                    "&newdateto="+$scope.filter.newdateto
-                );
     }
 
     $scope.savelog = function(k){

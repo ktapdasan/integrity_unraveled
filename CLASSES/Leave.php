@@ -513,7 +513,7 @@ EOT;
 
         $where = "where";
         if($data['date_from'] && $data['date_to']){
-            $where = "
+            $where .= "
                     (
                         (date_started::date >= '$date_from' and date_started::date <= '$date_to') or 
                         (date_ended::date >= '$date_from' and date_ended::date <= '$date_to')
@@ -721,6 +721,22 @@ EOT;
         $sql .= "commit;";
 
         return ClassParent::insert($sql);
+    }
+
+    public function leave_analytics(){
+        $sql = <<<EOT
+                select
+                    leave_types_pk,
+                    name,
+                    count(*) as count
+                from leave_filed
+                left join leave_types on (leave_filed.leave_types_pk = leave_types.pk)
+                where employees_pk in (select employees_pk from groupings where supervisor_pk = $this->employees_pk)
+                group by leave_types_pk, name
+                ;
+EOT;
+
+        return ClassParent::get($sql);   
     }
 }
 

@@ -5,6 +5,8 @@ require_once('../../CLASSES/Leave.php');
 require_once('../../CLASSES/ManualLog.php');
 require_once('../../CLASSES/Overtime.php');
 require_once('../../CLASSES/DailyPassSlip.php');
+require_once('../../CLASSES/Holidays.php');
+require_once('../../CLASSES/Suspension.php');
 
 $data = array(
 				"employees_pk" => $_POST['employees_pk'],
@@ -31,6 +33,7 @@ while(strtotime($startdate) <= strtotime($enddate)){
 		"status" => "",
 		"current_status" => ""
 	);
+
 	$data['date']=$date;
 	
 	$startdate = date('Y-m-d', strtotime($startdate . '+ 1 day'));
@@ -71,7 +74,7 @@ foreach($employees_data['result'] as $key=>$value){
 	}
 
 	foreach ($cutoff as $k => $v) {
-		$status = "Rest Day";
+		$status = '<div class="holiday-blue">Rest Day</div>';
 		if($work_schedule[strtolower($v['log_day'])]){
 			$status = "Regular";
 		}
@@ -159,7 +162,29 @@ $class5 = new DailyPassSlip(
 
 $data5 = $class5->approved_dps($date_range);
 $approved_dps = $data5['result'];
-//print_r($approved_dps);
+
+$class6 = new Holidays(
+	                        NULL,
+	        				NULL,
+	        				NULL,
+	        				NULL,
+	                        NULL
+	        			);
+
+$data6 = $class6->get_active_holidays($date_range);
+$holidays = $data6['result'];
+
+$class7 = new Suspension(
+	                        NULL,
+	        				$_POST['newdatefrom'],
+	        				$_POST['newdateto'],
+	        				NULL,
+	        				NULL,
+	                        NULL
+	        			);
+
+$data7 = $class7->fetch();
+$suspension = $data7['result'];
 
 foreach ($employees as $employee_id => $value) {
 	foreach ($data['result'] as $k => $v) {
@@ -277,7 +302,7 @@ foreach ($employees as $employee_id => $value) {
 				
 			$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
 
-			$y['overtime_value'] = $overtime;
+			$y['overtime_value'] = $overtime . " hrs";
 			$y['overtime'] = 'false';
 
 			foreach ($filed_overtimes as $a => $b) {
@@ -290,14 +315,34 @@ foreach ($employees as $employee_id => $value) {
 		
 		foreach ($approved_dps as $a => $b) {
 			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] == date('Y-m-d', strtotime($b['time_from']))){
-				$y['dps'] = $b['time_from']."<br />".$b['time_to'];
+				$y['dps'] = date('H:i', strtotime($b['time_from']))." - ".date('H:i', strtotime($b['time_to']));
+			}
+		}
+
+		foreach ($holidays as $a => $b) {
+			if($y['log_date'] == date('Y-m-d', strtotime($b['datex']))){
+				$y['status'] = '<div class="holiday-yellow">'. $b['name'] . '</div>';
+				
+				if(!$y['login'] && !$y['logout']){
+					$y['login'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
+					$y['login_time'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
+
+					$y['logout'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00";
+					$y['logout_time'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00";
+
+					$y['hrs'] = '09:00:00';
+				}
+			}
+		}
+
+		foreach ($suspension as $a => $b) {
+			if($y['log_date'] >= date('Y-m-d', strtotime($b['time_from'])) && $y['log_date'] <= date('Y-m-d', strtotime($b['time_to']))){
+				$y['suspension'] = date('H:i', strtotime($b['time_from'])). " - " .date('H:i', strtotime($b['time_to']));
 			}
 		}
 
 		$employees[$employee_id][$x] = $y;
 	}
-
-	
 }
 
 header("HTTP/1.0 500 Internal Server Error");

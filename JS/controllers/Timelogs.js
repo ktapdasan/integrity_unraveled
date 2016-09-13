@@ -311,7 +311,7 @@ app.controller('Timelogs', function(
             employees_pk : $scope.filter.employee[0].pk
         }
 
-        window.location = './FUNCTIONS/Timelog/timelogs_export.php?'+
+        window.location = './FUNCTIONS/Timelog/timesheet_export.php?'+
                             'pk='+$scope.filter.pk+
                             '&newdatefrom='+datefrom+
                             "&newdateto="+dateto+
