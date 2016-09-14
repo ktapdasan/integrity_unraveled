@@ -14,53 +14,53 @@ app.controller('Analytics', function(
     //////////////////////////////////
     //////////////////////////////////
     $scope.labels = [];
-        //$scope.series = ['Series A', 'Series B'];
-        $scope.series = [];
-        $scope.data = [
-        // [65,22],
-        // [64,23],
-        // [0,1],
-        // [6,0],
-        // [23,14],
-        // [0,1]
-        ];
-        $scope.onClick = function (points, evt) {
-            console.log(points, evt);
-        };
-        //$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-        $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-        // $scope.options = {
-        //     scales: {
-        //         yAxes: [
-        //         {
-        //             id: 'y-axis-1',
-        //             type: 'linear',
-        //             display: true,
-        //             position: 'left'
-        //         },
-        //         {
-        //             id: 'y-axis-2',
-        //             type: 'linear',
-        //             display: true,
-        //             position: 'right'
-        //         }]
-        //     }
-        // };
-        $scope.options = {
-            scales: {
-                yAxes: [
-                {
-                    id: 'y-axis-1',
-                    type: 'linear',
-                    display: true,
-                    position: 'left'
-                }]
-            }
-        };
-        //////////////////////////////////
-        //////////////////////////////////
-        //////////////////////////////////
-        //////////////////////////////////
+    //$scope.series = ['Series A', 'Series B'];
+    $scope.series = [];
+    $scope.data = [
+    // [65,22],
+    // [64,23],
+    // [0,1],
+    // [6,0],
+    // [23,14],
+    // [0,1]
+    ];
+    $scope.onClick = function (points, evt) {
+        console.log(points, evt);
+    };
+    //$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+    // $scope.options = {
+    //     scales: {
+    //         yAxes: [
+    //         {
+    //             id: 'y-axis-1',
+    //             type: 'linear',
+    //             display: true,
+    //             position: 'left'
+    //         },
+    //         {
+    //             id: 'y-axis-2',
+    //             type: 'linear',
+    //             display: true,
+    //             position: 'right'
+    //         }]
+    //     }
+    // };
+    $scope.options = {
+        scales: {
+            yAxes: [
+            {
+                id: 'y-axis-1',
+                type: 'linear',
+                display: true,
+                position: 'left'
+            }]
+        }
+    };
+    //////////////////////////////////
+    //////////////////////////////////
+    //////////////////////////////////
+    //////////////////////////////////
 
     init();
 
@@ -95,35 +95,37 @@ app.controller('Analytics', function(
         var promise = LeaveFactory.leaves_analytics(filter);
         promise.then(function(data){
             var a = data.data.result;
-            for(var i in a){
-            // console.log(a);
-            // console.log($scope.labels);
-            // console.log($scope.series);
-            // console.log($scope.data);
-              if($scope.labels.includes(a[i].employee)){
-               }else{
-                $scope.labels.push(a[i].employee);
-              }
-              console.log(a[i].count);
-              if($scope.series.includes(a[i].name)){
-                $scope.data[$scope.series.indexOf(a[i].name)][$scope.labels.indexOf(a[i].employee)]=a[i].count;
-              }
-              else{
-                $scope.series.push(a[i].name);
-                $scope.temp_array=[];
-                $scope.temp_array[$scope.labels.indexOf(a[i].employee)]=a[i].count;
-                $scope.data[i]=$scope.temp_array;
-              }
 
+            var new_data={};
+            for(var i in a){
+                if(new_data[a[i].employees_pk] === undefined){
+                    new_data[a[i].employees_pk] = {};    
+                    new_data[a[i].employees_pk].employee = a[i].employee;
+
+                    new_data[a[i].employees_pk].leaves = [];
+                }
+
+                new_data[a[i].employees_pk].leaves.push({
+                    leave : a[i].name,
+                    count : a[i].count
+                })
             }
-            
-            
+
+            for(var i in new_data){
+                $scope.series.push(new_data[i].employee);
+
+                var new_count=[];
+                for(var j in new_data[i].leaves){
+                    $scope.labels.push(new_data[i].leaves[j].leave);
+
+                    new_count.push(parseInt(new_data[i].leaves[j].count));
+                }
+
+                $scope.data.push(new_count);
+            }
         })
         .then(null, function(data){
             
-            
-
-
         });
     }
 

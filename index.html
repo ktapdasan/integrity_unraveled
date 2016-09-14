@@ -5,9 +5,7 @@
     <meta name="description" content="Career Hunter Recruitment Solutions, Time Tracking System">
     <meta name="author" content="CHRS IT">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title ng-controller="Sidebar" >Integrity 
-         {{notifications.count}} 
-    </title>
+    <title  ng-controller="Sidebar" >Integrity</title>
   
     <!-- start: Css -->
     <link rel="stylesheet" type="text/css" href="./ASSETS/css/bootstrap.min.css">
@@ -335,9 +333,9 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" >
-                    <li class="user-name"><span>{{ profile.first_name + " " + profile.last_name }}</span></li>
+                    <li class="user-name"><span>{{ profile.details.personal.first_name + " " + profile.details.personal.last_name }}</span></li>
                     <li class="dropdown avatar-dropdown">
-                        <img src="./ASSETS/img/LogoRGB_254.png" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <img src="{{profile.details.personal.profile_picture}}" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu user-dropdown">
                             <li><a href="#"><span class="fa fa-user"></span> My Profile</a></li>
                             <li><a href="#"><span class="fa fa-calendar"></span> My Calendar</a></li>

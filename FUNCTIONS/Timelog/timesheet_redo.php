@@ -221,15 +221,7 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 		
-		foreach ($approved_leaves as $a => $b) {
-			//print_r($b);
-			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['date_started'] && $y['log_date'] <= $b['date_ended']){
-				$y['status'] = $b['name'];
-				
-				$y['login'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in;
-				$y['logout'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out;
-			}
-		}
+		
 
 		$y['schedule'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in ." - ".$y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 
@@ -312,6 +304,8 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 
+
+
 		
 		foreach ($approved_dps as $a => $b) {
 			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] == date('Y-m-d', strtotime($b['time_from']))){
@@ -337,7 +331,37 @@ foreach ($employees as $employee_id => $value) {
 
 		foreach ($suspension as $a => $b) {
 			if($y['log_date'] >= date('Y-m-d', strtotime($b['time_from'])) && $y['log_date'] <= date('Y-m-d', strtotime($b['time_to']))){
+				
+				//change if actual date is > suspension start date
+				if($y['log_date'] > date('Y-m-d', strtotime($b['time_from']))){
+					$b['time_from'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
+				}
+
+				//change if actual date is < suspension end date
+				if($y['log_date'] < date('Y-m-d', strtotime($b['time_to']))){
+					$b['time_to'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00";
+				}
+
+				//default values
 				$y['suspension'] = date('H:i', strtotime($b['time_from'])). " - " .date('H:i', strtotime($b['time_to']));
+			}
+		}
+
+		foreach ($approved_leaves as $a => $b) {
+			//print_r($b);
+			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['date_started'] && $y['log_date'] <= $b['date_ended']){
+				$y['status'] = $b['name'];
+				
+				$y['login'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
+				$y['login_time'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
+				$y['logout'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00";
+				$y['logout_time'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00";
+
+				$y['hrs'] = '09:00:00';
+				$y['tardiness'] = "";
+				$y['undertime'] = "";
+				$y['overtime'] = "";
+				$y['dps'] = "";
 			}
 		}
 

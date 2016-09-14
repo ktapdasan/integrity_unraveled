@@ -136,7 +136,8 @@ app.controller('Sidebar', function(
                 return $scope.notifications.count=" ";
             }
             else
-            {
+            {   
+                document.title = "Integrity ("+count+")";
                 return $scope.notifications.count="(" +count +")";
             };
 

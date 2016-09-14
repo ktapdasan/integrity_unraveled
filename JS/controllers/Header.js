@@ -55,8 +55,10 @@ app.controller('Header', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
 
-            $scope.profile.permission = JSON.parse(data.data.result[0].permission);
-
+            $scope.profile.details = JSON.parse($scope.profile.details);
+            $scope.profile.permission = JSON.parse($scope.profile.permission);
+            $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
+            
             menuselect($location.$$path.replace(/\//,''));
         })   
     }
