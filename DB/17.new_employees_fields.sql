@@ -14,7 +14,7 @@ create table employees_backup
 alter table employees_backup owner to chrs;
 
 /*IMPORTANT!*/
--- FOR PROFILE PIC PLEASE CREATE PICTURE FOLDER - ASSETS/uploads/profile for it to save!
+-- For profile pic upload please create folder on - ASSETS/uploads/profile for it to save!
 -- Then on terminal go cd (change directory) to ASSETS and type chmod 775 -R uploads/
 
 /*start of details fields*/
