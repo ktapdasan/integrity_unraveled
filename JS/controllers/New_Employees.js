@@ -48,7 +48,7 @@ app.controller('New_Employees', function(
         levels_pk:'',
         supervisor_pk:'',
         departments_pk:'',
-        employee_type:'',
+        employee_status:'',
         employment_type:'',
         data_sss: null,
         data_phid: null,
