@@ -9,10 +9,13 @@ create table employees_backup
 	details jsonb,
 	leave_balances jsonb,
 	date_created timestamptz default now(),
-	archived boolean default false,
-	image bytea
+	archived boolean default false
 );
 alter table employees_backup owner to chrs;
+
+/*IMPORTANT!*/
+-- FOR PROFILE PIC PLEASE CREATE PICTURE FOLDER - ASSETS/uploads/profile for it to save!
+-- Then on terminal go cd (change directory) to ASSETS and type chmod 775 -R uploads/
 
 /*start of details fields*/
 /*
