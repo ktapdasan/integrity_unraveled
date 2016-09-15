@@ -30,6 +30,10 @@
  
     <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/libs.min.css">
     <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/docs.min.css">
+
+    <!-- FOR CALENDAR -->
+    <link href="./ASSETS/js/plugins/calendar/colorpicker.min.css" rel="stylesheet">
+    <link href="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar.min.css" rel="stylesheet">
     <!-- end: Css -->
     
     <link rel="shortcut icon" href="./ASSETS/img/24.png"> 
@@ -111,6 +115,19 @@
         
     }
 
+    .sidebar .notification_menu {
+        border-bottom: 0px;
+    }
+
+    .sidebar .notification_menu li {
+        
+    }
+
+    .sidebar .notification_menu .active {
+        border: 0px;
+        box-shadow: 0 0 0 0;
+    }
+
     .sidebar .notification_data {
         max-height: 500px;
         height: auto;
@@ -124,11 +141,14 @@
     }
 
     .sidebar ul li{
-        padding: 2.3px 2px;
+        padding: 2.3px 5px;
         border: 1px solid #e9e9e9;
         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     }
- 
+
+    .notification_data:first-child li{ 
+        border-top: 0px;
+    }
 
     .modal_save_disabled {
         background-color: #fafafa;
@@ -318,6 +338,7 @@
                             <li><a style="cursor:pointer;" href="#/admin/work_days" ng-click="menuclicked('admin')">Work Days</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/holidays" ng-click="menuclicked('admin')">Holidays</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/suspension" ng-click="menuclicked('admin')">Suspension</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/calendar" ng-click="menuclicked('admin')">Calendar</a></li>
                         </ul>
 
                     </li>
@@ -338,7 +359,7 @@
                         <img src="{{profile.details.personal.profile_picture}}" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu user-dropdown">
                             <li><a href="#/profile"><span class="fa fa-user"></span> My Profile</a></li>
-                            <li><a href="#"><span class="fa fa-calendar"></span> My Calendar</a></li>
+                            <li><a href="#/calendar"><span class="fa fa-calendar"></span> My Calendar</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="more">
                                 <ul>
@@ -404,26 +425,56 @@
 
             <div ng-show="switcher.content" class="sidebar">
                 <div>
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a ng-click="change_menu('inbox')">
+                    <ul class="nav nav-tabs notification_menu">
+                        <li class="active">
+                            <a ng-click="change_menu('notifications')">
                                 <img src="./ASSETS/img/bell.png" style="height:30px;"/>
                             </a>
                         </li>
                         <li>
-                            <a ng-click="change_menu('sent')">
-                                <img src="./ASSETS/img/message.png" style="height:30px;"/>
+                            <a ng-click="change_menu('memo')">
+                                <img src="./ASSETS/img/memo.png" style="height:30px;"/>
                             </a>
                         </li>
                         <li>
-                            <a ng-click="change_menu('sent')">
-                                <img src="./ASSETS/img/clipboard.png" style="height:30px;"/>
+                            <a ng-click="change_menu('calendar')">
+                                <img src="./ASSETS/img/calendar.png" style="height:30px;"/>
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="notification_data">
-                    <ul class="nav">
+                    <ul ng-if="sidebar_menu.notifications" class="nav notification_data">
+
+                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
+                            <a ng-click="goto(k)" >
+                                <p style="font-size:13px;margin-bottom:0px;">{{v.notification}}</p>
+                                <div style="font-size:10px; color:#AAA;" >
+                                
+                                {{v.created_by}}
+                                <br>
+                                {{v.date_created}}
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul ng-if="sidebar_menu.memo" class="nav notification_data">
+
+                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
+                            <a ng-click="goto(k)" >
+                                <p style="font-size:13px;margin-bottom:0px;">{{v.notification}}</p>
+                                <div style="font-size:10px; color:#AAA;" >
+                                
+                                {{v.created_by}}
+                                <br>
+                                {{v.date_created}}
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul ng-if="sidebar_menu.calendar" class="nav notification_data">
 
                         <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
                             <a ng-click="goto(k)" >
@@ -518,6 +569,7 @@
     <script src="./JS/controllers/Management_DailyPassSlip.js"></script>
     <script src="./JS/controllers/admin_Holidays.js"></script>
     <script src="./JS/controllers/admin_suspension.js"></script>
+    <script src="./JS/controllers/Admin_calendar.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -537,6 +589,7 @@
     <script src="./JS/factories/HolidaysFactory.js"></script>  
     <script src="./JS/factories/SuspensionFactory.js"></script> 
     <script src="./JS/factories/AttritionsFactory.js"></script> 
+    <script src="./JS/factories/CalendarFactory.js"></script> 
 
 
     <!-- DIRECTIVES -->
@@ -566,6 +619,11 @@
 
     <!--Notifications-->
     <script src="./JS/factories/NotificationsFactory.js"></script>  
+    
+    <script src="./ASSETS/js/plugins/calendar/interact.min.js"></script>
+    <script src="./ASSETS/js/plugins/calendar/rrule.js"></script>
+    <script src="./ASSETS/js/plugins/calendar/bootstrap-colorpicker-module.min.js"></script>
+    <script src="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar-tpls.min.js"></script>
 
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>

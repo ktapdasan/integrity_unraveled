@@ -8,7 +8,9 @@ var app = angular.module('onload', [
                                     'ngSanitize',
                                     'mgcrea.ngStrap',
                                     'angularFileUpload',
-                                    'chart.js'
+                                    'chart.js',
+                                    'mwl.calendar',
+                                    'colorpicker.module'
                                 ]);
 
 app.config(function($routeProvider){
@@ -22,6 +24,11 @@ app.config(function($routeProvider){
     {
         controller: 'Profile',
         templateUrl: 'partials/personal/profile.html'
+    })
+    .when('/calendar',
+    {
+        controller: 'Admin_calendar',
+        templateUrl: 'partials/admin/calendar/admin.html'
     })
     .when('/timesheet',
     {
@@ -112,6 +119,11 @@ app.config(function($routeProvider){
     {
         controller: 'admin_suspension',
         templateUrl: 'partials/admin/suspension/index.html'
+    })
+    .when('/admin/calendar',
+    {
+        controller: 'Admin_calendar',
+        templateUrl: 'partials/admin/calendar/admin.html'
     })
     .when('/management/leaves',
     {

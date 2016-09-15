@@ -30,6 +30,12 @@ app.controller('Sidebar', function(
         stop : '0' ,
         duration : '2.6s' 
     }
+
+    $scope.sidebar_menu = {
+        notifications : true,
+        memo : false,
+        calendar : false
+    }
    
 
     init();
@@ -236,5 +242,7 @@ app.controller('Sidebar', function(
         });
     }
 
-    
+    $scope.change_menu = function(menu){
+        console.log(menu);
+    }
 });
