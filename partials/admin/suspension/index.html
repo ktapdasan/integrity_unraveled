@@ -86,7 +86,7 @@ select{
                                 <option>Inactive</option>
                             </select>
 
-                            <input type="button" class="medium button red fa-fa" value = "Add New Suspension" alt="edit"ng-click="add_suspension(k)" title="Edit" style = "float: right;margin-right:10px;"/></h4> 
+                            <input type="button" class="medium button red fa-fa" value = "Add New Suspension" alt="edit"ng-click="add_suspension()" title="Edit" style = "float: right;margin-right:10px;"/></h4> 
         </div>
         </div>
     </div>
@@ -111,7 +111,7 @@ select{
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_suspension(k)" title="Edit">
                              <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px"  ng-click="delete_suspension(k)" title="Delete" ng-class="filter.status=='Active' && 'display'|| 'hide'"> 
-                            <!-- <input type="image" src="ASSETS/img/restore.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_suspension(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">   -->                        
+                            <input type="image" src="ASSETS/img/restore.png" alt="delete" style="width:14px; height:14px"  ng-click="restore_suspension(k)" title="Delete" ng-class="filter.status=='Inactive' && 'display'|| 'hide'">                          
                         </center>
                         </td>
                     <tr ng-if="!suspension.status">
