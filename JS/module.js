@@ -18,6 +18,11 @@ app.config(function($routeProvider){
         controller: 'Dashboard',
         templateUrl: 'partials/dashboard/index.html'
     })
+    .when('/profile',
+    {
+        controller: 'Profile',
+        templateUrl: 'partials/personal/profile.html'
+    })
     .when('/timesheet',
     {
         controller: 'Timesheet',

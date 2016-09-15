@@ -101,14 +101,14 @@ tr:hover {
                         <th style="width:7%;">Date</th>
                         <th style="width:8%;">Day</th>
                         <th style="width:8%;">Schedule</th>
-                        <th style="width:8%;">Log In</th>
-                        <th style="width:8%;">Log Out</th>
-                        <th style="width:8%;"># of Hours</th>
+                        <th style="width:9.5%;">Log In</th>
+                        <th style="width:9.5%;">Log Out</th>
+                        <th style="width:7%;"># of Hours</th>
                         <th style="width:7%;">Tardiness</th>
                         <th style="width:7%;">Undertime</th>
-                        <th style="width:10%;">Overtime</th>
+                        <th style="width:9%;">Overtime</th>
                         <th style="width:12%;">DPS</th>
-                        <th style="width:10%;">Suspension</th>
+                        <th style="width:9%;">Suspension</th>
                         <th style="width:10%;">Status</th>
                     </tr>
                 </thead>
@@ -120,7 +120,7 @@ tr:hover {
                         <td>
                             <span ng-if = "v.login == 'None' || v.login == ''">
                                 <a ng-click="open_manual_log('In', k)">
-                                    <font color="red" title = "File Manual Log"><u>None</u></font>
+                                    <font color="red" title = "File Manual Log"><u>File Manual Log</u></font>
                                 </a>
                             </span>
 
@@ -138,7 +138,7 @@ tr:hover {
                         <td>
                             <span ng-if="v.logout == 'None' || v.logout == ''">
                                 <a ng-click="open_manual_log('Out', k)">
-                                    <font color="red" title = "File Manual Log"><u>None</u></font>
+                                    <font color="red" title = "File Manual Log"><u>File Manual Log</u></font>
                                 </a>
                             </span>
 
