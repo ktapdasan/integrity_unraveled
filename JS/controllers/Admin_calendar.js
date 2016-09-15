@@ -55,7 +55,7 @@ app.controller('Admin_calendar', function(
         }, {
             label: '<i class=\'glyphicon glyphicon-remove\'></i>',
             onClick: function(args) {
-                alert.show('Deleted', args.calendarEvent);
+                console.log(args.calendarEvent);
             }
         }];
      
