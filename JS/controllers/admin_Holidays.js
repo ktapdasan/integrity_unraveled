@@ -86,12 +86,19 @@ app.controller('admin_Holidays', function(
 
 
     $scope.add_holiday = function(k){
+        var date = new Date();
+            var dd = date.getDate();
+            var mm = date.getMonth()+1; 
+            var yyyy = date.getFullYear();
+
+        $scope.date = new Date(mm+"-"+dd+"-"+yyyy);
      
         $scope.modal = {
 
             title : 'Add New Holiday',
             save : 'Add',
             close : 'Cancel',
+            datex : $scope.date
 
            
         };

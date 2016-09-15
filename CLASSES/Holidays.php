@@ -91,13 +91,14 @@ EOT;
     	$date= $data['new_date'];
     	$approver = $data['creator_pk'];
 
-		$sql = <<<EOT
+        $sql = 'begin;';
+		$sql .= <<<EOT
                 insert into holidays
                 (    
-                   	name,
+                    name,
                     type,
-                   	datex,
-                   	created_by
+                    datex,
+                    created_by
                 )  
                 values
                 (
@@ -108,6 +109,27 @@ EOT;
                 );
 EOT;
 
+        $sql .= <<<EOT
+                insert into calendar
+                (    
+                   	location,
+                    description,
+                    time_from,
+                    time_to,
+                   	color,
+                   	created_by
+                )  
+                values
+                (
+                    'N/A',
+                    '$name',
+                    '$date 00:00:00',
+                    '$date 23:59:59',
+                    '#fcfa90',
+                    $approver
+                );
+EOT;
+        $sql .= "commit;";
         return ClassParent::insert($sql);
     }
 
