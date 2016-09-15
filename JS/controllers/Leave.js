@@ -4,6 +4,7 @@ app.controller('Leave', function(
                                         EmployeesFactory,
                                         LevelsFactory,
                                         LeaveFactory,
+                                        TimelogFactory,
                                         ngDialog,
                                         UINotification,
                                         md5
@@ -536,4 +537,83 @@ app.controller('Leave', function(
         }
         return num;
     }
+
+
+    $scope.cancel_leave = function(k){
+       var pk = $scope.leaves_filed.data[k].pk;
+        
+        $scope.modal = {
+                        title : '',
+                        message: 'Are you sure you want to cancel your request',
+                        save : 'Delete',
+                        close : 'Cancel'
+                    };
+        
+        ngDialog.openConfirm({
+                    template: 'ConfirmModal',
+                    className: 'ngdialog-theme-plain',
+                    
+                    scope: $scope,
+                    showClose: false
+                })
+                .then(function(value){
+                    return false;
+                }, function(value){
+
+                    $scope.modal = {
+                        title : '',
+                        message: 'Please state the reason why you are cancelling your leave.',
+                        save : 'Save',
+                        close : 'Cancel'
+                    };
+
+                    ngDialog.openConfirm({
+                        template: 'DisapprovedModal',
+                        className: 'ngdialog-theme-plain',
+                        scope: $scope,
+                        showClose: false
+                    })
+                    .then(function(value){
+                        return false;
+                    }, function(value){
+                            
+                            $scope.modal["pk"] = pk;
+                            $scope.modal["employees_pk"] = $scope.profile.pk;
+                            $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
+                            console.log($scope.modal);
+                            var promise = TimelogFactory.cancel_leave($scope.modal);
+                            promise.then(function(data){
+                
+                            $scope.archived=true;
+
+                                UINotification.success({
+                                                        message: 'You have successfully cancel your leave.', 
+                                                        title: 'SUCCESS', 
+                                                        delay : 5000,
+                                                        positionY: 'top', positionX: 'right'
+                                                    });
+                                leave_types();
+                                leaves_filed(); 
+
+
+                            })
+                            .then(null, function(data){
+                                
+                                UINotification.error({
+                                                        message: 'An error occured, unable to save changes, please try again.', 
+                                                        title: 'ERROR', 
+                                                        delay : 5000,
+                                                        positionY: 'top', positionX: 'right'
+                                                    });
+                            });        
+
+
+
+
+                    }); 
+                });
+    }
+
+
+
 });

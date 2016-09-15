@@ -83,7 +83,7 @@ EOT;
             $where .= "and leave_types_pk = '$this->leave_types_pk'";
         }  
         
-        $sql = <<<EOT
+       $sql = <<<EOT
                 select
                     pk,
                     duration,
@@ -97,7 +97,17 @@ EOT;
                     date_ended:: date as date_ended,
                     (
                         select status from leave_status where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
-                    ) as status
+                    ) as status,
+                    (
+                        select leave_cancellation_status.status from leave_cancellation 
+                        left join leave_cancellation_status on 
+                        (leave_cancellation.pk = leave_cancellation_status.leave_cancellation_pk) 
+                        where leave_cancellation.leave_filed_pk = leave_filed.pk
+                        order by leave_cancellation_status.date_created 
+                        desc limit 1
+
+                    ) as statuscancel
+                    
                 from leave_filed
                 where archived = false
                 and date_created::date between '$this->date_started' and '$this->date_ended'
@@ -625,23 +635,6 @@ EOT;
     }
 
     public function cancellation_leave(){
-        
-        
-//          $sql = <<<EOT
-//                     select
-//                     leave_cancellation_pk,
-//                     created_by,
-//                     (select first_name||' '||last_name from employees where pk = created_by) as name,
-//                     date_created::timestamp(0) as date_created,
-//                     remarks,
-//                     status
-//                     from 
-//                     leave_cancellation_status 
-//                     where 
-//                     created_by in 
-//                     (select employees_pk from groupings where supervisor_pk = '$this->employees_pk');
-   
-// EOT;
 
         $sql = <<<EOT
                     select

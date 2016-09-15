@@ -171,14 +171,31 @@ th {
                         <td>{{v.date_ended}}</td>
                         <td>{{v.duration}}</td>
                         <td>{{v.category}}</td>
-                        <td>{{v.status}}</td>
                         <td>
-                        <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
-                            {{v.status}} 
+                            <div ng-class ="(v.statuscancel === 'Pending'|| v.statuscancel === 'Approved'||v.statuscancel === 'Disapproved') && 'hide' || 'display'">
+                            {{v.status}}
                             </div>
+                             <div ng-class ="(v.statuscancel === 'Pending'|| v.statuscancel === 'Approved'||v.statuscancel === 'Disapproved') && 'display' || 'hide'">
+                            Leave Cancellation 
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class ="(v.statuscancel === 'Pending'|| v.statuscancel === 'Approved'||v.statuscancel === 'Disapproved') && 'hide' || 'display'"> 
+                                <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">
+                                        {{v.status}} 
+                                <button ng-click="cancel_leave(k)" class="medium button red fa-fa" ng-class ="v.status === 'Approved' && 'display' || 'hide'">Cancel Leave
+                                </button> 
+                                </div>
+                            </div> 
+                            <div ng-class ="(v.statuscancel === 'Pending'||v.statuscancel === 'Approved'||v.statuscancel === 'Disapproved') && 'display' || 'hide'">
+                                {{v.statuscancel}}
+                            </div>
+
+                            <!-- delete button -->
                             <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
                                 <button ng-click="delete(k)" class="medium button red fa-fa">Delete</button> 
-                            </div></td>
+                            </div>
+                        </td>
                     </tr>
                     <tr ng-if="!leaves_filed.status" style= "text-align: center;">
                         <td colspan = "9" style="text-align:center;">No Data Found</td>
