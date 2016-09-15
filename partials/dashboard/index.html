@@ -256,9 +256,14 @@ body{
             
             <div class="notification_data">
                 <ul class="nav">
-
-                    <li ng-repeat="(k,v) in birthdays.data">
-                        <a>
+                    <li>
+                        <p>
+                            <h4 style="color:#9999ff;">
+                                BIRTHDAY CELEBRANT OF THE MONTH
+                            </h4>
+                        </p>
+                    </li>
+                    <li ng-repeat="(k,v) in birthdays.data" style="padding-top:15px;padding-bottom:20px;padding-left:10px">
                             <p style="font-size:13px;margin-bottom:0px; color:red;" ng-class="v.birthday===v.now && 'display'|| 'hide'">
                             TODAY IS {{v.name}}'s BIRTHDAY!!!
                             </p>
@@ -267,7 +272,6 @@ body{
                             <br>
                             {{v.name}}
                             </div>
-                        </a>
                     </li>
                 </ul>
             </div>
