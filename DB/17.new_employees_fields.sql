@@ -5,7 +5,6 @@ employees table new jsonb fields
 create table employees_backup
 (
 	pk serial primary key,
-	employee_id text not null,
 	details jsonb,
 	leave_balances jsonb,
 	date_created timestamptz default now(),
@@ -211,7 +210,8 @@ details = jsonb_set(details, '{personal}', '
 "birth_date": "1995-07-27", 
 "first_name": "Ken", 
 "civilstatus": "Single", 
-"middle_name": "Villanueva"
+"middle_name": "Villanueva",
+"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg"
 }
 ', true) 
 where pk = 12;

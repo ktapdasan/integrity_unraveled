@@ -51,6 +51,7 @@ $class = new Employees(
 
 //Company Array! Ken
 $company = array();
+$company['employee_id']              = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
 $company['employee_status']          = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
 $company['employment_type']          = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
 $company['departments_pk']           = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
