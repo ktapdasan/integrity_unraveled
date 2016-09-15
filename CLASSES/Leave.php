@@ -240,7 +240,7 @@ EOT;
                 values
                 (    
                     'Leave $status',
-                    'leave_filed',
+                    'leave_filed_result',
                     $this->pk,
                     $employees_pk,
                     $created_by

@@ -93,18 +93,19 @@ EOT;
 
         $sql .= <<<EOT
                 insert into notifications
-                (
+                (   created_by,
                     notification,
                     table_from,
                     table_from_pk,
                     employees_pk       
                 )
                 values
-                (    
+                (   
+                    $approver_pk,
                     'Manual log filed $status',
-                    'manual_log',
+                    'manual_log_result',
                     $pk,
-                    $approver_pk
+                    $employees_pk
                 )
                 ;
 EOT;

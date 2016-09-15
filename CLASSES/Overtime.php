@@ -170,6 +170,25 @@ EOT;
             )
             ;
 EOT;
+            $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk,
+                    created_by       
+                )
+                values
+                (    
+                    'Overtime $status',
+                    'overtime_result',
+                    $overtime_pk,
+                    $employees_pk,
+                    $created_by
+                )
+                ;
+EOT;
 
         return ClassParent::insert($sql);
 
@@ -210,6 +229,25 @@ EOT;
                 );
 EOT;
 
+            $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk,
+                    created_by       
+                )
+                values
+                (    
+                    'Overtime filed',
+                    'overtime',
+                    currval('overtime_pk_seq'),
+                    (select supervisor_pk from groupings where employees_pk= $this->employees_pk),
+                    $this->employees_pk
+                )
+                ;
+EOT;
         $sql .= "commit;";
 
         return ClassParent::insert($sql);

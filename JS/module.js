@@ -25,7 +25,7 @@ app.config(function($routeProvider){
     })
     /*.when('/timesheet/manual_logs',
     { 
-        controller: 'Manual_logs',
+        controller: 'Manual_logs',appro
         templateUrl: 'partials/timesheet/manual_logs_filed.html'
     })*/
     .when('/timesheet/leaves',

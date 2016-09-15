@@ -15,6 +15,7 @@ $info = array(
         		"created_by" => $_POST['approver_pk'],
         		"status" => $_POST['status'],
         		"remarks" => $_POST['remarks'],
+        		"employees_pk"=>$_POST['employees_pk']
     		);
 
 

@@ -174,8 +174,20 @@ app.controller('Sidebar', function(
         else if($scope.notifications.data[k].table_from == "leave_filed"){
             location = "#/management/leaves";
         }
+        else if($scope.notifications.data[k].table_from == "leave_filed_result"){
+            location = "#/timesheet/leaves";
+        }
         else if($scope.notifications.data[k].table_from == "manual_log"){
             location = "#/management/manual_logs";
+        }
+        else if($scope.notifications.data[k].table_from == "manual_log_result"){
+            location = "#/timesheet";
+        }
+        else if($scope.notifications.data[k].table_from == "overtime"){
+            location = "#/management/overtime";
+        }
+        else if($scope.notifications.data[k].table_from == "overtime_result"){
+            location = "#/timesheet/overtime";
         }
 
         var data=$scope.notifications.data[k];
