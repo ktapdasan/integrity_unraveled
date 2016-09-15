@@ -179,12 +179,6 @@ EOT;
         $sql = <<<EOT
                 select 
                     pk,
-                    employee_id,
-                    first_name,
-                    middle_name,
-                    last_name,
-                    email_address,
-                    business_email_address,
                     groupings.supervisor_pk as supervisor_pk,
                     (select first_name||' '||last_name from employees where pk = groupings.supervisor_pk)
                     as supervisor,

@@ -30,6 +30,19 @@ app.controller('Employees', function(
     $scope.level_class = 'orig_width';
     $scope.show_hours = false;
 
+    $scope.tab = {
+        personal : true,
+        education : false,
+        company : false,
+        government : false
+    };
+
+    $scope.current = {
+        personal : 'current',
+        education : '',
+        company : '',
+        government : ''
+    };
 
     init();
 
@@ -57,6 +70,16 @@ app.controller('Employees', function(
         });
     }
 
+    $scope.change_tab = function(tab){
+        for(var i in $scope.tab){
+            $scope.tab[i] = false
+            $scope.current[i] = '';
+        }
+
+        $scope.tab[tab] = true;
+        $scope.current[tab] = 'current';
+    }
+    
     function get_profile(){
         var filters = { 
             'pk' : $scope.pk

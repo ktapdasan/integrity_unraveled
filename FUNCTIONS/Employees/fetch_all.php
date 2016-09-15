@@ -41,7 +41,7 @@ $class = new Employees(
 					);
 
 $data = $class->fetch_all($_POST);
-
+print_r($filters['details']);
 header("HTTP/1.0 404 User .");
 if($data['status']){
 	header("HTTP/1.0 200 OK");

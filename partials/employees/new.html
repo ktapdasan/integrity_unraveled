@@ -237,6 +237,22 @@ body>footer .footer-main {
                         </tr>
                         <tr>
                             <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Present Address:</label>
+                            </td>
+                           <td id="css">     
+                                <input name="paddress" required ng-model="employees.present_address" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.paddress.$error.required">Present Address is required.</span>
+                            </td>
+                             <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Permanent Address:</label>
+                            </td>
+                           <td id="css">     
+                                <input name="p1address" required ng-model="employees.permanent_address" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.p1address.$error.required">Permanent address is required.</span>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td>
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Upload Profile Pic:</label>
                             </td>
                             <td colspan="2">
@@ -286,6 +302,8 @@ body>footer .footer-main {
                                     || myForm.emailAddressAddressAddress.$pristine || myForm.emailAddressAddress.$dirty && myForm.emailAddress.$invalid
                                     || myForm.gender.$error && myForm.gender.$invalid
                                     || myForm.relgion.$error && myForm.religion.$invalid
+                                    || myForm.p1address.$error && myForm.p1address.$invalid
+                                    || myForm.paddress.$error && myForm.paddress.$invalid
                                     || myForm.bdate.$error && myForm.bdate.$invalid" class="large button green fa-fa" value="Next" ng-click="change_tab('education')" />
                                     <input type="reset" class="large button green fa-fa" value="Clear" />
                                 </center>

@@ -141,13 +141,12 @@ education - {
 EXAMPLES
 update employees set
 details = jsonb_set(details, '{company}', ' {
-	"hours": "250",
-	"departments_pk": "39",
-	"levels_pk": "3",
+	"departments_pk": "26",
+	"levels_pk": "7",
 	"titles_pk": "13",
 	"supervisor": "17",
-	"email_address": "mrcristobal.chrs@gmail.com",
-	"business_email_address": "maria.cristobal@chrsglobal.com",
+	"email_address": "ktapdasan.chrs@gmail.com",
+	"business_email_address": "ken.tapdasan@chrsglobal.com",
 	"work_schedule": {
 		"sunday": null,
 		"monday": {
@@ -199,21 +198,20 @@ details = jsonb_set(details, '{company}', ' {
 
 }
 ', true) 
-where pk = 98;
+where pk = 12;
 
 update employees set
 details = jsonb_set(details, '{personal}', ' 
 {
 "gender": "Male", 
 "religion": "Catholic", 
-"last_name": "Tapdasan", 
+"last_name": "Funtera", 
 "birth_date": "1995-07-27", 
-"first_name": "Ken", 
+"first_name": "Gregory", 
 "civilstatus": "Single", 
-"middle_name": "Villanueva",
-"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg"
+"middle_name": "None"
 }
 ', true) 
-where pk = 12;
+where pk = 51;
 
 

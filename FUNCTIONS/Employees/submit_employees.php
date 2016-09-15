@@ -43,6 +43,8 @@ $class = new Employees(
     $_POST['timeout_friday'],
     $_POST['timeout_saturday'],
     $_POST['profile_picture'],
+    $_POST['permanent_address'],
+    $_POST['present_address'],
     NULL,
     NULL,
     NULL
@@ -102,6 +104,8 @@ $personal['gender']                  = pg_escape_string(strip_tags(trim($_POST['
 $personal['religion']                = pg_escape_string(strip_tags(trim($_POST['religion'])));
 $personal['birth_date']              = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 $personal['profile_picture']         = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
+$personal['permanent_address']       = pg_escape_string(strip_tags(trim($_POST['permanent_address'])));
+$personal['present_address']         = pg_escape_string(strip_tags(trim($_POST['present_address'])));
 
 //Government Array!
 $government = array();
