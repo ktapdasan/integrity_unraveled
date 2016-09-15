@@ -257,14 +257,29 @@ app.controller('admin_suspension', function(
 
     
     $scope.edit_suspension = function(k){
-        $scope.modal.date_from = new Date();
-        $scope.modal.date_to = new Date();
+        
+
+        var date_from = new Date($scope.suspension.data[k].time_from);
+            var ddf = date_from.getDate();
+            var mmf = date_from.getMonth()+1; 
+            var yyyyf = date_from.getFullYear();
+            
+        var date_to = new Date($scope.suspension.data[k].time_to);
+            var ddt = date_to.getDate();
+            var mmt = date_to.getMonth()+1; 
+            var yyyyt = date_to.getFullYear();
+
+        $scope.date_from = new Date(mmf+"-"+ddf+"-"+yyyyf);
+        $scope.date_to = new Date(mmt+"-"+ddt+"-"+yyyyt);
+
         $scope.modal.remarks = '';
         $scope.modal = {
 
             title : 'Edit Suspension',
             save : 'Save',
             close : 'Cancel',
+            date_from : $scope.date_from,
+            date_to : $scope.date_to
 
            
         };
@@ -335,15 +350,17 @@ app.controller('admin_suspension', function(
             var mmt = date_to.getMonth()+1; //January is 0!
             var yyyyt = date_to.getFullYear();
            
-            $scope.suspension.pk = $scope.suspension.data[k].pk
-            $scope.suspension.creator_pk = $scope.profile.pk;
-            $scope.suspension.time_from = fromh + ':' + fromm ;
-            $scope.suspension.time_to = toh + ':' + tom;
-            $scope.suspension.date_from = yyyyf+'-'+mmf+'-'+ddf;
-            $scope.suspension.date_to = yyyyt+'-'+mmt+'-'+ddt;
-            $scope.suspension.remarks = $scope.modal.remarks;
+            $scope.modal.pk = $scope.suspension.data[k].pk
+            $scope.modal.creator_pk = $scope.profile.pk;
+            $scope.modal.time_from = fromh + ':' + fromm ;
+            $scope.modal.time_to = toh + ':' + tom;
+            $scope.modal.date_from = yyyyf+'-'+mmf+'-'+ddf;
+            $scope.modal.date_to = yyyyt+'-'+mmt+'-'+ddt;
+            $scope.modal.remarks = $scope.modal.remarks;
 
-            var promise = SuspensionFactory.edit_suspension($scope.suspension);
+            
+
+            var promise = SuspensionFactory.edit_suspension($scope.modal);
             promise.then(function(data){
 
                 UINotification.success({
