@@ -73,9 +73,9 @@ app.factory('SuspensionFactory', function($http){
     }; 
 
 
-    factory.restore_holiday = function(data){
+    factory.restore_suspension = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Holidays/restore_holidays.php',
+            url:'./FUNCTIONS/suspension/restore_suspension.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

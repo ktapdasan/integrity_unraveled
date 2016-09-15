@@ -153,6 +153,26 @@ EOT;
         return ClassParent::update($sql);
     }
 
+    public function restore_suspension($extra){
+
+        $pk=$extra['pk'];
+
+        $sql = <<<EOT
+                UPDATE suspension set
+                (
+                    archived
+                )
+                =
+                (
+                    'f'
+                )
+                WHERE pk = $pk
+                ;
+EOT;
+
+        return ClassParent::update($sql);
+    }
+
     
 }
 ?>

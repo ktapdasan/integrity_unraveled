@@ -62,6 +62,8 @@ app.controller('admin_suspension', function(
         $scope.filter.date_to = new Date();
         $scope.modal.date_from = new Date(yyyy+'-'+mm+'-'+dd);
         $scope.modal.date_to = new Date(yyyy+'-'+mm+'-'+dd);
+
+        
     }
 
     function getMonday(d) {
@@ -87,60 +89,28 @@ app.controller('admin_suspension', function(
         return monday;
     }
 
+    $scope.add_suspension = function(){
+        var date_from = new Date();
+            var ddf = date_from.getDate();
+            var mmf = date_from.getMonth()+1; 
+            var yyyyf = date_from.getFullYear();
 
+        var date_to = new Date();
+            var ddt = date_to.getDate();
+            var mmt = date_to.getMonth()+1; 
+            var yyyyt = date_to.getFullYear();
 
-    $scope.show_suspension = function(){
-        suspension();
-    }
-   
+        $scope.date_from = new Date(mmf+"-"+ddf+"-"+yyyyf);
+        $scope.date_to = new Date(mmt+"-"+ddt+"-"+yyyyt);
 
-    function suspension(){
-
-        $scope.suspension.status = false;
-        $scope.suspension.data= '';
-
-        if ($scope.filter.status == 'Active')
-            {
-                $scope.filter.archived = 'false';  
-            }
-        else 
-            {
-                $scope.filter.archived = 'true';   
-            }
-
-      
-        var promise = SuspensionFactory.get_suspension($scope.filter);
-        promise.then(function(data){
-            $scope.suspension.status = true;
-            $scope.suspension.data = data.data.result;
-            var count = data.data.result.length;
-
-            if (count==0) {
-                $scope.suspension.count="";
-            }
-            else{
-                $scope.suspension.count= count;
-            }
-             
-
-        })
-        .then(null, function(data){
-            $scope.suspension.status = false;
-        });
-    }
-
-
-
-
-    $scope.add_suspension = function(k){
-        $scope.modal.date_from = new Date();
-        $scope.modal.date_to = new Date();
         $scope.modal.remarks = '';
         $scope.modal = {
 
             title : 'Add New Suspension',
             save : 'Add',
             close : 'Cancel',
+            date_from : $scope.date_from,
+            date_to : $scope.date_to
 
            
         };
@@ -211,14 +181,14 @@ app.controller('admin_suspension', function(
             var mmt = date_to.getMonth()+1; //January is 0!
             var yyyyt = date_to.getFullYear();
            
-            $scope.suspension.creator_pk = $scope.profile.pk;
-            $scope.suspension.time_from = fromh + ':' + fromm ;
-            $scope.suspension.time_to = toh + ':' + tom;
-            $scope.suspension.date_from = yyyyf+'-'+mmf+'-'+ddf;
-            $scope.suspension.date_to = yyyyt+'-'+mmt+'-'+ddt;
-            $scope.suspension.remarks = $scope.modal.remarks;
+            $scope.modal.creator_pk = $scope.profile.pk;
+            $scope.modal.time_from = fromh + ':' + fromm ;
+            $scope.modal.time_to = toh + ':' + tom;
+            $scope.modal.date_from = yyyyf+'-'+mmf+'-'+ddf;
+            $scope.modal.date_to = yyyyt+'-'+mmt+'-'+ddt;
+            $scope.modal.remarks = $scope.modal.remarks;
            
-            var promise = SuspensionFactory.save($scope.suspension);
+            var promise = SuspensionFactory.save($scope.modal);
             promise.then(function(data){
 
                 UINotification.success({
@@ -243,16 +213,73 @@ app.controller('admin_suspension', function(
         });
     }
 
+
+
+    $scope.show_suspension = function(){
+        suspension();
+    }
+   
+
+    function suspension(){
+
+        $scope.suspension.status = false;
+        $scope.suspension.data= '';
+
+        if ($scope.filter.status == 'Active')
+            {
+                $scope.filter.archived = 'false';  
+            }
+        else 
+            {
+                $scope.filter.archived = 'true';   
+            }
+
+      
+        var promise = SuspensionFactory.get_suspension($scope.filter);
+        promise.then(function(data){
+            $scope.suspension.status = true;
+            $scope.suspension.data = data.data.result;
+            var count = data.data.result.length;
+
+            if (count==0) {
+                $scope.suspension.count="";
+            }
+            else{
+                $scope.suspension.count= count;
+            }
+             
+
+        })
+        .then(null, function(data){
+            $scope.suspension.status = false;
+        });
+    }  
+
     
     $scope.edit_suspension = function(k){
-        $scope.modal.date_from = new Date();
-        $scope.modal.date_to = new Date();
+        
+
+        var date_from = new Date($scope.suspension.data[k].time_from);
+            var ddf = date_from.getDate();
+            var mmf = date_from.getMonth()+1; 
+            var yyyyf = date_from.getFullYear();
+            
+        var date_to = new Date($scope.suspension.data[k].time_to);
+            var ddt = date_to.getDate();
+            var mmt = date_to.getMonth()+1; 
+            var yyyyt = date_to.getFullYear();
+
+        $scope.date_from = new Date(mmf+"-"+ddf+"-"+yyyyf);
+        $scope.date_to = new Date(mmt+"-"+ddt+"-"+yyyyt);
+
         $scope.modal.remarks = '';
         $scope.modal = {
 
             title : 'Edit Suspension',
             save : 'Save',
             close : 'Cancel',
+            date_from : $scope.date_from,
+            date_to : $scope.date_to
 
            
         };
@@ -323,15 +350,17 @@ app.controller('admin_suspension', function(
             var mmt = date_to.getMonth()+1; //January is 0!
             var yyyyt = date_to.getFullYear();
            
-            $scope.suspension.pk = $scope.suspension.data[k].pk
-            $scope.suspension.creator_pk = $scope.profile.pk;
-            $scope.suspension.time_from = fromh + ':' + fromm ;
-            $scope.suspension.time_to = toh + ':' + tom;
-            $scope.suspension.date_from = yyyyf+'-'+mmf+'-'+ddf;
-            $scope.suspension.date_to = yyyyt+'-'+mmt+'-'+ddt;
-            $scope.suspension.remarks = $scope.modal.remarks;
+            $scope.modal.pk = $scope.suspension.data[k].pk
+            $scope.modal.creator_pk = $scope.profile.pk;
+            $scope.modal.time_from = fromh + ':' + fromm ;
+            $scope.modal.time_to = toh + ':' + tom;
+            $scope.modal.date_from = yyyyf+'-'+mmf+'-'+ddf;
+            $scope.modal.date_to = yyyyt+'-'+mmt+'-'+ddt;
+            $scope.modal.remarks = $scope.modal.remarks;
 
-            var promise = SuspensionFactory.edit_suspension($scope.suspension);
+            
+
+            var promise = SuspensionFactory.edit_suspension($scope.modal);
             promise.then(function(data){
 
                 UINotification.success({
@@ -407,12 +436,11 @@ app.controller('admin_suspension', function(
         });
     }
 
-
-    $scope.restore_holiday = function(k){
+    $scope.restore_suspension = function(k){
        
        $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to restore this holiday?',
+                message: 'Are you sure you want to restore this suspension?',
                 save : 'restore',
                 close : 'Cancel'
             };
@@ -428,19 +456,20 @@ app.controller('admin_suspension', function(
             return false;
         }, function(value){
 
-            
-            var promise = HolidaysFactory.restore_holiday($scope.holiday.data[k]);
+            $scope.suspension.pk = $scope.suspension.data[k].pk
+
+            var promise = SuspensionFactory.restore_suspension($scope.suspension);
             promise.then(function(data){
                 
 
                 $scope.archived=true;
                 UINotification.success({
-                                        message: 'You have successfully restored holiday', 
+                                        message: 'You have successfully restored suspension', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                holiday();
+                suspension();
 
             })
             .then(null, function(data){
@@ -456,6 +485,7 @@ app.controller('admin_suspension', function(
                             
         });
     }
+
 
 
 });
