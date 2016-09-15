@@ -5,7 +5,6 @@ update objects set body=jsonb_set(body, '{name}', '"Mary"', true) where id=1;
 create table employees_backup
 (
 	pk serial primary key,
-	employee_id text not null,
 	details jsonb,
 	leave_balances jsonb,
 	date_created timestamptz default now(),

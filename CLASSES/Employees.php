@@ -683,12 +683,10 @@ EOT;
         $sql .= <<<EOT
                 insert into employees_backup
                 (
-                    employee_id,
                     details
                 )
                 values
                 (
-                    '$this->employee_id',
                     '$details'
 
                 );
