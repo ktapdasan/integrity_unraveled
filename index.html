@@ -339,6 +339,7 @@
                             <li><a style="cursor:pointer;" href="#/admin/holidays" ng-click="menuclicked('admin')">Holidays</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/suspension" ng-click="menuclicked('admin')">Suspension</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/calendar" ng-click="menuclicked('admin')">Calendar</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/memo" ng-click="menuclicked('admin')">Memo</a></li>
                         </ul>
 
                     </li>
@@ -461,11 +462,10 @@
 
                     <ul ng-if="sidebar_menu.memo" class="nav notification_data">
 
-                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
-                            <a ng-click="goto(k)" >
-                                <p style="font-size:13px;margin-bottom:0px;">{{v.notification}}</p>
+                        <li ng-repeat="(k,v) in memo.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
+                            <a>
+                                <p style="font-size:13px;margin-bottom:0px;">{{v.memo}}</p>
                                 <div style="font-size:10px; color:#AAA;" >
-                                
                                 {{v.created_by}}
                                 <br>
                                 {{v.date_created}}
@@ -476,16 +476,17 @@
 
                     <ul ng-if="sidebar_menu.calendar" class="nav notification_data">
 
-                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
-                            <a ng-click="goto(k)" >
-                                <p style="font-size:13px;margin-bottom:0px;">{{v.notification}}</p>
-                                <div style="font-size:10px; color:#AAA;" >
-                                
-                                {{v.created_by}}
+                        <li ng-repeat="(k,v) in calendar.data" style="background-color:{{v.color}};">
+                        <a>
+                            <p style="font-size:14px;margin-bottom:0px;color:Black;">
+                                {{v.description}}
+                            </p>
+                            <div style="font-size:11px;color:#AAA;">
+                                {{v.time_from}} to {{v.time_to}}
                                 <br>
-                                {{v.date_created}}
-                                </div>
-                            </a>
+                                {{v.created_by}}
+                            </div>
+                        </a>
                         </li>
                     </ul>
                 </div>
@@ -570,6 +571,7 @@
     <script src="./JS/controllers/admin_Holidays.js"></script>
     <script src="./JS/controllers/admin_suspension.js"></script>
     <script src="./JS/controllers/Admin_calendar.js"></script>
+    <script src="./JS/controllers/Admin_memo.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -589,7 +591,8 @@
     <script src="./JS/factories/HolidaysFactory.js"></script>  
     <script src="./JS/factories/SuspensionFactory.js"></script> 
     <script src="./JS/factories/AttritionsFactory.js"></script> 
-    <script src="./JS/factories/CalendarFactory.js"></script> 
+    <script src="./JS/factories/CalendarFactory.js"></script>
+    <script src="./JS/factories/MemoFactory.js"></script>  
 
 
     <!-- DIRECTIVES -->
@@ -1237,34 +1240,20 @@
         </div>
     </script>
 
-    <script type="text/ng-template" id="EditHolidayModal">
+    <script type="text/ng-template" id="MemoModal">
         <div class="ngdialog-message">
             <div style="margin-top: 10px;">
-                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
             </div>
-        <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>            
-        <form name="myForm">
-            <div> 
-
-                <label style="margin-top: 10px;font-size:20px;">New Holiday Name:</label>
-                <input required type="text" size="10" ng-model="modal.name" style="width: 300px;font-size:18px;"/>  
-
-                <label style="margin-top: 10px;font-size:18px;">New Holiday type:</label>
-                <select ng-model="modal.type" value="Regular" style="width: 300px;font-size:18px;">
-                                <option value="Regular">Regular</option>
-                                <option value="Special Working">Special Working</option>
-                                <option value="Special Non-Working">Special Non-Working</option>
-                </select>
-
-                <label style="margin-top: 10px;font-size:20px;">New Holiday date:</label>
-               <input required placeholder ="Holiday Date" type="text" size="10" ng-model="modal.datex" style="width: 300px;font-size:18px;" /> 
-
-               
-            </div>
-        </form>
+                <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>
+            <form name="myForm">
+                <div> 
+                    <label style="margin-top: 10px;font-size:20px;">New Memo:</label>
+                <input required type="text" size="10" ng-model="modal.memo" style="width: 300px;font-size:18px;"/>  
+            </form>
         </div>
-        <div class="ngdialog-buttons">
-        <hr style="height:2px">          
+         <hr style="height:2px">
+        <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>

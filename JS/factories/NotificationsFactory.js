@@ -47,5 +47,25 @@ app.factory('NotificationsFactory', function($http){
         return promise;
     };
 
+    factory.get_memo = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Notifications/get_memo.php',
+            method: 'GET'
+        })
+
+        return promise;
+
+    };
+
+    factory.get_calendar = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Notifications/get_calendar.php',
+            method: 'GET'
+        })
+
+        return promise;
+
+    };
+
     return factory;
 });

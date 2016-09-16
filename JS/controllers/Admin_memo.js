@@ -1,16 +1,15 @@
-app.controller('admin_Holidays', function(
+app.controller('Admin_memo', function(
                                         $scope,
                                         SessionFactory,
                                         EmployeesFactory,
                                         ngDialog,
                                         UINotification,
-                                        HolidaysFactory,
+                                        MemoFactory,
                                         md5,
                                         $filter
                                     ){
-    $scope.holiday = {};
+    $scope.memo = {};
     $scope.modal = {};
-    $scope.holiday={};
     $scope.filter= {};
     $scope.filter.status= 'Active';
 
@@ -23,7 +22,7 @@ app.controller('admin_Holidays', function(
             $scope.pk = data.data[_id];
             
             get_profile();
-            holiday();
+            memo();
         });
     }
 
@@ -42,15 +41,15 @@ app.controller('admin_Holidays', function(
 
 
 
-    $scope.show_holiday = function(){
-        holiday();
+    $scope.show_memo = function(){
+        memo();
     }
    
 
-    function holiday(){
+    function memo(){
 
-        $scope.holiday.status = false;
-        $scope.holiday.data= '';
+        $scope.memo.status = false;
+        $scope.memo.data= '';
 
         if ($scope.filter.status == 'Active')
             {
@@ -61,51 +60,44 @@ app.controller('admin_Holidays', function(
                 $scope.filter.archived = 'true';   
             }
 
-      
-        var promise = HolidaysFactory.get_holiday($scope.filter);
+        
+        var promise = MemoFactory.get_memo($scope.filter);
         promise.then(function(data){
-            $scope.holiday.status = true;
-            $scope.holiday.data = data.data.result;
+            $scope.memo.status = true;
+            $scope.memo.data = data.data.result;
             var count = data.data.result.length;
 
             if (count==0) {
-                $scope.holiday.count="";
+                $scope.memo.count="";
             }
             else{
-                $scope.holiday.count="Total: " + count;
+                $scope.memo.count="Total: " + count;
             }
              
 
         })
         .then(null, function(data){
-            $scope.holiday.status = false;
+            $scope.memo.status = false;
         });
     }
 
 
 
 
-    $scope.add_holiday = function(k){
-        var date = new Date();
-            var dd = date.getDate();
-            var mm = date.getMonth()+1; 
-            var yyyy = date.getFullYear();
-
-        $scope.date = new Date(mm+"-"+dd+"-"+yyyy);
+    $scope.add_memo = function(k){
      
         $scope.modal = {
 
-            title : 'Add New Holiday',
+            title : 'Add New Memo',
             save : 'Add',
-            close : 'Cancel',
-            datex : $scope.date
+            close : 'Cancel'
 
            
         };
 
 
         ngDialog.openConfirm({
-            template: 'HolidayModal',
+            template: 'MemoModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
@@ -114,7 +106,7 @@ app.controller('admin_Holidays', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Are you sure you want to add this Holiday?</p>' +
+                                '<p>Are you sure you want to add this Memo?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -132,29 +124,20 @@ app.controller('admin_Holidays', function(
             return false;
         }, function(value){
 
-            $scope.holiday.creator_pk = $scope.profile.pk;
-            $scope.holiday.holiday_name = $scope.modal.name;
-            $scope.holiday.holiday_type = $scope.modal.type;
+            $scope.memo.memo = $scope.modal.memo;
+            $scope.memo.created_by = $scope.profile.pk;
 
 
-            var date = new Date($scope.modal.datex);
-            var dd = date.getDate();
-            var mm = date.getMonth()+1; 
-            var yyyy = date.getFullYear();
-
-            $scope.holiday.new_date=yyyy +"-"+ mm +"-"+ dd;
-           
-           
-            var promise = HolidaysFactory.save($scope.holiday);
+            var promise = MemoFactory.add($scope.memo);
             promise.then(function(data){
 
                 UINotification.success({
-                                        message: 'You have successfully added new Holiday', 
+                                        message: 'You have successfully added new Memo', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                holiday();
+                memo();
             })
             .then(null, function(data){
                 
@@ -171,29 +154,19 @@ app.controller('admin_Holidays', function(
     }
 
     
-    $scope.edit_holiday = function(k){
-        
-        var date = new Date( $scope.holiday.data[k].datex);
-            var dd = date.getDate();
-            var mm = date.getMonth()+1; 
-            var yyyy = date.getFullYear();
-
-        $scope.holiday.new_date = new Date(mm+"-"+dd+"-"+yyyy);
+    $scope.edit_memo = function(k){
             
         $scope.modal = {
 
-            title : 'Edit Holiday',
+            title : 'Edit Memo',
             save : 'Apply Changes',
             close : 'Cancel',
-            name : $scope.holiday.data[k].name,
-            datex : $scope.holiday.new_date,
-            type :$scope.holiday.data[k].type,
-            archived : $scope.holiday.data[k].archived,
-            pk: $scope.holiday.data[k].pk
+            memo : $scope.memo.data[k].memo,
+            pk: $scope.memo.data[k].pk
         };
 
         ngDialog.openConfirm({
-            template: 'HolidayModal',
+            template: 'MemoModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
@@ -202,7 +175,7 @@ app.controller('admin_Holidays', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Are you sure you want to apply changes to this Holiday?</p>' +
+                                '<p>Are you sure you want to apply changes to this  Memo?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -219,19 +192,17 @@ app.controller('admin_Holidays', function(
         .then(function(value){
             return false;
         }, function(value){
-            
-             $scope.modal.datex =  $filter('date')( $scope.modal.datex, "yyyy-MM-dd");
 
-            var promise = HolidaysFactory.update_holiday($scope.modal);
+            var promise = MemoFactory.update_memo($scope.modal);
             promise.then(function(data){
 
                 UINotification.success({
-                                        message: 'You have successfully applied changes to this Holiday.', 
+                                        message: 'You have successfully applied changes to this Memo.', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                holiday();
+                memo();
             })
             .then(null, function(data){
                 
@@ -248,11 +219,11 @@ app.controller('admin_Holidays', function(
     }
     
 
-     $scope.delete_holiday = function(k){
+    $scope.delete_memo = function(k){
        
        $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to delete this holiday?',
+                message: 'Are you sure you want to delete this memo?',
                 save : 'Delete',
                 close : 'Cancel'
             };
@@ -269,18 +240,18 @@ app.controller('admin_Holidays', function(
         }, function(value){
 
             
-            var promise = HolidaysFactory.delete_holiday($scope.holiday.data[k]);
+            var promise = MemoFactory.delete_memo($scope.memo.data[k]);
             promise.then(function(data){
                 
 
                 $scope.archived=true;
                 UINotification.success({
-                                        message: 'You have successfully deleted Holiday', 
+                                        message: 'You have successfully deleted memo', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                holiday();
+                memo();
 
             })
             .then(null, function(data){
@@ -298,11 +269,11 @@ app.controller('admin_Holidays', function(
     }
 
 
-    $scope.restore_holiday = function(k){
+    $scope.restore_memo = function(k){
        
        $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to restore this holiday?',
+                message: 'Are you sure you want to restore this memo?',
                 save : 'restore',
                 close : 'Cancel'
             };
@@ -319,18 +290,18 @@ app.controller('admin_Holidays', function(
         }, function(value){
 
             
-            var promise = HolidaysFactory.restore_holiday($scope.holiday.data[k]);
+            var promise = MemoFactory.restore_memo($scope.memo.data[k]);
             promise.then(function(data){
                 
 
                 $scope.archived=true;
                 UINotification.success({
-                                        message: 'You have successfully restored holiday', 
+                                        message: 'You have successfully restored memo', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-                holiday();
+                memo();
 
             })
             .then(null, function(data){

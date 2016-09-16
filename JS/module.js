@@ -125,6 +125,11 @@ app.config(function($routeProvider){
         controller: 'Admin_calendar',
         templateUrl: 'partials/admin/calendar/admin.html'
     })
+    .when('/admin/memo',
+    {
+        controller: 'Admin_memo',
+        templateUrl: 'partials/admin/memo/index.html'
+    })
     .when('/management/leaves',
     {
         controller: 'Management_leave',

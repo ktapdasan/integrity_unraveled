@@ -35,6 +35,7 @@ class Notifications extends ClassParent {
     }
 
 	public function fetch(){
+
         $sql = <<<EOT
                 select
                     pk, 
@@ -56,6 +57,7 @@ EOT;
     }
 
     public function read(){  
+
         $read = $this->read;
         $sql = <<<EOT
                 UPDATE notifications
@@ -68,6 +70,7 @@ EOT;
 
 
     public function get_birthday(){
+
          $sql = <<<EOT
                 select 
                 pk,
@@ -79,6 +82,46 @@ EOT;
                 to_char((employees.details->'personal'->>'birth_date')::date,'MM')=
                 to_char(now()::date,'MM')
                 order by employees.details->'personal'->'birth_date'
+                ;
+EOT;
+            return ClassParent::get($sql);
+
+    }
+
+    public function get_memo(){
+
+        $sql = <<<EOT
+                select 
+                pk,
+                memo,
+                (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = created_by) as created_by,
+                date_created::timestamp (0) as date_created,
+                read
+                from memo
+                order by date_created 
+                desc 
+                limit 6
+                ;
+EOT;
+            return ClassParent::get($sql);
+
+    }
+
+    public function get_calendar(){
+
+        $sql = <<<EOT
+                select 
+                pk,
+                description,
+                to_char((time_from)::date,'Mon DD YYYY')AS time_from,
+                to_char((time_to)::date,'Mon DD YYYY')AS time_to,
+                color,
+                (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = created_by) as created_by,
+                date_created::timestamp (0) as date_created
+                from calendar
+                order by date_created 
+                desc 
+                limit 6
                 ;
 EOT;
             return ClassParent::get($sql);

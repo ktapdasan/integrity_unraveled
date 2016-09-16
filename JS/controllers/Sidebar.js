@@ -36,6 +36,12 @@ app.controller('Sidebar', function(
         memo : false,
         calendar : false
     }
+
+    $scope.memo={};
+    $scope.memo.count ="";
+
+    $scope.calendar={};
+    $scope.calendar.count ="";
    
 
     init();
@@ -61,6 +67,8 @@ app.controller('Sidebar', function(
             $scope.profile = data.data.result[0];
             
             get_notifications();
+            get_memo();
+            get_calendar();
 
             
         })   
@@ -249,4 +257,94 @@ app.controller('Sidebar', function(
 
         $scope.sidebar_menu[menu] = true;
     }
+
+
+    function get_memo(){
+
+        var promise = NotificationsFactory.get_memo();
+        promise.then(function(data){
+
+            $scope.memo.data = data.data.result;
+            $scope.memo.status = true;
+            $scope.memo.hide = true;
+            var count = data.data.result.length;
+            
+
+            
+            // if (count==0) {
+
+            //     return $scope.notifications.count=" ";
+            // }
+            // else
+            // {   
+            //     document.title = "Integrity ("+count+")";
+            //     return $scope.notifications.count="(" +count +")";
+            // };
+
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '1';
+
+            
+           
+        })
+        .then(null, function(data){
+
+            $scope.memo.status = false;
+
+            $scope.animation.stop = '0s';
+            $scope.animation.duration = '2.6s';
+
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '0';
+          
+
+
+        });
+    }
+
+
+
+    function get_calendar(){
+
+        var promise = NotificationsFactory.get_calendar();
+        promise.then(function(data){
+
+            $scope.calendar.data = data.data.result;
+            $scope.calendar.status = true;
+            $scope.calendar.hide = true;
+            var count = data.data.result.length;
+            
+
+            
+            // if (count==0) {
+
+            //     return $scope.notifications.count=" ";
+            // }
+            // else
+            // {   
+            //     document.title = "Integrity ("+count+")";
+            //     return $scope.notifications.count="(" +count +")";
+            // };
+
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '1';
+
+            
+           
+        })
+        .then(null, function(data){
+
+            $scope.calendar.status = false;
+
+            $scope.animation.stop = '0s';
+            $scope.animation.duration = '2.6s';
+
+            $scope.animation_arrow.stop = '0';
+            $scope.animation_arrow.opacity = '0';
+          
+
+
+        });
+    }
+
 });
