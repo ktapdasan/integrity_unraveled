@@ -34,21 +34,24 @@
                             class="btn btn-primary"
                             mwl-date-modifier
                             date="viewDate"
-                            decrement="calendarView">
+                            decrement="calendarView"
+                            ng-click="init_calendar()">
                             Previous
                         </button>
                         <button
                             class="btn btn-default"
                             mwl-date-modifier
                             date="viewDate"
-                            set-to-today>
+                            set-to-today
+                            ng-click="init_calendar()">
                             Today
                         </button>
                         <button
                             class="btn btn-primary"
                             mwl-date-modifier
                             date="viewDate"
-                            increment="calendarView">
+                            increment="calendarView"
+                            ng-click="init_calendar()">
                             Next
                         </button>
                     </div>

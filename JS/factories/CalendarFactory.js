@@ -1,7 +1,6 @@
 app.factory('CalendarFactory', function($http){
     var factory = {};           
     
-    
     factory.get_events = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Calendar/get_events.php',
