@@ -74,8 +74,10 @@ app.controller('New_Employees', function(
         timeout_thursday:null,
         timeout_friday:null,
         timeout_saturday:null,
-        permanent_address:null,
-        present_address:null
+        permanent_address:'',
+        present_address:'',
+        emergency_contact_number:'',
+        emergency_name:''
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
@@ -283,8 +285,10 @@ app.controller('New_Employees', function(
             timeout_thursday:null,
             timeout_friday:null,
             timeout_saturday:null,
-            permanent_address:null,
-            present_address:null
+            permanent_address:'',
+            present_address:'',
+            emergency_contact_number:'',
+            emergency_name:''
         };
     }
 

@@ -45,6 +45,8 @@ $class = new Employees(
     $_POST['profile_picture'],
     $_POST['permanent_address'],
     $_POST['present_address'],
+    $_POST['emergency_name'],
+    $_POST['emergency_contact_number'],
     NULL,
     NULL,
     NULL
@@ -93,6 +95,13 @@ $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['t
 $company['work_schedule']['saturday']['in']         = pg_escape_string($_POST['timein_saturday']);
 $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
 
+if ($_POST['levels_pk'] == 3){
+    $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
+    $company['hours']                = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
+}
+if ($_POST['levels_pk'] != 3){
+    $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
+}
 
 //Personal Array!
 $personal = array();
@@ -106,6 +115,8 @@ $personal['birth_date']              = pg_escape_string(strip_tags(trim($_POST['
 $personal['profile_picture']         = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
 $personal['permanent_address']       = pg_escape_string(strip_tags(trim($_POST['permanent_address'])));
 $personal['present_address']         = pg_escape_string(strip_tags(trim($_POST['present_address'])));
+$personal['emergency_contact_name']  = pg_escape_string(strip_tags(trim($_POST['emergency_name'])));
+$personal['emergency_contact_number']= pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));
 
 //Government Array!
 $government = array();
@@ -113,14 +124,6 @@ $government['SSS']                   = pg_escape_string(strip_tags(trim($_POST['
 $government['TIN']                   = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
 $government['PAG-IBIG']              = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
 $government['PHILHEALTH']            = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
-
-if ($_POST['levels_pk'] == 3){
-    $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
-    $company['hours']                = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
-}
-if ($_POST['levels_pk'] != 3){
-    $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
-}
 
 $educations['school_type']           = $education;
 
