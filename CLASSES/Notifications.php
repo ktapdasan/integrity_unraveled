@@ -112,6 +112,7 @@ EOT;
         $sql = <<<EOT
                 select 
                 pk,
+                location,
                 description,
                 to_char((time_from)::date,'Mon DD YYYY')AS time_from,
                 to_char((time_to)::date,'Mon DD YYYY')AS time_to,

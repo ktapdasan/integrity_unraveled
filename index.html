@@ -482,6 +482,10 @@
                                 {{v.description}}
                             </p>
                             <div style="font-size:11px;color:#AAA;">
+                                <div ng-class="v.location==='N/A' && 'hide'|| 'display'">
+                                    {{v.location}}
+                                </div>
+                                <br>
                                 {{v.time_from}} to {{v.time_to}}
                                 <br>
                                 {{v.created_by}}
