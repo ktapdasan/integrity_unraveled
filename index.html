@@ -426,17 +426,17 @@
             <div ng-show="switcher.content" class="sidebar">
                 <div>
                     <ul class="nav nav-tabs notification_menu">
-                        <li class="active">
+                        <li class="{{ sidebar_menu.notifications?'active':'' }}">
                             <a ng-click="change_menu('notifications')">
                                 <img src="./ASSETS/img/bell.png" style="height:30px;"/>
                             </a>
                         </li>
-                        <li>
+                        <li class="{{ sidebar_menu.memo?'active':'' }}">
                             <a ng-click="change_menu('memo')">
                                 <img src="./ASSETS/img/memo.png" style="height:30px;"/>
                             </a>
                         </li>
-                        <li>
+                        <li class="{{ sidebar_menu.calendar?'active':'' }}">
                             <a ng-click="change_menu('calendar')">
                                 <img src="./ASSETS/img/calendar.png" style="height:30px;"/>
                             </a>
@@ -623,7 +623,7 @@
     <script src="./ASSETS/js/plugins/calendar/interact.min.js"></script>
     <script src="./ASSETS/js/plugins/calendar/rrule.js"></script>
     <script src="./ASSETS/js/plugins/calendar/bootstrap-colorpicker-module.min.js"></script>
-    <script src="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar-tpls.min.js"></script>
+    <script src="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar-tpls.js"></script>
 
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>

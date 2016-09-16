@@ -243,6 +243,10 @@ app.controller('Sidebar', function(
     }
 
     $scope.change_menu = function(menu){
-        console.log(menu);
+        for(var i in $scope.sidebar_menu){
+            $scope.sidebar_menu[i] = false;
+        }
+
+        $scope.sidebar_menu[menu] = true;
     }
 });
