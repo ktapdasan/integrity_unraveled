@@ -200,13 +200,43 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 19 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"cal-row-fluid cal-row-head\">\n\n  <div class=\"cal-cell1\" ng-repeat=\"day in vm.weekDays track by $index\" ng-bind=\"day\"></div>\n\n</div>\n<div class=\"cal-month-box\">\n\n  <div\n    ng-repeat=\"rowOffset in vm.monthOffsets track by rowOffset\"\n    ng-mouseenter=\"rowHovered = true\"\n    ng-mouseleave=\"rowHovered = false\">\n    <div class=\"cal-row-fluid cal-before-eventlist\">\n      <div\n        ng-repeat=\"day in vm.view | calendarLimitTo:7:rowOffset track by $index\"\n        ng-init=\"dayIndex = vm.view.indexOf(day)\"\n        class=\"cal-cell1 cal-cell {{ day.highlightClass }}\"\n        ng-style=\"{backgroundColor: day.backgroundColor}\"\n        ng-click=\"vm.dayClicked(day, false, $event)\"\n        ng-class=\"{pointer: day.events.length > 0}\">\n        <ng-include src=\"vm.customTemplateUrls.calendarMonthCell || vm.calendarConfig.templates.calendarMonthCell\"></ng-include>\n      </div>\n    </div>\n\n    <mwl-calendar-slide-box\n      is-open=\"vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled\"\n      events=\"vm.view[vm.openDayIndex].events\"\n      on-event-click=\"vm.onEventClick\"\n      cell=\"vm.view[vm.openDayIndex]\"\n      custom-template-urls=\"vm.customTemplateUrls\"\n      template-scope=\"vm.templateScope\">\n    </mwl-calendar-slide-box>\n\n  </div>\n\n</div>\n";
+	module.exports = '<div class="cal-row-fluid cal-row-head">  \
+							<div class="cal-cell1" ng-repeat="day in vm.weekDays track by $index" ng-bind="day"></div>\
+						</div>\
+						<div class="cal-month-box">  \
+							<div    ng-repeat="rowOffset in vm.monthOffsets track by rowOffset"    ng-mouseenter="rowHovered = true"    ng-mouseleave="rowHovered = false">    \
+								<div class="cal-row-fluid cal-before-eventlist">      \
+									<div        ng-repeat="day in vm.view | calendarLimitTo:7:rowOffset track by $index"        ng-init="dayIndex = vm.view.indexOf(day)"        class="cal-cell1 cal-cell {{ day.highlightClass }}"        ng-style="{backgroundColor: day.backgroundColor}"        ng-click="vm.dayClicked(day, false, $event)"        ng-class="{pointer: day.events.length > 0}">        \
+										<ng-include src="vm.customTemplateUrls.calendarMonthCell || vm.calendarConfig.templates.calendarMonthCell"></ng-include>      \
+									</div>    \
+								</div>    \
+								<mwl-calendar-slide-box is-open="vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled"      events="vm.view[vm.openDayIndex].events"      on-event-click="vm.onEventClick"      cell="vm.view[vm.openDayIndex]"      custom-template-urls="vm.customTemplateUrls"      template-scope="vm.templateScope">    \
+								</mwl-calendar-slide-box>  \
+							</div>\
+						</div>\
+						';
+						//"<div class=\"cal-row-fluid cal-row-head\">\n\n  <div class=\"cal-cell1\" ng-repeat=\"day in vm.weekDays track by $index\" ng-bind=\"day\"></div>\n\n</div>\n<div class=\"cal-month-box\">\n\n  <div\n    ng-repeat=\"rowOffset in vm.monthOffsets track by rowOffset\"\n    ng-mouseenter=\"rowHovered = true\"\n    ng-mouseleave=\"rowHovered = false\">\n    <div class=\"cal-row-fluid cal-before-eventlist\">\n      <div\n        ng-repeat=\"day in vm.view | calendarLimitTo:7:rowOffset track by $index\"\n        ng-init=\"dayIndex = vm.view.indexOf(day)\"\n        class=\"cal-cell1 cal-cell {{ day.highlightClass }}\"\n        ng-style=\"{backgroundColor: day.backgroundColor}\"\n        ng-click=\"vm.dayClicked(day, false, $event)\"\n        ng-class=\"{pointer: day.events.length > 0}\">\n        <ng-include src=\"vm.customTemplateUrls.calendarMonthCell || vm.calendarConfig.templates.calendarMonthCell\"></ng-include>\n      </div>\n    </div>\n\n    <mwl-calendar-slide-box\n      is-open=\"vm.openRowIndex === $index && vm.view[vm.openDayIndex].events.length > 0 && !vm.slideBoxDisabled\"\n      events=\"vm.view[vm.openDayIndex].events\"\n      on-event-click=\"vm.onEventClick\"\n      cell=\"vm.view[vm.openDayIndex]\"\n      custom-template-urls=\"vm.customTemplateUrls\"\n      template-scope=\"vm.templateScope\">\n    </mwl-calendar-slide-box>\n\n  </div>\n\n</div>\n";
 
 /***/ },
 /* 20 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"cal-slide-box\" uib-collapse=\"vm.isCollapsed\" mwl-collapse-fallback=\"vm.isCollapsed\">\n  <div class=\"cal-slide-content cal-event-list\">\n    <ul class=\"unstyled list-unstyled\">\n\n      <li\n        ng-repeat=\"event in vm.events | orderBy:'startsAt' track by event.$id\"\n        ng-class=\"event.cssClass\"\n        mwl-draggable=\"event.draggable === true\"\n        drop-data=\"{event: event}\">\n        <span class=\"pull-left event\" ng-style=\"{backgroundColor: event.color.primary}\"></span>\n        &nbsp;\n        <a\n          href=\"javascript:;\"\n          class=\"event-item\"\n          ng-click=\"vm.onEventClick({calendarEvent: event})\">\n          <span ng-bind-html=\"isMonthView ? vm.calendarEventTitle.monthView(event) : vm.calendarEventTitle.yearView(event) | calendarTrustAsHtml\"></span>\n        </a>\n\n        <a\n          href=\"javascript:;\"\n          class=\"event-item-action\"\n          ng-class=\"action.cssClass\"\n          ng-repeat=\"action in event.actions track by $index\"\n          ng-bind-html=\"action.label | calendarTrustAsHtml\"\n          ng-click=\"action.onClick({calendarEvent: event})\">\n        </a>\n\n      </li>\n\n    </ul>\n  </div>\n</div>\n";
+	module.exports = '<div class="cal-slide-box" uib-collapse="vm.isCollapsed" mwl-collapse-fallback="vm.isCollapsed">  \
+						<div class="cal-slide-content cal-event-list">    \
+							<ul class="unstyled list-unstyled">      \
+								<li ng-repeat="event in vm.events | orderBy:\'startsAt\' track by event.$id" ng-class="event.cssClass" mwl-draggable="event.draggable === true" drop-data="{event: event}"> \
+									<span class="pull-left event" ng-style="{backgroundColor: event.color.primary}"></span> &nbsp; \
+									<a href="javascript:;" class="event-item" ng-click="vm.onEventClick({calendarEvent: event})"> \
+										<span ng-bind-html="isMonthView ? vm.calendarEventTitle.monthView(event) : vm.calendarEventTitle.yearView(event) | calendarTrustAsHtml">\
+										</span>\
+									</a>\
+									<a href="javascript:;" class="event-item-action" ng-class="action.cssClass" ng-repeat="action in event.actions track by $index" ng-bind-html="action.label | calendarTrustAsHtml" ng-click="action.onClick({calendarEvent: event})"></a>      \
+								</li>    \
+							</ul>  \
+						</div>\
+					</div>\
+					'; 
+	//"<div class=\"cal-slide-box\" uib-collapse=\"vm.isCollapsed\" mwl-collapse-fallback=\"vm.isCollapsed\">\n  <div class=\"cal-slide-content cal-event-list\">\n    <ul class=\"unstyled list-unstyled\">\n\n      <li\n        ng-repeat=\"event in vm.events | orderBy:'startsAt' track by event.$id\"\n        ng-class=\"event.cssClass\"\n        mwl-draggable=\"event.draggable === true\"\n        drop-data=\"{event: event}\">\n        <span class=\"pull-left event\" ng-style=\"{backgroundColor: event.color.primary}\"></span>\n        &nbsp;\n        <a\n          href=\"javascript:;\"\n          class=\"event-item\"\n          ng-click=\"vm.onEventClick({calendarEvent: event})\">\n          <span ng-bind-html=\"isMonthView ? vm.calendarEventTitle.monthView(event) : vm.calendarEventTitle.yearView(event) | calendarTrustAsHtml\"></span>\n        </a>\n\n        <a\n          href=\"javascript:;\"\n          class=\"event-item-action\"\n          ng-class=\"action.cssClass\"\n          ng-repeat=\"action in event.actions track by $index\"\n          ng-bind-html=\"action.label | calendarTrustAsHtml\"\n          ng-click=\"action.onClick({calendarEvent: event})\">\n        </a>\n\n      </li>\n\n    </ul>\n  </div>\n</div>\n";
 
 /***/ },
 /* 21 */
@@ -2171,7 +2201,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    function monthView(event) {
-	      return event.title + ' (' + calendarDateFilter(event.startsAt, 'time', true) + ')';
+	    	if(calendarDateFilter(event.startsAt, 'time', true) == "00:00" && calendarDateFilter(event.endsAt, 'time', true) == '23:59'){
+	    		return event.title + ' (Whole Day)';
+	    	}
+	    	else {
+	    		return event.title + ' (' + calendarDateFilter(event.startsAt, 'time', true) + " - " + calendarDateFilter(event.endsAt, 'time', true) + ')';		
+	    	}
 	    }
 
 	    function monthViewTooltip(event) {

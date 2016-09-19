@@ -10,6 +10,7 @@ alter table memo owner to chrs;
 
 create table calendar (
 	pk serial primary key,
+	recipients int[],
 	location text not null,
 	description text not null,
 	time_from timestamptz,

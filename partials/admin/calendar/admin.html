@@ -1,3 +1,15 @@
+<style type="text/css">
+.color-picker {
+
+}
+
+.color-picker li {
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    display: inline-block;
+}
+</style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
@@ -17,7 +29,7 @@
             <h3 id="event-editor">
                 <button
                     class="btn btn-primary pull-right"
-                    ng-click="addEvent()">
+                    ng-click="add_event()">
                     Add new
                 </button>
                 <div class="clearfix"></div>
@@ -94,4 +106,61 @@
     </div>
 </div>
 
+<script type="text/ng-template" id="CalendarModal">
+    <div class="ngdialog-message">
+        <div style="margin-top: 10px;">
+            <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+        </div>
+        <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>
+        <div>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Description</td>
+                        <td>
+                            <textarea
+                            type="text"
+                            ng-model="modal.description"
+                            style="background-color:{{modal.color}}"
+                            ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Color</td>
+                        <td>
+                            <ul class="color-picker">
+                                <li ng-repeat="color in colors" ng-click="color_picked(color)" ng-style="{'background-color':color};" class="ng-scope"></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Starts at</td>
+                        <td>
+                            <p class="input-group" style="max-width: 250px">
+                                <input ng-model="modal.time_from" type="date" id="datefrom" style="width:165px;"/>
+                                
+                            </p>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ends at</td>
+                        <td>
+                            <p class="input-group" style="max-width: 250px">
+                                <input ng-model="modal.time_to" type="date" id="datefrom" style="width:165px;"/>
+                                
+                            </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+     <hr style="height:2px">
+    <div class="ngdialog-buttons">          
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+        <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+    </div>
+</script>
         

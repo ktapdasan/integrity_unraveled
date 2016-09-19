@@ -20,6 +20,10 @@ app.controller('Admin_calendar', function(
     $scope.calendarView = 'month';
     $scope.viewDate = new Date();
 
+    $scope.modal = {};
+
+    $scope.colors = ['#dc2127','#7bd148','#5484ed','#fbd75b','#ffb878','#7ae7bf'];
+    
     var actions = [{
                         label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
                         onClick: function(args) {
@@ -33,6 +37,8 @@ app.controller('Admin_calendar', function(
                     }];
 
     $scope.isCellOpen = true;
+
+    
 
     init();
 
@@ -65,7 +71,6 @@ app.controller('Admin_calendar', function(
     }
 
     function get_all_events(){
-        console.log($scope.viewDate);
         var data = {
             date : $filter('date')($scope.viewDate, "yyyy-MM-dd")
         };
@@ -111,7 +116,9 @@ app.controller('Admin_calendar', function(
     };
 
     $scope.eventClicked = function(event) {
-        alert.show('Clicked', event);
+        //alert.show('Clicked', event);
+        console.log(event);
+
     };
 
     $scope.eventEdited = function(event) {
@@ -134,5 +141,84 @@ app.controller('Admin_calendar', function(
 
     $scope.change_view = function(view){
         $scope.calendarView = view;
+    }
+
+    $scope.add_event = function(){
+        $scope.color='';
+        $scope.modal = {
+            title : 'Add Event',
+            save : 'Save',
+            close : 'Cancel',
+            color : '#dc2127'           
+        };
+
+        ngDialog.openConfirm({
+            template: 'CalendarModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+
+                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Are you sure you want to add this Holiday?</p>' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            // $scope.holiday.creator_pk = $scope.profile.pk;
+            // $scope.holiday.holiday_name = $scope.modal.name;
+            // $scope.holiday.holiday_type = $scope.modal.type;
+
+
+            // var date = new Date($scope.modal.datex);
+            // var dd = date.getDate();
+            // var mm = date.getMonth()+1; 
+            // var yyyy = date.getFullYear();
+
+            // $scope.holiday.new_date=yyyy +"-"+ mm +"-"+ dd;
+           
+           
+            // var promise = HolidaysFactory.save($scope.holiday);
+            // promise.then(function(data){
+
+            //     UINotification.success({
+            //                             message: 'You have successfully added new department', 
+            //                             title: 'SUCCESS', 
+            //                             delay : 5000,
+            //                             positionY: 'top', positionX: 'right'
+            //                         });
+            //     holiday();
+            // })
+            // .then(null, function(data){
+                
+            //     UINotification.error({
+            //                             message: 'An error occured, unable to save changes, please try again.', 
+            //                             title: 'ERROR', 
+            //                             delay : 5000,
+            //                             positionY: 'top', positionX: 'right'
+            //                         });
+            // });         
+
+                            
+        });
+    }
+
+    $scope.color_picked = function(color){
+        $scope.modal.color = color;
     }
 });

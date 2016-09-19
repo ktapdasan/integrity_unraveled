@@ -317,7 +317,7 @@ foreach ($employees as $employee_id => $value) {
 			if($y['log_date'] == date('Y-m-d', strtotime($b['datex']))){
 				$y['status'] = '<div class="holiday-yellow">'. $b['name'] . '</div>';
 				
-				if(!$y['login'] && !$y['logout']){
+				if(!$y['login'] && !$y['logout'] && !empty($y['work_schedule'][trim(strtolower($y['log_day']))]->in) && !empty($y['work_schedule'][trim(strtolower($y['log_day']))]->out)){
 					$y['login'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
 					$y['login_time'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00";
 
