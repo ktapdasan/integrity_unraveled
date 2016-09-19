@@ -158,7 +158,7 @@ body>footer .footer-main {
 
             <div>
                 <div ng-if="tab.personal">
-                    <table style="width:70%;margin-left:140px;margin-top:30px;" >
+                    <table style="width:70%;margin-left:10px;margin-top:30px;" >
                         <tr>
                             <td>
                                 <label style="display:block; float:left; padding-right:10px">First Name:</label> 
@@ -325,7 +325,7 @@ body>footer .footer-main {
                         </tr>
                         <tr>
                             <td colspan = "4">
-                                <center style="font-size: 18px; font-style: bold;margin-top:20px;">
+                                <center style="font-size: 18px; font-style: bold;margin-top:20px;margin-left:-100px;">
                                     <input type="button" ng-disabled="myForm.firstName.$error && myForm.firstName.$invalid
                                     || myForm.middleName.$error && myForm.middleName.$invalid
                                     || myForm.lastName.$error && myForm.lastName.$invalid
@@ -346,7 +346,7 @@ body>footer .footer-main {
 
                 
                     <div ng-if="tab.education">
-                        <table style="width:70%;margin-left:25px;" ng-repeat="form in employees.education track by $index" ng-init="name = form.educ_level
+                        <table style="width:70%;margin-left:20px;" ng-repeat="form in employees.education track by $index" ng-init="name = form.educ_level
                         ">
                         <tr>
                          
@@ -415,7 +415,7 @@ body>footer .footer-main {
 
         <div ng-if="tab.company">
 
-            <table style="width:70%;margin-left:140px;margin-top:30px" >
+            <table style="width:70%;margin-left:20px;margin-top:30px" >
                 <tr>
                     <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
@@ -685,7 +685,7 @@ body>footer .footer-main {
         </form>
     </div>
     <div ng-if="tab.government">
-        <table style="width:77%;margin-left:140px;margin-top:30px">
+        <table style="width:77%;margin-left:20px;margin-top:30px">
             <tr>
                 <td  id="css">
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">PHIC:</label>
