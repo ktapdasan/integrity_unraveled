@@ -181,7 +181,7 @@ app.controller('New_Employees', function(
 
         });
     }
-
+    console.log(employees());
 
     $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){

@@ -47,6 +47,8 @@ $class = new Employees(
     $_POST['present_address'],
     $_POST['emergency_name'],
     $_POST['emergency_contact_number'],
+    $_POST['contact_number'],
+    $_POST['landline_number'],
     NULL,
     NULL,
     NULL
@@ -117,6 +119,8 @@ $personal['permanent_address']       = pg_escape_string(strip_tags(trim($_POST['
 $personal['present_address']         = pg_escape_string(strip_tags(trim($_POST['present_address'])));
 $personal['emergency_contact_name']  = pg_escape_string(strip_tags(trim($_POST['emergency_name'])));
 $personal['emergency_contact_number']= pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));
+$personal['contact_number']          = pg_escape_string(strip_tags(trim($_POST['contact_number'])));
+$personal['landline_number']         = pg_escape_string(strip_tags(trim($_POST['landline_number'])));
 
 //Government Array!
 $government = array();
