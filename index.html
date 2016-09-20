@@ -340,6 +340,7 @@
                             <li><a style="cursor:pointer;" href="#/admin/suspension" ng-click="menuclicked('admin')">Suspension</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/calendar" ng-click="menuclicked('admin')">Calendar</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/memo" ng-click="menuclicked('admin')">Memo</a></li>
+                            <li><a style="cursor:pointer;" href="#/admin/request" ng-click="menuclicked('admin')">Request</a></li>
                         </ul>
 
                     </li>
@@ -584,6 +585,7 @@
     <script src="./JS/controllers/admin_suspension.js"></script>
     <script src="./JS/controllers/Admin_calendar.js"></script>
     <script src="./JS/controllers/Admin_memo.js"></script>
+    <script src="./JS/controllers/Admin_request.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -604,8 +606,11 @@
     <script src="./JS/factories/SuspensionFactory.js"></script> 
     <script src="./JS/factories/AttritionsFactory.js"></script> 
     <script src="./JS/factories/CalendarFactory.js"></script>
-    <script src="./JS/factories/MemoFactory.js"></script>  
     <script src="./JS/factories/DefaultFactory.js"></script>  
+    <script src="./JS/factories/MemoFactory.js"></script>
+    <script src="./JS/factories/RequestFactory.js"></script>  
+
+
 
     <!-- DIRECTIVES -->
     <script src="./JS/directives/splash.js"></script>
@@ -1265,6 +1270,33 @@
                 <textarea ng-model="modal.memo" rows ='4' cols ='33' tabindex="1" autofocus required/>  
             </form>
         </div>
+         <hr style="height:2px">
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="RequestTypeModal">
+        <div class="ngdialog-message">
+            <div style="margin-top: 10px;">
+                <h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+            </div>
+                <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>
+            <form name="myForm">
+                <div> 
+                    <label style="margin-top: 10px;font-size:20px;">New Request Type:</label>
+                    <input required type="text" size="10" ng-model="modal.type" style="width: 300px;" /> 
+                    <br><br>
+                    <label style = "font-size:20px;">Recipient:</label>
+                    <select required ng-model="modal.recipient" style="display: block; float: left;font-size:16px; width:300px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                        <option ng-repeat="(k, v) in employees.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.details.personal.first_name}},{{v.details.personal.last_name}}
+                        </option>
+                    </select>
+            
+                </div>
+            </form>
          <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>

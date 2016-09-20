@@ -130,6 +130,11 @@ app.config(function($routeProvider){
         controller: 'Admin_memo',
         templateUrl: 'partials/admin/memo/index.html'
     })
+    .when('/admin/request',
+    {
+        controller: 'Admin_request',
+        templateUrl: 'partials/admin/request/index.html'
+    })
     .when('/management/leaves',
     {
         controller: 'Management_leave',

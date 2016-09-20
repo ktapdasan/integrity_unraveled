@@ -1,6 +1,7 @@
 create table request_type (
 	pk serial primary key,
 	type text not null,
+	recipient int[] not null,
 	archived boolean default false
 );
 alter table request_type owner to chrs;
