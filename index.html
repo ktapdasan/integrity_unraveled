@@ -466,10 +466,9 @@
                     </ul>
 
                     <ul ng-if="sidebar_menu.memo" class="nav notification_data">
-
-                        <li ng-repeat="(k,v) in memo.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
+                        <li ng-repeat="(k,v) in memo.data"  ng-class="v.read==='f' && 'display'|| 'hide'" ng-click="show_memo(k)">
                             <a>
-                                <p style="font-size:13px;margin-bottom:0px;">{{v.memo}}</p>
+                                <p style="font-size:13px;margin-bottom:0px;">{{v.limitedmemo}}</p>
                                 <div style="font-size:10px; color:#AAA;" >
                                 {{v.created_by}}
                                 <br>
@@ -484,7 +483,7 @@
 
                     <ul ng-if="sidebar_menu.calendar" class="nav notification_data">
 
-                        <li ng-repeat="(k,v) in calendar.data" style="background-color:{{v.color}};">
+                        <li ng-repeat="(k,v) in calendar.data" style="background-color:{{v.color}};" ng-click="show_calendar(k)">
                         <a>
                             <p style="font-size:14px;margin-bottom:0px;color:Black;">
                                 {{v.description}}
@@ -1267,14 +1266,50 @@
             <form name="myForm">
                 <div> 
                     <label style="margin-top: 10px;font-size:20px;">New Memo:</label>
-                <textarea ng-model="modal.memo" rows ='4' cols ='33' tabindex="1" autofocus required/>  
+                    <br>
+                    <textarea ng-model="modal.memo" rows ='10' cols ='89' tabindex="1" autofocus required/>  
             </form>
-        </div>
+                </div>
          <hr style="height:2px">
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
             <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="myForm.$error.required">{{modal.save}}</button>
         </div>
+    </script>
+
+    <script type="text/ng-template" id="ShowMemoModal">
+     
+                
+        <div class="ngdialog-message" style="width;100%;height:100%">
+            <div>
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+                <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:10px;"></div>
+            </div>
+            <div style="max-height:200px;overflow-y: auto;"> 
+
+            <table>
+                <tr>
+                    <td>
+                        {{ modal.memo }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i style="font-size:12px;color:#AAA;">
+                            {{ modal.created_by }}
+                            <br>
+                            {{ modal.date_created }}
+                        </i>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <br>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+        </div>
+    
+    
     </script>
 
     <script type="text/ng-template" id="RequestTypeModal">
@@ -1289,11 +1324,15 @@
                     <input required type="text" size="10" ng-model="modal.type" style="width: 300px;" /> 
                     <br><br>
                     <label style = "font-size:20px;">Recipient:</label>
-                    <select required ng-model="modal.recipient" style="display: block; float: left;font-size:16px; width:300px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                    <select required ng-model="recipient" style="display: block; float: left;font-size:16px; width:300px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
                         <option ng-repeat="(k, v) in employees.data" style="cursor:pointer;" value="{{v.pk}}">
                             {{v.details.personal.first_name}},{{v.details.personal.last_name}}
                         </option>
                     </select>
+
+                    <button type="button" ng-click="recipient">OK</button>
+
+                    <textarea ng-model="modal.recipient"></textarea>
             
                 </div>
             </form>

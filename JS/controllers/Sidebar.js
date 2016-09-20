@@ -4,7 +4,8 @@ app.controller('Sidebar', function(
                                         EmployeesFactory,
                                         NotificationsFactory,
                                         md5,
-                                        $timeout
+                                        $timeout,
+                                        ngDialog
   									){
 
 
@@ -39,6 +40,7 @@ app.controller('Sidebar', function(
 
     $scope.memo={};
     $scope.memo.count ="";
+    $scope.modal = {};
 
     $scope.calendar={};
     $scope.calendar.count ="";
@@ -268,19 +270,7 @@ app.controller('Sidebar', function(
             $scope.memo.status = true;
             $scope.memo.hide = true;
             var count = data.data.result.length;
-            
-
-            
-            // if (count==0) {
-
-            //     return $scope.notifications.count=" ";
-            // }
-            // else
-            // {   
-            //     document.title = "Integrity ("+count+")";
-            //     return $scope.notifications.count="(" +count +")";
-            // };
-
+      
             $scope.animation_arrow.stop = '0';
             $scope.animation_arrow.opacity = '1';
 
@@ -302,7 +292,33 @@ app.controller('Sidebar', function(
         });
     }
 
+    $scope.show_memo = function(k){
 
+       
+    $scope.modal = {
+
+            title        : 'Memo',
+            close        : 'Close',
+            memo         : $scope.memo.data[k].memo,
+            created_by    : $scope.memo.data[k].created_by,
+            date_created : $scope.memo.data[k].date_created
+
+           
+        };
+
+
+        ngDialog.openConfirm({
+            template: 'ShowMemoModal',
+            className: 'ngdialog-theme-plain custom-widtheightfifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+
+            },
+            scope: $scope,
+            showClose: false
+        })
+        
+    }
 
     function get_calendar(){
 
@@ -314,18 +330,6 @@ app.controller('Sidebar', function(
             $scope.calendar.hide = true;
             var count = data.data.result.length;
             
-
-            
-            // if (count==0) {
-
-            //     return $scope.notifications.count=" ";
-            // }
-            // else
-            // {   
-            //     document.title = "Integrity ("+count+")";
-            //     return $scope.notifications.count="(" +count +")";
-            // };
-
             $scope.animation_arrow.stop = '0';
             $scope.animation_arrow.opacity = '1';
 
@@ -346,5 +350,13 @@ app.controller('Sidebar', function(
 
         });
     }
+
+    $scope.show_calendar = function(k){
+
+       window.location = "#/calendar";
+        
+    }
+
+
 
 });
