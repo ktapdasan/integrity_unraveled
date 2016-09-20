@@ -205,11 +205,11 @@ details = jsonb_set(details, '{personal}', '
 {
 "gender": "Male", 
 "religion": "Catholic", 
-"last_name": "Funtera", 
+"last_name": "Tapdasan", 
 "birth_date": "1995-07-27", 
-"first_name": "Gregory", 
+"first_name": "Ken", 
 "civilstatus": "Single", 
-"middle_name": "None",
+"middle_name": "Villanueva",
 "profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg"
 }
 ', true)
