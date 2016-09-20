@@ -36,7 +36,19 @@ class Default_values extends ClassParent {
         return(true);
     }
 
-    
+    public function fetch_all(){
+        $sql = <<<EOT
+                select 
+                    pk,
+                    name,
+                    details
+                from default_values
+                where archived = false
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }    
 
     public function fetch(){
         $sql = <<<EOT

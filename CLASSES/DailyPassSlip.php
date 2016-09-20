@@ -142,13 +142,14 @@ EOT;
         foreach($info as $k=>$v){
             $info[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-    
+
         $employees_pk=$info['employees_pk'];
         $daily_pass_slip_pk=$info['dps_pk'];
         $created_by=$info['created_by'];
         $status=$info['status'];
         $remarks=$info['remarks'];
-
+        $leave_pk=$info['leave_pk'];
+        $type=$info['type'];
         
         if($status=='Approved'){
             $remarks = "APPROVED";
@@ -156,6 +157,43 @@ EOT;
         else {
             $remarks = $remarks;
         }
+
+        $a = $this->get_leave_balances($employees_pk);
+        
+        $balances = json_decode($a['result'][0]['leave_balances']);
+        $balances = (array) $balances;
+
+        $date_a = new DateTime($info['time_from']);
+        $date_b = new DateTime($info['time_to']);
+        $interval = date_diff($date_a,$date_b);
+
+        //echo $interval->format('%h');
+        $additional_hrs = $interval->format('%h');
+
+        $z=array();
+        foreach ($balances as $key => $value) {
+            $z[(int)$key] = $value;
+        }
+        $balances = $z;
+
+        if(!isset($balances[$leave_pk])){
+            $balances[$leave_pk] = 0;
+        }
+
+        
+        $new_balances = array();
+        foreach($balances as $k=>$v){
+            if((int)$k == (int)$leave_pk){
+                $v = (float)$v - round((float)$additional_hrs / 9, 2);
+            }
+
+            $new_balances[$k] = $v;
+        }
+
+        $new_balances = json_encode($new_balances);
+
+        $sql = "begin;";
+
         $sql .= <<<EOT
             insert into daily_pass_slip_status
             (
@@ -173,9 +211,58 @@ EOT;
             )
             ;
 EOT;
+        if($status=='Approved' && $type == "Personal"){
+            $sql .= <<<EOT
+                update employees set
+                (
+                    leave_balances
+                )
+                =
+                (
+                    '$new_balances'
+                )
+                where pk = $employees_pk
+                ;
+EOT;
+        }
+
+
+        $sql .= <<<EOT
+                insert into notifications
+                (
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk,
+                    created_by        
+                )
+                values
+                (    
+                    'Daily Pass Slip $status',
+                    'daily_pass_slip',
+                    $daily_pass_slip_pk,
+                    $employees_pk,
+                    $created_by
+                )
+                ;
+EOT;
+
+        $sql .= "commit;";
         
         return ClassParent::update($sql);
 
+    }
+
+    private function get_leave_balances($employees_pk){
+        $sql = <<<EOT
+                select
+                    leave_balances
+                from employees
+                where pk = $employees_pk
+                ;
+EOT;
+    
+        return ClassParent::get($sql);
     }
 
     public function add_dps($extra){

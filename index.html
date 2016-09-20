@@ -357,7 +357,8 @@
                 <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" >
                     <li class="user-name"><span>{{ profile.details.personal.first_name + " " + profile.details.personal.last_name }}</span></li>
                     <li class="dropdown avatar-dropdown">
-                        <img src="{{profile.details.personal.profile_picture}}" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <img ng-if="profile.details.personal.profile_picture" src="{{profile.details.personal.profile_picture}}" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                        <img ng-if="!profile.details.personal.profile_picture" src="./ASSETS/img/blank.gif" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu user-dropdown">
                             <li><a href="#/profile"><span class="fa fa-user"></span> My Profile</a></li>
                             <li><a href="#/calendar"><span class="fa fa-calendar"></span> My Calendar</a></li>
@@ -604,6 +605,7 @@
     <script src="./JS/factories/AttritionsFactory.js"></script> 
     <script src="./JS/factories/CalendarFactory.js"></script>
     <script src="./JS/factories/MemoFactory.js"></script>  
+    <script src="./JS/factories/DefaultFactory.js"></script>  
 
 
     <!-- DIRECTIVES -->
@@ -638,6 +640,7 @@
     <script src="./ASSETS/js/plugins/calendar/rrule.js"></script>
     <script src="./ASSETS/js/plugins/calendar/bootstrap-colorpicker-module.min.js"></script>
     <script src="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar-tpls.js"></script>
+</head>
 
     <!-- custom -->
     <script src="./ASSETS/js/main.js"></script>

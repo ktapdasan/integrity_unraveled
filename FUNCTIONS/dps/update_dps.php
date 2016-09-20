@@ -14,7 +14,11 @@ $info = array(
         		"created_by" => $_POST['approver_pk'],
         		"status" => $_POST['status'],
         		"remarks" => $_POST['remarks'],
-        		"employees_pk"=>$_POST['employees_pk']
+        		"employees_pk"=>$_POST['employees_pk'],
+        		"time_from"=>$_POST['time_from'],
+        		"time_to"=>$_POST['time_to'],
+        		"leave_pk"=>$_POST['leave_pk'],
+                "type"=>$_POST['type']
     		);
 
 

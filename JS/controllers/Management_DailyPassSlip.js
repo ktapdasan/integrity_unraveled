@@ -3,6 +3,7 @@ app.controller('Management_DailyPassSlip', function(
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
+                                        DefaultFactory,
                                         ngDialog,
                                         UINotification,
                                         md5
@@ -19,6 +20,7 @@ app.controller('Management_DailyPassSlip', function(
     $scope.dps.status = false;
     $scope.dps.count = 0;
 
+    $scope.default_value = {};
     
 
     init();
@@ -45,10 +47,21 @@ app.controller('Management_DailyPassSlip', function(
         promise.then(function(data){
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
+            default_values();
             fetch_myemployees();
             show_list();
         })   
     } 
+
+    function default_values(){
+        var filter = {
+            name : 'overtime_leave'
+        };
+        var promise = DefaultFactory.fetch(filter);
+        promise.then(function(data){
+            $scope.default_value = data.data.result[0];
+        })
+    }
 
     function fetch_myemployees(){
         var filter  = {
@@ -160,16 +173,19 @@ app.controller('Management_DailyPassSlip', function(
         });
     }
 
-    $scope.approve = function(k){
-        $scope.dps["employees_pk"] = $scope.dps.data[k].employees_pk; 
-        $scope.dps["approver_pk"]=$scope.profile.pk;
+    $scope.respond = function(k, status){
+        $scope.dps.employees_pk = $scope.dps.data[k].employees_pk; 
+        $scope.dps.approver_pk=$scope.profile.pk;
+        $scope.dps.type = $scope.dps.data[k].type;
+        
         $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to approve overtime ',
+                message: 'Are you sure you want to '+status+' this daily pass slip ',
                 save : 'Yes',
                 close : 'Cancel'
 
             };
+
         ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
@@ -177,14 +193,25 @@ app.controller('Management_DailyPassSlip', function(
             scope: $scope,
             showClose: false
         })
-        
         .then(function(value){
             return false;
         }, function(value){
 
-            $scope.dps.status = "Approved";
+            if(status == "approve"){
+                $scope.dps.status = "Approved";    
+                $scope.dps.remarks= "APPROVED";
+            }
+            else {
+                $scope.dps.status = "Disapproved";
+                $scope.dps.remarks =  $scope.log.remarks;
+            }
+            
             $scope.dps.pk =  $scope.dps.data[k].pk;
-            $scope.dps.remarks= "APPROVED";
+            $scope.dps.time_from = $scope.dps.data[k].time_from;
+            $scope.dps.time_to = $scope.dps.data[k].time_to;
+
+            var default_value = JSON.parse($scope.default_value.details);
+            $scope.dps.leave_pk = default_value.leave_filed_pk;
             
             var promise = TimelogFactory.approve_dps($scope.dps);
             promise.then(function(data){
@@ -212,78 +239,4 @@ app.controller('Management_DailyPassSlip', function(
         });
     }
 
-    $scope.disapprove = function(k){
-        $scope.dps["employees_pk"] = $scope.dps.data[k].employees_pk; 
-        $scope.log.remarks = '';
-        $scope.dps["approver_pk"]=$scope.profile.pk;
-        // console.log($scope.profile.pk);
-
-
-       $scope.modal = {
-                title : 'Disapprove Log ',
-                save : 'Disapprove',
-                close : 'Cancel'
-
-            };
-        ngDialog.openConfirm({
-            template: 'DisapproveModal',
-            className: 'ngdialog-theme-plain custom-widththreefifty',
-            preCloseCallback: function(value) {
-                var nestedConfirmDialog;                
-                    nestedConfirmDialog = ngDialog.openConfirm({
-                        template:
-                                '<p></p>' +
-                                '<p>Disapprove Overtime' +
-                                '<div class="ngdialog-buttons">' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
-                                '</button></div>',
-                        plain: true,
-                        className: 'ngdialog-theme-plain custom-widththreefifty'
-                    });
-
-                return nestedConfirmDialog;
-            },
-            
-            scope: $scope,
-            showClose: false
-        })
-        
-        .then(function(value){
-            return false;
-        }, function(value){
-
-            $scope.dps.status = "Disapproved";
-            $scope.dps.pk =  $scope.dps.data[k].pk;
-            if($scope.log.remarks==''){
-                $scope.dps.remarks="Disapproved";
-            }else{
-                $scope.dps.remarks =  $scope.log.remarks;
-            }
-
-            var promise = TimelogFactory.disapprove_dps($scope.dps);
-            promise.then(function(data){
-
-                UINotification.success({
-                                        message: 'You have successfully diapproved overtime', 
-                                        title: 'SUCCESS', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });  
-                
-                $scope.dps.data[k].status = "Disapproved";
-                $scope.dps.data[k].remarks= $scope.dps.remarks.toUpperCase();     
-
-            })
-            .then(null, function(data){
-                
-                UINotification.error({
-                                        message: 'An error occured, unable to disapprove overtime, please try again.', 
-                                        title: 'ERROR', 
-                                        delay : 5000,
-                                        positionY: 'top', positionX: 'right'
-                                    });
-            });                                  
-        });
-    }
 });

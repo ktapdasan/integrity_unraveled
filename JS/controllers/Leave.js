@@ -346,6 +346,9 @@ app.controller('Leave', function(
             
             $scope.leave_balances = {};
             for(var i in $scope.leave_types.data){
+                if(a[$scope.leave_types.data[i].pk] === undefined){
+                    a[$scope.leave_types.data[i].pk] = 0;
+                }
                 $scope.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
             }
         })
@@ -550,70 +553,70 @@ app.controller('Leave', function(
                     };
         
         ngDialog.openConfirm({
-                    template: 'ConfirmModal',
-                    className: 'ngdialog-theme-plain',
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            $scope.modal = {
+                title : '',
+                message: 'Please state the reason why you are cancelling your leave.',
+                save : 'Save',
+                close : 'Cancel'
+            };
+
+            ngDialog.openConfirm({
+                template: 'DisapprovedModal',
+                className: 'ngdialog-theme-plain',
+                scope: $scope,
+                showClose: false
+            })
+            .then(function(value){
+                return false;
+            }, function(value){
                     
-                    scope: $scope,
-                    showClose: false
-                })
-                .then(function(value){
-                    return false;
-                }, function(value){
+                    $scope.modal["pk"] = pk;
+                    $scope.modal["employees_pk"] = $scope.profile.pk;
+                    $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
+                    
+                    var promise = TimelogFactory.cancel_leave($scope.modal);
+                    promise.then(function(data){
+        
+                    $scope.archived=true;
 
-                    $scope.modal = {
-                        title : '',
-                        message: 'Please state the reason why you are cancelling your leave.',
-                        save : 'Save',
-                        close : 'Cancel'
-                    };
+                        UINotification.success({
+                                                message: 'You have successfully cancel your leave.', 
+                                                title: 'SUCCESS', 
+                                                delay : 5000,
+                                                positionY: 'top', positionX: 'right'
+                                            });
+                        leave_types();
+                        leaves_filed(); 
 
-                    ngDialog.openConfirm({
-                        template: 'DisapprovedModal',
-                        className: 'ngdialog-theme-plain',
-                        scope: $scope,
-                        showClose: false
+
                     })
-                    .then(function(value){
-                        return false;
-                    }, function(value){
-                            
-                            $scope.modal["pk"] = pk;
-                            $scope.modal["employees_pk"] = $scope.profile.pk;
-                            $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
-                            console.log($scope.modal);
-                            var promise = TimelogFactory.cancel_leave($scope.modal);
-                            promise.then(function(data){
-                
-                            $scope.archived=true;
-
-                                UINotification.success({
-                                                        message: 'You have successfully cancel your leave.', 
-                                                        title: 'SUCCESS', 
-                                                        delay : 5000,
-                                                        positionY: 'top', positionX: 'right'
-                                                    });
-                                leave_types();
-                                leaves_filed(); 
-
-
-                            })
-                            .then(null, function(data){
-                                
-                                UINotification.error({
-                                                        message: 'An error occured, unable to save changes, please try again.', 
-                                                        title: 'ERROR', 
-                                                        delay : 5000,
-                                                        positionY: 'top', positionX: 'right'
-                                                    });
-                            });        
+                    .then(null, function(data){
+                        
+                        UINotification.error({
+                                                message: 'An error occured, unable to save changes, please try again.', 
+                                                title: 'ERROR', 
+                                                delay : 5000,
+                                                positionY: 'top', positionX: 'right'
+                                            });
+                    });        
 
 
 
 
-                    }); 
-                });
+            }); 
+        });
     }
 
-
+    
 
 });

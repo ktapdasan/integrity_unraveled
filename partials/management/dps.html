@@ -121,6 +121,7 @@ select{
                         <tr>
                             <th style="width:10%;">Date Filed</th>
                             <th style="width:15%;">Employees</th>
+                            <th style="width:15%;">Type</th>
                             <th style="width:10%;">Time From</th>
                             <th style="width:10%;">Time To</th>
                             <th style="width:35%;">Reason</th>
@@ -131,6 +132,7 @@ select{
                         <tr ng-repeat="(k, v) in dps.data" style="cursor:pointer;" ng-if="dps.status">
                             <td ng-bind-html="v.datecreated_html"></td>
                             <td>{{v.employee}}</td>
+                            <td>{{v.type}}</td>
                             <td ng-bind-html="v.timefrom_html"></td>
                             <td ng-bind-html="v.timeto_html"></td>
                             <td ng-bind-html="v.reason" class="remarks"></td>
@@ -139,10 +141,10 @@ select{
                                     {{v.status}} 
                                 </div>
                                 <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                <button class="medium button red fa-fa" ng-hide = "rejected" ng-click = "disapprove (k)" value = "Disapprove" > 
+                                <button class="medium button red fa-fa" ng-hide = "rejected" ng-click = "respond (k, 'disapprove')" value = "Disapprove" > 
                                     <img src="./ASSETS/img/thumbs_down.png" style="width:24px;"/>
                                 </button>
-                                <button class="medium button green fa-fa" ng-click = "approve (k)" value = "Approve" > 
+                                <button class="medium button green fa-fa" ng-click = "respond (k, 'approve')" value = "Approve" > 
                                     <img src="./ASSETS/img/thumbs_up.png" style="width:24px;"/>
                                 </button>
                                 </div>
