@@ -323,4 +323,23 @@ details = jsonb_set(details, '{government}', '
 }
 ', true);
 
+update employees set
+details = jsonb_set(details, '{personal}', ' 
+{
+"first_name": "Ken", 
+"middle_name": "Villanueva", 
+"last_name": "Tapdasan", 
+"email_address": "ktapdasan.chrs@gmail.com",
+"gender": "1",
+"civilstatus": "2",
+"present_address": "Mandaluyong",
+"permanent_address": "Dasmarinas",
+"birth_date": "1995-07-27",
+"contact_number": "09504151950",
+"landline_number": "5340368",
+"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg",
+}
+', true)
+where pk = 12;
+
 

@@ -5,6 +5,7 @@ app.controller('Employees', function(
                                         TimelogFactory,
                                         ngDialog,
                                         UINotification,
+                                        FileUploader,
                                         md5
   									){
 
@@ -13,13 +14,26 @@ app.controller('Employees', function(
     $scope.filter = {};
     $scope.filter.status = 'Active';
 
+    $scope.uploader = {};
+    $scope.uploader.queue = {};
+
 
     $scope.titles={};
     $scope.department={};
     $scope.level_title={};
     $scope.groupings= {};
 
-    $scope.employee = {};
+    $scope.employee = {
+        data_sss: null,
+        data_phid: null,
+        data_pagmid: null,
+        data_tin: null,
+        contact_number: 'N/A',
+        landline_number: 'N/A',
+        present_address: 'N/A',
+        permanent_address: 'N/A',
+        profile_picture: './ASSETS/img/blank.gif'
+    };
     $scope.employees={};
     $scope.employees.count = 0;
     $scope.employees.filters={};
@@ -431,7 +445,8 @@ app.controller('Employees', function(
             $scope.employee.data_sss = $scope.employees.data[k].details.government.data_sss;
             $scope.employee.data_tin = $scope.employees.data[k].details.government.data_tin;
             $scope.employee.data_pagmid = $scope.employees.data[k].details.government.data_pagmid;
-            $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;        
+            $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;
+            $scope.employee.profile_picture = $scope.employees.data[k].details.personal.profile_picture;        
         }
 
         level_changed();
@@ -475,9 +490,9 @@ app.controller('Employees', function(
                 $scope.archived=true;
 
                 UINotification.success({
-                                        message: 'You have successfully applied changes to this employee account.', 
+                                        message: 'You have successfully applied changes to ' + $scope.employee.first_name + ' ' + $scope.employee.last_name, 
                                         title: 'SUCCESS', 
-                                        delay : 5000,
+                                        delay : 7000,
                                         positionY: 'top', positionX: 'right'
                                     });
                 employees();
@@ -489,7 +504,7 @@ app.controller('Employees', function(
                 UINotification.error({
                                         message: 'An error occured, unable to save changes, please try again.', 
                                         title: 'ERROR', 
-                                        delay : 5000,
+                                        delay : 7000,
                                         positionY: 'top', positionX: 'right'
                                     });
             });         
@@ -627,5 +642,63 @@ app.controller('Employees', function(
             
         });
     }
+
+    /*
+    UPLOADER
+    */
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'FUNCTIONS/Employees/upload_profile_pic.php'
+    });
+
+    // FILTERS
+
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function(item /*{File|FileLikeObject}*/, options) {
+            return this.queue.length < 10;
+        }
+    });
+
+    // CALLBACKS
+
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        //console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    uploader.onAfterAddingFile = function(fileItem) {
+        //console.info('onAfterAddingFile', fileItem);
+    };
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        //console.info('onAfterAddingAll', addedFileItems);
+    };
+    uploader.onBeforeUploadItem = function(item) {
+        //console.info('onBeforeUploadItem', item);
+    };
+    uploader.onProgressItem = function(fileItem, progress) {
+        //console.info('onProgressItem', fileItem, progress);
+    };
+    uploader.onProgressAll = function(progress) {
+        //console.info('onProgressAll', progress);
+    };
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        //console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+        //console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    uploader.onCancelItem = function(fileItem, response, status, headers) {
+        //console.info('onCancelItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        //console.info('onCompleteItem', fileItem, respsonse, status, headers);
+        //$scope.data.quotationmodal.attachment = response.file;
+        $scope.employees.profile_picture = response.file;
+        //console.log(response);
+    };
+    uploader.onCompleteAll = function() {
+        //console.info('onCompleteAll');
+    };
+    /*
+    END OF UPLOADER
+    */
 
 });
