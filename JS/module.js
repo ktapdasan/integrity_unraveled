@@ -130,6 +130,11 @@ app.config(function($routeProvider){
         controller: 'admin_suspension',
         templateUrl: 'partials/admin/suspension/index.html'
     })
+    .when('/admin/birthday_theme',
+    {
+        controller: 'Admin_birthday_theme',
+        templateUrl: 'partials/admin/birthday_theme/index.html'
+    })
     .when('/admin/calendar',
     {
         controller: 'Admin_calendar',
