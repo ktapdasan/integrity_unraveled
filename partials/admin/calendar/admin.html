@@ -9,6 +9,17 @@
     box-sizing: border-box;
     display: inline-block;
 }
+#circle {
+      width: 30px;
+      height: 30px;
+      margin-top: -58px;
+      margin-left: 275px;
+      position: absolute;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 25px;
+      background: red;
+}
 </style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
@@ -116,16 +127,7 @@
         <div>
             <table class="table table-bordered">
                 <tbody>
-                    <tr>
-                        <td>Description</td>
-                        <td>
-                            <textarea
-                            type="text"
-                            ng-model="modal.description"
-                            style="background-color:{{modal.color}}"
-                            ></textarea>
-                        </td>
-                    </tr>
+                <div id="circle" style="background-color:{{modal.color}}"></div>
                     <tr>
                         <td>Color</td>
                         <td>
@@ -135,10 +137,26 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Description</td>
+                        <td>
+                            <textarea
+                            type="text"
+                            ng-model="modal.description"
+                            /*style="background-color:{{modal.color}}"*/
+                            ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Location</td>
+                        <td>
+                            <input type="text" ng-model="modal.location"/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Starts at</td>
                         <td>
                             <p class="input-group" style="max-width: 250px">
-                                <input ng-model="modal.time_from" type="date" id="datefrom" style="width:165px;"/>
+                                <input ng-model="modal.date_from" type="date" id="datefrom" style="width:165px;"/>
                                 
                             </p>
                             
@@ -148,7 +166,7 @@
                         <td>Ends at</td>
                         <td>
                             <p class="input-group" style="max-width: 250px">
-                                <input ng-model="modal.time_to" type="date" id="datefrom" style="width:165px;"/>
+                                <input ng-model="modal.date_to" type="date" id="datefrom" style="width:165px;"/>
                                 
                             </p>
                             

@@ -144,12 +144,28 @@ app.controller('Admin_calendar', function(
     }
 
     $scope.add_event = function(){
+        var date_from = new Date();
+            var ddf = date_from.getDate();
+            var mmf = date_from.getMonth()+1; 
+            var yyyyf = date_from.getFullYear();
+
+        var date_to = new Date();
+            var ddt = date_to.getDate();
+            var mmt = date_to.getMonth()+1; 
+            var yyyyt = date_to.getFullYear();
+
+        $scope.date_from = new Date(mmf+"-"+ddf+"-"+yyyyf);
+        $scope.date_to = new Date(mmt+"-"+ddt+"-"+yyyyt);
+
         $scope.color='';
         $scope.modal = {
             title : 'Add Event',
             save : 'Save',
             close : 'Cancel',
-            color : '#dc2127'           
+            color : '#dc2127', 
+            date_from : $scope.date_from,
+            date_to : $scope.date_to
+
         };
 
         ngDialog.openConfirm({
@@ -162,7 +178,7 @@ app.controller('Admin_calendar', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Are you sure you want to add this Holiday?</p>' +
+                                '<p>Are you sure you want to add this Event?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -180,39 +196,44 @@ app.controller('Admin_calendar', function(
             return false;
         }, function(value){
 
-            // $scope.holiday.creator_pk = $scope.profile.pk;
-            // $scope.holiday.holiday_name = $scope.modal.name;
-            // $scope.holiday.holiday_type = $scope.modal.type;
 
 
-            // var date = new Date($scope.modal.datex);
-            // var dd = date.getDate();
-            // var mm = date.getMonth()+1; 
-            // var yyyy = date.getFullYear();
+            var date_from = new Date($scope.modal.date_from);
+            var ddf = date_from.getDate();
+            var mmf = date_from.getMonth()+1; //January is 0!
+            var yyyyf = date_from.getFullYear();
 
-            // $scope.holiday.new_date=yyyy +"-"+ mm +"-"+ dd;
+            var date_to = new Date($scope.modal.date_to);
+            var ddt = date_to.getDate();
+            var mmt = date_to.getMonth()+1; //January is 0!
+            var yyyyt = date_to.getFullYear();
            
+            $scope.modal.created_by = $scope.profile.pk;
+            $scope.modal.description = $scope.modal.description;
+            $scope.modal.location = $scope.modal.location;
+            $scope.modal.date_from = yyyyf+'-'+mmf+'-'+ddf;
+            $scope.modal.date_to = yyyyt+'-'+mmt+'-'+ddt;
            
-            // var promise = HolidaysFactory.save($scope.holiday);
-            // promise.then(function(data){
+            var promise = CalendarFactory.save_event($scope.modal);
+            promise.then(function(data){
 
-            //     UINotification.success({
-            //                             message: 'You have successfully added new department', 
-            //                             title: 'SUCCESS', 
-            //                             delay : 5000,
-            //                             positionY: 'top', positionX: 'right'
-            //                         });
-            //     holiday();
-            // })
-            // .then(null, function(data){
+                UINotification.success({
+                                        message: 'You have successfully added new event', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                get_all_events();
+            })
+            .then(null, function(data){
                 
-            //     UINotification.error({
-            //                             message: 'An error occured, unable to save changes, please try again.', 
-            //                             title: 'ERROR', 
-            //                             delay : 5000,
-            //                             positionY: 'top', positionX: 'right'
-            //                         });
-            // });         
+                UINotification.error({
+                                        message: 'An error occured, unable to save changes, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
 
                             
         });
