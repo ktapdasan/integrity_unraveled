@@ -44,6 +44,9 @@ app.controller('Sidebar', function(
 
     $scope.calendar={};
     $scope.calendar.count ="";
+
+    $scope.read_memo={};
+    $scope.modal2 = {};
    
 
     init();
@@ -71,8 +74,7 @@ app.controller('Sidebar', function(
             get_notifications();
             get_memo();
             get_calendar();
-
-            
+           
         })   
     } 
 
@@ -293,15 +295,16 @@ app.controller('Sidebar', function(
     }
 
     $scope.show_memo = function(k){
-
        
-    $scope.modal = {
+        $scope.modal = {
 
             title        : 'Memo',
             close        : 'Close',
+            pk           : $scope.memo.data[k].pk,
             memo         : $scope.memo.data[k].memo,
-            created_by    : $scope.memo.data[k].created_by,
-            date_created : $scope.memo.data[k].date_created
+            created_by   : $scope.memo.data[k].created_by,
+            date_created : $scope.memo.data[k].date_created,
+            employees_pk : $scope.profile.pk
 
            
         };
@@ -310,15 +313,56 @@ app.controller('Sidebar', function(
         ngDialog.openConfirm({
             template: 'ShowMemoModal',
             className: 'ngdialog-theme-plain custom-widtheightfifty',
-            preCloseCallback: function(value) {
-                var nestedConfirmDialog;
-
-            },
+           
             scope: $scope,
             showClose: false
         })
+
+        var promise = NotificationsFactory.read_memo($scope.modal);
         
     }
+
+
+
+    $scope.memo_tracker = function(){
+
+
+       var promise = NotificationsFactory.get_read_memo($scope.modal);
+        promise.then(function(data){
+
+            $scope.read_memo.data = data.data.result;
+            $scope.read_memo.status = true;
+            $scope.read_memo.hide = true;
+
+            $scope.modal2 = {
+
+                title       : 'Seen',
+                close        : 'Close',
+                read_memo: $scope.read_memo.data
+            };
+
+
+            ngDialog.openConfirm({
+                template: 'ShowReadMemoModal',
+                className: 'ngdialog-theme-plain custom-widthfoursixty',
+                
+                scope: $scope,
+                showClose: false
+            });
+
+        })
+        .then(null, function(data){
+
+            $scope.memo.status = false;
+
+        });
+
+        
+
+        
+    }
+
+
 
     function get_calendar(){
 

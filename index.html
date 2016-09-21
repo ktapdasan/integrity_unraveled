@@ -1302,12 +1302,46 @@
             </table>
             </div>
             <br>
+            <a ng-click="memo_tracker()" >Seen by</a>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
         </div>
     
     
     </script>
+
+
+
+    <script type="text/ng-template" id="ShowReadMemoModal">
+     
+                
+        <div class="ngdialog-message" style="width;100%;height:100%">
+            <div>
+                <h2><span style="color:#0c79be;">{{ modal2.title }}</span></h2>
+                <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:10px;"></div>
+            </div>
+            <div style="max-height:230px;max-width:500px;overflow-y:auto;overflow-x:hidden;"> 
+
+            <table id="datatables-example" width="420">
+                <tr ng-repeat="(k, v) in modal2.read_memo" style="cursor:pointer;" ng-if="read_memo.status">
+                    <td>
+                        {{v.name}}
+                        
+                    </td>
+                    <td>
+                        <i style="color:#AAA;">{{v.date_created}}</i>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <br>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal2.close}}</button>
+        </div>
+    
+    
+    </script>
+
 
     <script type="text/ng-template" id="RequestTypeModal">
         <div class="ngdialog-message">

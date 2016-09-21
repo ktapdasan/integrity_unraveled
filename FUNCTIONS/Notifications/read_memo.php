@@ -4,13 +4,13 @@ require_once('../../CLASSES/Notifications.php');
 
 $class = new Notifications(
 						$_POST['pk'], 
+						$_POST['employees_pk'],
 						Null,
 						Null,
 						Null,
-						$_POST['read'],
 						Null
 					);
-$data = $class->read_notifs();
+$data = $class->read_memo();
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){

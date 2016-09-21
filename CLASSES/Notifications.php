@@ -56,9 +56,10 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function read(){  
+    public function read_notifs(){  
 
         $read = $this->read;
+
         $sql = <<<EOT
                 UPDATE notifications
                 set read = true
@@ -130,6 +131,45 @@ EOT;
 
     }
 
+    public function read_memo(){  
+
+        $read = $this->read;
+                
+        $sql = <<<EOT
+                insert into memo_tracker
+                (    
+                    memo_pk,
+                    employees_pk
+                )  
+                values
+                (
+                    '$this->pk',
+                    '$this->employees_pk'
+                );
+EOT;
+
+          return ClassParent::update($sql);
+    }
+
+    public function get_read_memo(){
+
+        $sql = <<<EOT
+                select 
+                memo_pk,
+                employees_pk,
+                (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as name,
+                date_created::timestamp (0) as date_created
+                from memo_tracker
+                where
+                memo_pk=$this->pk
+                order by date_created 
+                desc
+                
+                ;
+EOT;
+            return ClassParent::get($sql);
+
+    }
 }
 
 ?>
