@@ -8,6 +8,13 @@ create table memo (
 );
 alter table memo owner to chrs;
 
+create table memo_tracker (
+	memo_pk int references memo(pk),
+	employees_pk int references employees(pk),
+	date_created timestamptz default now()
+);
+alter table memo_tracker owner to chrs;
+
 create table calendar (
 	pk serial primary key,
 	recipients int[],
