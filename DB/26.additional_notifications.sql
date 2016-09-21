@@ -12,7 +12,7 @@ create table memo_tracker (
 	memo_pk int references memo(pk),
 	employees_pk int references employees(pk),
 	date_created timestamptz default now(),
-	constraint memo_tracker_employees_pk_unique unique(employees_pk)
+	constraint memo_tracker_employees_pk_unique unique(memo_pk, employees_pk)
 );
 alter table memo_tracker owner to chrs;
 
