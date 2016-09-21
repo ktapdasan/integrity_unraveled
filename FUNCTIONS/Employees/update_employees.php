@@ -22,22 +22,22 @@ $company = array();
 $personal = array();
 
 if ($_POST['levels_pk'] == 3){
+    $company['employee_id']            = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
     $company['levels_pk']              = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
     $company['hours']                  = pg_escape_string(strip_tags(trim($_POST['intern_hours'])));
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
-    $company['email_address']          = pg_escape_string(strip_tags(trim($_POST['email_address'])));
     $company['business_email_address'] = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
-    $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['supervisor']             = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
     $personal['last_name']             = pg_escape_string(strip_tags(trim($_POST['last_name'])));
+    $personal['email_address']         = pg_escape_string(strip_tags(trim($_POST['email_address'])));
 }
 else{
+    $company['employee_id']            = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
     $company['levels_pk']              = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
-    $company['email_address']          = pg_escape_string(strip_tags(trim($_POST['email_address'])));
     $company['business_email_address'] = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['supervisor']             = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
@@ -45,7 +45,8 @@ else{
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
     $personal['last_name']             = pg_escape_string(strip_tags(trim($_POST['last_name'])));
-}
+    $personal['email_address']         = pg_escape_string(strip_tags(trim($_POST['email_address'])));
+}   
 
 $details = array();
 
