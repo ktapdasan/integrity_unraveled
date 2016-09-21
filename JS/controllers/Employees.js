@@ -7,7 +7,6 @@ app.controller('Employees', function(
                                         UINotification,
                                         md5
   									){
-    
 
     $scope.pk='';
     $scope.profile = {};
@@ -57,7 +56,7 @@ app.controller('Employees', function(
             get_department();
             get_levels();
             get_supervisors();
-            // <!-- select -->
+            //select
             fetch_department();
             fetch_levels();
             fetch_titles();
@@ -70,7 +69,7 @@ app.controller('Employees', function(
         });
     }
 
-    $scope.change_tab = function(tab){
+     $scope.change_tab = function(tab){
         for(var i in $scope.tab){
             $scope.tab[i] = false
             $scope.current[i] = '';
@@ -90,8 +89,8 @@ app.controller('Employees', function(
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
             employees();
-            <!-- //employees_fetch();
-            //list(); -->
+            //employees_fetch();
+            //list();
         })   
     } 
 
@@ -146,14 +145,13 @@ app.controller('Employees', function(
     $scope.show_employees = function(){
 
        employees();
-
     }
 
     function employees(){
         
         $scope.filter.archived = 'false';
 
-        // console.log($scope.filter);
+
         var promise = EmployeesFactory.fetch_all($scope.filter);
         promise.then(function(data){
             $scope.employees.status = true;
@@ -172,15 +170,12 @@ app.controller('Employees', function(
             $scope.employees.status = false;
         });
 
-
-
     }
 
     function get_positions(){
         var promise = EmployeesFactory.get_positions();
         promise.then(function(data){
             $scope.titles.data = data.data.result;
-            
         })
         .then(null, function(data){
             
@@ -332,7 +327,6 @@ app.controller('Employees', function(
             $scope.modal["created_by"] = $scope.profile.pk;
             $scope.modal["supervisor_pk"] = $scope.profile.supervisor_pk;
             $scope.modal["pk"] =  $scope.employees.data[k].pk;
-            $scope.modal['created_by'] = $scope.profile.pk;
 
 
             var promise = EmployeesFactory.delete_employees($scope.modal);
@@ -419,13 +413,18 @@ app.controller('Employees', function(
 
     $scope.edit_employees = function(k){
         get_supervisors();
-          
+
         $scope.employee = $scope.employees.data[k];
-         
+
         if($scope.employees.data[k].details){
-            $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;    
+            $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;
+            $scope.employee.employee_id = $scope.employees.data[k].details.company.employee_id;
+            $scope.employee.email_address = $scope.employees.data[k].details.personal.email_address; 
+            $scope.employee.first_name = $scope.employees.data[k].details.personal.first_name;
+            $scope.employee.middle_name = $scope.employees.data[k].details.personal.middle_name;
+            $scope.employee.last_name = $scope.employees.data[k].details.personal.last_name;    
         }
-          
+
         level_changed();
         $scope.modal = {
             title : 'Edit ' + $scope.employees.data[k].first_name,
@@ -582,7 +581,8 @@ app.controller('Employees', function(
         });
     }
 
-function fetch_levels(){
+
+    function fetch_levels(){
         var promise = EmployeesFactory.get_levels();
         promise.then(function(data){
             var a = data.data.result;
@@ -600,7 +600,8 @@ function fetch_levels(){
         });
     }
 
-function fetch_titles(){
+
+    function fetch_titles(){
         var promise = EmployeesFactory.get_positions();
         promise.then(function(data){
              var a = data.data.result;

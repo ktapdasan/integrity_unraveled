@@ -449,7 +449,7 @@
                 <div class="notification_data">
                     <ul ng-if="sidebar_menu.notifications" class="nav notification_data">
 
-                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
+                        <li ng-repeat="(k,v) in notifications.data"  ng-class="v.read==='f' && 'display'|| 'hide'" style="cursor:pointer">
                             <a ng-click="goto(k)" >
                                 <p style="font-size:13px;margin-bottom:0px;">{{v.notification}}</p>
                                 <div style="font-size:10px; color:#AAA;" >
@@ -466,7 +466,7 @@
                     </ul>
 
                     <ul ng-if="sidebar_menu.memo" class="nav notification_data">
-                        <li ng-repeat="(k,v) in memo.data"  ng-class="v.read==='f' && 'display'|| 'hide'" ng-click="show_memo(k)">
+                        <li ng-repeat="(k,v) in memo.data"  ng-class="v.read==='f' && 'display'|| 'hide'" ng-click="show_memo(k)" style="cursor:pointer">
                             <a>
                                 <p style="font-size:13px;margin-bottom:0px;">{{v.limitedmemo}}</p>
                                 <div style="font-size:10px; color:#AAA;" >
@@ -483,7 +483,7 @@
 
                     <ul ng-if="sidebar_menu.calendar" class="nav notification_data">
 
-                        <li ng-repeat="(k,v) in calendar.data" style="background-color:{{v.color}};" ng-click="show_calendar(k)">
+                        <li ng-repeat="(k,v) in calendar.data" style="background-color:{{v.color}};cursor:pointer" ng-click="show_calendar(k)">
                         <a>
                             <p style="font-size:14px;margin-bottom:0px;color:Black;">
                                 {{v.description}}
@@ -1285,17 +1285,14 @@
                 <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
                 <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:10px;"></div>
             </div>
-            <div style="max-height:200px;overflow-y: auto;"> 
+            <div style="max-height:220px;overflow-y:auto;"> 
 
-            <table>
+            <table width="817">
                 <tr>
                     <td>
                         {{ modal.memo }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i style="font-size:12px;color:#AAA;">
+                        <br><br>
+                         <i style="font-size:12px;color:#AAA;">
                             {{ modal.created_by }}
                             <br>
                             {{ modal.date_created }}

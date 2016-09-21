@@ -98,7 +98,7 @@ app.controller('Admin_memo', function(
 
         ngDialog.openConfirm({
             template: 'MemoModal',
-            className: 'ngdialog-theme-plain custom-widththreefifty',
+            className: 'ngdialog-theme-plain custom-widtheightfifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
 

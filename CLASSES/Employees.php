@@ -179,6 +179,8 @@ EOT;
         $sql = <<<EOT
                 select 
                     pk,
+                    employee_id,
+                    email_address,
                     groupings.supervisor_pk as supervisor_pk,
                     (select first_name||' '||last_name from employees where pk = groupings.supervisor_pk)
                     as supervisor,
@@ -725,7 +727,6 @@ EOT;
         $sql .= <<<EOT
                 UPDATE employees set
                 (
-                    employee_id,
                     first_name,
                     middle_name,
                     last_name,
@@ -738,7 +739,6 @@ EOT;
                 )
                 =
                 (
-                    '$this->employee_id',
                     '$this->first_name',
                     '$this->middle_name',
                     '$this->last_name',
