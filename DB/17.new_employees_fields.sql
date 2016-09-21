@@ -12,6 +12,119 @@ create table employees_backup
 );
 alter table employees_backup owner to chrs;
 
+create table employment_statuses
+(
+	pk serial primary key,
+	status text not null,
+	archived boolean default false
+);
+alter table employment_statuses owner to chrs;
+
+insert into employment_statuses (status)
+values
+(
+	'Probationary'
+),
+(
+	'Trainee'
+),
+(
+	'Contractual'
+),
+(
+	'Regular'
+),
+(
+	'Consultant'
+);
+
+create table employee_types
+(
+	pk serial primary key,
+	type text not null,
+	archived boolean default false
+);
+alter table employee_types owner to chrs;
+
+insert into employee_types (type)
+values
+(
+	'Exempt'
+),
+(
+	'Non-exempt'
+);
+
+create table civil_statuses
+(
+	pk serial primary key,
+	status text not null,
+	archived boolean default false
+);
+alter table civil_statuses owner to chrs;
+
+insert into civil_statuses (status)
+values
+(
+	'Married'
+),
+(
+	'Single'
+),
+(
+	'Divorce'
+),
+(
+	'Living Common Law'
+),
+(
+	'Widowed'
+)
+;
+
+create table salary_types
+(
+	pk serial primary key,
+	type text not null,
+	archived boolean default false
+);
+alter table salary_types owner to chrs;
+
+insert into salary_types
+(
+	type
+)
+values
+(
+	'Bank'
+),
+(
+	'Cash'
+),
+(
+	'Wire'
+);
+
+create table gender_type
+(
+	pk serial primary key,
+	type text not null,
+	archived boolean default false
+);
+alter table gender_type owner to chrs;
+
+insert into gender_type
+(
+	type
+)
+values
+(
+	'Male'
+),
+(
+	'Female'
+);
+
 /*IMPORTANT!*/
 -- For profile pic upload please create folder on - ASSETS/uploads/profile for it to save!
 -- Then on terminal go cd (change directory) to ASSETS and type chmod 775 -R uploads/
@@ -201,18 +314,13 @@ details = jsonb_set(details, '{company}', ' {
 where pk = 12;
 
 update employees set
-details = jsonb_set(details, '{personal}', ' 
+details = jsonb_set(details, '{government}', ' 
 {
-"gender": "Male", 
-"religion": "Catholic", 
-"last_name": "Tapdasan", 
-"birth_date": "1995-07-27", 
-"first_name": "Ken", 
-"civilstatus": "Single", 
-"middle_name": "Villanueva",
-"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg"
+"data_sss": "N/A", 
+"data_tin": "N/A", 
+"data_phid": "N/A", 
+"data_pagmid": "N/A"
 }
-', true)
-where pk = 12;
+', true);
 
 
