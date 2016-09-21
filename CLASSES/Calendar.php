@@ -109,6 +109,8 @@ EOT;
         $created_by=$extra['created_by'];
         $date_from=$extra['date_from'];
         $date_to=$extra['date_to'];
+        $time_from=$extra['time_from'];
+        $time_to=$extra['time_to'];
         $description=$extra['description'];
         $location=$extra['location'];
         $colors=$extra['colors'];
@@ -126,13 +128,13 @@ EOT;
                     description,
                     location,
                     color,
-                    recipient
+                    recipients
                 )
                 values
                 (
                     '$created_by',
-                    '$date_from 00:00:00',
-                    '$date_to 23:59:59',
+                    '$date_from $time_from',
+                    '$date_to $time_to',
                     '$description',
                     '$location',
                     '$colors',

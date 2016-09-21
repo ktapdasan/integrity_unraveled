@@ -22,7 +22,7 @@ app.controller('Calendar', function(
 
     $scope.modal = {};
 
-    $scope.colors = ['#dc2127','#7bd148','#5484ed','#fbd75b','#ffb878','#7ae7bf'];
+    // $scope.colors = ['#dc2127','#7bd148','#5484ed','#fbd75b','#ffb878','#7ae7bf'];
     
     var actions = [{
                         label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
@@ -196,7 +196,7 @@ app.controller('Calendar', function(
             return false;
         }, function(value){
 
-
+            
 
             var date_from = new Date($scope.modal.date_from);
             var ddf = date_from.getDate();
@@ -214,8 +214,19 @@ app.controller('Calendar', function(
             $scope.modal.date_from = yyyyf+'-'+mmf+'-'+ddf;
             $scope.modal.date_to = yyyyt+'-'+mmt+'-'+ddt;
             $scope.modal.recipient = $scope.profile.pk;
-            console.log($scope.modal);
-           
+
+            if ($scope.modal.time_from == 'Undefined' || $scope.modal.time_from == undefined ) {
+                $scope.modal.time_to = '23:59:59';
+            }
+            if ($scope.modal.time_from == 'Undefined' || $scope.modal.time_from == undefined){
+                $scope.modal.time_from = '00:00:00';
+            } 
+            else{
+                $scope.modal.time_from = $filter('date')($scope.modal.time_from, "HH:mm");
+                $scope.modal.time_to = $filter('date')($scope.modal.time_to, "HH:mm");
+            }
+
+            
             var promise = CalendarFactory.save_myevent($scope.modal);
             promise.then(function(data){
 
@@ -241,7 +252,4 @@ app.controller('Calendar', function(
         });
     }
 
-    $scope.color_picked = function(color){
-        $scope.modal.color = color;
-    }
 });

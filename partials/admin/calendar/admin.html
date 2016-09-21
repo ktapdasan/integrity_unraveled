@@ -131,15 +131,14 @@
                     <tr>
                         <td>Color</td>
                         <td>
-                            <ul class="color-picker">
-                                <li ng-repeat="color in colors" ng-click="color_picked(color)" ng-style="{'background-color':color};" class="ng-scope"></li>
-                            </ul>
+                            <input required type="color" ng-model="modal.color" style="cursor:pointer;"/>
+                            <input required type="text" ng-model="modal.color"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Description</td>
                         <td>
-                            <textarea
+                            <textarea required
                             type="text"
                             ng-model="modal.description"
                             /*style="background-color:{{modal.color}}"*/
@@ -149,14 +148,14 @@
                     <tr>
                         <td>Location</td>
                         <td>
-                            <input type="text" ng-model="modal.location"/>
+                            <input required type="text" ng-model="modal.location"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Starts at</td>
                         <td>
                             <p class="input-group" style="max-width: 250px">
-                                <input ng-model="modal.date_from" type="date" id="datefrom" style="width:165px;"/>
+                                <input required ng-model="modal.date_from" type="date" id="datefrom" style="width:165px;"/>
                                 
                             </p>
                             
@@ -166,7 +165,37 @@
                         <td>Ends at</td>
                         <td>
                             <p class="input-group" style="max-width: 250px">
-                                <input ng-model="modal.date_to" type="date" id="datefrom" style="width:165px;"/>
+                                <input required ng-model="modal.date_to" type="date" id="datefrom" style="width:165px;"/>
+                                
+                            </p>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                           <div>
+                            <input id="wholeday" type="checkbox" ng-model="all"style="width:165px;margin-top">
+                            </div>
+                            <div style="margin-left:100px;margin-top:-20px">    
+                                Whole Day
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Time Starts</td>
+                        <td>
+                            <p class="input-group" style="max-width: 250px">
+                                <input required ng-model="modal.time_from"  ng-disabled="all" type="time" id="datefrom" style="width:165px;"/>
+                                
+                            </p>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Time Ends</td>
+                        <td>
+                            <p class="input-group" style="max-width: 250px">
+                                <input required ng-model="modal.time_to"  ng-disabled="all" type="time" id="datefrom" style="width:165px;"/>
                                 
                             </p>
                             
