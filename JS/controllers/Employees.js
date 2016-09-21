@@ -419,10 +419,19 @@ app.controller('Employees', function(
         if($scope.employees.data[k].details){
             $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;
             $scope.employee.employee_id = $scope.employees.data[k].details.company.employee_id;
-            $scope.employee.email_address = $scope.employees.data[k].details.personal.email_address; 
+            $scope.employee.email_address = $scope.employees.data[k].details.personal.email_address;
+            $scope.employee.business_email_address = $scope.employees.data[k].details.company.business_email_address; 
             $scope.employee.first_name = $scope.employees.data[k].details.personal.first_name;
             $scope.employee.middle_name = $scope.employees.data[k].details.personal.middle_name;
-            $scope.employee.last_name = $scope.employees.data[k].details.personal.last_name;    
+            $scope.employee.last_name = $scope.employees.data[k].details.personal.last_name;
+            $scope.employee.contact_number = $scope.employees.data[k].details.personal.contact_number;
+            $scope.employee.landline_number = $scope.employees.data[k].details.personal.landline_number;
+            $scope.employee.present_address = $scope.employees.data[k].details.personal.present_address;
+            $scope.employee.permanent_address = $scope.employees.data[k].details.personal.permanent_address;
+            $scope.employee.data_sss = $scope.employees.data[k].details.government.data_sss;
+            $scope.employee.data_tin = $scope.employees.data[k].details.government.data_tin;
+            $scope.employee.data_pagmid = $scope.employees.data[k].details.government.data_pagmid;
+            $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;        
         }
 
         level_changed();
