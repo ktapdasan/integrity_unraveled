@@ -141,10 +141,10 @@ select{
                                     {{v.status}} 
                                 </div>
                                 <div ng-class ="v.status === 'Pending' && 'display' || 'hide'"> 
-                                <button class="medium button red fa-fa" ng-hide = "rejected" ng-click = "respond (k, 'disapprove')" value = "Disapprove" > 
+                                <button class="medium button red fa-fa" ng-hide = "rejected" ng-click = "disapprove (k)" value = "Disapprove" > 
                                     <img src="./ASSETS/img/thumbs_down.png" style="width:24px;"/>
                                 </button>
-                                <button class="medium button green fa-fa" ng-click = "respond (k, 'approve')" value = "Approve" > 
+                                <button class="medium button green fa-fa" ng-click = "approve (k)" value = "Approve" > 
                                     <img src="./ASSETS/img/thumbs_up.png" style="width:24px;"/>
                                 </button>
                                 </div>

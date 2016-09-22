@@ -423,6 +423,48 @@ select{
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.pladdress.$error.required">Permanent address is required.</span>
                             </td>
                         </tr> 
+                         <tr>
+                            <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Upload Profile Pic:</label>
+                            </td>
+                            <td colspan="2">
+                                <div style="margin-top: 20px;">
+                                    <span style="font-size:12px; color:#FF0000;">* Only jpg, png files are allowed.</span>
+                                    <input type="file"  nv-file-select="" accept=".jpg,.png,.jpeg" uploader="uploader" />
+                                    <br/>
+                                </div>
+
+                                <div>
+                                    <div>
+                                        <div>
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="{{employee.profile_picture}}" style="width:200px;"/>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style="width:200px; margin-left:10px;">
+                                            <!-- Upload progress: -->
+                                            <div class="progress" style="">
+                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                            </div>
+                                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                                <span class="glyphicon glyphicon-upload"></span> Upload
+                                            </button>
+                                            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                            
                             <tr>
                                 <td colspan = "4">
@@ -594,6 +636,144 @@ select{
 
 
                             </tr>
+                             <tr>
+                        <td>
+                            <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Salary Type:</label>
+                        </td>
+                        <td>
+                            <input type="radio" id="bank" name="salarys" ng-model="employees.salary_type" value="bank"> Bank</input>
+                            <input type="radio" id="wire" name="salarys" ng-model="employees.salary_type" value="wire"> Wire Transfer</input>
+                            <input type="radio" id="cash" name="salarys" ng-model="employees.salary_type" value="cash"> Cash</input>
+                        </td>
+                    </tr>
+                </tr>
+                <tr ng-show="isShown('bank')">
+                    <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Bank Name:</label>
+                    </td>
+                    <td id="css">
+                        <input name="bname" required ng-model="employees.bank_name" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bname.$error.required">Bank Name is required.</span>
+                    </td>
+                   <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Account Number:</label>
+                    </td>
+                    <td id="css">
+                        <input name="aname" required ng-model="employees.account_number" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
+                    </td>
+                </tr>
+                <tr ng-show="isShown('bank')">
+                     <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
+                    </td>
+                    <td id="css">
+                        <input name="a_mount" required ng-model="employees.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
+                    </td>
+                </tr>
+                <tr ng-show="isShown('wire')">
+                      <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Mode of Payment:</label>
+                    </td>
+                    <td id="css">
+                        <input name="mpayment" required ng-model="employees.mode_payment" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.mpayment.$error.required">Mode of payment is required.</span>
+                    </td>
+                    <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Account Number:</label>
+                    </td>
+                    <td id="css">
+                        <input name="aname" required ng-model="employees.account_number" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
+                    </td>
+
+                </tr>
+                <tr ng-show="isShown('wire')">
+                    <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
+                    </td>
+                    <td id="css">
+                        <input name="a_mount" required ng-model="employees.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
+                    </td>
+                </tr>
+                <tr ng-show="isShown('cash')">
+                     <td> 
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
+                    </td>
+                    <td id="css">
+                        <input name="a_mount" required ng-model="employees.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
+                    </td>
+                </tr>
+                             <tr>
+                    <td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Sunday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_sunday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+
+                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_sunday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Monday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_monday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+
+                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_monday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Tuesday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_tuesday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+
+                        <input  type="text" placeholder="Time-Out"  ng-model="employees.timeout_tuesday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Wednesday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_wednesday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+
+                        <input  type="text" placeholder="Time-Out"  ng-model="employees.timeout_wednesday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Thursday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_thursday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+
+                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_thursday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Friday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_friday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+
+                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_friday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Saturday:</label>
+                    </td>
+                    <td>
+                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_saturday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>  
+                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_saturday" style="display: block; float: left; width:320px; height:25px;" bs-timepicker/>
+                    </td>
+                </tr>
                             <tr>
                                 <td colspan = "4">
                                     <center style="font-size: 18px; font-style: bold">

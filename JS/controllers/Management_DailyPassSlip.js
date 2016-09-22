@@ -155,6 +155,10 @@ app.controller('Management_DailyPassSlip', function(
         
         filter.date_from = fromy +"-"+ fromm +"-"+fromd;
         filter.date_to = toy+"-"+tom+"-"+tod;
+        filter.employees_pk = $scope.profile.pk,
+        filter.remarks = $scope.filter.remarks,
+        filter.status = $scope.filter.status,
+        filter.type = $scope.filter.type
 
         filter.employees_pk = null;
         if($scope.filter.myemployees && $scope.filter.myemployees[0]){
@@ -173,22 +177,95 @@ app.controller('Management_DailyPassSlip', function(
         });
     }
 
-    $scope.respond = function(k, status){
-        $scope.dps.employees_pk = $scope.dps.data[k].employees_pk; 
-        $scope.dps.approver_pk=$scope.profile.pk;
-        $scope.dps.type = $scope.dps.data[k].type;
-        
+    $scope.approve = function(k){
+        $scope.dps["employees_pk"] = $scope.dps.data[k].employees_pk; 
+        $scope.dps["approver_pk"]=$scope.profile.pk;
         $scope.modal = {
                 title : '',
-                message: 'Are you sure you want to '+status+' this daily pass slip ',
+                message: 'Are you sure you want to approve overtime ',
                 save : 'Yes',
                 close : 'Cancel'
 
             };
-
         ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            
+            $scope.dps.pk =  $scope.dps.data[k].pk;
+            $scope.dps.time_from = $scope.dps.data[k].time_from;
+            $scope.dps.time_to = $scope.dps.data[k].time_to;
+            $scope.dps.status = "Approved";    
+            $scope.dps.remarks= "APPROVED";
+            var default_value = JSON.parse($scope.default_value.details);
+            $scope.dps.leave_pk = default_value.leave_filed_pk;
+            
+            var promise = TimelogFactory.approve_dps($scope.dps);
+            promise.then(function(data){
+               
+                UINotification.success({
+                                        message: 'You have successfully approved daily pass slip', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });  
+
+                $scope.dps.data[k].status = "Approved";
+                $scope.dps.data[k].remarks= $scope.dps.remarks;
+                show_list();
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to approve daily pass slip, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                    });                                  
+                });
+            }
+    $scope.disapprove = function(k){
+
+        $scope.dps["employees_pk"] = $scope.dps.data[k].employees_pk; 
+        $scope.log.remarks = '';
+        $scope.dps["approver_pk"]=$scope.profile.pk;
+    
+        
+        $scope.modal = {
+                title : 'Disapprove Log ',
+                save : 'Disapprove',
+                close : 'Cancel'
+
+            };
+        ngDialog.openConfirm({
+            template: 'DisapproveModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+            preCloseCallback: function(value) {
+                var nestedConfirmDialog;                
+                    nestedConfirmDialog = ngDialog.openConfirm({
+                        template:
+                                '<p></p>' +
+                                '<p>Disapprove Overtime' +
+                                '<div class="ngdialog-buttons">' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                                '</button></div>',
+                        plain: true,
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
+                    });
+
+                return nestedConfirmDialog;
+            },
             
             scope: $scope,
             showClose: false
@@ -197,46 +274,43 @@ app.controller('Management_DailyPassSlip', function(
             return false;
         }, function(value){
 
-            if(status == "approve"){
-                $scope.dps.status = "Approved";    
-                $scope.dps.remarks= "APPROVED";
-            }
-            else {
-                $scope.dps.status = "Disapproved";
-                $scope.dps.remarks =  $scope.log.remarks;
-            }
             
             $scope.dps.pk =  $scope.dps.data[k].pk;
+            $scope.dps.status = "Disapproved";
             $scope.dps.time_from = $scope.dps.data[k].time_from;
             $scope.dps.time_to = $scope.dps.data[k].time_to;
+            if($scope.log.remarks==''){
+                $scope.dps.remarks="Disapproved";
+            }else{
+                $scope.dps.remarks =  $scope.log.remarks;
+            }
 
-            var default_value = JSON.parse($scope.default_value.details);
-            $scope.dps.leave_pk = default_value.leave_filed_pk;
+            /*var default_value = JSON.parse($scope.default_value.details);
+            $scope.dps.leave_pk = default_value.leave_filed_pk;*/
             
-            var promise = TimelogFactory.approve_dps($scope.dps);
+            var promise = TimelogFactory.disapprove_dps($scope.dps);
             promise.then(function(data){
                
                 UINotification.success({
-                                        message: 'You have successfully approved overtime', 
+                                        message: 'You have successfully disapproved daily pass slip', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-
                 $scope.dps.data[k].status = "Approved";
                 $scope.dps.data[k].remarks= $scope.dps.remarks;
-
+                show_list();
             })
             .then(null, function(data){
                 
                 UINotification.error({
-                                        message: 'An error occured, unable to approve overtime, please try again.', 
+                                        message: 'An error occured, unable to approve daily pass slip, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-            });                                  
-        });
-    }
+                });                                  
+            });
+        }
 
 });

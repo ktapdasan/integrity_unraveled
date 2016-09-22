@@ -124,10 +124,10 @@ $personal['landline_number']         = pg_escape_string(strip_tags(trim($_POST['
 
 //Government Array!
 $government = array();
-$government['SSS']                   = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
-$government['TIN']                   = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
-$government['PAG_IBIG']              = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
-$government['PHILHEALTH']            = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
+$government['data_sss']                   = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
+$government['data_tin']                   = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
+$government['data_pagmid']              = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
+$government['data_phid']            = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
 $educations['school_type']           = $education;
 
