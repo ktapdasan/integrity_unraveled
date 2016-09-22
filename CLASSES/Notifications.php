@@ -92,7 +92,7 @@ EOT;
     public function get_memo(){
 
         $sql = <<<EOT
-                select 
+                select
                 pk,
                 memo,
                 (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = created_by) as created_by,
@@ -100,6 +100,8 @@ EOT;
                 date_created::timestamp (0) as date_created,
                 read
                 from memo
+                where
+                archived=false
                 order by date_created 
                 desc 
                 limit 6

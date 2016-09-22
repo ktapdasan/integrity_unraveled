@@ -46,6 +46,7 @@ app.controller('Sidebar', function(
     $scope.calendar.count ="";
 
     $scope.read_memo={};
+    $scope.read_memo.count="";
     $scope.modal2 = {};
    
 
@@ -271,7 +272,6 @@ app.controller('Sidebar', function(
             $scope.memo.data = data.data.result;
             $scope.memo.status = true;
             $scope.memo.hide = true;
-            var count = data.data.result.length;
       
             $scope.animation_arrow.stop = '0';
             $scope.animation_arrow.opacity = '1';
@@ -294,8 +294,30 @@ app.controller('Sidebar', function(
         });
     }
 
+    function memo_tracker(){
+
+
+        var promise = NotificationsFactory.get_read_memo($scope.modal);
+        promise.then(function(data){
+
+            $scope.read_memo.data = data.data.result;
+            $scope.read_memo.status = true;
+            $scope.read_memo.hide = true;
+
+            $scope.modal.count = data.data.result.length;
+
+        })
+        .then(null, function(data){
+
+            $scope.memo.status = false;
+
+        });
+    }
+
+
+
     $scope.show_memo = function(k){
-       
+
         $scope.modal = {
 
             title        : 'Memo',
@@ -305,9 +327,12 @@ app.controller('Sidebar', function(
             created_by   : $scope.memo.data[k].created_by,
             date_created : $scope.memo.data[k].date_created,
             employees_pk : $scope.profile.pk
-
-           
         };
+
+        var promise = NotificationsFactory.read_memo($scope.modal);
+
+        
+        memo_tracker();
 
 
         ngDialog.openConfirm({
@@ -317,30 +342,20 @@ app.controller('Sidebar', function(
             scope: $scope,
             showClose: false
         })
-
-        var promise = NotificationsFactory.read_memo($scope.modal);
         
     }
 
-
-
     $scope.memo_tracker = function(){
 
+        memo_tracker();
 
-       var promise = NotificationsFactory.get_read_memo($scope.modal);
-        promise.then(function(data){
+        $scope.modal2 = {
 
-            $scope.read_memo.data = data.data.result;
-            $scope.read_memo.status = true;
-            $scope.read_memo.hide = true;
-
-            $scope.modal2 = {
-
-                title       : 'Seen',
+                title        : '',
                 close        : 'Close',
-                read_memo: $scope.read_memo.data
-            };
+                read_memo    : $scope.read_memo.data
 
+            };
 
             ngDialog.openConfirm({
                 template: 'ShowReadMemoModal',
@@ -350,19 +365,10 @@ app.controller('Sidebar', function(
                 showClose: false
             });
 
-        })
-        .then(null, function(data){
-
-            $scope.memo.status = false;
-
-        });
-
-        
-
         
     }
 
-
+    
 
     function get_calendar(){
 
