@@ -187,7 +187,7 @@ EOT;
                     titles_pk,
                     (select title from titles where pk = cast(employees.details->'company'->>'titles_pk' as int)) as title,
                     levels_pk,
-                    (select level_title from levels where pk = employees.levels_pk) as level,
+                    (select level_title from levels where pk = cast(employees.details->'company'->>'levels_pk' as int)) as level,
                     array_to_string(department, ',') as departments_pk,
                     department as departments_pk_arr,
                     (select array_to_string(array_agg(department), ', ') from departments where pk = any(employees.department)) as department,
