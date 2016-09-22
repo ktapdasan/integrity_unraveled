@@ -143,11 +143,14 @@ app.controller('New_Employees', function(
         var promise = EmployeesFactory.get_department(filter);
         promise.then(function(data){
             $scope.department.data = data.data.result;
+            
         })
+
         .then(null, function(data){
 
         });
     }
+
 
     function get_levels(){
         var promise = EmployeesFactory.get_levels();
@@ -181,7 +184,18 @@ app.controller('New_Employees', function(
 
         });
     }
-    console.log(employees());
+
+    function get_gender(){
+        var promise = EmployeesFactory.get_gender();
+        promise.then(function(data){
+            $scope.type.data = data.data.result;
+            
+        })
+
+        .then(null, function(data){
+
+        });
+    }
 
     $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){
@@ -201,8 +215,8 @@ app.controller('New_Employees', function(
             $scope.employees.education[i].date_from_school = $filter('date')($scope.employees.education[i].date_from_school, "yyyy-MM-dd");
             $scope.employees.education[i].date_to_school = $filter('date')($scope.employees.education[i].date_to_school, "yyyy-MM-dd");
         }
-        $scope.employees.date_started = $filter('date')($scope.employees.date_started, "MM-yyyy-dd");
-        $scope.employees.birth_date = $filter('date')($scope.employees.birth_date, "yyyy-MM-dd");
+        $scope.employees.date_started = $filter('date')($scope.employees.date_started, "MM-dd-yyyy");
+        $scope.employees.birth_date = $filter('date')($scope.employees.birth_date, "MM-dd-yyyy");
         
         $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "HH:mm");
         $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "HH:mm");

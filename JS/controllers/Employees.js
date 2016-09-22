@@ -23,17 +23,7 @@ app.controller('Employees', function(
     $scope.level_title={};
     $scope.groupings= {};
 
-    $scope.employee = {
-        data_sss: null,
-        data_phid: null,
-        data_pagmid: null,
-        data_tin: null,
-        contact_number: 'N/A',
-        landline_number: 'N/A',
-        present_address: 'N/A',
-        permanent_address: 'N/A',
-        profile_picture: './ASSETS/img/blank.gif'
-    };
+    $scope.employee = {};
     $scope.employees={};
     $scope.employees.count = 0;
     $scope.employees.filters={};
@@ -429,25 +419,34 @@ app.controller('Employees', function(
         get_supervisors();
 
         $scope.employee = $scope.employees.data[k];
-
+        
         if($scope.employees.data[k].details){
-            $scope.employee.intern_hours = $scope.employees.data[k].details.company.hours;
-            $scope.employee.employee_id = $scope.employees.data[k].details.company.employee_id;
-            $scope.employee.email_address = $scope.employees.data[k].details.personal.email_address;
+            $scope.employee.intern_hours    = $scope.employees.data[k].details.company.hours;
+            $scope.employee.employee_id     = $scope.employees.data[k].details.company.employee_id;
+            $scope.employee.email_address   = $scope.employees.data[k].details.personal.email_address;
             $scope.employee.business_email_address = $scope.employees.data[k].details.company.business_email_address; 
-            $scope.employee.first_name = $scope.employees.data[k].details.personal.first_name;
-            $scope.employee.middle_name = $scope.employees.data[k].details.personal.middle_name;
-            $scope.employee.last_name = $scope.employees.data[k].details.personal.last_name;
-            $scope.employee.contact_number = $scope.employees.data[k].details.personal.contact_number;
+            $scope.employee.first_name      = $scope.employees.data[k].details.personal.first_name;
+            $scope.employee.middle_name     = $scope.employees.data[k].details.personal.middle_name;
+            $scope.employee.last_name       = $scope.employees.data[k].details.personal.last_name;
+            $scope.employee.contact_number  = $scope.employees.data[k].details.personal.contact_number;
             $scope.employee.landline_number = $scope.employees.data[k].details.personal.landline_number;
             $scope.employee.present_address = $scope.employees.data[k].details.personal.present_address;
             $scope.employee.permanent_address = $scope.employees.data[k].details.personal.permanent_address;
-            $scope.employee.data_sss = $scope.employees.data[k].details.government.data_sss;
-            $scope.employee.data_tin = $scope.employees.data[k].details.government.data_tin;
-            $scope.employee.data_pagmid = $scope.employees.data[k].details.government.data_pagmid;
-            $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;
-            $scope.employee.profile_picture = $scope.employees.data[k].details.personal.profile_picture;        
+            $scope.employee.data_sss        = $scope.employees.data[k].details.government.data_sss;
+            $scope.employee.data_tin        = $scope.employees.data[k].details.government.data_tin;
+            $scope.employee.data_pagmid     = $scope.employees.data[k].details.government.data_pagmid;
+            $scope.employee.data_phid       = $scope.employees.data[k].details.government.data_phid;
+            $scope.employee.profile_picture = $scope.employees.data[k].details.personal.profile_picture;
+            $scope.employee.salary_type     = $scope.employees.data[k].details.company.salary.salary_type;
+            $scope.employee.salary_bank_name= $scope.employees.data[k].details.company.salary.bank_name;
+            $scope.employee.salary_account_number = $scope.employees.data[k].details.company.salary.account_number;
+            $scope.employee.salary_mode_payment = $scope.employees.data[k].details.company.salary.mode_payment;
+            $scope.employee.salary_amount   = $scope.employees.data[k].details.company.salary.amount;   
         }
+
+        $scope.isShown = function(salarys_type) {
+            return salarys_type === $scope.employee.salary_type;
+        };
 
         level_changed();
         $scope.modal = {

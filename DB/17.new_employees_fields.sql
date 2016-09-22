@@ -96,13 +96,13 @@ insert into salary_types
 )
 values
 (
-	'Bank'
+	'bank'
 ),
 (
-	'Cash'
+	'cash'
 ),
 (
-	'Wire'
+	'wire'
 );
 
 create table gender_type
@@ -255,11 +255,17 @@ EXAMPLES
 update employees set
 details = jsonb_set(details, '{company}', ' {
 	"departments_pk": "26",
+	"employee_id": "201400072",
 	"levels_pk": "7",
 	"titles_pk": "13",
 	"supervisor": "17",
 	"email_address": "ktapdasan.chrs@gmail.com",
 	"business_email_address": "ken.tapdasan@chrsglobal.com",
+	"salary": 
+	{
+	"salary_type": "cash",
+	"amount": ""
+	},
 	"work_schedule": {
 		"sunday": null,
 		"monday": {
@@ -310,8 +316,8 @@ details = jsonb_set(details, '{company}', ' {
 	}
 
 }
-', true)
-where pk = 12;
+', true);
+
 
 update employees set
 details = jsonb_set(details, '{government}', ' 
@@ -341,5 +347,8 @@ details = jsonb_set(details, '{personal}', '
 }
 ', true)
 where pk = 12;
+
+
+
 
 

@@ -185,7 +185,7 @@ EOT;
                     (select first_name||' '||last_name from employees where pk = groupings.supervisor_pk)
                     as supervisor,
                     titles_pk,
-                    (select title from titles where pk = employees.titles_pk) as title,
+                    (select title from titles where pk = cast(employees.details->'company'->>'titles_pk' as int)) as title,
                     levels_pk,
                     (select level_title from levels where pk = employees.levels_pk) as level,
                     array_to_string(department, ',') as departments_pk,

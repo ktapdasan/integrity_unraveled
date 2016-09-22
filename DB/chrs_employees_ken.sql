@@ -212,6 +212,40 @@ ALTER SEQUENCE calendar_pk_seq OWNED BY calendar.pk;
 
 
 --
+-- Name: civil_statuses; Type: TABLE; Schema: public; Owner: chrs
+--
+
+CREATE TABLE civil_statuses (
+    pk integer NOT NULL,
+    status text NOT NULL,
+    archived boolean DEFAULT false
+);
+
+
+ALTER TABLE civil_statuses OWNER TO chrs;
+
+--
+-- Name: civil_statuses_pk_seq; Type: SEQUENCE; Schema: public; Owner: chrs
+--
+
+CREATE SEQUENCE civil_statuses_pk_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE civil_statuses_pk_seq OWNER TO chrs;
+
+--
+-- Name: civil_statuses_pk_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chrs
+--
+
+ALTER SEQUENCE civil_statuses_pk_seq OWNED BY civil_statuses.pk;
+
+
+--
 -- Name: cutoff_dates; Type: TABLE; Schema: public; Owner: chrs
 --
 
@@ -619,6 +653,40 @@ ALTER TABLE feedbacks_pk_seq OWNER TO chrs;
 --
 
 ALTER SEQUENCE feedbacks_pk_seq OWNED BY feedbacks.pk;
+
+
+--
+-- Name: gender_type; Type: TABLE; Schema: public; Owner: chrs
+--
+
+CREATE TABLE gender_type (
+    pk integer NOT NULL,
+    type text NOT NULL,
+    archived boolean DEFAULT false
+);
+
+
+ALTER TABLE gender_type OWNER TO chrs;
+
+--
+-- Name: gender_type_pk_seq; Type: SEQUENCE; Schema: public; Owner: chrs
+--
+
+CREATE SEQUENCE gender_type_pk_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE gender_type_pk_seq OWNER TO chrs;
+
+--
+-- Name: gender_type_pk_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chrs
+--
+
+ALTER SEQUENCE gender_type_pk_seq OWNED BY gender_type.pk;
 
 
 --
@@ -1181,6 +1249,13 @@ ALTER TABLE ONLY calendar ALTER COLUMN pk SET DEFAULT nextval('calendar_pk_seq':
 -- Name: pk; Type: DEFAULT; Schema: public; Owner: chrs
 --
 
+ALTER TABLE ONLY civil_statuses ALTER COLUMN pk SET DEFAULT nextval('civil_statuses_pk_seq'::regclass);
+
+
+--
+-- Name: pk; Type: DEFAULT; Schema: public; Owner: chrs
+--
+
 ALTER TABLE ONLY cutoff_types ALTER COLUMN pk SET DEFAULT nextval('cutoff_types_pk_seq'::regclass);
 
 
@@ -1238,6 +1313,13 @@ ALTER TABLE ONLY employment_statuses ALTER COLUMN pk SET DEFAULT nextval('employ
 --
 
 ALTER TABLE ONLY feedbacks ALTER COLUMN pk SET DEFAULT nextval('feedbacks_pk_seq'::regclass);
+
+
+--
+-- Name: pk; Type: DEFAULT; Schema: public; Owner: chrs
+--
+
+ALTER TABLE ONLY gender_type ALTER COLUMN pk SET DEFAULT nextval('gender_type_pk_seq'::regclass);
 
 
 --
@@ -1458,6 +1540,26 @@ SELECT pg_catalog.setval('calendar_pk_seq', 4, true);
 
 
 --
+-- Data for Name: civil_statuses; Type: TABLE DATA; Schema: public; Owner: chrs
+--
+
+COPY civil_statuses (pk, status, archived) FROM stdin;
+1	Married	f
+2	Single	f
+3	Divorce	f
+4	Living Common Law	f
+5	Widowed	f
+\.
+
+
+--
+-- Name: civil_statuses_pk_seq; Type: SEQUENCE SET; Schema: public; Owner: chrs
+--
+
+SELECT pg_catalog.setval('civil_statuses_pk_seq', 5, true);
+
+
+--
 -- Data for Name: cutoff_dates; Type: TABLE DATA; Schema: public; Owner: chrs
 --
 
@@ -1593,7 +1695,6 @@ SELECT pg_catalog.setval('employee_types_pk_seq', 2, true);
 --
 
 COPY employees (pk, employee_id, first_name, middle_name, last_name, email_address, archived, date_created, business_email_address, titles_pk, level, department, levels_pk, details, leave_balances) FROM stdin;
-14	201400081	Vincent	Yturralde	Ramil	vramil.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	N/A	8	Supervisor	{21}	8	{"company": {"levels_pk": "8", "titles_pk": "8", "supervisor": "45", "employee_id": "201400081", "departments_pk": "21", "business_email_address": "N/A"}, "personal": {"last_name": "Ramil", "first_name": "Vincent", "middle_name": "Yturralde", "email_address": "vramil.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 43	201400121	Kathleen Kay	Macalino	Ongcal	kkongcal.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	kathleen.ongcal@chrsglobal.com	10	Associate	{29}	7	{"company": {"levels_pk": "7", "titles_pk": "10", "supervisor": "null", "employee_id": "201400121", "departments_pk": "29", "business_email_address": "kathleen.ongcal@chrsglobal.com"}, "personal": {"last_name": "Ongcal", "first_name": "Kathleen Kay", "middle_name": "Macalino", "email_address": "kkongcal.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 45	201400126	Michelle	Tan	De Guzman	mdeguzman.chrs@gmail.com	f	2016-03-04 16:14:08.15679+08	michelle.deguzman@chrsglobal.com	19	Manager	{27}	4	{"company": {"levels_pk": "4", "titles_pk": "19", "supervisor": "11", "employee_id": "201400126", "departments_pk": "27", "business_email_address": "michelle.deguzman@chrsglobal.com"}, "personal": {"last_name": "De Guzman", "first_name": "Michelle", "middle_name": "Tan", "email_address": "mdeguzman.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 52	201400134	Blu Raven	Lipardo	Villanueva	brvillanueva.chrs@gmail.com	f	2016-04-12 16:08:41.478974+08	blu.villanueva@chrsglobal.com	\N	Associate	{31}	7	{"company": {"levels_pk": "7", "titles_pk": "null", "supervisor": "null", "employee_id": "201400134", "departments_pk": "31", "business_email_address": "blu.villanueva@chrsglobal.com"}, "personal": {"last_name": "Villanueva", "first_name": "Blu Raven", "middle_name": "Lipardo", "email_address": "brvillanueva.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
@@ -1602,14 +1703,12 @@ COPY employees (pk, employee_id, first_name, middle_name, last_name, email_addre
 11	201400066	Judy Ann	Lantican	Reginaldo	jreginaldo.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	N/A	9	Manager	{28}	4	{"company": {"levels_pk": "4", "titles_pk": "9", "supervisor": "10", "employee_id": "201400066", "departments_pk": "28", "business_email_address": "N/A"}, "personal": {"last_name": "Reginaldo", "first_name": "Judy Ann", "middle_name": "Lantican", "email_address": "jreginaldo.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 57	201400140	Lovely	De Leon	Larracas	llarracas.chrs@gmail.com	f	2016-04-25 16:56:37.76254+08	lovely.larracas@chrsglobal.com	\N	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "null", "supervisor": "null", "employee_id": "201400140", "departments_pk": "32", "business_email_address": "lovely.larracas@chrsglobal.com"}, "personal": {"last_name": "Larracas", "first_name": "Lovely", "middle_name": "De Leon", "email_address": "llarracas.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 77	201400155	Ken	Espera	Gelisanga	kgelisanga.chrs@gmail.com	f	2016-05-25 11:06:25.026458+08	ken.gelisanga@chrsglobal.com	12	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "12", "supervisor": "null", "employee_id": "201400155", "departments_pk": "32", "business_email_address": "ken.gelisanga@chrsglobal.com"}, "personal": {"last_name": "Gelisanga", "first_name": "Ken", "middle_name": "Espera", "email_address": "kgelisanga.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-26	201400103	Gerlie	Pagaduan	Andres	gerlie.andres@chrsglobal.com	f	2016-02-14 23:42:40.014678+08	gerlieandres0201@gmail.com	12	Intern	{24}	3	{"company": {"hours": "undefined", "levels_pk": "3", "titles_pk": "12", "supervisor": "11", "employee_id": "201400103", "departments_pk": "24", "business_email_address": "gerlieandres0201@gmail.com"}, "personal": {"last_name": "Andres", "first_name": "Gerlie", "middle_name": "Pagaduan", "email_address": "gerlie.andres@chrsglobal.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 62	201400145	Claire Receli	Morales	Renosa	crrenosa.chrs@gmail.com	f	2016-04-25 16:56:37.76254+08	claire.renosa@chrsglobal.com	21	Associate	{26}	3	{"company": {"hours": "250", "levels_pk": "3", "titles_pk": "21", "supervisor": "28", "employee_id": "201400145", "departments_pk": "26", "business_email_address": "claire.renosa@chrsglobal.com"}, "personal": {"last_name": "Renosa", "first_name": "Claire Receli", "middle_name": "Morales", "email_address": "crrenosa.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 54	201400137	Arbie	Castillo	Honra	ahonra.chrs@gmail.com	f	2016-04-22 14:36:12.162891+08	arbie.honra@chrsglobal.com	19	Associate	{31}	7	{"company": {"levels_pk": "7", "titles_pk": "19", "supervisor": "10", "employee_id": "201400137", "departments_pk": "31", "business_email_address": "arbie.honra@chrsglobal.com"}, "personal": {"last_name": "Honra", "first_name": "Arbie", "middle_name": "Castillo", "email_address": "ahonra.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 48	201400132	Maria Eliza	Querido	De Mesa	medemesa.chrs@gmail.com	f	2016-03-07 16:21:37.202235+08	maria.demesa@chrsglobal.com	17	Associate	{22}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "19", "employee_id": "201400132", "departments_pk": "22", "business_email_address": "maria.demesa@chrsglobal.com"}, "personal": {"last_name": "De Mesa", "first_name": "Maria Eliza", "middle_name": "Querido", "email_address": "medemesa.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 63						f	2016-05-20 11:34:40.871902+08		21	Associate	{26}	3	{"company": {"hours": "250", "levels_pk": "3", "titles_pk": "21", "supervisor": "28", "employee_id": "", "departments_pk": "26", "business_email_address": ""}, "personal": {"gender_pk": "", "last_name": "", "first_name": "", "middle_name": "", "civil_status": "", "email_address": ""}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 49	201400124	Renz	Santiago	Feliciano	rfeliciano.chrs@gmail.com	f	2016-03-08 09:05:10.063741+08	renz.feliciano@chrsglobal.com	12	Associate	{22}	7	{"company": {"levels_pk": "7", "titles_pk": "12", "supervisor": "19", "employee_id": "201400124", "departments_pk": "22", "business_email_address": "renz.feliciano@chrsglobal.com"}, "personal": {"last_name": "Feliciano", "first_name": "Renz", "middle_name": "Santiago", "email_address": "rfeliciano.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 64	201400151	Ma. Maxine Estrelle	Mercado	Soliven	mmesoliven.chrs@gmail.com	f	2016-05-20 11:48:09.95915+08	maxine.soliven@chrsglobal.com	23	one	{30}	\N	{"company": {"levels_pk": "null", "titles_pk": "23", "supervisor": "47", "employee_id": "201400151", "departments_pk": "30", "business_email_address": "maxine.soliven@chrsglobal.com"}, "personal": {"last_name": "Soliven", "first_name": "Ma. Maxine Estrelle", "middle_name": "Mercado", "email_address": "mmesoliven.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-23	201400100	Rolando	Carillo	Fabi	rolly.fabi@chrsglobal.com	f	2016-02-14 23:42:40.014678+08	rollyfabi_23@yahoo.com	3	Supervisor	{23}	8	{"company": {"levels_pk": "8", "titles_pk": "3", "supervisor": "10", "employee_id": "201400100", "date_started": "undefined", "email_address": "rolly.fabi@chrsglobal.com", "departments_pk": "23", "business_email_address": "rollyfabi_23@yahoo.com"}, "personal": {"last_name": "Fabi", "first_name": "Rolando", "middle_name": "Carillo", "contact_number": "0932323232", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 79	201400157	Frances Therese	Yamongan	Garay	ftgaray.chrs@gmail.com	f	2016-05-25 11:08:33.958727+08	frances.garay@chrsglobal.com	23	Associate	{30}	7	{"company": {"levels_pk": "7", "titles_pk": "23", "supervisor": "47", "employee_id": "201400157", "departments_pk": "30", "business_email_address": "frances.garay@chrsglobal.com"}, "personal": {"last_name": "Garay", "first_name": "Frances Therese", "middle_name": "Yamongan", "email_address": "ftgaray.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 83	201400161	Jomarie	Dela Cruz	Baun	jbaun.chrs@gmail.com	f	2016-05-30 11:55:47.879323+08	joemarie.baun@chrsglobal.com	13	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "13", "supervisor": "null", "employee_id": "201400161", "departments_pk": "32", "business_email_address": "joemarie.baun@chrsglobal.com"}, "personal": {"last_name": "Baun", "first_name": "Jomarie", "middle_name": "Dela Cruz", "email_address": "jbaun.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 27	201400104	Eliza	Alcaraz	Mandique	emandique.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	eliza.mandique@chrsglobal.com	11	Supervisor	{25}	8	{"company": {"levels_pk": "8", "titles_pk": "11", "supervisor": "10", "employee_id": "201400104", "departments_pk": "25", "business_email_address": "eliza.mandique@chrsglobal.com"}, "personal": {"last_name": "Mandique", "first_name": "Eliza", "middle_name": "Alcaraz", "email_address": "emandique.chrs@gmail.com", "contact_number": "09323232", "landline_number": "323232", "present_address": "Manila", "permanent_address": "Cavite"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
@@ -1628,7 +1727,6 @@ COPY employees (pk, employee_id, first_name, middle_name, last_name, email_addre
 39	201400117	Arlene	Diama	Obasa	aobasa.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	obasa_arlene@yahoo.com	7	Associate	{29}	7	{"company": {"levels_pk": "7", "titles_pk": "7", "supervisor": "28", "employee_id": "201400117", "departments_pk": "29", "business_email_address": "obasa_arlene@yahoo.com"}, "personal": {"last_name": "Obasa", "first_name": "Arlene", "middle_name": "Diama", "email_address": "aobasa.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 41	201400119	Alyssa	Iligan	Panaguiton	apanaguiton.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	panaguitonalyssaend121@gmail.com	13	Associate	{24}	7	{"company": {"levels_pk": "7", "titles_pk": "13", "supervisor": "10", "employee_id": "201400119", "departments_pk": "24", "business_email_address": "panaguitonalyssaend121@gmail.com"}, "personal": {"last_name": "Panaguiton", "first_name": "Alyssa", "middle_name": "Iligan", "email_address": "apanaguiton.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 55	201400138	Jhon Michel	Alcaide	Lalis	jmlalis.chrs@gmail.com	f	2016-04-22 14:36:12.162891+08	jhon.lalis@chrsglobal.com	17	Associate	{31}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "10", "employee_id": "201400138", "departments_pk": "31", "business_email_address": "jhon.lalis@chrsglobal.com"}, "personal": {"last_name": "Lalis", "first_name": "Jhon Michel", "middle_name": "Alcaide", "email_address": "jmlalis.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-25	201400058	Rodette Joyce	Magaway	Laurio	jlaurio.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	N/A	12	Associate	{28}	7	{"company": {"levels_pk": "7", "titles_pk": "12", "supervisor": "11", "employee_id": "201400058", "departments_pk": "28", "business_email_address": "N/A"}, "personal": {"last_name": "Laurio", "first_name": "Rodette Joyce", "middle_name": "Magaway", "email_address": "jlaurio.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 13	201400078	Lita	Llanera	Elejido	lelejido.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	lhitaelejido@gmail.com	17	Associate	{28}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "11", "employee_id": "201400078", "departments_pk": "28", "business_email_address": "lhitaelejido@gmail.com"}, "personal": {"last_name": "Elejido", "first_name": "Lita", "middle_name": "Llanera", "email_address": "lelejido.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 40	201400118	Cristina	Tulayan	Ibanez	cibanez.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	tina_041481@yahoo.com	13	Associate	{22,29}	7	{"company": {"levels_pk": "7", "titles_pk": "13", "supervisor": "19", "employee_id": "201400118", "departments_pk": "22,29", "business_email_address": "tina_041481@yahoo.com"}, "personal": {"last_name": "Ibanez", "first_name": "Cristina", "middle_name": "Tulayan", "email_address": "cibanez.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 47	201400128	Aleine Leilanie	Braza	Oro	aloro.chrs@gmail.com	f	2016-03-07 12:16:40.262446+08	aleine.oro@chrsglobal.com	20	Officer	{30}	5	{"company": {"levels_pk": "5", "titles_pk": "20", "supervisor": "10", "employee_id": "201400128", "departments_pk": "30", "business_email_address": "aleine.oro@chrsglobal.com"}, "personal": {"last_name": "Oro", "first_name": "Aleine Leilanie", "middle_name": "Braza", "email_address": "aloro.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
@@ -1641,16 +1739,12 @@ COPY employees (pk, employee_id, first_name, middle_name, last_name, email_addre
 44	201400122	Marry Jeane	Genteroy	Sadsad	mjsadsad.chrs@gmail.com	t	2016-02-14 23:42:40.014678+08	marry.sadsad@chrsglobal.com	10	Associate	{29}	7	{"company": {"salary": {"details": {"bank": "BDO", "amount": "1000000", "account_number": "100010001"}, "allowances": {"1": "100", "2": "100"}, "salary_types_pk": "1"}, "levels_pk": "4", "titles_pk": "15", "start_date": "2016-01-18", "supervisor": "10", "email_address": "rafael.pascual@chrsglobal.com", "work_schedule": {"friday": {"in": "08:00", "out": "17:00"}, "monday": {"in": "08:00", "out": "17:00"}, "sunday": null, "tuesday": {"in": "08:00", "out": "17:00"}, "saturday": null, "thursday": {"in": "08:00", "out": "17:00"}, "wednesday": {"in": "08:00", "out": "17:00"}}, "departments_pk": "26", "employee_types_pk": "1", "business_email_address": "rpascual0812@gmail.com", "employment_statuses_pk": "4"}, "personal": {}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 59	201400142	Mariam Hazel	Sango	Pugoy	mhpugoy.chrs@gmail.com	f	2016-04-25 16:56:37.76254+08	mariam.pugoy@chrsglobal.com	\N	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "null", "supervisor": "null", "employee_id": "201400142", "departments_pk": "32", "business_email_address": "mariam.pugoy@chrsglobal.com"}, "personal": {"last_name": "Pugoy", "first_name": "Mariam Hazel", "middle_name": "Sango", "email_address": "mhpugoy.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 76	201400123	Kristia Marie		Velasco	kmvelasco.chrs@gmail.com	f	2016-05-23 12:58:46.584679+08	kristia.velasco@chrsglobal.com	17	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "null", "employee_id": "201400123", "departments_pk": "32", "business_email_address": "kristia.velasco@chrsglobal.com"}, "personal": {"last_name": "Velasco", "first_name": "Kristia Marie", "middle_name": "", "email_address": "kmvelasco.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-19	201300004	Mary Grace	Soriano	Lacerna	gracesoriano.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	grace.soriano@chrsglobal.com	8	Supervisor	{22,29}	8	{"company": {"levels_pk": "8", "titles_pk": "8", "supervisor": "10", "employee_id": "201400004", "departments_pk": "22,29", "business_email_address": "grace.soriano@chrsglobal.com"}, "personal": {"last_name": "Lacerna", "first_name": "Mary Grace", "middle_name": "Soriano", "email_address": "gracesoriano.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-18	201400059	Marilyn May	Villano	Bolocon	mbolocon.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	bolocon.marilynmay@yahoo.com	17	Associate	{21}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "14", "employee_id": "201400059", "email_address": "mbolocon.chrs@gmail.com", "departments_pk": "21", "business_email_address": "bolocon.marilynmay@yahoo.com"}, "personal": {"last_name": "Bolocon", "first_name": "Marilyn May", "middle_name": "Villano"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-16	201400084	Michelle	Balasta	Gongura	mgongura.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	michelle.gongura@chrsglobal.com	17	Intern	{21}	3	{"company": {"hours": "250", "levels_pk": "3", "titles_pk": "17", "supervisor": "14", "employee_id": "201400084", "date_started": "Fri Sep 02 2016 00:00:00 GMT+0800 (PHT)", "email_address": "mgongura.chrs@gmail.com", "departments_pk": "21", "business_email_address": "michelle.gongura@chrsglobal.com"}, "personal": {"last_name": "Gongura", "first_name": "Michelle", "middle_name": "Balasta", "contact_number": "09993232121", "landline_number": "5340368", "present_address": "Caloocan", "permanent_address": "Mandaluyong"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-12	201400072	Ken	Villanueva	Tapdasan	ktapdasan.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	ken.tapdasan@chrsglobal.com	14	Associate	{26}	7	{"company": {"levels_pk": "7", "titles_pk": "14", "supervisor": "28", "employee_id": "201400072", "departments_pk": "26", "business_email_address": "ken.tapdasan@chrsglobal.com"}, "personal": {"last_name": "Tapdasan", "first_name": "Ken", "middle_name": "Villanueva", "email_address": "ktapdasan.chrs@gmail.com", "contact_number": "09504151950", "landline_number": "5340368", "present_address": "Mandaluyong", "permanent_address": "Dasmarinas"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 60	201400143	John Patrick	Escosio	Purugganan	jppurugganan.chrs@gmail.com	f	2016-04-25 16:56:37.76254+08	john.purugganan@chrsglobal.com	\N	Associate	{30}	7	{"company": {"levels_pk": "7", "titles_pk": "null", "supervisor": "null", "employee_id": "201400143", "departments_pk": "30", "business_email_address": "john.purugganan@chrsglobal.com"}, "personal": {"last_name": "Purugganan", "first_name": "John Patrick", "middle_name": "Escosio", "email_address": "jppurugganan.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 61	201400144	Romnick	Bedonia	Ilag	rilag.chrs@gmail.com	f	2016-04-25 16:56:37.76254+08	romnick.ilag@chrsglobal.com	\N	Associate	{25}	7	{"company": {"levels_pk": "7", "titles_pk": "null", "supervisor": "null", "employee_id": "201400144", "departments_pk": "25", "business_email_address": "romnick.ilag@chrsglobal.com"}, "personal": {"last_name": "Ilag", "first_name": "Romnick", "middle_name": "Bedonia", "email_address": "rilag.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 74	201400125	Raquel	Villocino	Trasmonte	rtrasmonte.chrs@gmail.com	f	2016-05-23 12:50:58.383123+08	raquel.trasmonte@chrsglobal.com	17	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "null", "employee_id": "201400125", "departments_pk": "32", "business_email_address": "raquel.trasmonte@chrsglobal.com"}, "personal": {"last_name": "Trasmonte", "first_name": "Raquel", "middle_name": "Villocino", "email_address": "rtrasmonte.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-24	201400102	John Erasmus Mari	Regado	Fernandez	N/A	f	2016-02-14 23:42:40.014678+08	johnerasmusmarif@gmail.com	12	Associate	{}	7	{"company": {"levels_pk": "7", "titles_pk": "12", "supervisor": "19", "employee_id": "201400102", "date_started": "undefined", "email_address": "N/A", "departments_pk": "", "business_email_address": "johnerasmusmarif@gmail.com"}, "personal": {"last_name": "Fernandez", "first_name": "John Erasmus Mari", "middle_name": "Regado", "contact_number": "undefined", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+19	201300004	Mary Grace	Soriano	Lacerna	gracesoriano.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	grace.soriano@chrsglobal.com	8	Supervisor	{22,29}	8	{"company": {"levels_pk": "8", "titles_pk": "8", "supervisor": "10", "employee_id": "201400004", "departments_pk": "22,29", "business_email_address": "grace.soriano@chrsglobal.com"}, "personal": {"last_name": "Lacerna", "first_name": "Mary Grace", "middle_name": "Soriano", "email_address": "gracesoriano.chrs@gmail.com", "contact_number": "undefined", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+18	201400059	Marilyn May	Villano	Bolocon	mbolocon.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	bolocon.marilynmay@yahoo.com	17	Associate	{21}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "14", "employee_id": "201400059", "departments_pk": "21", "business_email_address": "bolocon.marilynmay@yahoo.com"}, "personal": {"last_name": "Bolocon", "first_name": "Marilyn May", "middle_name": "Villano", "email_address": "mbolocon.chrs@gmail.com", "contact_number": "undefined", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 31	201400108	Irone John	Mendoza	Amor	ijamor.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	ironejohn@gmail.com	13	Associate	{27}	7	{"company": {"levels_pk": "7", "titles_pk": "13", "supervisor": "45", "employee_id": "201400108", "departments_pk": "27", "business_email_address": "ironejohn@gmail.com"}, "personal": {"last_name": "Amor", "first_name": "Irone John", "middle_name": "Mendoza", "email_address": "ijamor.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
-28	201400105	Rafael	Aurelio	Pascual	rafael.pascual@chrsglobal.com	f	2016-02-14 23:42:40.014678+08	rpascual0812@gmail.com	15	Manager	{26}	4	{"company": {"levels_pk": "4", "titles_pk": "15", "supervisor": "10", "employee_id": "201400105", "departments_pk": "26", "business_email_address": "rpascual0812@gmail.com"}, "personal": {"last_name": "Pascual", "first_name": "Rafael", "middle_name": "Aurelio", "email_address": "rafael.pascual@chrsglobal.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": 14, "3": 12, "4": "3", "5": "12", "7": 12}
 22	201400098	Rolando	Garfin	Lipardo	N/A	f	2016-02-14 23:42:40.014678+08	N/A	16	Associate	{23}	7	{"company": {"levels_pk": "7", "titles_pk": "16", "supervisor": "10", "employee_id": "201400098", "departments_pk": "23", "business_email_address": "N/A"}, "personal": {"last_name": "Lipardo", "first_name": "Rolando", "middle_name": "Garfin", "email_address": "N/A"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 84	201400162	Girome	Roque	Fernandez	gfernandez.chrs@gmail.com	f	2016-06-02 10:44:04.950151+08	girome.fernandez@chrsglobal.com	13	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "13", "supervisor": "null", "employee_id": "201400162", "departments_pk": "32", "business_email_address": "girome.fernandez@chrsglobal.com"}, "personal": {"last_name": "Fernandez", "first_name": "Girome", "middle_name": "Roque", "email_address": "gfernandez.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 20	201400089	Ma. Fe	Pariscal	Bolinas	mfbolinas.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	mafe.bolinas@gmail.com	6	Associate	{NULL}	7	{"company": {"levels_pk": "7", "titles_pk": "6", "supervisor": "10", "employee_id": "201400089", "departments_pk": "null", "business_email_address": "mafe.bolinas@gmail.com"}, "personal": {"last_name": "Bolinas", "first_name": "Ma. Fe", "middle_name": "Pariscal", "email_address": "mfbolinas.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
@@ -1658,6 +1752,14 @@ COPY employees (pk, employee_id, first_name, middle_name, last_name, email_addre
 71	201400154	Reenalyn	Fediles	Ortilano	rortilano.chrs@gmail.com	f	2016-05-20 11:55:14.912758+08	rennalyn.ortilano@chrsglobal.com	13	Associate	{31}	3	{"company": {"hours": "250", "levels_pk": "3", "titles_pk": "13", "supervisor": "10", "employee_id": "201400154", "departments_pk": "31", "business_email_address": "rennalyn.ortilano@chrsglobal.com"}, "personal": {"last_name": "Ortilano", "first_name": "Reenalyn", "middle_name": "Fediles", "email_address": "rortilano.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 81	201400159	Maria Quiara	Flor	Valenzona	mqvalenzona.chrs@gmail.com	f	2016-05-30 11:53:45.637891+08	maria.valenzona@chrsglobal.com	13	Associate	{30}	3	{"company": {"hours": "undefined", "levels_pk": "3", "titles_pk": "13", "supervisor": "47", "employee_id": "201400159", "departments_pk": "30", "business_email_address": "maria.valenzona@chrsglobal.com"}, "personal": {"last_name": "Valenzona", "first_name": "Maria Quiara", "middle_name": "Flor", "email_address": "mqvalenzona.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 58	201400141	Rochelle Ann	Bellita	Laquinon	ralaquinon.chrs@gmail.com	f	2016-04-25 16:56:37.76254+08	rochelle.laquinon@chrsglobal.com	\N	Associate	{32}	7	{"company": {"levels_pk": "7", "titles_pk": "null", "supervisor": "null", "employee_id": "201400141", "departments_pk": "32", "business_email_address": "rochelle.laquinon@chrsglobal.com"}, "personal": {"last_name": "Laquinon", "first_name": "Rochelle Ann", "middle_name": "Bellita", "email_address": "ralaquinon.chrs@gmail.com"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+16	201400084	Michelle	Balasta	Gongura	mgongura.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	michelle.gongura@chrsglobal.com	17	Intern	{21}	7	{"company": {"levels_pk": "7", "titles_pk": "17", "supervisor": "14", "employee_id": "201400084", "departments_pk": "21", "business_email_address": "michelle.gongura@chrsglobal.com"}, "personal": {"last_name": "Gongura", "first_name": "Michelle", "middle_name": "Balasta", "email_address": "mgongura.chrs@gmail.com", "contact_number": "09993232121", "landline_number": "5340368", "present_address": "Caloocan", "permanent_address": "Mandaluyong"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+24	201400102	John Erasmus Mari	Regado	Fernandez	undefined	f	2016-02-14 23:42:40.014678+08	johnerasmusmarif@gmail.com	12	Associate	{22}	7	{"company": {"levels_pk": "7", "titles_pk": "12", "supervisor": "19", "employee_id": "201400102", "departments_pk": "22", "business_email_address": "johnerasmusmarif@gmail.com"}, "personal": {"last_name": "Fernandez", "first_name": "John Erasmus Mari", "middle_name": "Regado", "email_address": "undefined", "contact_number": "undefined", "landline_number": "undefined", "present_address": "Undefined", "permanent_address": "Undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+28	201400105	Rafael	Aurelio	Pascual	rpascual0812@gmail.com	f	2016-02-14 23:42:40.014678+08	rafael.pascual@chrsglobal.com	15	Manager	{26}	4	{"company": {"levels_pk": "4", "titles_pk": "15", "supervisor": "10", "employee_id": "201400105", "departments_pk": "26", "business_email_address": "rafael.pascual@chrsglobal.com"}, "personal": {"last_name": "Pascual", "first_name": "Rafael", "middle_name": "Aurelio", "email_address": "rpascual0812@gmail.com", "contact_number": "undefined", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": 14, "3": 12, "4": "3", "5": "12", "7": 12}
+26	201400103	Gerlie	Pagaduan	Andres	gerlie.andres@chrsglobal.com	f	2016-02-14 23:42:40.014678+08	gerlieandres0201@gmail.com	12	Intern	{24}	3	{"company": {"hours": "320", "levels_pk": "3", "titles_pk": "12", "supervisor": "11", "employee_id": "201400103", "business_email_address": "gerlieandres0201@gmail.com"}, "personal": {"last_name": "Andres", "first_name": "Gerlie", "middle_name": "Pagaduan", "email_address": "gerlie.andres@chrsglobal.com", "contact_number": "undefined", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+23	201400100	Rolando	Carillo	Fabi	rollyfabi_23@yahoo.com	f	2016-02-14 23:42:40.014678+08	rolando.fabi@chrsglobal.com	3	Supervisor	{23}	8	{"company": {"levels_pk": "8", "titles_pk": "3", "supervisor": "10", "employee_id": "201400100", "departments_pk": "23", "business_email_address": "rolando.fabi@chrsglobal.com"}, "personal": {"last_name": "Fabi", "first_name": "Rolando", "middle_name": "Carillo", "email_address": "rollyfabi_23@yahoo.com", "contact_number": "0932323232", "landline_number": "undefined", "present_address": "Undefined", "permanent_address": "Undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+14	201400081	Vincent	Yturralde	Ramil	vramil.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	vincent.ramil@chrsglobal.com	8	Supervisor	{21}	8	{"company": {"levels_pk": "8", "titles_pk": "8", "supervisor": "45", "employee_id": "201400081", "departments_pk": "21", "business_email_address": "vincent.ramil@chrsglobal.com"}, "personal": {"last_name": "Ramil", "first_name": "Vincent", "middle_name": "Yturralde", "email_address": "vramil.chrs@gmail.com", "contact_number": "undefined", "landline_number": "undefined", "present_address": "undefined", "permanent_address": "undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+25	201400058	Rodette Joyce	Magaway	Laurio	jlaurio.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	joyce.laurio@chrsglobal.com	12	Associate	{28}	7	{"company": {"levels_pk": "7", "titles_pk": "12", "supervisor": "11", "employee_id": "201400058", "departments_pk": "28", "business_email_address": "joyce.laurio@chrsglobal.com"}, "personal": {"last_name": "Laurio", "first_name": "Rodette Joyce", "middle_name": "Magaway", "email_address": "jlaurio.chrs@gmail.com", "contact_number": "undefined", "landline_number": "323232", "present_address": "Undefined", "permanent_address": "Undefined"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
+12	201400072	Ken	Villanueva	Tapdasan	ktapdasan.chrs@gmail.com	f	2016-02-14 23:42:40.014678+08	ken.tapdasan@chrsglobal.com	14	Associate	{26}	7	{"company": {"salary": {"amount": "2500", "bank_name": "BDO", "salary_type": "bank", "account_number": "323232323232"}, "levels_pk": "7", "titles_pk": "14", "supervisor": "28", "employee_id": "201400072", "departments_pk": "26", "business_email_address": "ken.tapdasan@chrsglobal.com"}, "personal": {"last_name": "Tapdasan", "first_name": "Ken", "middle_name": "Villanueva", "email_address": "ktapdasan.chrs@gmail.com", "contact_number": "09504151950", "landline_number": "None", "present_address": "Mandaluyong", "permanent_address": "Dasmarinas"}, "government": {"data_sss": "N/A", "data_tin": "N/A", "data_phid": "N/A", "data_pagmid": "N/A"}}	{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}
 \.
 
 
@@ -1666,7 +1768,7 @@ COPY employees (pk, employee_id, first_name, middle_name, last_name, email_addre
 --
 
 COPY employees_backup (pk, details, leave_balances, date_created, archived) FROM stdin;
-1	{"company": {"levels_pk": "7", "titles_pk": "14", "employee_id": "201400072", "salary_type": {"cash": {"amount": "13000"}}, "date_started": "03-2016-01", "supervisor_pk": "28", "work_schedule": {"friday": {"in": "08:00", "out": "17:00"}, "monday": {"in": "08:00", "out": "17:00"}, "sunday": {"in": "null", "out": "null"}, "tuesday": {"in": "08:00", "out": "17:00"}, "saturday": {"in": "null", "out": "null"}, "thursday": {"in": "08:00", "out": "17:00"}, "wednesday": {"in": "08:00", "out": "08:00"}}, "departments_pk": "26", "employee_status": "3", "employment_type": "2", "business_email_address": "ken.tapdasan@chrsglobal.com"}, "personal": {"gender": "1", "religion": "Catholic", "last_name": "Tapdasan", "birth_date": "1995-07-27", "first_name": "Ken", "civilstatus": "2", "middle_name": "Villanueva", "contact_number": "09504151950", "landline_number": "5340368", "present_address": "Mandaluyong", "profile_picture": "undefined", "permanent_address": "Dasmarinas", "emergency_contact_name": "Clang", "emergency_contact_number": "undefined"}, "education": {"school_type": [{"educ_level": "Primary", "school_name": "San Miguel Elementary School", "date_to_school": "0232-03-23", "school_location": "Dasmarinas", "date_from_school": "0232-03-23"}]}, "government": {"SSS": "null", "TIN": "null", "PAG-IBIG": "null", "PHILHEALTH": "null"}}	\N	2016-09-20 14:40:23.838874+08	f
+5	{"company": {"salary": {"amount": "323232", "bank_name": "dwdaw", "salary_type": "bank", "account_number": "323232"}, "levels_pk": "", "titles_pk": "", "employee_id": "", "date_started": "", "supervisor_pk": "", "work_schedule": {"friday": {"in": "null", "out": "null"}, "monday": {"in": "null", "out": "null"}, "sunday": {"in": "null", "out": "null"}, "tuesday": {"in": "null", "out": "null"}, "saturday": {"in": "null", "out": "null"}, "thursday": {"in": "null", "out": "null"}, "wednesday": {"in": "null", "out": "null"}}, "departments_pk": "", "employee_status": "", "employment_type": "", "business_email_address": ""}, "personal": {"gender": "", "religion": "", "last_name": "", "birth_date": "", "first_name": "", "civilstatus": "", "middle_name": "", "contact_number": "null", "landline_number": "null", "present_address": "", "profile_picture": "./ASSETS/img/blank.gif", "permanent_address": "", "emergency_contact_name": "", "emergency_contact_number": ""}, "education": {"school_type": [{"educ_level": "Primary"}]}, "government": {"data_sss": "null", "data_tin": "null", "data_phid": "null", "data_pagmid": "null"}}	\N	2016-09-22 14:17:29.666739+08	f
 \.
 
 
@@ -1674,7 +1776,7 @@ COPY employees_backup (pk, details, leave_balances, date_created, archived) FROM
 -- Name: employees_backup_pk_seq; Type: SEQUENCE SET; Schema: public; Owner: chrs
 --
 
-SELECT pg_catalog.setval('employees_backup_pk_seq', 1, true);
+SELECT pg_catalog.setval('employees_backup_pk_seq', 5, true);
 
 
 --
@@ -1819,27 +1921,36 @@ SELECT pg_catalog.setval('feedbacks_pk_seq', 25, true);
 
 
 --
+-- Data for Name: gender_type; Type: TABLE DATA; Schema: public; Owner: chrs
+--
+
+COPY gender_type (pk, type, archived) FROM stdin;
+1	Male	f
+2	Female	f
+\.
+
+
+--
+-- Name: gender_type_pk_seq; Type: SEQUENCE SET; Schema: public; Owner: chrs
+--
+
+SELECT pg_catalog.setval('gender_type_pk_seq', 2, true);
+
+
+--
 -- Data for Name: groupings; Type: TABLE DATA; Schema: public; Owner: chrs
 --
 
 COPY groupings (employees_pk, supervisor_pk) FROM stdin;
-16	14
-23	10
 21	10
-24	19
-19	10
 42	19
 27	10
 15	10
-12	28
 41	10
-25	11
 13	11
 38	\N
 40	19
 37	\N
-14	45
-28	10
 20	10
 43	\N
 10	\N
@@ -1848,7 +1959,6 @@ COPY groupings (employees_pk, supervisor_pk) FROM stdin;
 31	45
 32	11
 33	14
-26	11
 36	11
 35	14
 45	11
@@ -1886,7 +1996,16 @@ COPY groupings (employees_pk, supervisor_pk) FROM stdin;
 17	10
 22	10
 63	28
+28	10
+16	14
+26	11
+23	10
+24	19
+19	10
 18	14
+14	45
+25	11
+12	28
 \.
 
 
@@ -2122,9 +2241,9 @@ SELECT pg_catalog.setval('payroll_pk_seq', 1, true);
 --
 
 COPY salary_types (pk, type, archived) FROM stdin;
-1	Bank	f
-2	Cash	f
-3	Others	f
+1	bank	f
+2	cash	f
+3	wire	f
 \.
 
 
@@ -4385,6 +4504,7 @@ COPY time_log (employees_pk, type, date_created, time_log, random_hash, pk) FROM
 28	Out	2016-09-13 10:22:45.947751+08	2016-09-13 10:22:45.947751+08	1k2etzoK1DQCVzLCPUkWtYAiRSHib3tdovrS3RB4tqHm_r_Oki	2220
 12	In	2016-09-19 15:02:03.597016+08	2016-09-19 15:02:03.597016+08	e4Dx9hZwlP_E6ubFiuXP7fW8vEurJPMZUpu1Gsy0fwFl0R0jkY	2221
 12	Out	2016-09-19 15:13:12.427282+08	2016-09-19 15:13:12.427282+08	e4Dx9hZwlP_E6ubFiuXP7fW8vEurJPMZUpu1Gsy0fwFl0R0jkY	2222
+12	In	2016-09-22 09:25:51.211754+08	2016-09-22 09:25:51.211754+08	Om644mQlrEAdnM_dTpkl4osrmonXAp6nLcsRzga0WLdhxbvpBQ	2223
 \.
 
 
@@ -4407,7 +4527,7 @@ SELECT pg_catalog.setval('time_log_pk_seq', 1, false);
 -- Name: time_log_pk_seq1; Type: SEQUENCE SET; Schema: public; Owner: chrs
 --
 
-SELECT pg_catalog.setval('time_log_pk_seq1', 2222, true);
+SELECT pg_catalog.setval('time_log_pk_seq1', 2223, true);
 
 
 --
@@ -4471,6 +4591,14 @@ ALTER TABLE ONLY attritions
 
 ALTER TABLE ONLY calendar
     ADD CONSTRAINT calendar_pkey PRIMARY KEY (pk);
+
+
+--
+-- Name: civil_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: chrs
+--
+
+ALTER TABLE ONLY civil_statuses
+    ADD CONSTRAINT civil_statuses_pkey PRIMARY KEY (pk);
 
 
 --
@@ -4543,6 +4671,14 @@ ALTER TABLE ONLY employment_statuses
 
 ALTER TABLE ONLY feedbacks
     ADD CONSTRAINT feedbacks_pkey PRIMARY KEY (pk);
+
+
+--
+-- Name: gender_type_pkey; Type: CONSTRAINT; Schema: public; Owner: chrs
+--
+
+ALTER TABLE ONLY gender_type
+    ADD CONSTRAINT gender_type_pkey PRIMARY KEY (pk);
 
 
 --
