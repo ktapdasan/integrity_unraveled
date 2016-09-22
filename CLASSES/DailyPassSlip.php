@@ -348,8 +348,8 @@ EOT;
                         to_char(time_to, 'DD-Mon-YYYY<br/>HH12:MI:SS AM') as timeto_html,
                         (select status from daily_pass_slip_status where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk order by daily_pass_slip_status.date_created desc limit 1) as status,
                         (
-                            select 
-                                remarks || ' <br /> ' || date_created::timestamp(0)
+                             select 
+                            array_to_string(array_agg('<div>' || remarks || '</div> <div><span>' || date_created::timestamp(0) || '</span></div>'), '<hr />')
                             from daily_pass_slip_status 
                             where daily_pass_slip.pk = daily_pass_slip_status.daily_pass_slip_pk 
                             order by pk desc limit 1
