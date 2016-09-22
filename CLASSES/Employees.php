@@ -85,7 +85,8 @@ EOT;
                         employees.last_name,
                         employees.email_address,
                         employees_titles.titles_pk,
-                        employees.details->'company'->'work_schedule' as work_schedule
+                        employees.details->'company'->'work_schedule' as work_schedule,
+                        employees.leave_balances
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
                     where employees.archived = false
@@ -94,6 +95,34 @@ EOT;
                 select
                     *
                 from A
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function fetch_birthday_celebrants(){
+        $sql = <<<EOT
+                select 
+                    employees.pk,
+                    employees.employee_id,
+                    employees.first_name,
+                    employees.middle_name,
+                    employees.last_name,
+                    employees.email_address,
+                    employees_titles.titles_pk,
+                    employees.details->'company'->'work_schedule' as work_schedule,
+                    employees.leave_balances,
+                    to_char(to_date(details->'personal'->>'birth_date', 'YYYY-mm-dd'), 'mm') as bday_month,
+                    to_char(now(), 'mm') as month_now
+                from employees
+                left join employees_titles on (employees.pk = employees_titles.employees_pk)
+                where employees.archived = false
+                    and (
+                            to_char(to_date(details->'personal'->>'birth_date', 'YYYY-mm-dd'), 'mm') = to_char(now(), 'mm') or
+                            to_char(to_date(details->'personal'->>'birth_date', 'YYYY-mm-dd'), 'mm') = to_char(now() - interval '1 month', 'mm')
+                        )
+                order by last_name, first_name
                 ;
 EOT;
 
@@ -925,6 +954,12 @@ EOT;
         return ClassParent::update($sql);
     }
 
+    public function auto_update_leave_balances($sql){
+        return ClassParent::update($sql);
+    }
+
+
+
 //      public function open_manual_log($data){
 //        foreach($data as $k=>$v){
 //             $data[$k] = pg_escape_string(trim(strip_tags($v)));
@@ -962,5 +997,6 @@ select
                         and Q.log_date = logs.log_date and Q.type = 'In'
                     ) as log_time,
 */
+
 
 ?>
