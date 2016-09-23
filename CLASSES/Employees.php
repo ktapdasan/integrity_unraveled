@@ -9,9 +9,6 @@ class Employees extends ClassParent
     var $last_name = NULL;
     var $email_address = NULL;
     var $business_email_address = NULL;
-    var $titles_pk = NULL;
-    var $levels_pk = NULL;
-    var $department = NULL;
     var $date_created = NULL;
     var $archived = NULL;
 
@@ -23,9 +20,6 @@ class Employees extends ClassParent
                                     $last_name,
                                     $email_address,
                                     $business_email_address,
-                                    $titles_pk,
-                                    $levels_pk,
-                                    $department,
                                     $date_created,
                                     $archived
                                 )
@@ -174,26 +168,13 @@ EOT;
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
         $str=$data['searchstring'];
-        $lvl=$data['levels_pk'];
-        $dept=$data['departments_pk'];
-        $posi=$data['titles_pk'];
         $where = "";
 
         if ($str){
             $where .= " AND (first_name ILIKE '$str%' OR middle_name ILIKE '$str%' 
                 OR last_name ILIKE '$str%' OR employee_id ILIKE '$str%' )";
         }
-
-        if($lvl){
-            $where.=" AND levels_pk = '$lvl'";
-        }
-        if($dept){
-            $where.=" AND department = '{{$dept}}'";
-        }
-        if($posi){
-            $where.=" AND titles_pk = '$posi'";
-        }
-
+        
         $status = $data['status'];
         if ($status){
             if ($status == 'Active'){
@@ -213,13 +194,9 @@ EOT;
                     groupings.supervisor_pk as supervisor_pk,
                     (select first_name||' '||last_name from employees where pk = groupings.supervisor_pk)
                     as supervisor,
-                    titles_pk,
                     (select title from titles where pk = cast(employees.details->'company'->>'titles_pk' as int)) as title,
-                    levels_pk,
                     (select level_title from levels where pk = cast(employees.details->'company'->>'levels_pk' as int)) as level,
-                    array_to_string(department, ',') as departments_pk,
-                    department as departments_pk_arr,
-                    (select array_to_string(array_agg(department), ', ') from departments where pk = any(employees.department)) as department,
+                    (select department from departments where pk = cast(employees.details->'company'->>'departments_pk' as int)) as department,
                     date_created,
                     details, 
                     employees.archived,
@@ -241,7 +218,6 @@ EOT;
         $sql = <<<EOT
                 select 
                     pk,
-                    employee_id,
                     first_name,
                     middle_name,
                     last_name,
@@ -747,8 +723,6 @@ EOT;
         }
 
         
- 
-        $department = '{' . $this->department . '}';
         $details = json_encode($extra['details']);
         // $personal = json_encode($extra['personal']);
 
@@ -756,26 +730,10 @@ EOT;
         $sql .= <<<EOT
                 UPDATE employees set
                 (
-                    first_name,
-                    middle_name,
-                    last_name,
-                    business_email_address,
-                    email_address,
-                    titles_pk,
-                    department,
-                    levels_pk,
                     details
                 )
                 =
                 (
-                    '$this->first_name',
-                    '$this->middle_name',
-                    '$this->last_name',
-                    '$this->business_email_address',
-                    '$this->email_address',
-                    $this->titles_pk,
-                    '$department',
-                    $this->levels_pk,
                     '$details'
                 )
                 where pk = $this->pk
@@ -885,13 +843,32 @@ EOT;
                 pk,
                 first_name||' '|| last_name as name
             from employees
-            where levels_pk != 3 and
-                levels_pk != 7
+            where 
+            cast(employees.details->'company'->>'levels_pk' as int) != 3 
+            AND 
+            cast(employees.details->'company'->>'levels_pk' as int) != 7
             ;
 EOT;
 
         return ClassParent::get($sql);
     }
+
+//     public function get_supervisors(){
+
+//         $sql = <<<EOT
+//             select 
+//                 pk,
+//             (select details->'personal'->>'first_name' ||' '|| details->'personal'->>'last_name' from employees) as name
+//             from employees
+//             where 
+//             cast(employees.details->'company'->>'levels_pk' as int) != 3 
+//             AND 
+//             cast(employees.details->'company'->>'levels_pk' as int) != 7
+//             ;
+// EOT;
+
+//         return ClassParent::get($sql);
+//     }
 
     public function get_permissions(){
         $sql = <<<EOT

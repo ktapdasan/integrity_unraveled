@@ -256,15 +256,17 @@ update employees set
 details = jsonb_set(details, '{company}', ' {
 	"departments_pk": "26",
 	"employee_id": "201400072",
-	"levels_pk": "7",
-	"titles_pk": "13",
+	"levels_pk": "8",
+	"titles_pk": "8",
 	"supervisor": "17",
+	"employee_status_pk": "3",
+	"employment_type_pk": "1",
 	"email_address": "ktapdasan.chrs@gmail.com",
 	"business_email_address": "ken.tapdasan@chrsglobal.com",
 	"salary": 
 	{
 	"salary_type": "cash",
-	"amount": ""
+	"amount": "55555555"
 	},
 	"work_schedule": {
 		"sunday": null,
@@ -336,14 +338,15 @@ details = jsonb_set(details, '{personal}', '
 "middle_name": "Villanueva", 
 "last_name": "Tapdasan", 
 "email_address": "ktapdasan.chrs@gmail.com",
-"gender": "1",
-"civilstatus": "2",
+"gender_pk": "1",
+"civilstatus_pk": "2",
+"religion": "Catholic",
 "present_address": "Mandaluyong",
 "permanent_address": "Dasmarinas",
 "birth_date": "1995-07-27",
 "contact_number": "09504151950",
 "landline_number": "5340368",
-"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg",
+"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg"
 }
 ', true)
 where pk = 12;

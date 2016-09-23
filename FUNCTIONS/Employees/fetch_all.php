@@ -10,10 +10,6 @@ $filters = array(
 					'last_name' => NULL,
 					'email_address' => NULL,
 					'business_email_address' => NULL,
-					'titles_pk' => NULL,
-					'level' => NULL,
-					'levels_pk' => NULL,
-					'department' => NULL,
 					'date_created' => NULL,
 					'details' => NULL,
 					'archived' => NULL
@@ -31,10 +27,6 @@ $class = new Employees(
 						$filters['last_name'], 
 						$filters['email_address'], 
 						$filters['business_email_address'], 
-						$filters['titles_pk'], 
-						$filters['level'],
-						$filters['levels_pk'], 
-						$filters['department'], 
 						$filters['date_created'],
 						$filters['details'],
 						$filters['archived']
