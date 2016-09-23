@@ -5,6 +5,7 @@ require_once('../../CLASSES/Default_values.php');
 $class = new Default_values(	
 								NULL,
 								$_POST['name'],
+								NULL,
 								NULL
 							);
 

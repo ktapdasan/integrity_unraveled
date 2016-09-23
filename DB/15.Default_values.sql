@@ -24,7 +24,10 @@ values
 	'leave',
 	'{
 		"regularization" : 180,
-		"staggered" : "Staggered monthly"
+		"staggered" : "Staggered monthly",
+		"carry_over": "5",
+		"leave_per_month": {"1": "1", "3": "1"},
+		"max_increase": {"status": "true", "details": {"1": "1"}, "run_upon": "regularization"}
 	}'::jsonb
 );
 
@@ -55,3 +58,70 @@ values
 
 }'::jsonb
 );
+
+
+insert into default_values
+ (
+ name,
+ details
+ )
+ values
+ (
+ 'cutoff_dates',
+ '{
+ 			"first":
+ 			{
+ 			"from":"1","to":"15"
+ 			},
+ 			"second":
+ 			{
+ 			"from":"16","to":"31"
+ 			},
+ 			"cutoff_type":
+ 			{
+ 			"type": "2"
+ 			}}'::jsonb
+ );
+
+ insert into default_values
+ (
+ name,
+ details
+ )
+ values
+ (
+ 'working_hours',
+ '{
+ 			"hrs": "16"
+
+			} '::jsonb
+ );
+
+  insert into default_values
+ (
+ name,
+ details
+ )
+ values
+ (
+ 'birthday_leave',
+ '{
+ 			"status": "true",
+ 			"count": "1"
+
+			} '::jsonb
+ );
+
+/* insert into default_values
+ (
+ name,
+ details
+ )
+ values
+ (
+ 'overtime_leave',
+ '{
+ 			"leave_filed_pk": "16"
+
+			} '::jsonb
+ );*/

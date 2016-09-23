@@ -71,7 +71,7 @@ app.controller('Admin_leave', function(
             $scope.leave_types.status = true;
             $scope.leave_types.data = data.data.result;
             $scope.leave_types.count = data.data.result.length;
-6
+
         })
         .then(null, function(data){
             $scope.leave_types.status = false;

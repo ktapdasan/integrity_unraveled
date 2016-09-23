@@ -121,6 +121,7 @@ app.controller('Cutoff', function(
         var promise = CutoffFactory.fetch_dates();
         promise.then(function(data){
             $scope.cutoffdates.data = data.data.result;
+            console.log($scope.cutoffdates.data);
             $scope.cutoffdates.data[0].dates = JSON.parse($scope.cutoffdates.data[0].dates);
             
             $scope.filter.status = $scope.cutoffdates.data[0].cutoff_types_pk;

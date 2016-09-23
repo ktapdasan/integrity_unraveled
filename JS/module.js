@@ -95,10 +95,10 @@ app.config(function($routeProvider){
         controller: 'Admin_leave',
         templateUrl: 'partials/admin/leaves/index.html'
     })
-    .when('/admin/work_days',
+    .when('/admin/default_values',
     {
-        controller: 'Work_days',
-        templateUrl: 'partials/admin/work_days/index.html'
+        controller: 'Default_values',
+        templateUrl: 'partials/admin/default_values/index.html'
     })
     .when('/admin/permissions',
     {

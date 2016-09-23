@@ -5,10 +5,11 @@ require_once('../../CLASSES/Default_values.php');
 $class = new Default_values(
 								NULL,
 		                        NULL,
+		                        NULL,
 		                        NULL
 							);
 
-$data = $class->update_work_days($_POST);
+$data = $class->update_birthday_leave($_POST);
 
 header("HTTP/1.0 404 Error saving contact");
 if($data['status']){
