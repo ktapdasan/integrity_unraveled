@@ -163,6 +163,8 @@ th {
                 <tr>
                     <th>Name</th>
                     <th>Date Created</th>
+                    <th>Leave Types</th>
+                    <th>Date of Leave</th>
                     <th>Remarks</th>
                     <th>Status</th>
                 </tr>
@@ -171,6 +173,8 @@ th {
                 <tr style="width:20px;" ng-repeat="(k, v) in cancellation_leave.data" style="cursor:pointer;" ng-if="cancellation_leave.status">
                     <td col width="50">{{v.name}}</td>
                     <td col width="50">{{v.date_created}}</td>
+                    <td col width="50">{{v.leave_types}}</td>
+                    <td col width="50">{{v.date_started}} <br> {{v.date_ended}}</td>
                     <td col width="180">{{v.remarks}}</td>
                     <td col width="50"> 
                         <div ng-class ="v.status === 'Pending' && 'hide' || 'display'">

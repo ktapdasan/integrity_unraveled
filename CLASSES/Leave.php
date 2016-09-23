@@ -647,7 +647,22 @@ EOT;
                     ) as remarks,
                     (
                         select status from leave_cancellation_status where leave_cancellation_pk = leave_cancellation.pk order by date_created desc limit 1
-                    ) as status
+                    ) as status,
+                    (
+                        select leave_types.name from leave_filed
+                        left join leave_types on 
+                        (leave_filed.leave_types_pk = leave_types.pk)
+                        where  leave_filed.pk = leave_cancellation.leave_filed_pk
+                        order by leave_cancellation.date_created
+                        desc limit 1
+                    ) as leave_types,
+                    (
+                        select date_started :: date from leave_filed where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
+                    ) as date_started,
+                   
+                    (
+                        select date_ended :: date from leave_filed where leave_filed_pk = leave_filed.pk order by date_created desc limit 1
+                    ) as date_ended
                     from 
                     leave_cancellation
                     where 
