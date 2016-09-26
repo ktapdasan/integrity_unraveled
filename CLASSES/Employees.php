@@ -192,7 +192,7 @@ EOT;
                     employee_id,
                     email_address,
                     groupings.supervisor_pk as supervisor_pk,
-                    (select first_name||' '||last_name from employees where pk = groupings.supervisor_pk)
+                    (select (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name') from employees where pk = groupings.supervisor_pk)
                     as supervisor,
                     (select title from titles where pk = cast(employees.details->'company'->>'titles_pk' as int)) as title,
                     (select level_title from levels where pk = cast(employees.details->'company'->>'levels_pk' as int)) as level,
@@ -205,7 +205,7 @@ EOT;
                 left join groupings on (groupings.employees_pk = employees.pk)
                 left join employees_permissions on (employees_permissions.employees_pk = employees.pk)
                 where true
-                $where
+                $where 
                 order by date_created
                 ;
 EOT;
@@ -841,34 +841,19 @@ EOT;
         $sql = <<<EOT
             select 
                 pk,
-                first_name||' '|| last_name as name
+                (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name') as name
             from employees
             where 
-            cast(employees.details->'company'->>'levels_pk' as int) != 3 
-            AND 
             cast(employees.details->'company'->>'levels_pk' as int) != 7
+            AND
+            cast(employees.details->'company'->>'levels_pk' as int) != 3
             ;
 EOT;
 
         return ClassParent::get($sql);
     }
 
-//     public function get_supervisors(){
-
-//         $sql = <<<EOT
-//             select 
-//                 pk,
-//             (select details->'personal'->>'first_name' ||' '|| details->'personal'->>'last_name' from employees) as name
-//             from employees
-//             where 
-//             cast(employees.details->'company'->>'levels_pk' as int) != 3 
-//             AND 
-//             cast(employees.details->'company'->>'levels_pk' as int) != 7
-//             ;
-// EOT;
-
-//         return ClassParent::get($sql);
-//     }
+// (select (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name'))
 
     public function get_permissions(){
         $sql = <<<EOT

@@ -435,7 +435,7 @@ select{
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
                             </td>
                             <td id="css">
-                                <input name="bdate" ng-model="employees.birth_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
+                                <input name="bdate" ng-model="employee.birth_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>{{employeek.birth_dateinsert}}{{employee.birth_date}}
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bdate.$error.required">Birth Date is required.</span>
                             </td>
 
@@ -667,7 +667,7 @@ select{
 
                     </td>
                     <td id="css">
-                        <input name="inputd" ng-model="employees.date_started" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
+                        <input name="inputd" ng-model="employee.date_started" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.required">Start Date is required.</span>
                     </tr>
                     </tr>
@@ -741,15 +741,15 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Sunday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_sunday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
-
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_sunday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker ng-change="date_time.timein = employee.timein_sunday "/>
+                        {{date_time.timein}}
                         <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_sunday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Monday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_monday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_monday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
 
                         <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_monday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>

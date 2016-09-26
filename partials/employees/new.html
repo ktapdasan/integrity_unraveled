@@ -164,14 +164,14 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">First Name:</label> 
                             </td>
                             <td id="css">     
-                                <input name="firstName" required ng-model="employees.first_name" ng-change="data_data.fname = employees.first_name" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                                <input name="firstName" required ng-model="employees.first_name" ng-change="data_data.fname = employees.first_name" type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first tabindex="1" />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                             </td>
                             <td>
                                 <label style="display:block; float:left;">E-mail Address:</label>
                             </td>
                             <td id="css">
-                                <input name="emailAddress" required ng-model="employees.email_address" ng-change="data.email = employees.email_address" type="email" style="display: block; float: left; width:340px;height:36px;" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
+                                <input name="emailAddress" required ng-model="employees.email_address" ng-change="data.email = employees.email_address" type="email" style="display: block; float: left; width:340px;height:36px;" tabindex="2" /> <span style="color:red; display: block; float: left; width:340px; ;" ng-show="myForm.emailAddress.$error.required">E-mail Address is required.</span>
 
                                 <span style="color:red; display: block; float: left; width:340px;" ng-show="myForm.emailAddress.$error.email">Please, write a valid E-mail Address address.</span>
                             </td>               
@@ -181,14 +181,14 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Middle Name:</label>
                             </td>
                             <td id="css">
-                                <input name="middleName" required ng-model="employees.middle_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <input name="middleName" required ng-model="employees.middle_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first tabindex="3"/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                             </td>
                             <td>
                                 <label style="display:block; float:left; padding-right:10px">Religion:</label>
                             </td>
                             <td id="css">
-                                <input name="religion" required ng-model="employees.religion" type="text"  style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <input name="religion" required ng-model="employees.religion" type="text"  style="display: block; float: left; width:340px; height:36px;" capitalize-first tabindex="4"/>
                                 <span style="color:red;display: block; float: left; width:400px;" ng-show="myForm.religion.$error.required">Religion is required.</span>
                             </td>
                         </tr>
@@ -197,14 +197,14 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Last Name:</label>
                             </td>
                             <td id="css">
-                                <input name="lastName" required ng-model="employees.last_name" ng-change="data_data.lname1 = employees.last_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first/>
+                                <input name="lastName" required ng-model="employees.last_name" ng-change="data_data.lname1 = employees.last_name" type="text" style="display: block; float: left; width:340px; height:36px;" capitalize-first tabindex="5"/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                             </td>
                             <td>
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
                             </td>
                             <td id="css">
-                                <input name="bdate" ng-model="employees.birth_date" type="date" style="display: block; float: left; width:340px; height:36px;" ng-required="true"/>
+                                <input name="bdate" ng-model="employees.birth_date" type="date" style="display: block; float: left; width:340px; height:36px;" ng-required="true" tabindex="6"/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bdate.$error.required">Birth Date is required.</span>
                             </td>
                         </tr>
@@ -214,7 +214,7 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
                             </td>
                             <td id="css">
-                                <select name="gender" required ng-model="employees.gender" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                <select name="gender" tabindex="7" required ng-model="employees.gender" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                                     <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.pk}}">
                                         {{v.gender}}
@@ -226,7 +226,7 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
                             </td>
                             <td id="css">
-                                <select name="cistatus" required ng-model="employees.civilstatus" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                <select name="cistatus" tabindex="8" required ng-model="employees.civilstatus" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
                                     <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.pk}}">
                                         {{v.civilstatus}}
@@ -240,13 +240,13 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Contact Number:</label> 
                             </td>
                             <td id="css">     
-                                <input name="cnumber" required ng-model="employees.contact_number"  type="text" style="display: block; float: left; width:340px; height:36px;" is-number placeholder="(Optional)" />
+                                <input name="cnumber" tabindex="9" required ng-model="employees.contact_number"  type="text" style="display: block; float: left; width:340px; height:36px;" is-number placeholder="(Optional)" />
                             </td>
                              <td>
                                 <label style="display:block; float:left; padding-right:10px">Landline Number:</label> 
                             </td>
                             <td id="css">     
-                                <input name="lnumber" required ng-model="employees.landline_number"  type="text" style="display: block; float: left; width:340px; height:36px;"  is-number placeholder="(Optional)"/>
+                                <input name="lnumber" tabindex="10" required ng-model="employees.landline_number"  type="text" style="display: block; float: left; width:340px; height:36px;"  is-number placeholder="(Optional)"/>
                             </td>
                         </tr> 
                         <tr>
@@ -254,14 +254,14 @@ body>footer .footer-main {
                                 <label style="display:block; float:left; padding-right:10px">Present Address:</label> 
                             </td>
                             <td id="css">     
-                                <input name="paddress" required ng-model="employees.present_address"  type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                                <input name="paddress" required ng-model="employees.present_address"  type="text" style="display: block; float: left; width:340px; height:36px;" tabindex="11" capitalize-first />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.paddress.$error.required">Present address is required.</span>
                             </td>
                              <td>
                                 <label style="display:block; float:left; padding-right:10px">Permanent Address:</label> 
                             </td>
                             <td id="css">     
-                                <input name="pladdress" required ng-model="employees.permanent_address"  type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
+                                <input name="pladdress" tabindex="12" required ng-model="employees.permanent_address"  type="text" style="display: block; float: left; width:340px; height:36px;"  capitalize-first />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.pladdress.$error.required">Permanent address is required.</span>
                             </td>
                         </tr> 
@@ -270,14 +270,14 @@ body>footer .footer-main {
                             <label style="display:block; float:left; padding-right:10px">In case of Emergency who to contact:</label> 
                         </td>
                              <td id="css">     
-                                <input name="ename" required ng-model="employees.emergency_name"  type="text" style="display: block; float: left; width:340px; height:36px;" placeholder="Contact Person Name" capitalize-first />
+                                <input name="ename" tabindex="13" required ng-model="employees.emergency_name"  type="text" style="display: block; float: left; width:340px; height:36px;" placeholder="Contact Person Name" capitalize-first />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ename.$error.required">Contact person is required.</span>
                             </td>
                         <td>
                             <label style="display:block; float:left; padding-right:10px">Contact number:</label> 
                         </td>
                              <td id="css">     
-                                <input name="enumber" required ng-model="employees.emergency_contact_number"  type="text" style="display: block; float: left; width:340px; height:36px;" placeholder="Contact Person Contact Number" is-number ng-pattern="/^\d{4}-\d{3}-\d{4}$/"/>
+                                <input name="enumber" tabindex="14" required ng-model="employees.emergency_contact_number"  type="text" style="display: block; float: left; width:340px; height:36px;" placeholder="Contact Person Contact Number" is-number ng-pattern="/^\d{4}-\d{3}-\d{4}$/"/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.enumber.$error.required">Contact number is required.</span>
                             </td>
                         </tr>
@@ -288,7 +288,7 @@ body>footer .footer-main {
                             <td colspan="2">
                                 <div style="margin-top: 20px;">
                                     <span style="font-size:12px; color:#FF0000;">* Only jpg, png files are allowed.</span>
-                                    <input type="file"  nv-file-select="" accept=".jpg,.png,.jpeg" uploader="uploader" />
+                                    <input type="file" tabindex="15" nv-file-select="" accept=".jpg,.png,.jpeg" uploader="uploader" />
                                     <br/>
                                 </div>
 
@@ -310,10 +310,10 @@ body>footer .footer-main {
                                             <div class="progress" style="">
                                                 <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
                                             </div>
-                                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                            <button type="button" tabindex="16" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
                                                 <span class="glyphicon glyphicon-upload"></span> Upload
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                            <button type="button" tabindex="17" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
                                                 <span class="glyphicon glyphicon-ban-circle"></span> Cancel
                                             </button>
 
@@ -325,8 +325,8 @@ body>footer .footer-main {
                         </tr>
                         <tr>
                             <td colspan = "4">
-                                <center style="font-size: 18px; font-style: bold;margin-top:20px;margin-left:-100px;">
-                                    <input type="button" ng-disabled="myForm.firstName.$error && myForm.firstName.$invalid
+                                <center  style="font-size: 18px; font-style: bold;margin-top:20px;margin-left:-100px;">
+                                    <input type="button" tabindex="18" ng-disabled="myForm.firstName.$error && myForm.firstName.$invalid
                                     || myForm.middleName.$error && myForm.middleName.$invalid
                                     || myForm.lastName.$error && myForm.lastName.$invalid
                                     || myForm.emailAddressAddressAddress.$pristine || myForm.emailAddressAddress.$dirty && myForm.emailAddress.$invalid
@@ -335,7 +335,7 @@ body>footer .footer-main {
                                     || myForm.p1address.$error && myForm.p1address.$invalid
                                     || myForm.paddress.$error && myForm.paddress.$invalid
                                     || myForm.bdate.$error && myForm.bdate.$invalid" class="large button green fa-fa" value="Next" ng-click="change_tab('education')" />
-                                    <input type="reset" class="large button green fa-fa" value="Clear" />
+                                    <input type="reset" tabindex="19" class="large button green fa-fa" value="Clear" />
                                 </center>
                             </td>
                         </tr>
@@ -421,7 +421,7 @@ body>footer .footer-main {
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
                     </td>
                     <td id="css">
-                        <input name="user" required ng-model="employees.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:340px; height:38px;" />
+                        <input name="user" required ng-model="employees.employee_id" maxlength = "9"type = "text" tabindex="1" is-number style="display: block; float: left; width:340px; height:38px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.user.$error.required">Employee I.D. is required.</span>
                     </td>
                     <td>

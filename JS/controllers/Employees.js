@@ -6,7 +6,8 @@ app.controller('Employees', function(
                                         ngDialog,
                                         UINotification,
                                         FileUploader,
-                                        md5
+                                        md5,
+                                        $filter
   									){
 
     $scope.pk='';
@@ -28,6 +29,9 @@ app.controller('Employees', function(
     $scope.employees.count = 0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
+    $scope.date_time = {
+        timein: ''
+    };
     
     $scope.modal = {};
     $scope.level_class = 'orig_width';
@@ -572,37 +576,50 @@ app.controller('Employees', function(
         if ($scope.employees.data[k].details.company.employment_type_pk == undefined) {
             $scope.employees.data[k].details.company.employment_type_pk = null;
         }
+        if ($scope.employees.data[k].details.personal.birth_date == undefined) {
+            $scope.employees.data[k].details.personal.birth_date = null;
+        }
+        if ($scope.employees.data[k].details.company.date_started == undefined) {
+            $scope.employees.data[k].details.company.date_started = null;
+        }
 
-        $scope.employee.intern_hours    = $scope.employees.data[k].details.company.hours;
-        $scope.employee.employee_id     = $scope.employees.data[k].details.company.employee_id;
-        $scope.employee.email_address   = $scope.employees.data[k].details.personal.email_address;
+
+        // $scope.employee.birth_date = $filter('date')($scope.employee.birth_date, "MM-dd-yyyy");
+
+        $scope.employee.intern_hours           = $scope.employees.data[k].details.company.hours;
+        $scope.employee.employee_id            = $scope.employees.data[k].details.company.employee_id;
+        $scope.employee.email_address          = $scope.employees.data[k].details.personal.email_address;
         $scope.employee.business_email_address = $scope.employees.data[k].details.company.business_email_address; 
-        $scope.employee.first_name      = $scope.employees.data[k].details.personal.first_name;
-        $scope.employee.middle_name     = $scope.employees.data[k].details.personal.middle_name;
-        $scope.employee.last_name       = $scope.employees.data[k].details.personal.last_name;
-        $scope.employee.contact_number  = $scope.employees.data[k].details.personal.contact_number;
-        $scope.employee.landline_number = $scope.employees.data[k].details.personal.landline_number;
-        $scope.employee.present_address = $scope.employees.data[k].details.personal.present_address;
-        $scope.employee.permanent_address = $scope.employees.data[k].details.personal.permanent_address;
-        $scope.employee.data_sss        = $scope.employees.data[k].details.government.data_sss;
-        $scope.employee.data_tin        = $scope.employees.data[k].details.government.data_tin;
-        $scope.employee.data_pagmid     = $scope.employees.data[k].details.government.data_pagmid;
-        $scope.employee.data_phid       = $scope.employees.data[k].details.government.data_phid;
-        $scope.employee.profile_picture = $scope.employees.data[k].details.personal.profile_picture;
-        $scope.employee.salary_type     = $scope.employees.data[k].details.company.salary.salary_type;
-        $scope.employee.salary_bank_name= $scope.employees.data[k].details.company.salary.bank_name;
-        $scope.employee.salary_account_number = $scope.employees.data[k].details.company.salary.account_number;
-        $scope.employee.salary_mode_payment = $scope.employees.data[k].details.company.salary.mode_payment;
-        $scope.employee.salary_amount   = $scope.employees.data[k].details.company.salary.amount;
-        $scope.employee.departments_pk  = $scope.employees.data[k].details.company.departments_pk;
-        $scope.employee.levels_pk  = $scope.employees.data[k].details.company.levels_pk;
-        $scope.employee.titles_pk  = $scope.employees.data[k].details.company.titles_pk;
-        $scope.employee.gender_pk  = $scope.employees.data[k].details.personal.gender_pk;
-        $scope.employee.religion  = $scope.employees.data[k].details.personal.religion;
-        $scope.employee.employee_status_pk  = $scope.employees.data[k].details.company.employee_status_pk;
-        $scope.employee.employment_type_pk  = $scope.employees.data[k].details.company.employment_type_pk;
-        $scope.employee.civilstatus_pk = $scope.employees.data[k].details.personal.civilstatus_pk; 
-
+        $scope.employee.first_name             = $scope.employees.data[k].details.personal.first_name;
+        $scope.employee.middle_name            = $scope.employees.data[k].details.personal.middle_name;
+        $scope.employee.last_name              = $scope.employees.data[k].details.personal.last_name;
+        $scope.employee.contact_number         = $scope.employees.data[k].details.personal.contact_number;
+        $scope.employee.landline_number        = $scope.employees.data[k].details.personal.landline_number;
+        $scope.employee.present_address        = $scope.employees.data[k].details.personal.present_address;
+        $scope.employee.permanent_address      = $scope.employees.data[k].details.personal.permanent_address;
+        $scope.employee.data_sss               = $scope.employees.data[k].details.government.data_sss;
+        $scope.employee.data_tin               = $scope.employees.data[k].details.government.data_tin;
+        $scope.employee.data_pagmid            = $scope.employees.data[k].details.government.data_pagmid;
+        $scope.employee.data_phid              = $scope.employees.data[k].details.government.data_phid;
+        $scope.employee.profile_picture        = $scope.employees.data[k].details.personal.profile_picture;
+        $scope.employee.salary_type            = $scope.employees.data[k].details.company.salary.salary_type;
+        $scope.employee.salary_bank_name       = $scope.employees.data[k].details.company.salary.bank_name;
+        $scope.employee.salary_account_number  = $scope.employees.data[k].details.company.salary.account_number;
+        $scope.employee.salary_mode_payment    = $scope.employees.data[k].details.company.salary.mode_payment;
+        $scope.employee.salary_amount          = $scope.employees.data[k].details.company.salary.amount;
+        $scope.employee.departments_pk         = $scope.employees.data[k].details.company.departments_pk;
+        $scope.employee.levels_pk              = $scope.employees.data[k].details.company.levels_pk;
+        $scope.employee.titles_pk              = $scope.employees.data[k].details.company.titles_pk;
+        $scope.employee.gender_pk              = $scope.employees.data[k].details.personal.gender_pk;
+        $scope.employee.religion               = $scope.employees.data[k].details.personal.religion;
+        $scope.employee.employee_status_pk     = $scope.employees.data[k].details.company.employee_status_pk;
+        $scope.employee.employment_type_pk     = $scope.employees.data[k].details.company.employment_type_pk;
+        $scope.employee.civilstatus_pk         = $scope.employees.data[k].details.personal.civilstatus_pk;
+        $scope.employee.birth_date             = new Date($scope.employees.data[k].details.personal.birth_date);
+        $scope.employee.date_started           = new Date($scope.employees.data[k].details.company.date_started);
+        $scope.employee.timein_monday          = new Date($scope.employees.data[k].details.company.work_schedule.monday.ins);
+        
+        
         $scope.isShown = function(salarys_type) {
             return salarys_type === $scope.employee.salary_type;
         };
@@ -613,7 +630,7 @@ app.controller('Employees', function(
             save : 'Apply Changes',
             close : 'Cancel',
         };
-
+        
         ngDialog.openConfirm({
             template: 'EditModal',
             preCloseCallback: function(value) {
