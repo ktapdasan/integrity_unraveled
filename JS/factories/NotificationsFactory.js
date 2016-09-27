@@ -37,5 +37,15 @@ app.factory('NotificationsFactory', function($http){
         return promise;
     };
 
+    factory.get_birthday = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Notifications/get_birthday.php',
+            method: 'GET'
+            
+        })
+
+        return promise;
+    };
+
     return factory;
 });

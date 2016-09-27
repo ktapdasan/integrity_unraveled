@@ -41,6 +41,8 @@ app.controller('Dashboard', function(
         logouthover:false
     };
 
+    $scope.birthdays={};
+
     
 
     init();
@@ -82,10 +84,11 @@ app.controller('Dashboard', function(
             $scope.profile.details = JSON.parse($scope.profile.details);
             $scope.profile.permission = JSON.parse($scope.profile.permission);
             $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
-            //console.log($scope.profile);
+            
             get_last_log_today();
             get_current_date();
             get_approved_leaves();
+            get_birthday();
         })   
     }
 
@@ -98,6 +101,7 @@ app.controller('Dashboard', function(
 
     function set_greetings(){
         var date = moment(new Date());
+        
 
         var hour = date.format('HH');
         if(parseInt(hour) >= 12 && parseInt(hour) < 18){
@@ -189,7 +193,7 @@ app.controller('Dashboard', function(
 
                 var promise = TimelogFactory.submit_log(filter);
                 promise.then(function(data){
-                    console.log($scope.lastlog.date);
+                    
                     get_last_log_today();
 
                     UINotification.success({
@@ -361,6 +365,7 @@ app.controller('Dashboard', function(
 
             var fromdd = timeFrom.getDate();
             var frommm = timeFrom.getMonth()+1; //January is 0!
+            
             var fromyyyy = timeFrom.getFullYear();
 
             var schedule_from = fromyyyy+"-"+frommm+"-"+fromdd + " " + z[$scope.current_date.day.toLowerCase()]['in'];
@@ -451,7 +456,21 @@ app.controller('Dashboard', function(
         };
     }
 
-    
+    function get_birthday(){
+        
+        var promise = NotificationsFactory.get_birthday();
+        promise.then(function(data){
+
+            $scope.birthdays.data = data.data.result;
+            $scope.birthdays.status = true; 
+           
+        })
+        .then(null, function(data){
+
+            $scope.birthdays.status = false;
+
+        });
+    }
 
 
 

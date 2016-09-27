@@ -257,20 +257,23 @@ body{
             <div class="notification_data">
                 <ul class="nav">
 
-                    <li ng-repeat="(k,v) in birthdays.data"  ng-class="v.read==='f' && 'display'|| 'hide'">
-                        <a ng-click="goto(k)" >
-                            <p style="font-size:13px;margin-bottom:0px;">{{v.notification}}</p>
-                            <div style="font-size:10px; color:#AAA;" >
-                            
-                            {{v.created_by}}
+                    <li ng-repeat="(k,v) in birthdays.data">
+                        <a>
+                            <p style="font-size:13px;margin-bottom:0px;" ng-class="v.birthday===v.now && 'display'|| 'hide'">
+                            {{v.birthday}}
                             <br>
-                            {{v.date_created}}
+                            {{v.name}}
+                            </p>
+                            <div style="font-size:10px; color:#AAA;" ng-class="v.birthday!==v.now && 'display'|| 'hide'">
+                            {{v.birthday}}
+                            <br>
+                            {{v.name}}
                             </div>
                         </a>
                     </li>
                 </ul>
             </div>
-            <div class="notification_data" ng-if="!notifications.status">
+            <div class="notification_data" ng-if="!birthdays.status">
                 <ul class="nav"><li style="padding-top:20px;padding-bottom:20px;padding-left:10px">No Birthday Celebrants for this month</li></ul>
             </div>
         </div>

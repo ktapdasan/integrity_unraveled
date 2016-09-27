@@ -66,5 +66,25 @@ EOT;
           return ClassParent::update($sql);
     }
 
+
+    public function get_birthday(){
+         $sql = <<<EOT
+                select 
+                pk,
+                (select last_name ||', '|| first_name ||' '|| middle_name) as name,
+                to_char((employees.details->'personal'->>'birth_date')::date,'Mon DD')AS birthday,
+                to_char(now()::date,'Mon DD')AS now
+                from employees
+                where
+                to_char((employees.details->'personal'->>'birth_date')::date,'MM')=
+                to_char(now()::date,'MM')
+                order by employees.details->'personal'->'birth_date'
+                ;
+EOT;
+            return ClassParent::get($sql);
+
+    }
+
 }
+
 ?>
