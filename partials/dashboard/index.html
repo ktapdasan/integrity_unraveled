@@ -259,12 +259,10 @@ body{
 
                     <li ng-repeat="(k,v) in birthdays.data">
                         <a>
-                            <p style="font-size:13px;margin-bottom:0px;" ng-class="v.birthday===v.now && 'display'|| 'hide'">
-                            {{v.birthday}}
-                            <br>
-                            {{v.name}}
+                            <p style="font-size:13px;margin-bottom:0px; color:red;" ng-class="v.birthday===v.now && 'display'|| 'hide'">
+                            TODAY IS {{v.name}}'s BIRTHDAY!!!
                             </p>
-                            <div style="font-size:10px; color:#AAA;" ng-class="v.birthday!==v.now && 'display'|| 'hide'">
+                            <div style="font-size:11px; color:#AAA;" ng-class="v.birthday!==v.now && 'display'|| 'hide'">
                             {{v.birthday}}
                             <br>
                             {{v.name}}
