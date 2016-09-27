@@ -19,7 +19,7 @@ app.controller('Sidebar', function(
 
     $scope.notifications.count ="";
 
-    $scope.stop = false; //how to stop the shaking
+    $scope.stop = true; //how to stop the shaking
     
     $scope.animation_arrow = {
         stop : '0' ,
@@ -106,10 +106,10 @@ app.controller('Sidebar', function(
          if($scope.stop == true)
         {
 
-            return $scope.animation_arrow.stop;
+            return $scope.animation_arrow.opacity;
         }
         else {
-            return $scope.animation_arrow.opacity;
+            return $scope.animation_arrow.stop;
         }
 
     }
@@ -140,7 +140,7 @@ app.controller('Sidebar', function(
                 return $scope.notifications.count="(" +count +")";
             };
 
-            $scope.animation_arrow.stop = '1';
+            $scope.animation_arrow.stop = '0';
             $scope.animation_arrow.opacity = '1';
 
             
@@ -154,13 +154,8 @@ app.controller('Sidebar', function(
             $scope.animation.duration = '2.6s';
 
             $scope.animation_arrow.stop = '0';
-            $scope.animation_arrow.opacity = '1';
-            
-            $scope.animation.stop = '0s';
-            $scope.animation.duration = '2.6s';
-
-            $scope.animation_arrow.stop = '0';
-            $scope.animation_arrow.opacity = '1';
+            $scope.animation_arrow.opacity = '0';
+          
 
 
         });

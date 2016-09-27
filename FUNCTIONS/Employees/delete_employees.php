@@ -23,19 +23,23 @@ $class = new Employees(
 
 $info=json_decode($_POST['info'],true);
 
-
-
-
 $info = array();
 $info['last_day']=$_POST['last_day_work'];
 $info['effective_date']=$_POST['effective_date'];
 $info['reason']=$_POST['reason'];
 
+
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
 $extra['created_by'] = $_POST['created_by'];
 
+$attr = array(
+        "reason" => null,
+        "remark" => null,
+         "elig" => null
 
-$data=$class->deactivate($info,$extra);
+       );
+
+$data=$class->deactivate($info,$extra, $attr);
 
 
 
