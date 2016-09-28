@@ -2,7 +2,7 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 
-$class =    new Employees(
+$class =  new Employees(
                             $_POST['pk'],
                             $_POST['employee_id'],
                             $_POST['first_name'],

@@ -94,8 +94,7 @@ app.controller('Employees', function(
             $scope.profile = data.data.result[0];
             DEFAULTDATES();
             employees();
-            //employees_fetch();
-            //list();
+            
         })   
     } 
 
