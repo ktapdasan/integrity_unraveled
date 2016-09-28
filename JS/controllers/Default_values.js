@@ -10,12 +10,15 @@ app.controller('Default_values', function(
                                     ){
     $scope.pk='';
     $scope.filter= {};
+    $scope.cutoff= {};
     $scope.default_values = {};
     $scope.calendar = {};
     $scope.leave_default = {};
     $scope.birthday_leave = {};
+    $scope.birthday_leave_pk = '';
     $scope.leaves_filed = {};
     $scope.leave_types = {};
+    $scope.get_leave_types = {};
     $scope.calendar.data = {
         color : null
     };
@@ -24,6 +27,7 @@ app.controller('Default_values', function(
     $scope.type = '';
     
     $scope.cutofftypes = {};
+    $scope.cutoffdates = {};
 
     $scope.days ={};
 
@@ -38,6 +42,10 @@ app.controller('Default_values', function(
         friday : false,
         saturday : false,
         sunday : false
+    };
+
+    $scope.birthday_leave.data = {
+        status : false
     };
 
     init();
@@ -65,12 +73,12 @@ app.controller('Default_values', function(
             $scope.profile = data.data.result[0];
 
             get_work_days();
-
+            get_leave_status();
             get_work_hours();
-            leave_types();
+            get_leave_types();
             birthday_leave();
             default_values();
-            cutofftypes();
+            fetch_cutoff_dates();
             //fetch_myemployees(); 
         })         
     } 
@@ -162,6 +170,33 @@ app.controller('Default_values', function(
         });
     }
 
+    function get_leave_status(){
+        
+        var promise = DefaultvaluesFactory.get_leave_status();
+        promise.then(function(data){
+
+            var a = data.data.result[0];
+            var birthday_leave = JSON.parse(a.details)
+
+            for(var i in birthday_leave)
+            {
+                if (birthday_leave[i] == "true"){
+                    birthday_leave[i] = true;
+                }
+                else
+                {
+                    birthday_leave[i] = false;
+                }
+            }
+
+            $scope.birthday_leave.data.status = birthday_leave.status;
+            
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
 
     function get_work_hours() {
         var filters = { 
@@ -236,17 +271,14 @@ app.controller('Default_values', function(
     }   
 
     function cutofftypes(){
-        $scope.cutofftypes.status = false;
-        $scope.cutofftypes.data= '';
-
-        
+        $scope.cutoff.types={};
         var promise = CutoffFactory.fetch_types();
         promise.then(function(data){
-            $scope.cutofftypes.status = true;
-            $scope.cutofftypes.data = data.data.result;
+            $scope.cutoff.types.status = true;
+            $scope.cutoff.types.data = data.data.result;
         })
         .then(null, function(data){
-            $scope.cutofftypes.status = false;
+            $scope.cutoff.types.status = false;
         });
     }
 
@@ -256,7 +288,7 @@ app.controller('Default_values', function(
     }
 
     function type(){
-        if ($scope.filter.status == 1) {
+        if ($scope.cutoff.cutoff_types_pk == 1) {
             $scope.displayM = true;
             $scope.displayB = false;
         }
@@ -265,7 +297,6 @@ app.controller('Default_values', function(
             $scope.displayM = false;
         }           
     }
-
 
     $scope.save_cutoff = function(){  
         type();
@@ -290,7 +321,7 @@ app.controller('Default_values', function(
             return false;
         }, function(value){
 
-            var promise = DefaultvaluesFactory.save_cutoff($scope.filter);
+            var promise = DefaultvaluesFactory.save_cutoff($scope.cutoff);
             promise.then(function(data){
 
                 UINotification.success({
@@ -314,42 +345,45 @@ app.controller('Default_values', function(
        
     }
 
-    function fetch_dates(){        
+    function fetch_cutoff_dates(){        
+        $scope.cutoff.dates={};
         var promise = DefaultvaluesFactory.fetch_dates();
         promise.then(function(data){
-            $scope.default_values.data = data.data.result;
-
-            $scope.default_values.data[0].details = JSON.parse($scope.default_values.data[0].details);
+            $scope.cutoff.dates.data = data.data.result[0];
             
-            $scope.filter.status = $scope.default_values.data[0].details;
+            $scope.cutoff.dates.data.details = JSON.parse($scope.cutoff.dates.data.details);
+            
+            
+            $scope.cutoff.cutoff_types_pk = $scope.cutoff.dates.data.details.cutoff_types_pk;
+            console.log($scope.cutoff.cutoff_types_pk);
 
-            if ($scope.default_values.data[0].details.type == "1"){
-                $scope.filter.start_m = $scope.default_values.data[0].details.from;
-                $scope.filter.end_m = $scope.default_values.data[0].details.to;
+            if ($scope.cutoff.cutoff_types_pk  == "1"){
+                $scope.cutoff.start_m = $scope.cutoff.dates.data.details.dates.from;
+                $scope.cutoff.end_m = $scope.cutoff.dates.data.details.dates.to;
             }
             else{
-                $scope.filter.start_bf = $scope.default_values.data[0].details.first.from;
-                $scope.filter.end_bf = $scope.default_values.data[0].details.first.to;
+                $scope.cutoff.start_bf = $scope.cutoff.dates.data.details.dates.first.from;
+                $scope.cutoff.end_bf = $scope.cutoff.dates.data.details.dates.first.to;
 
-                $scope.filter.start_bs = $scope.default_values.data[0].details.second.from;
-                $scope.filter.end_bs = $scope.default_values.data[0].details.second.to;
+                $scope.cutoff.start_bs = $scope.cutoff.dates.data.details.dates.second.from;
+                $scope.cutoff.end_bs = $scope.cutoff.dates.data.details.dates.second.to;
             }
 
-            console.log($scope.default_values);
+            
 
             type();
         })
         .then(null, function(data){
-            if ($scope.default_values.data[0].cutoff_types_pk == "1"){
-                $scope.filter.start_m = 1;
-                $scope.filter.end_m = 30;
+            if ($scope.cutoff.cutoff_types_pk == "1"){
+                $scope.cutoff.start_m = 1;
+                $scope.cutoff.end_m = 30;
             }
             else {
-                $scope.filter.start_bf = 1;
-                $scope.filter.end_bf = 15;
+                $scope.cutoff.start_bf = 1;
+                $scope.cutoff.end_bf = 15;
 
-                $scope.filter.start_bs = 16;
-                $scope.filter.end_bs = 30;
+                $scope.cutoff.start_bs = 16;
+                $scope.cutoff.end_bs = 30;
             }
 
             type();
@@ -365,7 +399,7 @@ app.controller('Default_values', function(
             $scope.days[i] = i;      
         };
 
-        fetch_dates();      
+        fetch_cutoff_dates();      
     }
 
     function default_values() {
@@ -404,6 +438,8 @@ app.controller('Default_values', function(
 
             $scope.birthday_leave.data.details = JSON.parse($scope.birthday_leave.data.details);
             $scope.birthday_leave.data.count = $scope.birthday_leave.data.details.count;
+            $scope.birthday_leave.data.pk = $scope.birthday_leave.data.details.leave_types_pk;
+            
         })
         .then(null, function(data){
             $scope.birthday_leave.status = false;
@@ -431,13 +467,13 @@ app.controller('Default_values', function(
     //     });
     // }
 
-    function leave_types() {
+    function get_leave_types() {
         var promise = DefaultvaluesFactory.get_leave_types();
         promise.then(function(data){
             $scope.leave_types.data = data.data.result;
 
             $scope.leave_types.data.name = $scope.leave_types.data;
-
+            $scope.leave_types.data.pk = $scope.leave_types.data;
         })
         .then(null, function(data){
         });
@@ -504,7 +540,6 @@ app.controller('Default_values', function(
     }
 
     $scope.save_leave = function(){
-        $scope.birthday_leave.data.status = 'true';
         $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to update these values?',
@@ -523,8 +558,6 @@ app.controller('Default_values', function(
             return false;
         }, function(value){
             
-            $scope.birthday_leave.data.employees_pk = $scope.profile.pk;
-            console.log($scope.birthday_leave.data);
             var promise = DefaultvaluesFactory.update_birthday_leave($scope.birthday_leave.data);
             promise.then(function(data){
 

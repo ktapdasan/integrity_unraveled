@@ -9,15 +9,15 @@ $class = new Default_values(
 		                        NULL
 							);
 
-$extra['type'] = $_POST['status'];
-if($_POST['status'] == 1){
-	$extra['cutoffdate'] = array(
+$extra['cutoff_types_pk'] = $_POST['cutoff_types_pk'];
+if($_POST['cutoff_types_pk'] == 1){
+	$extra['dates'] = array(
 									"from" => $_POST['start_m'],
 									"to" => $_POST['end_m']
 								);
 }
 else {
-	$extra['cutoffdate'] = array(
+	$extra['dates'] = array(
 									"first" => array(
 														"from" => $_POST['start_bf'],
 														"to" => $_POST['end_bf']

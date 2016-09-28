@@ -77,10 +77,8 @@ insert into default_values
  			{
  			"from":"16","to":"31"
  			},
- 			"cutoff_type":
- 			{
- 			"type": "2"
- 			}}'::jsonb
+ 			"cutoff_types_pk":
+ 			"2"}'::jsonb
  );
 
  insert into default_values
@@ -105,14 +103,10 @@ insert into default_values
  values
  (
  'birthday_leave',
- '{
- 			"status": "true",
- 			"count": "1"
-
-			} '::jsonb
+ '{"status": "false","count": "1","leave_types_pk": "1"}'::jsonb
  );
 
-/* insert into default_values
+ insert into default_values
  (
  name,
  details
@@ -120,8 +114,5 @@ insert into default_values
  values
  (
  'overtime_leave',
- '{
- 			"leave_filed_pk": "16"
-
-			} '::jsonb
- );*/
+ '{"leave_types_pk": "16"} '::jsonb
+ );

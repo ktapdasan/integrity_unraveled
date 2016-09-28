@@ -87,27 +87,12 @@ EOT;
                     details
                 from default_values
                 where name = 'cutoff_dates'
-                and pk = '3'
                 ;
 EOT;
         return ClassParent::get($sql);
 
     }
-
-    public function cutoff_dates(){
-       
-
-        $sql = <<<EOT
-                select
-                    details
-                from cutoff_dates
-                where name = 'cutoff_dates'
-                ;
-EOT;
-        return ClassParent::get($sql);
-
-    }
-
+    
     public function fetch_default_values(){
         $sql = <<<EOT
                 select 
@@ -115,7 +100,7 @@ EOT;
                     name,
                     details
                 from default_values
-                where pk = '2'
+                where name = 'work_days'
                 ;
 EOT;
 
@@ -130,7 +115,20 @@ EOT;
                     details
                 from default_values
                 where name = 'work_days'
-                and pk = '2'
+                ;
+EOT;
+        
+        return ClassParent::get($sql);
+    }
+
+    public function get_leave_status(){
+        
+        $sql = <<<EOT
+                select 
+                    name,
+                    details
+                from default_values
+                where name = 'birthday_leave'
                 ;
 EOT;
         
@@ -159,8 +157,7 @@ EOT;
                     name,
                     details
                 from default_values
-                where name = '$this->name'
-                and pk = '6'
+                where name = 'birthday_leave'
                 ;
 EOT;
         
@@ -176,6 +173,20 @@ EOT;
                 from leave_types
                 where archived = false
                 order by pk
+                ;
+EOT;
+        
+        return ClassParent::get($sql);
+    }
+
+    public function get_cutoff_types(){
+        
+        $sql = <<<EOT
+                select
+                    name, 
+                    details
+                from default_values
+                where name='cutoff_dates'
                 ;
 EOT;
         
@@ -365,6 +376,7 @@ EOT;
         }  
         $new_data ['count'] = $data ['count'];
         $new_data ['status'] = $data ['status'];
+        $new_data ['leave_types_pk'] = $data ['pk'];
 
         $data = json_encode($new_data);
         $sql = <<<EOT
@@ -385,14 +397,14 @@ EOT;
                 $extra[$k] = pg_escape_string(trim(strip_tags($v)));
             }
         }
-        if($type == 1 ){
-                $type = 1;    
+        if($cutoff_types_pk == 1 ){
+                $cutoff_types_pk = 1;    
         }
         else{
-            $type = 2;
+            $cutoff_types_pk = 2;
         }      
-        $array['cutoffdate'] = $extra['cutoffdate'];
-        $array['type'] = $extra['type'];
+        $array['dates'] = $extra['dates'];
+        $array['cutoff_types_pk'] = $extra['cutoff_types_pk'];
         
         $dates=json_encode($array);
         
