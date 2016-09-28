@@ -48,7 +48,13 @@ $class = new Employees(
     $_POST['emergency_name'],
     $_POST['emergency_contact_number'],
     $_POST['contact_number'],
-    $_POST['landline_number'],
+    $_POST['flexi_sunday'],
+    $_POST['flexi_monday'],
+    $_POST['flexi_tuesday'],
+    $_POST['flexi_wednesday'],
+    $_POST['flexi_thursday'],
+    $_POST['flexi_friday'],
+    $_POST['flexi_saturday'],
     NULL,
     NULL,
     NULL
@@ -89,18 +95,25 @@ if ($_POST['salary_type'] == 'cash'){
 //TIMEIN and OUT
 $company['work_schedule']['sunday']['in']           = pg_escape_string($_POST['timein_sunday']);
 $company['work_schedule']['sunday']['out']          = pg_escape_string($_POST['timeout_sunday']);
+$company['work_schedule']['sunday']['flexi']        = pg_escape_string($_POST['flexi_sunday']);
 $company['work_schedule']['monday']['in']           = pg_escape_string($_POST['timein_monday']);
 $company['work_schedule']['monday']['out']          = pg_escape_string($_POST['timeout_monday']);
+$company['work_schedule']['monday']['flexi']        = pg_escape_string($_POST['flexi_monday']);
 $company['work_schedule']['tuesday']['in']          = pg_escape_string($_POST['timein_tuesday']);
 $company['work_schedule']['tuesday']['out']         = pg_escape_string($_POST['timeout_tuesday']);
+$company['work_schedule']['tuesday']['flexi']       = pg_escape_string($_POST['flexi_tuesday']);
 $company['work_schedule']['wednesday']['in']        = pg_escape_string($_POST['timein_wednesday']);
 $company['work_schedule']['wednesday']['out']       = pg_escape_string($_POST['timeout_wednesday']);
+$company['work_schedule']['wednesday']['flexi']     = pg_escape_string($_POST['flexi_wednesday']);
 $company['work_schedule']['thursday']['in']         = pg_escape_string($_POST['timein_thursday']);
 $company['work_schedule']['thursday']['out']        = pg_escape_string($_POST['timeout_thursday']);
+$company['work_schedule']['thursday']['flexi']      = pg_escape_string($_POST['flexi_thursday']);
 $company['work_schedule']['friday']['in']           = pg_escape_string($_POST['timein_friday']);
 $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
+$company['work_schedule']['friday']['flexi']        = pg_escape_string($_POST['flexi_friday']);
 $company['work_schedule']['saturday']['in']         = pg_escape_string($_POST['timein_saturday']);
 $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
+$company['work_schedule']['saturday']['flexi']      = pg_escape_string($_POST['flexi_saturday']);
 
 if ($_POST['levels_pk'] == 3){
     $company['levels_pk']            = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));

@@ -435,7 +435,7 @@ select{
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
                             </td>
                             <td id="css">
-                                <input name="bdate" ng-model="employee.birth_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>{{employeek.birth_dateinsert}}{{employee.birth_date}}
+                                <input name="bdate" ng-model="employee.birth_date" ng-change="employee.birth_dates = employee.birth_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bdate.$error.required">Birth Date is required.</span>
                             </td>
 
@@ -667,7 +667,7 @@ select{
 
                     </td>
                     <td id="css">
-                        <input name="inputd" ng-model="employee.date_started" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
+                        <input name="inputd" ng-model="employee.date_started" type="date"  style="display: block; float: left; width:320px; height:25px;" ng-required="true" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.required">Start Date is required.</span>
                     </tr>
                     </tr>
@@ -742,8 +742,8 @@ select{
                     </td>
                     <td>
                         <input  type="text" placeholder="Time-In" ng-model="employee.timein_sunday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker ng-change="date_time.timein = employee.timein_sunday "/>
-                        {{date_time.timein}}
-                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_sunday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        
+                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_sunday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Monday:</label>
@@ -751,7 +751,7 @@ select{
                     <td>
                         <input  type="text" placeholder="Time-In" ng-model="employee.timein_monday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_monday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_monday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                 </tr>
                 <tr>
@@ -759,17 +759,17 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Tuesday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_tuesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_tuesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out"  ng-model="employees.timeout_tuesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_tuesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Wednesday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_wednesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_wednesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out"  ng-model="employees.timeout_wednesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_wednesday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                 </tr>
                 <tr>
@@ -777,17 +777,17 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Thursday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_thursday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_thursday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_thursday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_thursday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                     <td>
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Friday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_friday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_friday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_friday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_friday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                 </tr>
                 <tr>
@@ -795,8 +795,8 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Saturday:</label>
                     </td>
                     <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employees.timein_saturday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>  
-                        <input  type="text" placeholder="Time-Out" ng-model="employees.timeout_saturday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
+                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_saturday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>  
+                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_saturday" style="display: block; float: left; width:200px; height:25px;" bs-timepicker/>
                     </td>
                 </tr>
                             <tr>

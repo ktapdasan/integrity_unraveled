@@ -32,6 +32,20 @@ $class =    new Employees(
                             $_POST['civilstatus_pk'],
                             $_POST['birth_date'],
                             $_POST['date_started'],
+                            $_POST['timein_sunday'],
+                            $_POST['timein_monday'],
+                            $_POST['timein_tuesday'],
+                            $_POST['timein_wednesday'],
+                            $_POST['timein_thursday'],
+                            $_POST['timein_friday'],
+                            $_POST['timein_saturday'],
+                            $_POST['timeout_sunday'],
+                            $_POST['timeout_monday'],
+                            $_POST['timeout_tuesday'],
+                            $_POST['timeout_wednesday'],
+                            $_POST['timeout_thursday'],
+                            $_POST['timeout_friday'],
+                            $_POST['timeout_saturday'],
                             NULL,
                             NULL,
                             NULL
@@ -53,7 +67,6 @@ if ($_POST['levels_pk'] == 3){
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['employee_status_pk']     = pg_escape_string(strip_tags(trim($_POST['employee_status_pk'])));
     $company['employment_type_pk']     = pg_escape_string(strip_tags(trim($_POST['employment_type_pk'])));
-    $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
@@ -66,26 +79,25 @@ if ($_POST['levels_pk'] == 3){
     $personal['gender_pk']             = pg_escape_string(strip_tags(trim($_POST['gender_pk'])));
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
     $personal['civilstatus_pk']        = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
-    $personal['birth_date']            = pg_escape_string(strip_tags(trim($_POST['birth_dateinsert'])));
     
     $government['data_sss']            = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
     $government['data_phid']           = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
-    $company['work_schedule']['sunday']['in']           = pg_escape_string($_POST['timein_sunday']);
+    $company['work_schedule']['sunday']['ins']          = pg_escape_string($_POST['timein_sunday']);
     $company['work_schedule']['sunday']['out']          = pg_escape_string($_POST['timeout_sunday']);
-    $company['work_schedule']['monday']['in']           = pg_escape_string($_POST['timein_monday']);
+    $company['work_schedule']['monday']['ins']          = pg_escape_string($_POST['timein_monday']);
     $company['work_schedule']['monday']['out']          = pg_escape_string($_POST['timeout_monday']);
-    $company['work_schedule']['tuesday']['in']          = pg_escape_string($_POST['timein_tuesday']);
+    $company['work_schedule']['tuesday']['ins']         = pg_escape_string($_POST['timein_tuesday']);
     $company['work_schedule']['tuesday']['out']         = pg_escape_string($_POST['timeout_tuesday']);
-    $company['work_schedule']['wednesday']['in']        = pg_escape_string($_POST['timein_wednesday']);
+    $company['work_schedule']['wednesday']['ins']       = pg_escape_string($_POST['timein_wednesday']);
     $company['work_schedule']['wednesday']['out']       = pg_escape_string($_POST['timeout_wednesday']);
-    $company['work_schedule']['thursday']['in']         = pg_escape_string($_POST['timein_thursday']);
+    $company['work_schedule']['thursday']['ins']        = pg_escape_string($_POST['timein_thursday']);
     $company['work_schedule']['thursday']['out']        = pg_escape_string($_POST['timeout_thursday']);
-    $company['work_schedule']['friday']['in']           = pg_escape_string($_POST['timein_friday']);
+    $company['work_schedule']['friday']['ins']          = pg_escape_string($_POST['timein_friday']);
     $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
-    $company['work_schedule']['saturday']['in']         = pg_escape_string($_POST['timein_saturday']);
+    $company['work_schedule']['saturday']['ins']        = pg_escape_string($_POST['timein_saturday']);
     $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
 }
 if ($_POST['levels_pk'] != 3){
@@ -100,7 +112,6 @@ if ($_POST['levels_pk'] != 3){
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['employee_status_pk']     = pg_escape_string(strip_tags(trim($_POST['employee_status_pk'])));
     $company['employment_type_pk']     = pg_escape_string(strip_tags(trim($_POST['employment_type_pk'])));
-    $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
@@ -113,26 +124,25 @@ if ($_POST['levels_pk'] != 3){
     $personal['gender_pk']             = pg_escape_string(strip_tags(trim($_POST['gender_pk'])));
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
     $personal['civilstatus_pk']        = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
-    $personal['birth_date']            = pg_escape_string(strip_tags(trim($_POST['birth_dateinsert'])));
     
     $government['data_sss']            = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
     $government['data_phid']           = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
-    $company['work_schedule']['sunday']['in']           = pg_escape_string($_POST['timein_sunday']);
+    $company['work_schedule']['sunday']['ins']          = pg_escape_string($_POST['timein_sunday']);
     $company['work_schedule']['sunday']['out']          = pg_escape_string($_POST['timeout_sunday']);
-    $company['work_schedule']['monday']['in']           = pg_escape_string($_POST['timein_monday']);
+    $company['work_schedule']['monday']['ins']          = pg_escape_string($_POST['timein_monday']);
     $company['work_schedule']['monday']['out']          = pg_escape_string($_POST['timeout_monday']);
-    $company['work_schedule']['tuesday']['in']          = pg_escape_string($_POST['timein_tuesday']);
+    $company['work_schedule']['tuesday']['ins']         = pg_escape_string($_POST['timein_tuesday']);
     $company['work_schedule']['tuesday']['out']         = pg_escape_string($_POST['timeout_tuesday']);
-    $company['work_schedule']['wednesday']['in']        = pg_escape_string($_POST['timein_wednesday']);
+    $company['work_schedule']['wednesday']['ins']       = pg_escape_string($_POST['timein_wednesday']);
     $company['work_schedule']['wednesday']['out']       = pg_escape_string($_POST['timeout_wednesday']);
-    $company['work_schedule']['thursday']['in']         = pg_escape_string($_POST['timein_thursday']);
+    $company['work_schedule']['thursday']['ins']        = pg_escape_string($_POST['timein_thursday']);
     $company['work_schedule']['thursday']['out']        = pg_escape_string($_POST['timeout_thursday']);
-    $company['work_schedule']['friday']['in']           = pg_escape_string($_POST['timein_friday']);
+    $company['work_schedule']['friday']['ins']          = pg_escape_string($_POST['timein_friday']);
     $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
-    $company['work_schedule']['saturday']['in']         = pg_escape_string($_POST['timein_saturday']);
+    $company['work_schedule']['saturday']['ins']        = pg_escape_string($_POST['timein_saturday']);
     $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
 }   
 
@@ -155,9 +165,10 @@ if ($_POST['salary_type'] == 'cash'){
    $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
    $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
 } 
+$company['date_started']                       = pg_escape_string(strip_tags(trim($_POST['date_started'])));
+$personal['birth_date']                        = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 
 $details = array();
-
 $details['company'] = $company;
 $details['personal'] = $personal;
 $details['government'] = $government;

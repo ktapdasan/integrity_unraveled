@@ -256,6 +256,7 @@ update employees set
 details = jsonb_set(details, '{company}', ' {
 	"departments_pk": "26",
 	"employee_id": "201400072",
+	"date_started": "03/01/2016",
 	"levels_pk": "8",
 	"titles_pk": "8",
 	"supervisor": "17",
@@ -271,7 +272,7 @@ details = jsonb_set(details, '{company}', ' {
 	"work_schedule": {
 		"sunday": null,
 		"monday": {
-			"in": "09:00",
+			"ins": "09:00",
 			"out": "18:00"
 		},
 		"tuesday": {
@@ -292,7 +293,7 @@ details = jsonb_set(details, '{company}', ' {
 		},
 		"saturday": null
 	},
-	"company.work_schedule": {
+	"company_work_schedule": {
 		"friday": {
 			"in": "09:00",
 			"out": "18:00"
@@ -319,6 +320,7 @@ details = jsonb_set(details, '{company}', ' {
 
 }
 ', true);
+where pk = 12;
 
 
 update employees set

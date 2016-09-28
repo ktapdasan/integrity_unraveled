@@ -29,9 +29,6 @@ app.controller('Employees', function(
     $scope.employees.count = 0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
-    $scope.date_time = {
-        timein: ''
-    };
     
     $scope.modal = {};
     $scope.level_class = 'orig_width';
@@ -492,97 +489,45 @@ app.controller('Employees', function(
 
 
         $scope.employee = $scope.employees.data[k];
-        if ($scope.employees.data[k].details.company.employee_id == undefined) {
-            $scope.employees.data[k].details.company.employee_id = null;
-        }
         if ($scope.employees.data[k].details.personal.email_address == undefined) {
             $scope.employees.data[k].details.personal.email_address = null;
         }
         if ($scope.employees.data[k].details.company.business_email_address == undefined) {
             $scope.employees.data[k].details.company.business_email_address = null;
         }
-        if ($scope.employees.data[k].details.personal.first_name == undefined) {
-            $scope.employees.data[k].details.personal.first_name = null;
-        }
-        if ($scope.employees.data[k].details.personal.middle_name == undefined) {
-            $scope.employees.data[k].details.personal.middle_name = null;
-        }
-        if ($scope.employees.data[k].details.personal.last_name == undefined) {
-            $scope.employees.data[k].details.personal.last_name = null;
-        }
         if ($scope.employees.data[k].details.personal.contact_number == undefined) {
-            $scope.employees.data[k].details.personal.contact_number = null;
+            $scope.employees.data[k].details.personal.contact_number = 'No Data';
         }
         if ($scope.employees.data[k].details.personal.landline_number == undefined) {
-            $scope.employees.data[k].details.personal.landline_number = null;
+            $scope.employees.data[k].details.personal.landline_number = 'No Data';
         }
         if ($scope.employees.data[k].details.personal.present_address == undefined) {
-            $scope.employees.data[k].details.personal.present_address = null ;
+            $scope.employees.data[k].details.personal.present_address = 'No Data' ;
         }
         if ($scope.employees.data[k].details.personal.permanent_address == undefined) {
-            $scope.employees.data[k].details.personal.permanent_address = null;
+            $scope.employees.data[k].details.personal.permanent_address = 'No Data';
         }
         if ($scope.employees.data[k].details.government.data_sss == undefined) {
-            $scope.employees.data[k].details.government.data_sss = null;
+            $scope.employees.data[k].details.government.data_sss = 'No Data';
         }
         if ($scope.employees.data[k].details.government.data_tin == undefined) {
-            $scope.employees.data[k].details.government.data_tin = null;
+            $scope.employees.data[k].details.government.data_tin = 'No Data';
         }
         if ($scope.employees.data[k].details.government.data_pagmid == undefined) {
-            $scope.employees.data[k].details.government.data_pagmid = null;
+            $scope.employees.data[k].details.government.data_pagmid = 'No Data';
         }
         if ($scope.employees.data[k].details.government.data_phid == undefined) {
-            $scope.employees.data[k].details.government.data_phid = null;
+            $scope.employees.data[k].details.government.data_phid = 'No Data';
         }
         if ($scope.employees.data[k].details.personal.profile_picture == undefined) {
             $scope.employees.data[k].details.personal.profile_picture = './ASSETS/img/blank.gif';
         }
-        if ($scope.employees.data[k].details.company.salary.salary_type == undefined) {
-            $scope.employees.data[k].details.company.salary.salary_type = null;
-        }
-        if ($scope.employees.data[k].details.company.salary.bank_name == undefined) {
-            $scope.employees.data[k].details.company.salary.bank_name = null;
-        }
-        if ($scope.employees.data[k].details.company.salary.account_number == undefined) {
-            $scope.employees.data[k].details.company.salary.account_number = null;
-        }
-        if ($scope.employees.data[k].details.company.salary.mode_payment == undefined) {
-            $scope.employees.data[k].details.company.salary.mode_payment = null;
-        }
-        if ($scope.employees.data[k].details.company.salary.amount == undefined) {
-            $scope.employees.data[k].details.company.salary.amount = null;
-        }
-        if ($scope.employees.data[k].details.company.departments_pk == undefined) {
-            $scope.employees.data[k].details.company.departments_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.levels_pk == undefined) {
-            $scope.employees.data[k].details.company.levels_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.titles_pk == undefined) {
-            $scope.employees.data[k].details.company.titles_pk = null;
-        }
-        if ($scope.employees.data[k].details.personal.gender_pk == undefined) {
-            $scope.employees.data[k].details.personal.gender_pk = null;
-        }
-        if ($scope.employees.data[k].details.personal.civilstatus_pk == undefined) {
-            $scope.employees.data[k].details.personal.civilstatus_pk = null;
+        if ($scope.employees.data[k].details.personal.religion == undefined) {
+            $scope.employees.data[k].details.personal.religion = 'No Data';
         }
         if ($scope.employees.data[k].details.personal.religion == undefined) {
-            $scope.employees.data[k].details.personal.religion = ' ';
+            $scope.employees.data[k].details.personal.religion = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.employee_status_pk == undefined) {
-            $scope.employees.data[k].details.company.employee_status_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.employment_type_pk == undefined) {
-            $scope.employees.data[k].details.company.employment_type_pk = null;
-        }
-        if ($scope.employees.data[k].details.personal.birth_date == undefined) {
-            $scope.employees.data[k].details.personal.birth_date = null;
-        }
-        if ($scope.employees.data[k].details.company.date_started == undefined) {
-            $scope.employees.data[k].details.company.date_started = null;
-        }
-
 
         // $scope.employee.birth_date = $filter('date')($scope.employee.birth_date, "MM-dd-yyyy");
 
@@ -617,20 +562,35 @@ app.controller('Employees', function(
         $scope.employee.civilstatus_pk         = $scope.employees.data[k].details.personal.civilstatus_pk;
         $scope.employee.birth_date             = new Date($scope.employees.data[k].details.personal.birth_date);
         $scope.employee.date_started           = new Date($scope.employees.data[k].details.company.date_started);
-        $scope.employee.timein_monday          = new Date($scope.employees.data[k].details.company.work_schedule.monday.ins);
+
+        $scope.employee.timein_sunday        = new Date($scope.employees.data[k].details.company.work_schedule.sunday.ins);
+        $scope.employee.timein_monday        = new Date($scope.employees.data[k].details.company.work_schedule.monday.ins);
+        $scope.employee.timein_tuesday       = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.ins);
+        $scope.employee.timein_wednesday     = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.ins);
+        $scope.employee.timein_thursday      = new Date($scope.employees.data[k].details.company.work_schedule.thursday.ins);
+        $scope.employee.timein_friday        = new Date($scope.employees.data[k].details.company.work_schedule.friday.ins);
+        $scope.employee.timein_saturday      = new Date($scope.employees.data[k].details.company.work_schedule.saturday.ins);
+
+        $scope.employee.timeout_sunday       = new Date($scope.employees.data[k].details.company.work_schedule.sunday.out);
+        $scope.employee.timeout_monday       = new Date($scope.employees.data[k].details.company.work_schedule.monday.out);
+        $scope.employee.timeout_tuesday      = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.out);
+        $scope.employee.timeout_wednesday    = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.out);
+        $scope.employee.timeout_thursday     = new Date($scope.employees.data[k].details.company.work_schedule.thursday.out);
+        $scope.employee.timeout_friday       = new Date($scope.employees.data[k].details.company.work_schedule.friday.out);
+        $scope.employee.timeout_saturday     = new Date($scope.employees.data[k].details.company.work_schedule.saturday.out);
         
-        
+
+
         $scope.isShown = function(salarys_type) {
             return salarys_type === $scope.employee.salary_type;
         };
-
+       
         level_changed();
         $scope.modal = {
             title : 'Edit ' + $scope.employees.data[k].first_name,
             save : 'Apply Changes',
             close : 'Cancel',
         };
-        
         ngDialog.openConfirm({
             template: 'EditModal',
             preCloseCallback: function(value) {
@@ -657,8 +617,38 @@ app.controller('Employees', function(
             return false;
         }, function(value){
             
-        
-            var promise = EmployeesFactory.edit_employees($scope.employees.data[k]);
+            //Date Started Filter
+            var dated = new Date($scope.employee.date_started);
+            var dds = dated.getDate();
+            var mms = dated.getMonth()+1;
+            var yyyys = dated.getFullYear();
+            $scope.employee.date_started = mms+'-'+dds+'-'+yyyys;
+
+            //Birth Date Filter
+            var dateb = new Date($scope.employee.birth_date);
+            var ddk = dateb.getDate();
+            var mmk = dateb.getMonth()+1;
+            var yyyyk = dateb.getFullYear();
+            $scope.employee.birth_date = mmk+'-'+ddk+'-'+yyyyk;
+
+            //WorkHours Monday
+
+            $scope.employee.timein_monday = $filter('date')($scope.employee.timein_monday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timein_tuesday = $filter('date')($scope.employee.timein_tuesday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timein_wednesday = $filter('date')($scope.employee.timein_wednesday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_wednesday = $filter('date')($scope.employee.timein_wednesday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timein_thursday = $filter('date')($scope.employee.timein_thursday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timein_friday = $filter('date')($scope.employee.timein_friday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timein_saturday = $filter('date')($scope.employee.timein_saturday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timein_sunday = $filter('date')($scope.employee.timein_sunday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_sunday = $filter('date')($scope.employee.timeout_sunday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_monday = $filter('date')($scope.employee.timeout_monday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_tuesday = $filter('date')($scope.employee.timeout_tuesday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_thursday = $filter('date')($scope.employee.timeout_thursday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_friday = $filter('date')($scope.employee.timeout_friday, "yyyy-MM-dd HH:mm");
+            $scope.employee.timeout_saturday = $filter('date')($scope.employee.timeout_saturday, "yyyy-MM-dd HH:mm");
+            
+            var promise = EmployeesFactory.edit_employees($scope.employee);
             promise.then(function(data){
                 
 
@@ -667,7 +657,7 @@ app.controller('Employees', function(
                 UINotification.success({
                                         message: 'You have successfully applied changes to ' + $scope.employee.first_name + ' ' + $scope.employee.last_name, 
                                         title: 'SUCCESS', 
-                                        delay : 7000,
+                                        delay : 6000,
                                         positionY: 'top', positionX: 'right'
                                     });
                 employees();
@@ -679,7 +669,7 @@ app.controller('Employees', function(
                 UINotification.error({
                                         message: 'An error occured, unable to save changes, please try again.', 
                                         title: 'ERROR', 
-                                        delay : 7000,
+                                        delay : 6000,
                                         positionY: 'top', positionX: 'right'
                                     });
             });         

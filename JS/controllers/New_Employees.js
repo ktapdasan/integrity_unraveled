@@ -41,7 +41,7 @@ app.controller('New_Employees', function(
         religion:'',
         civilstatus:'',
         employee_id:'',
-        date_started:'',
+        date_started: new Date(),
         business_email_address:'',
         birth_date:'',
         titles_pk:'',
@@ -74,12 +74,19 @@ app.controller('New_Employees', function(
         timeout_thursday:null,
         timeout_friday:null,
         timeout_saturday:null,
-        permanent_address:'',
-        present_address:'',
+        permanent_address:'No Data',
+        present_address:'No Data',
         emergency_contact_number:null,
-        emergency_name:'',
+        emergency_name:'No Data',
         contact_number:null,
-        landline_number:null
+        landline_number:null,
+        flexi_sunday:false,
+        flexi_monday:false,
+        flexi_tuesday:false,
+        flexi_wednesday:false,
+        flexi_thursday:false,
+        flexi_friday:false,
+        flexi_saturday:false
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
@@ -218,20 +225,20 @@ app.controller('New_Employees', function(
         $scope.employees.date_started = $filter('date')($scope.employees.date_started, "MM-dd-yyyy");
         $scope.employees.birth_date = $filter('date')($scope.employees.birth_date, "MM-dd-yyyy");
         
-        $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "HH:mm");
-        $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "HH:mm");
-        $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
-        $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
-        $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "HH:mm");
-        $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "HH:mm");
-        $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "HH:mm");
-        $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "HH:mm");
-        $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "HH:mm");
-        $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "HH:mm");
-        $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "HH:mm");
-        $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "HH:mm");
-        $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "HH:mm");
-        $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "HH:mm");
+        $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timein_wednesday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "yyyy-MM-dd HH:mm");
+        $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "yyyy-MM-dd HH:mm");
         
         $scope.employees.education = JSON.stringify($scope.employees.education);
        
@@ -306,7 +313,14 @@ app.controller('New_Employees', function(
             emergency_contact_number:'',
             emergency_name:'',
             contact_number:null,
-            landline_number:null
+            landline_number:null,
+            flexi_sunday:false,
+            flexi_monday:false,
+            flexi_tuesday:false,
+            flexi_wednesday:false,
+            flexi_thursday:false,
+            flexi_friday:false,
+            flexi_saturday:false
         };
     }
 
