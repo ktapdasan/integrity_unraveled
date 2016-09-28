@@ -304,7 +304,7 @@ app.controller('Admin_leave', function(
         }, function(value){
             
             $scope.leave_default.data.employees_pk = $scope.profile.pk;
-            console.log($scope.leave_default.data);
+            
             var promise = LeaveFactory.update_default_values($scope.leave_default.data);
             promise.then(function(data){
                 

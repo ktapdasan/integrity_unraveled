@@ -136,7 +136,6 @@ app.controller('Management_leave', function(
     }
 
     function leaves_filed() {
-        // console.log($scope.filter);
         var filter = {};
         filter.archived = $scope.filter.archived;
         filter.employees_pk = $scope.filter.employees_pk;

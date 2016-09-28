@@ -140,8 +140,7 @@ app.controller('Management_overtime', function(
             $scope.overtime.count = data.data.result.length;
             $scope.overtime.status = true;
             
-            /*console.log($scope.filter)*/
-            /*console.log($scope.overtime.data);*/
+            
         }) 
         .then(null, function(data){
             $scope.overtime.status = false;
@@ -211,7 +210,7 @@ app.controller('Management_overtime', function(
         $scope.overtime["employees_pk"] = $scope.overtime.data[k].employees_pk; 
         $scope.log.remarks = '';
         $scope.overtime["approver_pk"]=$scope.profile.pk;
-        // console.log($scope.profile.pk);
+        
 
 
        $scope.modal = {

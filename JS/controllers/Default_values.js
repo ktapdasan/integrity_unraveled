@@ -355,7 +355,7 @@ app.controller('Default_values', function(
             
             
             $scope.cutoff.cutoff_types_pk = $scope.cutoff.dates.data.details.cutoff_types_pk;
-            console.log($scope.cutoff.cutoff_types_pk);
+            
 
             if ($scope.cutoff.cutoff_types_pk  == "1"){
                 $scope.cutoff.start_m = $scope.cutoff.dates.data.details.dates.from;
@@ -514,7 +514,7 @@ app.controller('Default_values', function(
         }, function(value){
             
             $scope.leave_default.data.employees_pk = $scope.profile.pk;
-            console.log($scope.leave_default.data);
+            
             var promise = DefaultvaluesFactory.update_default_values($scope.leave_default.data);
             promise.then(function(data){
 

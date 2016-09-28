@@ -132,7 +132,7 @@ app.controller('Management_manual_logs', function(
             $scope.manual_logs.status = true;
             $scope.manual_logs.data = data.data.result;
             $scope.manual_logs.count = data.data.result.length;
-            // console.log($scope.manual_logs);
+            
         }) 
         .then(null, function(data){
             $scope.manual_logs.status = false;
@@ -165,7 +165,6 @@ app.controller('Management_manual_logs', function(
     }
 
     $scope.approve = function(k){
-         // console.log($scope.manual_logs.status);
         // $scope.manual_logs["employees_pk"] = ; 
         // $scope.manual_logs["approver_pk"]=$scope.profile.pk;
         $scope.modal = {
@@ -199,7 +198,7 @@ app.controller('Management_manual_logs', function(
             // $scope.manual_logs.remarks= "APPROVED";
             // $scope.manual_logs.type= $scope.manual_logs.data[k].type;
             // $scope.manual_logs.time_log=$scope.manual_logs.data[k].time;
-            // console.log( $scope.manual_logs.data[k].status);
+            
             manual_logs.status = "Approved";
             var promise = TimelogFactory.approve(manual_logs);
             promise.then(function(data){
@@ -212,7 +211,6 @@ app.controller('Management_manual_logs', function(
                 $scope.manual_logs.data[k].status = "Approved";
                 $scope.manual_logs.data[k].remarks= manual_logs.remarks;
                 // $scope.manual_logs.data.splice(k,1);
-             //   console.log($scope.manual_logs.status);
 
             })
             .then(null, function(data){
@@ -228,10 +226,10 @@ app.controller('Management_manual_logs', function(
     }
 
     $scope.disapprove = function(k){
-        // console.log($scope.manual_logs.status);
+        
         $scope.modal.remarks = '';
         // $scope.manual_logs["approver_pk"]=$scope.profile.pk;
-        // console.log($scope.profile.pk);
+        
 
 
        $scope.modal = {
@@ -290,7 +288,7 @@ app.controller('Management_manual_logs', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });  
-                // console.log($scope.manual_logs.status);
+                
                 $scope.manual_logs.data[k].status = manual_logs.status;
                 $scope.manual_logs.data[k].remarks= manual_logs.remarks.toUpperCase();
    
