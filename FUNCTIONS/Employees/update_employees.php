@@ -144,9 +144,8 @@ if ($_POST['levels_pk'] != 3){
     $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
     $company['work_schedule']['saturday']['ins']        = pg_escape_string($_POST['timein_saturday']);
     $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
-}   
 
-//Salary Type
+    //Salary Type
 if ($_POST['salary_type'] == 'bank'){
     $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
     $company['salary']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['salary_bank_name'])));
@@ -165,6 +164,9 @@ if ($_POST['salary_type'] == 'cash'){
    $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
    $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
 } 
+}   
+
+
 $company['date_started']                       = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 $personal['birth_date']                        = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 

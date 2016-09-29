@@ -270,50 +270,56 @@ details = jsonb_set(details, '{company}', ' {
 	"amount": "55555555"
 	},
 	"work_schedule": {
-		"sunday": null,
+		"sunday": {
+			"ins": "null",
+			"out": "null"
+		},
+		"monday": {
+			"ins": "2016-09-29 09:00",
+			"out": "2016-09-29 18:00"
+		},
+		"tuesday": {
+			"ins": "2016-09-29 09:00",
+			"out": "2016-09-29 18:00"
+		},
+		"wednesday": {
+			"ins": "2016-09-29 09:00",
+			"out": "2016-09-29 18:00"
+		},
+		"thursday": {
+			"ins": "2016-09-29 09:00",
+			"out": "2016-09-29 18:00"
+		},
+		"friday": {
+			"ins": "2016-09-29 09:00",
+			"out": "2016-09-29 18:00"
+		},
+		"saturday": {
+			"ins": "null",
+			"out": "null"
+		}
+	},
+	"company_work_schedule": {
+		"friday": {
+			"ins": "09:00",
+			"out": "18:00"
+		},
 		"monday": {
 			"ins": "09:00",
 			"out": "18:00"
 		},
-		"tuesday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"wednesday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"thursday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"friday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"saturday": null
-	},
-	"company_work_schedule": {
-		"friday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"monday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
 		"sunday": null,
 		"tuesday": {
-			"in": "09:00",
+			"ins": "09:00",
 			"out": "18:00"
 		},
 		"saturday": null,
 		"thursday": {
-			"in": "09:00",
+			"ins": "09:00",
 			"out": "18:00"
 		},
 		"wednesday": {
-			"in": "09:00",
+			"ins": "09:00",
 			"out": "18:00"
 		}
 	}

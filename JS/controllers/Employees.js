@@ -524,8 +524,47 @@ app.controller('Employees', function(
         if ($scope.employees.data[k].details.personal.religion == undefined) {
             $scope.employees.data[k].details.personal.religion = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.religion == undefined) {
-            $scope.employees.data[k].details.personal.religion = 'No Data';
+        if ($scope.employees.data[k].details.company.work_schedule.sunday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.sunday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.sunday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.sunday.out = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.monday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.monday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.monday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.monday.out = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.tuesday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.tuesday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.tuesday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.tuesday.out = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.wednesday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.wednesday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.wednesday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.wednesday.out = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.thursday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.thursday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.thursday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.thursday.out = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.friday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.friday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.friday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.friday.out = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.saturday.ins == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.saturday.ins = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.work_schedule.saturday.out == undefined) {
+            $scope.employees.data[k].details.company.work_schedule.saturday.out = 'No Data';
         }
 
         // $scope.employee.birth_date = $filter('date')($scope.employee.birth_date, "MM-dd-yyyy");
