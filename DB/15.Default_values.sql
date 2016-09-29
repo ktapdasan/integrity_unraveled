@@ -114,5 +114,5 @@ insert into default_values
  values
  (
  'overtime_leave',
- '{"leave_types_pk": "16"} '::jsonb
+ '{"leave_types_pk": "16","leave_types_pk": "8", "allow_tardy" : "true", "maximum" : {"year" : "120", "month" : "40"}}'::jsonb
  );

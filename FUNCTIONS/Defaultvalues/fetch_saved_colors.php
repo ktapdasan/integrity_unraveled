@@ -8,8 +8,8 @@ $class = new Default_values(
 		                        NULL,
 		                        NULL
 							);
-
-$data = $class->get_leave_types();
+$extra['employees_pk'] = $_POST['employees_pk'];
+$data = $class->fetch_saved_colors($extra);
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){

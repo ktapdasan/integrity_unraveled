@@ -230,7 +230,7 @@ th {
                     <tbody>
                         <tr style="cursor:pointer;">
                             <td></td>
-                                <input style="width:80px;" class="form-control" colorpicker  type="text" ng-model="calendar.data.color"/>
+                                <input style="width:80px;" class="form-control" colorpicker  type="text" ng-model="color"/>
                         </tr> 
                         <table>
                 <tr ng-repeat="(k, v) in calendar.data" style="cursor:pointer;">
@@ -276,3 +276,66 @@ th {
     </div>
 </div>
 
+<div class="col-md-6">
+            <div style="margin-top:150px;margin-left:500px;position:absolute">
+                <h3>Overtime Leave</h3>
+                <table cellspacing="0"  style="margin-top:10px;" width:"100px">
+                    <tbody>
+                        <tr style="cursor:pointer;">
+                            <td>Leave type to be used for approved non-paid overtime</td>
+                            <td>
+                                <select ng-model="overtime_leave.pk">
+                                    <option  value="{{v.pk}}" ng-repeat="v in overtime_leave_types.data track by $index">{{v.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                         <tr style="cursor:pointer;">
+                            <td> Allow tardy employees to file overtime</td>
+                            <td>
+                                <input type="checkbox" value="true" style="width:30px;height:35px;background-color black" ng-model="overtime_leave.status">
+                            </td>
+                        </tr> 
+                        <tr style="cursor:pointer;">
+                            <td> Maximum Leave per Year</td>
+                            <td>
+                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.year" /> day(s)
+                            </td>
+                        </tr>
+                        <tr style="cursor:pointer;">
+                            <td> Maximum Leave per Month</td>
+                            <td>
+                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.month" /> day(s)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align:right;">
+                                <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_overtime_leave()" title="update" /> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table cellspacing="3" style="margin-left:700px;margin-top:450px;" >
+                    <tr>
+                        <th style = 'padding-right: 50px'> Calendar Color List: </th>
+                    </tr>
+                    <tr>
+                            <th>Calendar Color</th>
+                            <th>Option</th>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="(k, v) in calendar_color.data" style="cursor:pointer;" ng-if="calendar_color.status">
+                            <td>{{v.color}}</td>
+                            <td><button ng-click="cancel(k)" class="medium button blue fa-fa">Cancel</button> </td>
+                        </tr>
+                        <tr ng-if="!calendar_color.status" style = "text-align: center;">
+                            <td colspan = "6" style="text-align:center;">No data found</td>
+                        </tr>
+
+                    </tbody>
+                </table>
