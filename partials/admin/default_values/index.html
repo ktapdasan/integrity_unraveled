@@ -253,14 +253,14 @@ th {
                         <tr style="cursor:pointer;">
                             <td>Birthday Leave Count</td>
                             <td>
-                                <select ng-disabled="birthday_leave.data.status ?  false : true" ng-model="birthday_leave.data.pk">
+                                <select ng-disabled="birthday_leave.status ?  false : true" ng-model="birthday_leave.pk">
                                     <option  value="{{v.pk}}" ng-repeat="v in leave_types.data track by $index">{{v.name}}</option>
                                 </select>
                             </td>
                             <td>
-                                <input ng-disabled="birthday_leave.data.status ?  false : true" type="text" style="width:80px;" is-number maxlength="3" ng-model="birthday_leave.data.count" />
+                                <input ng-disabled="birthday_leave.status ?  false : true" type="text" style="width:80px;" is-number maxlength="3" ng-model="birthday_leave.count" />
 
-                                <input type="checkbox" value="true" style="width:25px;height:20px;background-color black" ng-model="birthday_leave.data.status">
+                                <input type="checkbox" value="true" style="width:25px;height:20px;background-color black" ng-model="birthday_leave.status">
                             </td>
                         </tr>
                         <tr>

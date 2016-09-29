@@ -189,7 +189,7 @@ app.controller('Default_values', function(
                 }
             }
 
-            $scope.birthday_leave.data.status = birthday_leave.status;
+            $scope.birthday_leave.status = birthday_leave.status;
             
         })
         .then(null, function(data){
@@ -433,16 +433,16 @@ app.controller('Default_values', function(
 
         var promise = DefaultvaluesFactory.get_birthday_leave(filters);
         promise.then(function(data){
-            $scope.birthday_leave.status = true;
+            
             $scope.birthday_leave.data = data.data.result[0];
 
-            $scope.birthday_leave.data.details = JSON.parse($scope.birthday_leave.data.details);
-            $scope.birthday_leave.data.count = $scope.birthday_leave.data.details.count;
-            $scope.birthday_leave.data.pk = $scope.birthday_leave.data.details.leave_types_pk;
+            $scope.birthday_leave.details = JSON.parse($scope.birthday_leave.data.details);
+            $scope.birthday_leave.count = $scope.birthday_leave.details.count;
+            $scope.birthday_leave.pk = $scope.birthday_leave.details.leave_types_pk;
             
         })
         .then(null, function(data){
-            $scope.birthday_leave.status = false;
+            
         });
     }
 
@@ -558,7 +558,7 @@ app.controller('Default_values', function(
             return false;
         }, function(value){
             
-            var promise = DefaultvaluesFactory.update_birthday_leave($scope.birthday_leave.data);
+            var promise = DefaultvaluesFactory.update_birthday_leave($scope.birthday_leave);
             promise.then(function(data){
 
                 UINotification.success({
