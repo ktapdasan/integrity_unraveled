@@ -735,6 +735,7 @@ app.controller('Default_values', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
+                show_list();
             })
             .then(null, function(data){
                 
@@ -762,7 +763,7 @@ app.controller('Default_values', function(
         promise.then(function(data){
             $scope.calendar_color.status = true;
             $scope.calendar_color.data = data.data.result;
-            console.log($scope.calendar_color);
+            
             
         })
         .then(null, function(data){
