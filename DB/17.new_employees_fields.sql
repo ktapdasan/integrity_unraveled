@@ -323,9 +323,10 @@ details = jsonb_set(details, '{company}', ' {
 			"out": "18:00"
 		}
 	}
+	
 
 }
-', true);
+', true)
 where pk = 12;
 
 
@@ -359,7 +360,23 @@ details = jsonb_set(details, '{personal}', '
 ', true)
 where pk = 12;
 
-
+update employees set
+details = jsonb_set(details, '{education}', ' 
+{
+"school_type": 
+	    [{"educ_level": "Primary", 
+		"school_name": "Elem School", 
+		"date_to_school": "1995-07-27", 
+		"school_location": "Where", 
+		"date_from_school": "1995-07-27"}, 
+		{"educ_level": "Tertiary", 
+		"school_name": "Tertiary School", 
+		"date_to_school": "1992-03-22", 
+		"school_location": "Where", 
+		"date_from_school": "1992-03-22"}]
+}
+', true)
+where pk = 12;
 
 
 
