@@ -72,10 +72,10 @@ select{
     <div class="panel box-shadow-none content-header">
         <div class="panel-body">
             <div class="col-md-12">
-                <h3 class="animated fadeInLeft">Employees</h3>
+                <h3 class="animated fadeInLeft">HRIS</h3>
                 <p class="animated fadeInDown">
                     <a href="#/">Home</a> <span class="fa-angle-right fa"></span> 
-                    Employees
+                    HRIS
 
                 </p>
             </div>
@@ -185,7 +185,7 @@ select{
                 <thead>
                    
                     <tr>
-                        <th col width="80">Employee Number</th>
+                        <th col width="80" >Employee Number</th>
                         <th col width="55">First Name</th>
                         <th col width="65">Middle Name</th>
                         <th col width="55">Last Name</th>
@@ -198,8 +198,8 @@ select{
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status">
-                        <td>{{v.details.company.employee_id}}</td>
+                    <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status"  title="View">
+                        <td >{{v.details.company.employee_id}}</td>
                         <td>{{v.details.personal.first_name}}</td>
                         <td>{{v.details.personal.middle_name}}</td>
                         <td>{{v.details.personal.last_name}}</td>
@@ -214,6 +214,7 @@ select{
                         <td><center> 
                             <!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
                             <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="view_employees(k)"title="View">
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
 
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px" ng-if="v.archived=='f'" ng-click="delete_employees(k)" title="Delete">
@@ -434,7 +435,7 @@ select{
                         </tr>
                          <tr>
                          <td>
-                            <label style="display:block; float:left; padding-top:10px; padding-right:10px">In case of Emergency who to contact:</label> 
+                            <label style="display:block; float:left; padding-top:10px; padding-right:5px">In case of Emergency who to contact:</label> 
                         </td>
                              <td id="css">     
                                 <input name="ename" tabindex="13" required ng-model="employee.emergency_name"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Name" capitalize-first />
@@ -888,4 +889,331 @@ select{
                 </div>
             </div>
         </div>
+
 </script>
+<script type="text/ng-template" id="ViewModal" class="ngdialog-buttons">
+    <div class="ngdialog-message" style="width: 1000px;">
+        <style type ="text/css">
+            
+            .imageprofile{
+                border-radius:50%;
+                height:180px;
+                border: 5px solid white;
+
+            }
+
+            </style>
+        <div class="container">
+           <div class="row">
+            <div class ="col-md-2" style="padding:5px;word-wrap: break-word;">
+                    <img src="{{employee.profile_picture}}" class="imageprofile"/>
+                </div>
+                <div class ="col-md-4" style="padding:6px;word-wrap: break-word;margin-top:40px">
+                    <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
+                    <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
+                </div>
+                <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
+                                                       
+                            
+                             <div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
+                             <div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
+                             <div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
+                             <div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
+                             <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
+                        
+
+                      </div>
+                      <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
+                      padding-top:10px;padding-bottom:10px;">
+
+                            <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
+                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_types}}</div>
+                            <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
+                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">{{employee.emergency_name}} - {{emergency_contact_number}}</div>
+                      </div>  
+                
+
+           </div>
+           <div class ="row">
+               
+            <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+                      padding-top:10px;padding-bottom:10px;">
+            <div class="panel panel-default">
+                 <div class="panel-heading" style="font-weight:900">Company Profile</div>
+                    <div class="panel-body">
+
+                        <table>
+                            <tr>
+                                <td>
+                                   <b> Employee ID: <br>{{employee.employee_id}}</b>
+                                </td>    
+                            </tr>   
+                            <tr>
+                                <td>
+                                   <div><b>Business Email Address:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.business_email_address}}</div>
+                                </td>
+                                <td>
+                                    <div><b>Start Date:</b></div>
+                                </td>
+                                 <td>
+                                    <div>{{employee.date_started | date}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div><b>Position:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.titles}}</div>
+                                </td>
+
+                                <td>
+                                    <div><b>Supervisor:</b></div>
+                                </td>
+                                <td>
+                                    <div>111111</div>
+                                </td>
+
+                               
+                            </tr>
+                           <tr>
+                                <td>
+                                    <div><b>Level Id:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.levels}}</div>
+                                </td>
+
+                                <td>
+                                    <div><b>Employee Status:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.employee_statuses}}</div>
+                                </td>
+
+                           </tr>
+                           <tr>
+                                <td>
+                                    <div><b>Department:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.departmentss}}</div>
+                                </td>
+
+                           </tr>
+                             <tr>
+                                <td>
+                                    <div><b>Employment Type:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.employment_typess}}</div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    <div><b>Salary type:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.salary_type}}</div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    <div><b>Bank Name:</b></div>
+                                </td>
+                                <td>
+                                    <div>111111</div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    <div><b>Amount:</b></div>
+                                </td>
+                                <td>
+                                    <div>111111</div>
+                                </td>
+                             </tr>
+
+                    </table>
+                        
+                </div>   
+              </div>
+
+          </div>
+
+            <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+                      padding-top:10px;padding-bottom:10px;">
+            <div class="panel panel-default">
+                 <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
+                    <div class="panel-body">
+
+
+                        <table width="80%">
+                            <tr>
+                                <td>
+                                <div style="color:#2196F3;font-weight:bold;">Primary</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <div><b>School Name:</b></div>
+                                </td>
+                                <td>
+                                    <div>11111</div>
+                                </td>
+                                <td>
+                                    <div><b>Location:</b></div>
+                                </td>
+                                 <td>
+                                    <div>111111</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                   <td>
+                                    <div><b>From Date:</b></div>
+                                    </td>
+                                    <td>
+                                        <div>111111</div>
+                                    </td>
+                                    <td>
+                                        <div><b>To Date::</b></div>
+                                    </td>
+                                    <td>
+                                        <div>111111</div>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td >  <div style="color:#2196F3;font-weight:bold;">Secondary</div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <div><b>School Name:</b></div>
+                                </td>
+                                <td>
+                                    <div>111111</div>
+                                </td>
+                                <td>
+                                    <div><b>Location:</b></div>
+                                </td>
+                                 <td>
+                                    <div>111111</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                   <td>
+                                    <div><b>From Date:</b></div>
+                                    </td>
+                                    <td>
+                                        <div>111111</div>
+                                    </td>
+                                    <td>
+                                        <div><b>To Date::</b></div>
+                                    </td>
+                                    <td>
+                                        <div>111111</div>
+                                    </td>
+                            </tr>
+                               <tr>
+                                <td> <div style="color:#2196F3;font-weight:bold;">Tertiary</div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <div><b>School Name:</b></div>
+                                </td>
+                                <td>
+                                    <div>111111</div>
+                                </td>
+                                <td>
+                                    <div><b>Location:</b></div>
+                                </td>
+                                 <td>
+                                    <div>111111</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                   <td>
+                                    <div><b>From Date:</b></div>
+                                    </td>
+                                    <td>
+                                        <div>111111</div>
+                                    </td>
+                                    <td>
+                                        <div><b>To Date::</b></div>
+                                    </td>
+                                    <td>
+                                        <div>111111</div>
+                                    </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+       <div class="row">    
+        <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+                      padding-top:10px;padding-bottom:10px;">
+             <div class="panel panel-default">
+                 <div class="panel-heading" style="font-weight:900">Government Mandated Benefits</div>
+                    <div class="panel-body">
+
+                        <table width="40%">
+                            <tr>
+                                <td>
+                                <div style="font-weight:bold; width:100px; height:30px;">PHIC:</div>
+                                </td>
+                                <td>
+                                      <div style="width:100px; height:30px;">{{employee.data_phid}}</div>
+                                </td>
+                                <td>
+                                <div style="font-weight:bold; width:100px; height:30px;">HDMF:</div>
+                                </td>
+                                <td>
+                                      <div style="width:100px; height:30px;">{{employee.data_pagmid}}</div>
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                <div style="font-weight:bold; width:100px; height:30px;">TIN:</div>
+                                </td>
+                                <td>
+                                      <div style="width:100px; height:30px;">{{employee.data_tin}}</div>
+                                </td>    
+                                <td>
+                                <div style="font-weight:bold; width:100px; height:30px;">SSS:</div>
+                                </td>
+                                <td>
+                                      <div style="width:100px; height:30px;">{{employee.data_sss}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                            </tr>   
+                        </table>       
+                    </div>
+                    <div class="panel-body"?
+                        <table width = "30%">
+                            <tr>
+                                <td colspan = "4">
+                                    <center style="font-size: 18px; font-style: bold">
+                                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+                                    </center>
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+         </div>
+        </div>         
+      </div>
+        </div>
+            
+    </div>
+</script>
+

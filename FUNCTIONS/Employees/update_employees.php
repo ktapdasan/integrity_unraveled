@@ -77,6 +77,7 @@ if ($_POST['levels_pk'] == 3){
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['employee_status_pk']     = pg_escape_string(strip_tags(trim($_POST['employee_status_pk'])));
     $company['employment_type_pk']     = pg_escape_string(strip_tags(trim($_POST['employment_type_pk'])));
+    $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
@@ -92,7 +93,8 @@ if ($_POST['levels_pk'] == 3){
     $personal['profile_picture']       = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
     $personal['emergency_contact_name']     = pg_escape_string(strip_tags(trim($_POST['emergency_name'])));
     $personal['emergency_contact_number']   = pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));
-    
+    $personal['birth_date']                 = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
+
     $government['data_sss']            = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
@@ -145,7 +147,8 @@ if ($_POST['levels_pk'] != 3){
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
     $personal['civilstatus_pk']        = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
     $personal['profile_picture']       = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
-    
+    $personal['birth_date']            = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
+
     $government['data_sss']            = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
@@ -172,31 +175,29 @@ if ($_POST['levels_pk'] != 3){
     $company['work_schedule']['saturday']['ins']        = pg_escape_string($_POST['timein_saturday']);
     $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
     $company['work_schedule']['saturday']['flexi']      = pg_escape_string($_POST['flexi_saturday']);
-
+    $company['date_started']                            = pg_escape_string(strip_tags(trim($_POST['date_started'])));
+    
     //Salary Type
-if ($_POST['salary_type'] == 'bank'){
-    $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
-    $company['salary']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['salary_bank_name'])));
-    $company['salary']['account_number']       = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
-    $company['salary']['amount']               = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
+    if ($_POST['salary_type'] == 'bank'){
+        $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
+        $company['salary']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['salary_bank_name'])));
+        $company['salary']['account_number']       = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
+        $company['salary']['amount']               = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
 
-}
-if ($_POST['salary_type'] == 'wire'){
-   $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
-   $company['salary']['mode_payment']          = pg_escape_string(strip_tags(trim($_POST['salary_mode_payment'])));
-   $company['salary']['account_number']        = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
-   $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
+    }
+    if ($_POST['salary_type'] == 'wire'){
+       $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
+       $company['salary']['mode_payment']          = pg_escape_string(strip_tags(trim($_POST['salary_mode_payment'])));
+       $company['salary']['account_number']        = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
+       $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
 
-}
-if ($_POST['salary_type'] == 'cash'){
-   $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
-   $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
-} 
+    }
+    if ($_POST['salary_type'] == 'cash'){
+       $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
+       $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
+    } 
 }   
 
-
-$company['date_started']                       = pg_escape_string(strip_tags(trim($_POST['date_started'])));
-$personal['birth_date']                        = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 
 $details = array();
 $details['company'] = $company;
