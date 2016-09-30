@@ -123,6 +123,10 @@ app.controller('New_Employees', function(
         });
     }
 
+    $scope.saveme = function(){
+        alert("asdf");
+    }
+
     $scope.change_tab = function(tab){
         for(var i in $scope.tab){
             $scope.tab[i] = false

@@ -6,15 +6,16 @@ require_once('../../CLASSES/Default_values.php');
 require_once('../../CLASSES/Employees.php');
 
 $default_values_max_overtime_class = new Default_values(
-											NULL,
-											'maximum_overtime',
-											NULL,
-											NULL
-										);
+									                        NULL,
+									        				'overtime_leave',
+									        				NULL,
+									                        NULL
+									        			);
 
 $default_values_max_overtime_data = $default_values_max_overtime_class->fetch();
 
 $default_max_overtime = json_decode($default_values_max_overtime_data['result'][0]['details']);
+$default_max_overtime = $default_max_overtime->maximum;
 
 $default_values_overtime_leave_class = new Default_values(
 											NULL,

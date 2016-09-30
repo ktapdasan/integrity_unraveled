@@ -12,7 +12,9 @@ app.controller('Default_values', function(
     $scope.filter= {};
     $scope.cutoff= {};
     $scope.default_values = {};
+
     $scope.cancel_color = {};
+
     $scope.calendar = {};
     $scope.leave_default = {};
     $scope.birthday_leave = {};
