@@ -774,16 +774,16 @@ app.controller('Default_values', function(
         });
     }
 
-    $scope.cancel = function(k){
+    $scope.delete_color = function(k){
         $scope.modal = {
-                title : 'Cancel Color Saved',
-                message: 'Are you sure you want to cancel your saved color',
+                
+                message: 'Are you sure you want to delete this color?',
                 save : 'Delete',
                 close : 'Cancel'
             };
         
         ngDialog.openConfirm({
-            template: 'ColorCancelModal',
+            template: 'ConfirmModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             
             scope: $scope,
