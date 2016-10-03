@@ -352,10 +352,6 @@ app.controller('Default_values', function(
         .then(function(value){
             return false;
         }, function(value){
-            
-
-            
-            console.log($scope.overtime_leave);
 
             var promise = DefaultvaluesFactory.save_overtime_leave($scope.overtime_leave);
             promise.then(function(data){
