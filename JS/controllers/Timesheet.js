@@ -7,7 +7,7 @@ app.controller('Timesheet', function(
                                         ngDialog,
                                         UINotification,
                                         CutoffFactory,
-                                        WorkdaysFactory,
+                                        DefaultvaluesFactory,
                                         LeaveFactory,
                                         md5,
                                         $filter
@@ -180,9 +180,10 @@ app.controller('Timesheet', function(
         $scope.timesheet.data = [];
         var promise = TimelogFactory.timesheet(filter);
         promise.then(function(data){
+            //console.log($scope.profile.details);
             $scope.timesheet.status = true;
-            $scope.timesheet.data = data.data[$scope.profile.employee_id];
-            
+            $scope.timesheet.data = data.data[$scope.profile.details.company.employee_id];
+            //console.log(data.data);
             $scope.timesheet.count=0;
             for(var i in $scope.timesheet.data){
                 $scope.timesheet.count++;                

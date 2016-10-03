@@ -36,7 +36,7 @@
     <link href="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar.min.css" rel="stylesheet">
     <!-- end: Css -->
     
-    <link rel="shortcut icon" href="./ASSETS/img/icon_24.png"> 
+    <link rel="shortcut icon" href="./ASSETS/img/time_32.png"> 
     
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -305,7 +305,7 @@
                         <a href="#/timelogs" ng-click="menuclicked('timelogs')">Time Logs</a>
                     </li> -->
                     <li ng-class="menu.employees" ng-if="profile.permission.employees">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employees<span class="caret" ></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">HRIS<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
                             
                             <li><a style="cursor:pointer;" href="#/employees/new" ng-click="menuclicked('employees')">New</a></li>
@@ -329,13 +329,14 @@
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/admin/default_values" ng-click="menuclicked('admin')">Default Values</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/departments" ng-click="menuclicked('admin')">Departments</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/positions" ng-click="menuclicked('admin')">Positions</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/levels" ng-click="menuclicked('admin')">Levels</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/permissions" ng-click="menuclicked('admin')">Permissions</a></li> 
-                            <li><a style="cursor:pointer;" href="#/admin/cutoff" ng-click="menuclicked('admin')">Cut Off</a></li>
+                            <!-- <li><a style="cursor:pointer;" href="#/admin/cutoff" ng-click="menuclicked('admin')">Cut Off</a></li> -->
                             <li><a style="cursor:pointer;" href="#/admin/leaves" ng-click="menuclicked('admin')">Leaves</a></li>
-                            <li><a style="cursor:pointer;" href="#/admin/default_values" ng-click="menuclicked('admin')">Default Values</a></li>
+                            
                             <li><a style="cursor:pointer;" href="#/admin/holidays" ng-click="menuclicked('admin')">Holidays</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/suspension" ng-click="menuclicked('admin')">Suspension</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/calendar" ng-click="menuclicked('admin')">Calendar</a></li>
@@ -567,7 +568,7 @@
     <script src="./JS/controllers/New_Employees.js"></script>
     <script src="./JS/controllers/Leave.js"></script>
     <script src="./JS/controllers/Manual_logs.js"></script>
-    <script src="./JS/controllers/Cutoff.js"></script>
+    <!-- <script src="./JS/controllers/Cutoff.js"></script> -->
     <script src="./JS/controllers/Management_manual_logs.js"></script>
     <script src="./JS/controllers/Management_leave.js"></script>
     <script src="./JS/controllers/EmployeesPermissions.js"></script>
@@ -858,6 +859,20 @@
             </div>
                 <label style = "font-size:20px;">Remarks:</label> 
                 <textarea ng-model="log.remarks" rows ='6' cols ='32' tabindex="1" required/>
+        </div>
+        <div class="ngdialog-buttons">          
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+            <button type="button" class="ngdialog-button button-action" data-ng-click="closeThisDialog('Save')" ng-disabled="disapproveForm.$error.required">{{modal.save}}</button>
+        </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="ColorCancelModal">
+        <div class="ngdialog-message">
+            <form name="disapproveForm">
+            <div style="margin-top: 10px;">
+                <h2><span style="color:#0c79be;">{{ modal.title }}</span></h2>
+            </div>
         </div>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>

@@ -3,17 +3,22 @@ require_once('../connect.php');
 require_once('../../CLASSES/Default_values.php');
 
 $class = new Default_values(
-								NULL,
-		                        NULL,
-		                        NULL,
-		                        NULL
-							);
+                                NULL,
+                                NULL,
+                                NULL,
+                                NULL
+                            );
 
-$data = $class->get_leave_types();
+$info = array(
+                "pk" => $_POST['pk'],
+                "employees_pk" => $_POST['employees_pk']
+            );
+
+$data = $class->cancel_color($info);
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){
-	header("HTTP/1.0 200 OK");
+    header("HTTP/1.0 200 OK");
 }
 
 header('Content-Type: application/json');

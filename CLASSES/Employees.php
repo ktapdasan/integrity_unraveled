@@ -80,7 +80,8 @@ EOT;
                         employees.email_address,
                         employees_titles.titles_pk,
                         employees.details->'company'->'work_schedule' as work_schedule,
-                        employees.leave_balances
+                        employees.leave_balances,
+                        employees.details
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
                     where employees.archived = false
@@ -147,6 +148,7 @@ EOT;
                         employees.last_name,
                         employees.email_address,
                         employees_titles.titles_pk,
+                        employees.details->'company'->'flexible' as flexible,
                         employees.details->'company'->'work_schedule' as work_schedule
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)

@@ -19,9 +19,12 @@ tr:nth-child(odd){background-color:#F9F9F9;}
 th {
     font-size:13px;
     background-color:white;
-    color: #3d3d3d;
+    color: #918C8C;
     border: 1px solid #c6c6c6;
 }
+
+#table3 td{width:220px;}
+
 </style>
  
 <div id="content2">
@@ -37,12 +40,12 @@ th {
         </div> 
     </div>
 
-<div style="float:left;">
-    <table id="table1" width="16%" cellspacing="0">
-        
+    <div class ="container" style="margin-left:170px;">
+        <div style="float:left;margin-right:40px;">
+            <table id="table2" width="16%" cellspacing="0">
                 <tr>
-                    <th><font size = 3>Work Days</font></th>
-                    <th><font size = 3>Select</th>
+                    <th><font size ="2.8px">Work Days</font></th>
+                    <th><font size = "2.8px;">Select</th>
                 </tr>
 
                 <tr>
@@ -73,67 +76,65 @@ th {
                     <td>Sunday</td>
                     <td><input name="workdays" type="checkbox" style="width:25px;height:25px;background-color black" ng-model="work.data.sunday"></td>
                 </tr>
-                <table cellspacing="10" style="margin-left:200px;margin-top:-445px;" >
-                    <tr>
-                        <th style = 'padding-right: 50px'> Working Hours: </th>
-                    </tr>
-                    <tr>
-                        <td>                            
-                                <input type="text" is-number maxlength="12" ng-model="work_hours.data.hrs">
+                <tr style="cursor:pointer;">
+                        <td colspan="2" style="text-align:right;">      
+                        <button ng-click = "save_workdays()" class="medium button red fa-fa">Save</button>
                         </td>
-                    </tr>
-                <tr ng-repeat="(k, v) in default_values.data" style="cursor:pointer;">
-                     <div style="padding-left:1px; margin-top: 100px; position:absolute;">
-                        <button ng-click = "save_workdays()" class=" medium button red fa-fa"><h5> Save </h5></button>
-        </div>
-    </tr>
-                </table>
-
-       
-            <table>
-                    <tr ng-repeat="(k, v) in default_values.data" style="cursor:pointer;">
-                     <div style="padding-left:200px; margin-top: 10px; position:absolute;">
-                        <button ng-click = "save_hrs()" class=" medium button red fa-fa"><h5> Save </h5></button>
-                </div>
-            </tr>
-    </table>
-</div>
-
-
-
-    <div style="padding-left: 200px;margin-top:200px;position:absolute;">
-                <select ng-model="cutoff.cutoff_types_pk" ng-change= "show_type()">
+                </tr>
+            </table>
+        </div>    
+        <div class="float:left;">
+            <table cellspacing="10" style="margin-bottom:38px;">
+                <tr>
+                    <th> Working Hours: </th>
+                </tr>
+                <tr>
+                    <td >                            
+                        <input type="text" is-number maxlength="12" ng-model="work_hours.data.hrs" style="margin-bottom:10px;margin-top:10px">
+                    </td>
+                </tr>
+                <tr tyle="cursor:pointer;">
+                    <td style="text-align:right;">
+                        <button ng-click = "save_hrs()" class="medium button red fa-fa">Save </button>
+                    </td>
+          
+                </tr>
+            </table>
+            
+            <h3>Cut-off</h3>
+            
+            <div style="margin-bottom:27px;">
+                <select ng-model="cutoff.cutoff_types_pk" ng-change= "show_type()" style="padding:5px;padding-right:130px;">
                     <option ng-repeat="(k, v) in cutoff.types.data" style="cursor:pointer;" value="{{v.pk}}">{{v.type}}</option>
-                 </select>
-        </div>   
+                </select>
+            </div>
 
-    <div style="padding-left: 100px; margin-top: 50px;">
-                <table style="margin-left:100px;margin-top: 216px;position:absolute;width:100px;"ng-show= "displayM">
+            <table ng-show= "displayM">
+                <tr>
+                    <th style = 'padding-right: 44px;'> Start Day: </th>
+                    <th style = 'padding-right: 44px;'> End Day: </th>
+                </tr>
+                <tr>
+                    <td>
+                        <select ng-model = "cutoff.start_m">
+                            <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                        </select>
+                    </td>
+                    <td> 
+                        <select ng-model = "cutoff.end_m">
+                            <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div ng-show= "displayB">
+                <table >
                     <tr>
-                        <th style = 'padding-right: 50px'> Start Day: </th>
-                        <th style = 'padding-right: 50px'> End Day: </th>
+                        <th style = 'padding-right: 44px'> Start Day: </th>
+                        <th style = 'padding-right: 44px'> End Day: </th>
                     </tr>
                     <tr>
-                        <td>
-                            <select ng-model = "cutoff.start_m">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
-                            </select>
-                        </td>
-                        <td> 
-                            <select ng-model = "cutoff.end_m">
-                                <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
-                            </select>
-                    </tr>
-                </table>
-        </div>
-        <div style="padding-left: 100px; margin-top: 50px;"ng-show= "displayB">
-                <table style="margin-left:100px;margin-top: 216px;position:absolute;width:100px;">
-                    <tr>
-                        <th style = 'padding-right: 50px'> Start Day: </th>
-                        <th style = 'padding-right: 50px'> End Day: </th>
-                    </tr>
-                    <tr>
-                        <td>
+                        <td style="padding-bottom:70px">
                             <select ng-model = "cutoff.start_bf">
                                 <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
@@ -142,6 +143,7 @@ th {
                             <select ng-model = "cutoff.end_bf">
                                 <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -153,126 +155,359 @@ th {
                             <select ng-model = "cutoff.end_bs">
                                 <option ng-repeat = "(k, v) in days" style="cursor:pointer;" value="{{v}}">{{v}}</option>
                             </select>
+                        </td>
                     </tr>
                 </table>
-        </div>
-        <table>
-                <tr ng-repeat="(k, v) in cutoff.dates.data" style="cursor:pointer;">
-                     <div style="padding-left:200px; margin-top: 400px; position:absolute;">
-                        <button ng-click = "save_cutoff()" class=" medium button red fa-fa"><h5> Save </h5></button>
-        </div>
-    </tr>
-    </table>
-
-     <div class="col-md-6">
-            <div style="margin-top:-30px;position:absolute">
-                <h3>Default Leave Values</h3>
-                <table cellspacing="0"  style="margin-top:10px;">
-                    <tbody>
-                        <tr style="cursor:pointer;">
-                            <td>Leaves are granted</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.regularization" /> day(s)
-                                
-                            </td>
-                        </tr> 
-                         <tr style="cursor:pointer;">
-                            <td>Leaves to be added upon regularization</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_regularization" /> day(s)
-                                
-                            </td>
-                        </tr> 
-                        <tr style="cursor:pointer;">
-                            <td>The rest of the leaves are given:</td>
-                            <td>
-                                <select ng-model="leave_default.data.staggered">
-                                    <option>Staggered monthly</option>
-                                    <option>All at once</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr style="cursor:pointer;">
-                            <td>Leaves max increase:</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.max_increase" /> day(s)
-                            </td>
-                        </tr>
-                        <tr style="cursor:pointer;">
-                            <td>Leaves to be added per month:</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_per_month" /> day(s)
-                            </td>
-                        </tr>
-                        <tr style="cursor:pointer;">
-                            <td>How many leaves will be carried-over:</td>
-                            <td>
-                                <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.carry_over" /> day(s)
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td></td>
-                            <td style="text-align:right;">
-                                <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_default()" title="update" /> 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-6">
-            <div style="margin-top:450px;margin-left:0px;position:absolute">
-                <h3>Calendar Color</h3>
-                <table cellspacing="0"  style="margin-top:10px;">
-                    <tbody>
-                        <tr style="cursor:pointer;">
-                            <td></td>
-                                <input style="width:80px;" class="form-control" colorpicker  type="text" ng-model="calendar.data.color"/>
-                        </tr> 
-                        <table>
-                <tr ng-repeat="(k, v) in calendar.data" style="cursor:pointer;">
-                     <div style="padding-left:130px; margin-top: -50px; position:absolute;">
-                        <button ng-click = "save_color()" class=" medium button red fa-fa"><h5> Save </h5></button>
+            <table style=" width:226px;">
+                <tr style="cursor:pointer;">
+                    <td style="text-align:right;border-top:0">
+                     <div>
+                        <button ng-click = "save_cutoff()" class="medium button red fa-fa" >Save </button>
                     </div>
+                    </td>
                 </tr>
-                        </table>
-                    </tbody>
-                </table>
+            </table>
+        </div>  
+    </div>
+    <div style="margin-left:640px;margin-top:-456px;">
+        <h2>Default Leave Values</h2>
+        <table id ="table2" cellspacing="0"  style="margin-top:30px;">
+            <tbody>
+                <tr style="cursor:pointer;">
+                    <td >Leaves are granted after</td>
+                    <td>
+                        <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.regularization" /> day(s)
+                        
+                    </td>
+                </tr> 
+                <tr style="cursor:pointer;">
+                    <td>Leaves to be added upon regularization</td>
+                    <td>
+                        <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_regularization" /> day(s)
+                        
+                    </td>
+                </tr> 
+                <tr style="cursor:pointer;">
+                    <td>The rest of the leaves are given:</td>
+                    <td>
+                        <select ng-model="leave_default.data.staggered">
+                            <option>Staggered monthly</option>
+                            <option>All at once</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr style="cursor:pointer;">
+                    <td>Annual Maximum Leave increase:</td>
+                    <td>
+                        <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.max_increase" /> day(s)
+                    </td>
+                </tr>
+                <tr style="cursor:pointer;">
+                    <td>Leaves to be added per month:</td>
+                    <td>
+                        <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_per_month" /> day(s)
+                    </td>
+                </tr>
+                <tr style="cursor:pointer;">
+                    <td>How many leaves will be carried-over:</td>
+                    <td>
+                        <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.carry_over" /> day(s)
+                    </td>
+                </tr> 
+                <tr>
+                
+                    <td style="text-align:right;" colspan="2">
+                        <button  class="medium button blue fa-fa" value = "Update" ng-click="save_default()" title="update" >Update</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style ="margin-left:180px;margin-top:50px;">
+
+        <h3>Birthday Leave</h3>
+        <table cellspacing="0">
+            
+            <tr style="cursor:pointer;">
+
+                <td>    <input type="checkbox" value="true" style="width:25px;height:20px;background-color black;margin-top:-3px;" ng-model="birthday_leave.status"> <div style="margin-top:-24px;margin-left:31px;">Birthday Leave Count</div></td>
+                <td>
+                    <select ng-disabled="birthday_leave.status ?  false : true" ng-model="birthday_leave.pk">
+                        <option  value="{{v.pk}}" ng-repeat="v in leave_types.data track by $index">{{v.name}}</option>
+                    </select>
+                </td>
+                <td>
+                    <input ng-disabled="birthday_leave.status ?  false : true" type="text" style="width:45px;" is-number maxlength="3" ng-model="birthday_leave.count" />
+
+                
+                </td>
+            </tr>
+            <tr>
+            
+                <td style="text-align:right;"colspan="3">
+                    <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_leave()" title="update" /> 
+                </td>
+            </tr>
+          
+        </table>
+         
+    </div>   
+    <div style="margin-left:640px;margin-top:-158px;">
+        <h3>Overtime Leave</h3>
+        <table cellspacing="0"  style="margin-top:10px;" width:"100px" id="table3">
+            
+            <tr >
+                <td>Leave type to be used for approved non-paid overtime</td>
+                <td>
+                    <select ng-model="overtime_leave.pk" style="cursor:pointer;">
+                        <option  value="{{v.pk}}" ng-repeat="v in overtime_leave_types.data track by $index">{{v.name}}</option>
+                    </select>
+                </td>
+            </tr>
+             <tr style="cursor:pointer;">
+                <td> Allow tardy employees to file overtime</td>
+                <td>
+                    <input type="checkbox" value="true" style="width:30px;height:35px;background-color black" ng-model="overtime_leave.status">
+                </td>
+            </tr> 
+            <tr style="cursor:pointer;">
+                <td> Maximum Leave per Year</td>
+                <td>
+                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.year" /> day(s)
+                </td>
+            </tr>
+            <tr style="cursor:pointer;">
+                <td> Maximum Leave per Month</td>
+                <td>
+                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.month" /> day(s)
+                </td>
+            </tr>
+            <tr>
+              
+                <td style="text-align:right;" colspan="2">
+                    <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_overtime_leave()" title="update" /> 
+                </td>
+            </tr>
+     
+        </table>
+    </div>
+    <div style ="margin-top:-150px;margin-left:180px;">
+        <h3>Calendar Color List:</h3>
+        <table cellspacing="3" width="420px" >
+            <tbody>
+                <tr style="cursor:pointer;">
+                    <td style="width:80%;">
+                        <div style="padding:5px; background-color:{{color}}">
+                            <input style="width:80px;" class="form-control" colorpicker  type="text" ng-model="color"/>
+                        </div>
+                    </td>
+                    <td>
+                        <button ng-click = "save_color()" class=" medium button blue fa-fa"><h5> ADD </h5></button>
+                    </td>
+                </tr> 
+            </tbody>
+            <tr>
+                <th>Calendar Color</th>
+                <th>Option</th>
+            </tr>
+            <tbody>
+                <tr ng-repeat="(k, v) in calendar_color.data" style="cursor:pointer;" ng-if="calendar_color.status">
+                    <td>
+                        <div style="padding:5px; background-color:{{v.color}}">{{v.color}}</div>
+                    </td>
+                    <td><button ng-click="cancel(k)" class="medium button red fa-fa">X</button> </td>
+                </tr>
+                <tr ng-if="!calendar_color.status" style = "text-align: center;">
+                    <td colspan = "6" style="text-align:center;">No data found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>           
+        
+
+
+
+       
+
+
+         
+<!-- 
+         <div class="col-md-6">
+                <div style="margin-top:-30px;position:absolute">
+                    <h3>Default Leave Values</h3>
+                    <table cellspacing="0"  style="margin-top:10px;">
+                        <tbody>
+                            <tr style="cursor:pointer;">
+                                <td>Leaves are granted</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.regularization" /> day(s)
+                                    
+                                </td>
+                            </tr> 
+                             <tr style="cursor:pointer;">
+                                <td>Leaves to be added upon regularization</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_regularization" /> day(s)
+                                    
+                                </td>
+                            </tr> 
+                            <tr style="cursor:pointer;">
+                                <td>The rest of the leaves are given:</td>
+                                <td>
+                                    <select ng-model="leave_default.data.staggered">
+                                        <option>Staggered monthly</option>
+                                        <option>All at once</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr style="cursor:pointer;">
+                                <td>Leaves max increase:</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.max_increase" /> day(s)
+                                </td>
+                            </tr>
+                            <tr style="cursor:pointer;">
+                                <td>Leaves to be added per month:</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_per_month" /> day(s)
+                                </td>
+                            </tr>
+                            <tr style="cursor:pointer;">
+                                <td>How many leaves will be carried-over:</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.carry_over" /> day(s)
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td></td>
+                                <td style="text-align:right;">
+                                    <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_default()" title="update" /> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-6">
-            <div style="margin-top:-30px;margin-left:500px;position:absolute">
-                <h3>Birthday Leave</h3>
-                <table cellspacing="0"  style="margin-top:10px;">
-                    <tbody>
-                        <tr style="cursor:pointer;">
-                            <td>Birthday Leave Count</td>
-                            <td>
-                                <select ng-disabled="birthday_leave.status ?  false : true" ng-model="birthday_leave.pk">
-                                    <option  value="{{v.pk}}" ng-repeat="v in leave_types.data track by $index">{{v.name}}</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input ng-disabled="birthday_leave.status ?  false : true" type="text" style="width:80px;" is-number maxlength="3" ng-model="birthday_leave.count" />
 
-                                <input type="checkbox" value="true" style="width:25px;height:20px;background-color black" ng-model="birthday_leave.status">
-                            </td>
+    <div class="col-md-6">
+                <div style="margin-top:450px;margin-left:0px;position:absolute">
+                    <h3>Calendar Color</h3>
+                    <table cellspacing="0"  style="margin-top:10px;">
+                        <tbody>
+                            <tr style="cursor:pointer;">
+                                <td></td>
+                                    <input style="width:80px;" class="form-control" colorpicker  type="text" ng-model="color"/>
+                            </tr> 
+                            <table>
+                    <tr ng-repeat="(k, v) in calendar.data" style="cursor:pointer;">
+                         <div style="padding-left:130px; margin-top: -50px; position:absolute;">
+                            <button ng-click = "save_color()" class=" medium button red fa-fa"><h5> Save </h5></button>
+                        </div>
+                    </tr>
+                            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+                <div style="margin-top:-30px;margin-left:500px;position:absolute">
+                    <h3>Birthday Leave</h3>
+                    <table cellspacing="0"  style="margin-top:10px;">
+                        <tbody>
+                            <tr style="cursor:pointer;">
+                                <td>Birthday Leave Count</td>
+                                <td>
+                                    <select ng-disabled="birthday_leave.status ?  false : true" ng-model="birthday_leave.pk">
+                                        <option  value="{{v.pk}}" ng-repeat="v in leave_types.data track by $index">{{v.name}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input ng-disabled="birthday_leave.status ?  false : true" type="text" style="width:80px;" is-number maxlength="3" ng-model="birthday_leave.count" />
+
+                                    <input type="checkbox" value="true" style="width:25px;height:20px;background-color black" ng-model="birthday_leave.status">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="text-align:right;">
+                                    <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_leave()" title="update" /> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+                <div style="margin-top:150px;margin-left:500px;position:absolute">
+                    <h3>Overtime Leave</h3>
+                    <table cellspacing="0"  style="margin-top:10px;" width:"100px">
+                        <tbody>
+                            <tr style="cursor:pointer;">
+                                <td>Leave type to be used for approved non-paid overtime</td>
+                                <td>
+                                    <select ng-model="overtime_leave.pk">
+                                        <option  value="{{v.pk}}" ng-repeat="v in overtime_leave_types.data track by $index">{{v.name}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                             <tr style="cursor:pointer;">
+                                <td> Allow tardy employees to file overtime</td>
+                                <td>
+                                    <input type="checkbox" value="true" style="width:30px;height:35px;background-color black" ng-model="overtime_leave.status">
+                                </td>
+                            </tr> 
+                            <tr style="cursor:pointer;">
+                                <td> Maximum Leave per Year</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.year" /> day(s)
+                                </td>
+                            </tr>
+                            <tr style="cursor:pointer;">
+                                <td> Maximum Leave per Month</td>
+                                <td>
+                                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.month" /> day(s)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="text-align:right;">
+                                    <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_overtime_leave()" title="update" /> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table cellspacing="3" style="margin-left:700px;margin-top:450px;" >
+                        <tr>
+                            <th style = 'padding-right: 50px'> Calendar Color List: </th>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td style="text-align:right;">
-                                <input type="button" class="medium button blue fa-fa" value = "Update" ng-click="save_leave()" title="update" /> 
-                            </td>
+                                <th>Calendar Color</th>
+                                <th>Option</th>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+                        <tbody>
+                            <tr ng-repeat="(k, v) in calendar_color.data" style="cursor:pointer;" ng-if="calendar_color.status">
+                                <td>{{v.color}}</td>
+                                <td><button ng-click="cancel(k)" class="medium button blue fa-fa">Cancel</button> </td>
+                            </tr>
+                            <tr ng-if="!calendar_color.status" style = "text-align: center;">
+                                <td colspan = "6" style="text-align:center;">No data found</td>
+                            </tr>
 
+                        </tbody>
+                    </table>
+ -->

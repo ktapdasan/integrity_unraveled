@@ -9,7 +9,7 @@ $class = new Default_values(
 		                        NULL
 							);
 
-$data = $class->get_leave_types();
+$data = $class->get_overtime_leave_status();
 
 header("HTTP/1.0 500 Internal Server Error");
 if($data['status']==true){

@@ -135,6 +135,20 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_overtime_leave_status(){
+        
+        $sql = <<<EOT
+                select 
+                    name,
+                    details
+                from default_values
+                where name = 'overtime_leave'
+                ;
+EOT;
+        
+        return ClassParent::get($sql);
+    }
+
     public function get_default_values(){
         
         $sql = <<<EOT
@@ -164,7 +178,36 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_overtime_leave(){
+        
+        $sql = <<<EOT
+                select 
+                    name,
+                    details
+                from default_values
+                where name = 'overtime_leave'
+                ;
+EOT;
+        
+        return ClassParent::get($sql);
+    }
+
     public function get_leave_types(){
+        
+        $sql = <<<EOT
+                select
+                    pk, 
+                    name
+                from leave_types
+                where archived = false
+                order by pk
+                ;
+EOT;
+        
+        return ClassParent::get($sql);
+    }
+
+    public function get_overtime_leave_types(){
         
         $sql = <<<EOT
                 select
@@ -256,25 +299,28 @@ EOT;
     }
 
     public function save_color($info){
-        $info = pg_escape_string(strip_tags(trim($info)));
-
+        
         $color = $info['color'];
+        $created_by = $info['employees_pk']; 
 
-        echo $sql = <<<EOT
+        $sql = <<<EOT
 
                 insert into calendar
                 (   
                     location,
                     description,
-                    description,
+                    created_by,
                     color
                 )
                 values
                 (
+                    'N/A',
+                    'N/A',
+                    '$created_by',
                     '$color'
                 );
 EOT;
-        return ClassParent::update($sql);
+        return ClassParent::insert($sql);
     }
 
     public function update_work_days($data){
@@ -362,6 +408,33 @@ EOT;
         return ClassParent::update($sql);
     }
 
+    public function update_overtime_leave($data){
+
+        foreach($data as $k=>$v){
+            if(is_array($v)){
+                foreach($v as $key=>$val){
+                    $data[$k][$key] = pg_escape_string(trim(strip_tags($val)));
+                }
+            }
+            else {
+                $data[$k] = pg_escape_string(trim(strip_tags($v)));    
+            }
+        }  
+        $new_data ['leave_types_pk'] = $data ['pk'];
+        $new_data['maximum']['year'] = $data ['year'];
+        $new_data['maximum']['month'] = $data ['month'];
+        $new_data ['allow_tardy'] = $data ['status'];
+
+        $data = json_encode($new_data);
+        $sql = <<<EOT
+                update default_values
+                set details = '$data'
+                where name = 'overtime_leave'
+                ;
+EOT;
+        return ClassParent::update($sql);
+    }
+
     public function update_birthday_leave($data){
 
         foreach($data as $k=>$v){
@@ -417,6 +490,48 @@ EOT;
                 where name = 'cutoff_dates'
                 ;
 EOT;
+        return ClassParent::insert($sql);
+    }
+
+    public function fetch_saved_colors($extra){
+        
+        $employees_pk = $extra['employees_pk'];
+
+        $sql = <<<EOT
+                select
+                pk,
+                    color
+                from calendar
+                where created_by = $employees_pk
+                and archived = false
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function cancel_color($extra){
+        
+        $employees_pk = $extra['employees_pk'];
+        $pk = $extra['pk'];
+
+        $sql = <<<EOT
+        update calendar set
+                (
+                    archived,
+                    created_by
+
+                )
+                =
+                (
+                    't',
+                    '$employees_pk'
+                )
+                where pk = $pk
+                ;
+EOT;
+
         return ClassParent::insert($sql);
     }
 

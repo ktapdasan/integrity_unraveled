@@ -12,16 +12,22 @@ app.controller('Default_values', function(
     $scope.filter= {};
     $scope.cutoff= {};
     $scope.default_values = {};
+
+    $scope.cancel_color = {};
+
     $scope.calendar = {};
     $scope.leave_default = {};
     $scope.birthday_leave = {};
+    $scope.overtime_leave = {};
+    $scope.overtime_leave_pk = {};
+    $scope.overtime_leave_types = {};
     $scope.birthday_leave_pk = '';
     $scope.leaves_filed = {};
     $scope.leave_types = {};
     $scope.get_leave_types = {};
-    $scope.calendar.data = {
-        color : null
-    };
+    $scope.calendar = {};
+    $scope.calendar_color = {};
+    $scope.color = '';
     $scope.work = {};
     $scope.work_hours = {};
     $scope.type = '';
@@ -78,7 +84,11 @@ app.controller('Default_values', function(
             get_leave_types();
             birthday_leave();
             default_values();
+            show_list();
             fetch_cutoff_dates();
+            get_overtime_leave();
+            get_overtime_leave_status();
+            get_overtime_leave_types();
             //fetch_myemployees(); 
         })         
     } 
@@ -197,6 +207,33 @@ app.controller('Default_values', function(
         });
     }
 
+     function get_overtime_leave_status(){
+        
+        var promise = DefaultvaluesFactory.get_overtime_leave_status();
+        promise.then(function(data){
+
+            var a = data.data.result[0];
+            var overtime_leave = JSON.parse(a.details)
+
+            for(var i in overtime_leave)
+            {
+                if (overtime_leave[i] == "true"){
+                    overtime_leave[i] = true;
+                }
+                else
+                {
+                    overtime_leave[i] = false;
+                }
+            }
+
+            $scope.overtime_leave.status = overtime_leave.allow_tardy;
+            
+        })
+        .then(null, function(data){
+            
+        });
+    }
+
 
     function get_work_hours() {
         var filters = { 
@@ -214,6 +251,27 @@ app.controller('Default_values', function(
         })
         .then(null, function(data){
             $scope.work_hours.status = false;
+        });
+    }
+
+    function get_overtime_leave() {
+        var filters = { 
+            'name' : 'overtime_leave'
+        };
+
+        var promise = DefaultvaluesFactory.get_overtime_leave(filters);
+        promise.then(function(data){
+            
+            $scope.overtime_leave.data = data.data.result[0];
+
+            $scope.overtime_leave.details = JSON.parse($scope.overtime_leave.data.details);
+            $scope.overtime_leave.pk = $scope.overtime_leave.details.leave_types_pk;
+            $scope.overtime_leave.year = $scope.overtime_leave.details.maximum.year;
+            $scope.overtime_leave.month = $scope.overtime_leave.details.maximum.month;
+
+        })
+        .then(null, function(data){
+            
         });
     }
 
@@ -251,6 +309,59 @@ app.controller('Default_values', function(
 
                 UINotification.success({
                                             message: 'You have successfully saved working hours.', 
+                                            title: 'SUCCESS', 
+                                            delay : 5000,
+                                            positionY: 'top', positionX: 'right'
+                                        });  
+
+            })
+            .then(null, function(data){
+
+                UINotification.error({
+                                        message: 'An error occured, unable to save, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });
+       });
+       
+    }   
+
+    $scope.save_overtime_leave = function(){  
+
+        $scope.modal = {
+            title : '',
+            message: 'Are you sure you want to save these overtime leave?',
+            save : 'Yes',
+            close : 'Cancel'
+
+        };
+        
+        ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+            
+
+            
+
+
+            var promise = DefaultvaluesFactory.save_overtime_leave($scope.overtime_leave);
+            promise.then(function(data){
+
+
+
+
+                UINotification.success({
+                                            message: 'You have successfully saved overtime leave.', 
                                             title: 'SUCCESS', 
                                             delay : 5000,
                                             positionY: 'top', positionX: 'right'
@@ -439,7 +550,6 @@ app.controller('Default_values', function(
             $scope.birthday_leave.details = JSON.parse($scope.birthday_leave.data.details);
             $scope.birthday_leave.count = $scope.birthday_leave.details.count;
             $scope.birthday_leave.pk = $scope.birthday_leave.details.leave_types_pk;
-            
         })
         .then(null, function(data){
             
@@ -474,6 +584,18 @@ app.controller('Default_values', function(
 
             $scope.leave_types.data.name = $scope.leave_types.data;
             $scope.leave_types.data.pk = $scope.leave_types.data;
+        })
+        .then(null, function(data){
+        });
+    }
+
+    function get_overtime_leave_types() {
+        var promise = DefaultvaluesFactory.get_overtime_leave_types();
+        promise.then(function(data){
+            $scope.overtime_leave_types.data = data.data.result;
+
+            $scope.overtime_leave_types.data.name = $scope.overtime_leave_types.data;
+            $scope.overtime_leave_types.data.pk = $scope.overtime_leave_types.data;
         })
         .then(null, function(data){
         });
@@ -583,6 +705,7 @@ app.controller('Default_values', function(
     }
 
     $scope.save_color = function(){
+
         $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to save these colors?',
@@ -601,7 +724,11 @@ app.controller('Default_values', function(
             return false;
         }, function(value){
             
-            var promise = DefaultvaluesFactory.save_color($scope.calendar.data);
+            var filters = { 
+            a : $scope.color,
+            employees_pk : $scope.profile.pk
+        };
+            var promise = DefaultvaluesFactory.save_color(filters);
             promise.then(function(data){
 
                 UINotification.success({
@@ -610,6 +737,9 @@ app.controller('Default_values', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
+                
+                $scope.color = "";
+                show_list();
             })
             .then(null, function(data){
                 
@@ -624,5 +754,74 @@ app.controller('Default_values', function(
                             
         });
     }
+
+    function show_list(){
+
+        var filter = {
+            employees_pk : $scope.profile.pk
+        }
+
+        
+        
+        var promise = DefaultvaluesFactory.fetch_saved_colors(filter);
+        promise.then(function(data){
+            $scope.calendar_color.status = true;
+            $scope.calendar_color.data = data.data.result;
+            
+            
+        })
+        .then(null, function(data){
+            $scope.calendar_color.status = false;
+        });
+    }
+
+    $scope.cancel = function(k){
+        $scope.modal = {
+                title : 'Cancel Color Saved',
+                message: 'Are you sure you want to cancel your saved color',
+                save : 'Delete',
+                close : 'Cancel'
+            };
+        
+        ngDialog.openConfirm({
+            template: 'ColorCancelModal',
+            className: 'ngdialog-theme-plain custom-widththreefifty',
+            
+            scope: $scope,
+            showClose: false
+        })
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            
+                $scope.cancel_color["employees_pk"] = $scope.profile.pk;
+                $scope.cancel_color.pk = $scope.calendar_color.data[k].pk;
+
+            var promise = DefaultvaluesFactory.cancel_color($scope.cancel_color);
+            promise.then(function(data){
+                UINotification.success({
+                                        message: 'You have successfully cancelled your request', 
+                                        title: 'SUCCESS', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                show_list();
+            })
+            .then(null, function(data){
+                UINotification.error({
+                                        message: 'An error occured, unable to cancel, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
+    
+    }
+
+    
 
 });

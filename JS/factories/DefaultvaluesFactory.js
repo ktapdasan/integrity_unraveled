@@ -18,6 +18,40 @@ app.factory('DefaultvaluesFactory', function($http){
         return promise;
     };
 
+    factory.get_overtime_leave = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/get_overtime_leave.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.get_overtime_leave_status = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/get_overtime_leave_status.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     factory.get_leave_status = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Defaultvalues/get_leave_status.php',
@@ -120,6 +154,57 @@ app.factory('DefaultvaluesFactory', function($http){
         return promise;
     };
 
+    factory.cancel_color = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/cancel_color.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.fetch_saved_colors = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/fetch_saved_colors.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
+    factory.get_overtime_leave_types = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/get_overtime_leave_types.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
+
     factory.get_leaves_filed = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Defaultvalues/get_leaves_filed.php',
@@ -176,6 +261,23 @@ app.factory('DefaultvaluesFactory', function($http){
     factory.save_hrs = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Defaultvalues/save_work_hrs.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    }; 
+
+    factory.save_overtime_leave = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/save_overtime_leave.php',
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
