@@ -42,19 +42,27 @@ class Request extends ClassParent {
         }
         
         $sql = <<<EOT
-                 select 
-                 pk,
-                 type,
-                 recipient,
-                 archived,
-                 (
-                    select array_to_string(array_agg(details->'personal'->>'first_name'), ',') 
-                    from employees where employees.pk = any( request_type.recipient)
-                 ) as recipients
-                from request_type
-                where archived = $this->archived
-                $where
-                order by pk
+                with Q as
+                (
+                    select pk, type, unnest(recipient) as employees_pk from request_type
+                    where archived = $this->archived
+                    $where
+                ),
+                R as
+                (
+                    select
+                        pk,
+                        type,
+                        employees_pk || '|' || (select (details->'personal'->>'first_name')::text ||' '|| (details->'personal'->>'last_name')::text from employees where employees.pk = Q.employees_pk) as recipient
+                    from Q
+                )
+                select
+                    pk,
+                    type,
+                    array_to_string(array_agg(recipient), ',') as recipients
+                from R
+                group by pk, type
+                order by type
                 ;
 EOT;
 

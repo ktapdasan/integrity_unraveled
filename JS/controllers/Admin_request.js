@@ -13,7 +13,6 @@ app.controller('Admin_request', function(
     $scope.filter= {};
     $scope.filter.status= 'Active';
     $scope.employees={};
-    $scope.recipients=[];
 
     init();
 
@@ -67,6 +66,21 @@ app.controller('Admin_request', function(
         promise.then(function(data){
             $scope.request_type.status = true;
             $scope.request_type.data = data.data.result;
+
+            for(var i in $scope.request_type.data){
+                var recipients = $scope.request_type.data[i].recipients.split(',');
+                var new_recipients = [];
+                for(var j in recipients){
+                    var z = recipients[j].split('|');
+                    new_recipients.push({
+                        pk : z[0],
+                        name : z[1]
+                    })
+                }
+
+                $scope.request_type.data[i].obj_recipients = new_recipients;
+            }
+
             var count = data.data.result.length;
 
             if (count==0) {
@@ -86,25 +100,15 @@ app.controller('Admin_request', function(
 
         
     $scope.add_Recipients = function(){
-
-        console.log($scope.employees.data);
-        console.log($scope.modal.addRecipients);
-        $scope.recipients.push({
-            first_name : $scope.employees.data[$scope.modal.addRecipients].details.personal.first_name,
-            last_name  : $scope.employees.data[$scope.modal.addRecipients].details.personal.last_name,
-            pk         : $scope.employees.data[$scope.modal.addRecipients].pk
+        $scope.modal.obj_recipients.push({
+            pk : $scope.employees.data[$scope.modal.addRecipients].pk,
+            name : $scope.employees.data[$scope.modal.addRecipients].details.personal.first_name + " " + $scope.employees.data[$scope.modal.addRecipients].details.personal.last_name
         });
-
-
     }
 
-     $scope.removeRecipients = function (x) {
-       
-        $scope.recipients.splice(x, 1);
+    $scope.removeRecipients = function (x) {
+        $scope.modal.obj_recipients.splice(x, 1);
     }
-
-
-
 
     $scope.add_request_type = function(k){
      
@@ -144,11 +148,7 @@ app.controller('Admin_request', function(
         .then(function(value){
             return false;
         }, function(value){
-
-            $scope.recipients.type = $scope.modal.type;
-
-            $scope.modal.recipients=JSON.stringify($scope.recipients);
-             
+            $scope.modal.obj_recipients=JSON.stringify($scope.obj_recipients);
             
             var promise = RequestFactory.add_request_type($scope.modal);
             promise.then(function(data){
@@ -177,49 +177,32 @@ app.controller('Admin_request', function(
 
     
     $scope.edit_request_type = function(k){
-
-        if ($scope.request_type.data[k].recipients && $scope.request_type.data[k].recipients.length != 0) {
-
-            var str = $scope.request_type.data[k].recipients.split(',');
-
-            for(var i=0;i<=str.length-1;i++){
-                
-                $scope.recipients.push({
-                    pk         : $scope.request_type.data[k].recipient,
-                    last_name  : str[i]
-                });
-            }
-        }
-
- 
         $scope.modal = {
-
             title   : 'Edit Request type',
             save    : 'Apply Changes',
             close   : 'Cancel',
             type    : $scope.request_type.data[k].type,
-            pk      : $scope.request_type.data[k].pk
+            pk      : $scope.request_type.data[k].pk,
+            obj_recipients: $scope.request_type.data[k].obj_recipients
         };
-
 
         ngDialog.openConfirm({
             template: 'RequestTypeModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
                 var nestedConfirmDialog;
-
                 
-                    nestedConfirmDialog = ngDialog.openConfirm({
-                        template:
-                                '<p></p>' +
-                                '<p>Are you sure you want to apply changes to this  Request type?</p>' +
-                                '<div class="ngdialog-buttons">' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
-                                    '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
-                                '</button></div>',
-                        plain: true,
-                        className: 'ngdialog-theme-plain custom-widththreefifty'
-                    });
+                nestedConfirmDialog = ngDialog.openConfirm({
+                    template:
+                            '<p></p>' +
+                            '<p>Are you sure you want to apply changes to this  Request type?</p>' +
+                            '<div class="ngdialog-buttons">' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
+                                '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
+                            '</button></div>',
+                    plain: true,
+                    className: 'ngdialog-theme-plain custom-widththreefifty'
+                });
 
                 return nestedConfirmDialog;
             },
@@ -230,9 +213,7 @@ app.controller('Admin_request', function(
             return false;
         }, function(value){
 
-            $scope.modal.recipients=JSON.stringify($scope.recipients);
-            console.log($scope.recipients);
-            
+            $scope.modal.obj_recipients = JSON.stringify($scope.modal.obj_recipients);
             var promise = RequestFactory.update_request_type($scope.modal);
             promise.then(function(data){
 
@@ -311,13 +292,13 @@ app.controller('Admin_request', function(
 
     $scope.restore_request_type = function(k){
        
-       $scope.modal = {
+        $scope.modal = {
                 title : '',
                 message: 'Are you sure you want to restore this Request type?',
                 save : 'restore',
                 close : 'Cancel'
             };
-       ngDialog.openConfirm({
+        ngDialog.openConfirm({
             template: 'ConfirmModal',
             className: 'ngdialog-theme-plain',
             
