@@ -10,7 +10,8 @@ values
 ),
 (
 	'overtime_leave',
-	'{"leave_filed_pk": "8"}'
+	'{"maximum": {"year": "120", "month": "40"}, "allow_tardy": "true", "leave_types_pk": "8", "overtime_count" : "2"}
+'
 )
 ;
 

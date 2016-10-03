@@ -424,6 +424,7 @@ EOT;
         $new_data['maximum']['year'] = $data ['year'];
         $new_data['maximum']['month'] = $data ['month'];
         $new_data ['allow_tardy'] = $data ['status'];
+        $new_data ['overtime_count'] = $data ['count'];
 
         $data = json_encode($new_data);
         $sql = <<<EOT

@@ -279,6 +279,12 @@ th {
                 </td>
             </tr>
             <tr style="cursor:pointer;">
+                <td> Counting of Overtime start after</td>
+                <td>
+                    <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.count" /> hr(s)
+                </td>
+            </tr>
+            <tr style="cursor:pointer;">
                 <td> Maximum Leave per Month</td>
                 <td>
                     <input type="text" style="width:80px;" is-number maxlength="3" ng-model="overtime_leave.month" /> day(s)
@@ -317,7 +323,7 @@ th {
                     <td>
                         <div style="padding:5px; background-color:{{v.color}}">{{v.color}}</div>
                     </td>
-                    <td><button ng-click="cancel(k)" class="medium button red fa-fa">X</button> </td>
+                    <td><button ng-click="delete_color(k)" class="medium button red fa-fa">X</button> </td>
                 </tr>
                 <tr ng-if="!calendar_color.status" style = "text-align: center;">
                     <td colspan = "6" style="text-align:center;">No data found</td>

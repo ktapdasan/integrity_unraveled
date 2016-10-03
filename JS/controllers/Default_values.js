@@ -264,10 +264,13 @@ app.controller('Default_values', function(
             
             $scope.overtime_leave.data = data.data.result[0];
 
+            
+
             $scope.overtime_leave.details = JSON.parse($scope.overtime_leave.data.details);
             $scope.overtime_leave.pk = $scope.overtime_leave.details.leave_types_pk;
             $scope.overtime_leave.year = $scope.overtime_leave.details.maximum.year;
             $scope.overtime_leave.month = $scope.overtime_leave.details.maximum.month;
+            $scope.overtime_leave.count = $scope.overtime_leave.details.overtime_count;
 
         })
         .then(null, function(data){
@@ -349,10 +352,6 @@ app.controller('Default_values', function(
         .then(function(value){
             return false;
         }, function(value){
-            
-
-            
-
 
             var promise = DefaultvaluesFactory.save_overtime_leave($scope.overtime_leave);
             promise.then(function(data){
@@ -775,16 +774,16 @@ app.controller('Default_values', function(
         });
     }
 
-    $scope.cancel = function(k){
+    $scope.delete_color = function(k){
         $scope.modal = {
-                title : 'Cancel Color Saved',
-                message: 'Are you sure you want to cancel your saved color',
+                
+                message: 'Are you sure you want to delete this color?',
                 save : 'Delete',
                 close : 'Cancel'
             };
         
         ngDialog.openConfirm({
-            template: 'ColorCancelModal',
+            template: 'ConfirmModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             
             scope: $scope,
