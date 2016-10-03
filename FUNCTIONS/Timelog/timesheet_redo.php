@@ -245,7 +245,6 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 		
-		//print($y['work_schedule'][trim(strtolower($y['log_day']))]->flexible);
 		$y['schedule'] = $y['work_schedule'][trim(strtolower($y['log_day']))]->in ." - ".$y['work_schedule'][trim(strtolower($y['log_day']))]->out;
 
 		//TARDINESS
@@ -265,8 +264,6 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 
-		// echo $y['login'];
-		// echo $y['logout'];
 		//UNDERTIME
 		if(
 			$y['work_schedule'][trim(strtolower($y['log_day']))]->out && 
@@ -315,37 +312,22 @@ foreach ($employees as $employee_id => $value) {
 		){
 			//ALLOW TARDY == TRUE
 			//there is no need to check if the employee came in earlier than schedule
+
 			if(
 				$overtime_leave['allow_tardy'] == "true"
 			){
-				//$overtime = strtotime($y['hrs']) - strtotime($working_hours['hrs'] . ":00:00");
+				$is_overtime=false;
 
 				//if not flexible, employee login should be <= sched log in
 				//and logout should be >= sched log out and total mins of overtime must be >= 7200
 				if(
 					$y['work_schedule'][trim(strtolower($y['log_day']))]->flexible == "false" &&
-					strtotime($y['login']) <= strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00") &&
 					strtotime($y['logout']) > strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") &&
 					(strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) >= 7200
 				){
 					$overtime = (strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00"));
 					
-					$z = round($overtime) / 60;
-					$z = $z / 4;
-					
-					$whole = floor($z);
-					$fraction = (float)$z - (int)$whole;
-						
-					$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
-
-					$y['overtime_value'] = $overtime . " hrs";
-					$y['overtime'] = 'false';
-
-					foreach ($filed_overtimes as $a => $b) {
-						if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
-							$y['overtime'] = $b['status'];
-						}
-					}
+					$is_overtime=true;
 				}
 				//if flexible, overtime is equals to total # of hrs minus default working hrs
 				else if(
@@ -356,110 +338,59 @@ foreach ($employees as $employee_id => $value) {
 					// echo "\n";
 					$overtime = strtotime($y['hrs']) - strtotime($working_hours['hrs'] . ":00:00");
 
-					$z = round($overtime) / 60;
-					$z = $z / 4;
-					
-					$whole = floor($z);
-					$fraction = (float)$z - (int)$whole;
-						
-					$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
-
-					$y['overtime_value'] = $overtime . " hrs";
-					$y['overtime'] = 'false';
-
-					foreach ($filed_overtimes as $a => $b) {
-						if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
-							$y['overtime'] = $b['status'];
-						}
-					}
+					$is_overtime=true;
 				}
-				
-				
-				// if($overtime >= 7200){
-				// 	$z = round($overtime) / 60;
-				// 	$z = $z / 4;
-					
-				// 	$whole = floor($z);
-				// 	$fraction = (float)$z - (int)$whole;
-						
-				// 	$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
-
-				// 	$y['overtime_value'] = $overtime . " hrs";
-				// 	$y['overtime'] = 'false';
-
-				// 	foreach ($filed_overtimes as $a => $b) {
-				// 		if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
-				// 			$y['overtime'] = $b['status'];
-				// 		}
-				// 	}
-				// }
 			}
 			else {
+				$is_overtime=false;
+				if(
+					$y['work_schedule'][trim(strtolower($y['log_day']))]->flexible == "false" &&
+					strtotime($y['login']) <= strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00") &&
+					strtotime($y['logout']) > strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") &&
+					(strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) >= 7200
+				){
+					$overtime = (strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00"));
 
+					$is_overtime=true;
+				}
+				else if(
+					$y['work_schedule'][trim(strtolower($y['log_day']))]->flexible == "true" &&
+					(strtotime($y['hrs']) - strtotime($working_hours['hrs'] . ":00:00")) >= 7200
+				){
+					$overtime = strtotime($y['hrs']) - strtotime($working_hours['hrs'] . ":00:00");
+
+					$is_overtime=true;
+				}
 			}
 
-			
-
-
-			// if(
-			// 	$y['work_schedule'][trim(strtolower($y['log_day']))]->flexible == "false" &&
-			// 	strtotime($y['login']) <= strtotime(date('Y-m-d',strtotime($y['login'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->in.":00") &&
-			// 	strtotime($y['logout']) > strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") &&
-			// 	(strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) >= 7200
-			// ){
-			// 	$overtime = (strtotime($y['logout']) - strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")) / 60;
-
-			// 	//compute overtime number of hours
-			// 	//$overtime is the difference between actual log out and scheduled log out
-			// 	//situation: for every 3 hrs the next 1 hr will be considered as break.
-			// 	//in this equation we round off the overtime (currently in minutes)
-			// 	//divide by 60 to get the # of hours
-			// 	//divide by 4 because for every 4 hrs we have 3 valid hrs
-			// 	//the result will be multiplied to 3 to get the actual # of hrs
-			// 	//for example:
-			// 	//6 hrs of overtime will divided by 4 = 1.5
-			// 	//1 * 3 = 3
-			// 	//we now have 3 valid overtime hrs
-			// 	//the remainder will be converted and treated as percentage
-			// 	//since we are dividing by 4, the remainders are only limited to .25, .5, .75 and 0
-			// 	//.25 = 1 hr
-			// 	//.5 = 2 hrs
-			// 	//.75 = 3 hrs
-			// 	//in this case we have 3 valid hrs + 2
-			// 	//the total overtime hrs is 5
-
-			// 	$z = round($overtime) / 60;
-			// 	$z = $z / 4;
+			if($is_overtime){
+				$z = round($overtime) / 60;
+				$z = $z / 4;
 				
-			// 	$whole = floor($z);
-			// 	$fraction = (float)$z - (int)$whole;
+				$whole = floor($z);
+				$fraction = (float)$z - (int)$whole;
 					
-			// 	$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
+				$overtime = ((int)$whole * 3) + (4 * (float)$fraction);
 
-			// 	$y['overtime_value'] = $overtime . " hrs";
-			// 	$y['overtime'] = 'false';
+				$y['overtime_value'] = $overtime . " hrs";
+				$y['overtime'] = 'false';
 
-			// 	foreach ($filed_overtimes as $a => $b) {
-			// 		if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
-			// 			$y['overtime'] = $b['status'];
-			// 		}
-			// 	}
-			// }
-			// else {
-				
-				
-			// }	
+				foreach ($filed_overtimes as $a => $b) {
+					if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['datefrom'] && $y['log_date'] <= $b['dateto']){
+						$y['overtime'] = $b['status'];
+					}
+				}
+			}
 		}
 
-
-
-		
+		//DAILY PASS SLIP
 		foreach ($approved_dps as $a => $b) {
 			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] == date('Y-m-d', strtotime($b['time_from']))){
 				$y['dps'] = date('H:i', strtotime($b['time_from']))." - ".date('H:i', strtotime($b['time_to']));
 			}
 		}
 
+		//HOLIDAYS
 		foreach ($holidays as $a => $b) {
 			if($y['log_date'] == date('Y-m-d', strtotime($b['datex']))){
 				$y['status'] = '<div class="holiday-yellow">'. $b['name'] . '</div>';
@@ -476,6 +407,7 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 
+		//SUSPENSIONS
 		foreach ($suspension as $a => $b) {
 			if($y['log_date'] >= date('Y-m-d', strtotime($b['time_from'])) && $y['log_date'] <= date('Y-m-d', strtotime($b['time_to']))){
 				
@@ -494,6 +426,7 @@ foreach ($employees as $employee_id => $value) {
 			}
 		}
 
+		//APPROVED LEAVES
 		foreach ($approved_leaves as $a => $b) {
 			//print_r($b);
 			if($y['employees_pk'] == $b['employees_pk'] && $y['log_date'] >= $b['date_started'] && $y['log_date'] <= $b['date_ended']){
