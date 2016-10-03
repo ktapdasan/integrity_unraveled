@@ -737,6 +737,8 @@ app.controller('Default_values', function(
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
+                
+                $scope.color = "";
                 show_list();
             })
             .then(null, function(data){

@@ -275,15 +275,33 @@ foreach ($employees as $employee_id => $value) {
 			$y['logout'] != 'Pending' && 
 			$y['login'] && 
 			$y['login'] != 'None' && 
-			$y['login'] != 'Pending' && 
-			strtotime($y['logout']) < strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")
-		){
-
-			$hrs = $working_hours['hrs'];
-			$mins = $working_hours['hrs'] * 60;
+			$y['login'] != 'Pending'
 			
-			$undertime = (strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
-			$y['undertime'] = round($undertime) . " mins";
+		){
+			//strtotime($y['logout']) < strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")
+			$is_undertime=false;
+			if(
+				$y['work_schedule'][trim(strtolower($y['log_day']))]->flexible == "false" && 
+				strtotime($y['logout']) < strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00")
+			){
+				$is_undertime=true;
+			}
+
+			if(
+				$y['work_schedule'][trim(strtolower($y['log_day']))]->flexible == "true" && 
+				(strtotime($y['hrs']) < strtotime($working_hours['hrs'] . ":00:00"))
+			){
+				$is_undertime=true;
+			}			
+
+			if($is_undertime){
+				$hrs = $working_hours['hrs'];
+				$mins = $working_hours['hrs'] * 60;
+				
+				$undertime = (strtotime(date('Y-m-d',strtotime($y['logout'])) ." ". $y['work_schedule'][trim(strtolower($y['log_day']))]->out.":00") - strtotime($y['logout'])) / 60;
+				$y['undertime'] = round($undertime) . " mins";
+			}
+				
 		}
 
 		//OVERTIME

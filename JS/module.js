@@ -85,11 +85,11 @@ app.config(function($routeProvider){
         controller: 'Position',
         templateUrl: 'partials/admin/position/index.html'
     })
-    .when('/admin/cutoff',
-    {
-        controller: 'Cutoff',
-        templateUrl: 'partials/admin/cutoff/index.html'
-    })
+    // .when('/admin/cutoff',
+    // {
+    //     controller: 'Cutoff',
+    //     templateUrl: 'partials/admin/cutoff/index.html'
+    // })
     .when('/admin/leaves',
     {
         controller: 'Admin_leave',
