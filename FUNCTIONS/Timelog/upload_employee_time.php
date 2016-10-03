@@ -18,6 +18,18 @@ if ( !empty( $_FILES ) ) {
             $random_hash = randomPrefix(50);
 
             $sql .= <<<EOT
+                    delete from time_log
+                    where type = 'In' 
+                        and employees_pk in (select pk from employees where employee_id = '$employee_id')
+                        and time_log::date = '$time_in'::date
+                    ;
+
+                    delete from time_log
+                    where type = 'Out' 
+                        and employees_pk in (select pk from employees where employee_id = '$employee_id')
+                        and time_log::date = '$time_in'::date
+                    ;
+
                     insert into time_log
                     (
                         employees_pk,
