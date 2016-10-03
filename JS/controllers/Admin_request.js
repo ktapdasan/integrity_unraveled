@@ -13,6 +13,7 @@ app.controller('Admin_request', function(
     $scope.filter= {};
     $scope.filter.status= 'Active';
     $scope.employees={};
+    $scope.recipients=[];
 
     init();
 
@@ -81,6 +82,26 @@ app.controller('Admin_request', function(
             $scope.request_type.status = false;
         });
     }
+  
+
+        
+    $scope.add_Recipients = function(){
+
+        console.log($scope.employees.data);
+        console.log($scope.modal.addRecipients);
+        $scope.recipients.push({
+            first_name : $scope.employees.data[$scope.modal.addRecipients].details.personal.first_name,
+            last_name  : $scope.employees.data[$scope.modal.addRecipients].details.personal.last_name,
+            pk         : $scope.employees.data[$scope.modal.addRecipients].pk
+        });
+
+
+    }
+
+     $scope.removeRecipients = function (x) {
+       
+        $scope.recipients.splice(x, 1);
+    }
 
 
 
@@ -95,7 +116,6 @@ app.controller('Admin_request', function(
 
            
         };
-
 
         ngDialog.openConfirm({
             template: 'RequestTypeModal',
@@ -125,6 +145,11 @@ app.controller('Admin_request', function(
             return false;
         }, function(value){
 
+            $scope.recipients.type = $scope.modal.type;
+
+            $scope.modal.recipients=JSON.stringify($scope.recipients);
+             
+            
             var promise = RequestFactory.add_request_type($scope.modal);
             promise.then(function(data){
 
@@ -152,15 +177,30 @@ app.controller('Admin_request', function(
 
     
     $scope.edit_request_type = function(k){
-            
+
+        if ($scope.request_type.data[k].recipients && $scope.request_type.data[k].recipients.length != 0) {
+
+            var str = $scope.request_type.data[k].recipients.split(',');
+
+            for(var i=0;i<=str.length-1;i++){
+                
+                $scope.recipients.push({
+                    pk         : $scope.request_type.data[k].recipient,
+                    last_name  : str[i]
+                });
+            }
+        }
+
+ 
         $scope.modal = {
 
-            title : 'Edit Request type',
-            save : 'Apply Changes',
-            close : 'Cancel',
-            type : $scope.request_type.data[k].type,
-            pk: $scope.request_type.data[k].pk
+            title   : 'Edit Request type',
+            save    : 'Apply Changes',
+            close   : 'Cancel',
+            type    : $scope.request_type.data[k].type,
+            pk      : $scope.request_type.data[k].pk
         };
+
 
         ngDialog.openConfirm({
             template: 'RequestTypeModal',
@@ -190,6 +230,9 @@ app.controller('Admin_request', function(
             return false;
         }, function(value){
 
+            $scope.modal.recipients=JSON.stringify($scope.recipients);
+            console.log($scope.recipients);
+            
             var promise = RequestFactory.update_request_type($scope.modal);
             promise.then(function(data){
 

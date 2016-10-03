@@ -42,11 +42,15 @@ class Request extends ClassParent {
         }
         
         $sql = <<<EOT
-                select 
-                    pk,
-                    type,
-                    recipient,
-                    archived
+                 select 
+                 pk,
+                 type,
+                 recipient,
+                 archived,
+                 (
+                    select array_to_string(array_agg(details->'personal'->>'first_name'), ',') 
+                    from employees where employees.pk = any( request_type.recipient)
+                 ) as recipients
                 from request_type
                 where archived = $this->archived
                 $where
@@ -57,9 +61,13 @@ EOT;
         return ClassParent::get($sql);
     }
 
-    public function add_request_type(){
-    	
-		$sql = <<<EOT
+    public function add_request_type($data){
+        
+    	$dat=implode(',', $data);
+        $dat="{".$dat."}";
+
+
+		 $sql = <<<EOT
                 insert into request_type
                 (    
                     type,
@@ -68,15 +76,17 @@ EOT;
                 values
                 (
                     '$this->type',
-                    array[$this->recipient]
+                    '$dat'
                 );
 EOT;
         return ClassParent::insert($sql);
     }
 
 
-    public function update_request_type(){
+    public function update_request_type($data){
 
+        $dat=implode(',', $data);
+        $dat="{".$dat."}";
 
         $sql = <<<EOT
                 UPDATE request_type set
@@ -87,7 +97,7 @@ EOT;
                 =
                 (
                     '$this->type',
-                    array[$this->recipient]
+                    '$dat'
                 )
                 WHERE pk = $this->pk
                 ;

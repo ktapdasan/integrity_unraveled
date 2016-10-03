@@ -1352,24 +1352,38 @@
                 <div style="height:2px;width:100%;background-color:#B3B3B3;margin-bottom:15px;"></div>
             <form name="myForm">
                 <div> 
-                    <label style="margin-top: 10px;font-size:20px;">New Request Type:</label>
-                    <input required type="text" size="10" ng-model="modal.type" style="width: 300px;" /> 
-                    <br><br>
-                    <label style = "font-size:20px;">Recipient:</label>
+                    <table>
+                        <tr>
+                            <td colspan="2 ">
+                                <label style="margin-top: 10px;font-size:20px;">New Request Type:</label>
+                                <input required type="text" size="10" ng-model="modal.type" style="width: 300px;" />
+                                <br>
+                                <label style = "font-size:20px;">Recipient:</label>
+                            </td>
+                        </tr>
 
-                    <select required ng-model="recipient" style="display: block; float: left;font-size:16px; width:300px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                        <option ng-repeat="(k, v) in employees.data" style="cursor:pointer;" value="{{v.pk}}">
-                            {{v.details.personal.first_name}},{{v.details.personal.last_name}}
-                        </option>
-                    </select>
-                    <br><br>
-                    <button type="button" ng-click="recipient2">Add</button>
-
-                    <textarea>{{recipient2}}</textarea>
-
-
-
-            
+                        <tr>
+                            <td>
+                                <select required ng-model="modal.addRecipients" style="display: block; float: left;font-size:15px; width:200px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                                    <option ng-repeat="(k, v) in employees.data" style="cursor:pointer;" value="{{k}}">
+                                        {{v.details.personal.first_name}},{{v.details.personal.last_name}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="add_Recipients()">
+                                Add Recipient
+                                </button>
+                            </td>
+                        </tr>
+                            <br>
+                        <tr>
+                         <td colspan="2">
+                            <li ng-repeat="(k,v) in recipients">{{v.last_name}},{{v.first_name}}
+                            <span style="cursor:pointer;color:red;"ng-click="removeRecipients($index)"><b> ×</b></span></li>
+                         </td>
+                        </tr>
+                </table>
                 </div>
             </form>
          <hr style="height:2px">

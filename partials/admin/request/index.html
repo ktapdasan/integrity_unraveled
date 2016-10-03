@@ -5,7 +5,7 @@
 }
 .total{
     font-size: 14px;
-    margin: 1px 0 -100px 0px;
+    margin: 1px 0 -90px 0px;
 }
 .table1{
     width:47.6%;
@@ -98,12 +98,14 @@ select{
                      
                     <tr>
                         <th><font size = 4>Type</font></th>
+                        <th><font size = 4>Recipients</font></th>
                         <th><font size = 4> Options</font></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in request_type.data" style="cursor:pointer;" ng-if="request_type.status">
                         <td>{{v.type}}</td>
+                        <td>{{v.recipients}}</td>
                         <td>
                         <center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_request_type(k)" title="Edit">
