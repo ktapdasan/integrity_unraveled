@@ -364,6 +364,27 @@ foreach ($employees as $employee_id => $value) {
 			}
 
 			if($is_overtime){
+				//compute overtime number of hours
+			 	//$overtime is the difference between actual log out and scheduled log out
+			 	//if not flexi,
+			 	//difference between log out and log in if flexi
+			 	//situation: for every 3 hrs the next 1 hr will be considered as break.
+			 	//in this equation we round off the overtime (currently in minutes)
+			 	//divide by 60 to get the # of hours
+			 	//divide by 4 because for every 4 hrs we have 3 valid hrs
+			 	//the result will be multiplied to 3 to get the actual # of hrs
+			 	//for example:
+			 	//6 hrs of overtime will divided by 4 = 1.5
+			 	//1 * 3 = 3
+			 	//we now have 3 valid overtime hrs
+			 	//the remainder will be converted and treated as percentage
+			 	//since we are dividing by 4, the remainders are only limited to .25, .5, .75 and 0
+			 	//.25 = 1 hr
+			 	//.5 = 2 hrs
+			 	//.75 = 3 hrs
+			 	//in this case we have 3 valid hrs + 2
+			 	//the total overtime hrs is 5
+			 	
 				$z = round($overtime) / 60;
 				$z = $z / 4;
 				
