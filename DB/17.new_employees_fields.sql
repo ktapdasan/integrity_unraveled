@@ -269,7 +269,7 @@ details = jsonb_set(details, '{company}', ' {
 	"salary_type": "cash",
 	"amount": "55555555"
 	},
-	"work_schedule": {
+	"work_schedules": {
 		"sunday": {
 			"ins": "null",
 			"out": "null"
@@ -326,7 +326,7 @@ details = jsonb_set(details, '{company}', ' {
 	
 
 }
-', true)
+', true);
 where pk = 12;
 
 
