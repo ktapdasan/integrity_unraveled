@@ -81,9 +81,10 @@ app.controller('Admin_leave', function(
     $scope.add_leavetype = function(k){
 
         $scope.modal = {
-            title : 'Add New Leave Type',
-            save : 'Save',
-            close : 'Cancel'
+            title    : 'Add New Leave Type',
+            save     : 'Save',
+            close    : 'Cancel',
+            check    : 'true'
         };
 
         ngDialog.openConfirm({
@@ -102,7 +103,7 @@ app.controller('Admin_leave', function(
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
                                 '</button></div>',
                         plain: true,
-                        className: 'ngdialog-theme-plain custom-widtheightfifty'
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
                     });
 
                 return nestedConfirmDialog;
@@ -141,16 +142,20 @@ app.controller('Admin_leave', function(
     
     $scope.edit_leavetype = function(k){
         $scope.modal = {
-            title : 'Edit Leave Type',
-            save : 'Apply Changes',
-            close : 'Cancel',
-            name: $scope.leave_types.data[k].name,
-            days: $scope.leave_types.data[k].days,
-            code: $scope.leave_types.data[k].code,
-            pk: $scope.leave_types.data[k].pk,
-            regularization: JSON.parse($scope.leave_types.data[k].details).regularization,
-            staggered: JSON.parse($scope.leave_types.data[k].details).staggered,
-            carry_over: JSON.parse($scope.leave_types.data[k].details).carry_over
+            title                 : 'Edit Leave Type',
+            save                  : 'Apply Changes',
+            close                 : 'Cancel',
+            check                 : 'false',
+            name                  : $scope.leave_types.data[k].name,
+            days                  : $scope.leave_types.data[k].days,
+            code                  : $scope.leave_types.data[k].code,
+            pk                    : $scope.leave_types.data[k].pk,
+            regularization        : JSON.parse($scope.leave_types.data[k].details).regularization,
+            staggered             : JSON.parse($scope.leave_types.data[k].details).staggered,
+            carry_over            : JSON.parse($scope.leave_types.data[k].details).carry_over,
+            leaves_regularization : JSON.parse($scope.leave_types.data[k].details).leaves_regularization,
+            max_increase          : JSON.parse($scope.leave_types.data[k].details).max_increase,
+            leaves_per_month      : JSON.parse($scope.leave_types.data[k].details).leaves_per_month
             
         };
 
@@ -170,7 +175,7 @@ app.controller('Admin_leave', function(
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
                                 '</button></div>',
                         plain: true,
-                        className: 'ngdialog-theme-plain custom-widtheightfifty'
+                        className: 'ngdialog-theme-plain custom-widththreefifty'
                     });
 
                 return nestedConfirmDialog;
@@ -274,10 +279,15 @@ app.controller('Admin_leave', function(
             $scope.leave_default.status = true;
             $scope.leave_default.data = data.data.result[0];
 
-            $scope.leave_default.data.details = JSON.parse($scope.leave_default.data.details);
-            $scope.leave_default.data.regularization = $scope.leave_default.data.details.regularization;
-            $scope.leave_default.data.staggered = $scope.leave_default.data.details.staggered;
-            $scope.leave_default.data.carry_over = $scope.leave_default.data.details.carry_over;
+            console.log($scope.leave_default.data);
+            $scope.leave_default.data.details               = JSON.parse($scope.leave_default.data.details);
+            $scope.leave_default.data.regularization        = $scope.leave_default.data.details.regularization;
+            $scope.leave_default.data.staggered             = $scope.leave_default.data.details.staggered;
+            $scope.leave_default.data.carry_over            = $scope.leave_default.data.details.carry_over;
+            $scope.leave_default.data.leaves_regularization = $scope.leave_default.data.details.leaves_regularization;
+            $scope.leave_default.data.leaves_per_month      = $scope.leave_default.data.details.leaves_per_month;
+            $scope.leave_default.data.max_increase          = $scope.leave_default.data.details.max_increase;
+
         })
         .then(null, function(data){
             $scope.leave_default.status = false;
@@ -334,15 +344,23 @@ app.controller('Admin_leave', function(
 
     $scope.default_checkbox_toggle = function(){
         if($scope.modal.default_checkbox){
-            $scope.modal.regularization = $scope.leave_default.data.regularization;
-            $scope.modal.staggered = $scope.leave_default.data.staggered;
-            $scope.modal.carry_over = $scope.leave_default.data.carry_over;
+            $scope.modal.regularization          = $scope.leave_default.data.regularization;
+            $scope.modal.staggered               = $scope.leave_default.data.staggered;
+            $scope.modal.carry_over              = $scope.leave_default.data.carry_over;
+            $scope.modal.leaves_regularization   = $scope.leave_default.data.leaves_regularization;
+            $scope.modal.leaves_per_month        = $scope.leave_default.data.leaves_per_month;
+            $scope.modal.max_increase            = $scope.leave_default.data.max_increase;
+            
                
         }
         else {
             $scope.modal.regularization = "";
             $scope.modal.staggered = "";
             $scope.modal.carry_over = "";
+            $scope.modal.leaves_regularization = "";
+            $scope.modal.leaves_per_month = "";
+            $scope.modal.max_increase = "";
+
         }
     }
 });
