@@ -355,7 +355,9 @@ details = jsonb_set(details, '{personal}', '
 "birth_date": "1995-07-27",
 "contact_number": "09504151950",
 "landline_number": "5340368",
-"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg"
+"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg",
+"emergency_contact_name": "Clarissa Mae Fortuno",
+"emergency_contact_number": "09504151950"
 }
 ', true)
 where pk = 12;
