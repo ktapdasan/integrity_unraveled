@@ -11,7 +11,7 @@ $class = new Request(
 
 
 
-$recipient=(array)json_decode($_POST['recipients']);
+$recipient=(array)json_decode($_POST['obj_recipients']);
 $pk_arr= array();
 
 foreach ($recipient as $key => $value) {
