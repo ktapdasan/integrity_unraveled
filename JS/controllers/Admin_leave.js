@@ -279,7 +279,7 @@ app.controller('Admin_leave', function(
             $scope.leave_default.status = true;
             $scope.leave_default.data = data.data.result[0];
 
-            console.log($scope.leave_default.data);
+            
             $scope.leave_default.data.details               = JSON.parse($scope.leave_default.data.details);
             $scope.leave_default.data.regularization        = $scope.leave_default.data.details.regularization;
             $scope.leave_default.data.staggered             = $scope.leave_default.data.details.staggered;
