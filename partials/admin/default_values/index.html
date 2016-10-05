@@ -43,6 +43,7 @@ th {
     <div class ="container" style="margin-left:170px;">
         <div style="float:left;margin-right:40px;">
             <table id="table2" width="16%" cellspacing="0">
+                <h2>Work Days</h2>
                 <tr>
                     <th><font size ="2.8px">Work Days</font></th>
                     <th><font size = "2.8px;">Select</th>
@@ -85,6 +86,7 @@ th {
         </div>    
         <div class="float:left;">
             <table cellspacing="10" style="margin-bottom:38px;">
+                <h2>Working Hours</h2>
                 <tr>
                     <th> Working Hours: </th>
                 </tr>
@@ -174,21 +176,21 @@ th {
         <h2>Default Leave Values</h2>
         <table id ="table2" cellspacing="0"  style="margin-top:30px;">
             <tbody>
-                <tr style="cursor:pointer;">
+                <tr>
                     <td >Leaves are granted after</td>
                     <td>
                         <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.regularization" /> day(s)
                         
                     </td>
                 </tr> 
-                <tr style="cursor:pointer;">
+                <tr>
                     <td>Leaves to be added upon regularization</td>
                     <td>
                         <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_regularization" /> day(s)
                         
                     </td>
                 </tr> 
-                <tr style="cursor:pointer;">
+                <tr>
                     <td>The rest of the leaves are given:</td>
                     <td>
                         <select ng-model="leave_default.data.staggered">
@@ -197,19 +199,19 @@ th {
                         </select>
                     </td>
                 </tr>
-                <tr style="cursor:pointer;">
+                <tr>
                     <td>Annual Maximum Leave increase:</td>
                     <td>
                         <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.max_increase" /> day(s)
                     </td>
                 </tr>
-                <tr style="cursor:pointer;">
+                <tr>
                     <td>Leaves to be added per month:</td>
                     <td>
                         <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.leaves_per_month" /> day(s)
                     </td>
                 </tr>
-                <tr style="cursor:pointer;">
+                <tr>
                     <td>How many leaves will be carried-over:</td>
                     <td>
                         <input type="text" style="width:80px;" is-number maxlength="3" ng-model="leave_default.data.carry_over" /> day(s)

@@ -98,10 +98,11 @@ app.controller('Admin_request', function(
     }
   
 
-        
+    
     $scope.add_Recipients = function(){
-        $scope.modal.obj_recipients.push({
-            pk : $scope.employees.data[$scope.modal.addRecipients].pk,
+      
+          $scope.modal.obj_recipients.push({
+            pk   : $scope.employees.data[$scope.modal.addRecipients].pk,
             name : $scope.employees.data[$scope.modal.addRecipients].details.personal.first_name + " " + $scope.employees.data[$scope.modal.addRecipients].details.personal.last_name
         });
     }
@@ -114,9 +115,10 @@ app.controller('Admin_request', function(
      
         $scope.modal = {
 
-            title : 'Add New Request type',
-            save : 'Add',
-            close : 'Cancel'
+            title           : 'Add New Request type',
+            save            : 'Add',
+            close           : 'Cancel',
+            obj_recipients  : []
 
            
         };
@@ -148,7 +150,9 @@ app.controller('Admin_request', function(
         .then(function(value){
             return false;
         }, function(value){
-            $scope.modal.obj_recipients=JSON.stringify($scope.obj_recipients);
+            
+            $scope.modal.obj_recipients = JSON.stringify($scope.modal.obj_recipients);
+            
             
             var promise = RequestFactory.add_request_type($scope.modal);
             promise.then(function(data){
@@ -178,12 +182,12 @@ app.controller('Admin_request', function(
     
     $scope.edit_request_type = function(k){
         $scope.modal = {
-            title   : 'Edit Request type',
-            save    : 'Apply Changes',
-            close   : 'Cancel',
-            type    : $scope.request_type.data[k].type,
-            pk      : $scope.request_type.data[k].pk,
-            obj_recipients: $scope.request_type.data[k].obj_recipients
+            title           : 'Edit Request type',
+            save            : 'Apply Changes',
+            close           : 'Cancel',
+            type            : $scope.request_type.data[k].type,
+            pk              : $scope.request_type.data[k].pk,
+            obj_recipients  : $scope.request_type.data[k].obj_recipients
         };
 
         ngDialog.openConfirm({

@@ -151,7 +151,7 @@ EOT;
 
     }
 
-    public function add(){
+    public function add_leave_type(){
         $name = $this->name;
         $days = $this->days;
         $code = $this->code;
