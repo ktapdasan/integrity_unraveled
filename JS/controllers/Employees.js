@@ -17,7 +17,7 @@ app.controller('Employees', function(
 
     $scope.uploader = {};
     $scope.uploader.queue = {};
-
+ 
 
     $scope.titles={};
     $scope.department={};

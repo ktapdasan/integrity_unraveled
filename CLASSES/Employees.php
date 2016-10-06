@@ -219,6 +219,8 @@ EOT;
     public function profile(){
         $sql = <<<EOT
                 select 
+                    (select (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name') from employees where pk = groupings.supervisor_pk)
+                    as supervisor,
                     pk,
                     first_name,
                     middle_name,
@@ -228,8 +230,10 @@ EOT;
                     (select supervisor_pk from groupings where employees_pk = pk) as supervisor_pk,
                     details,
                     leave_balances
+                    
                 from employees
                 left join employees_permissions on (employees.pk = employees_permissions.employees_pk)
+                left join groupings on (groupings.employees_pk = employees.pk)
                 where employees.archived = false
                 and md5(pk::text) = '$this->pk'
                 ;
