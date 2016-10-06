@@ -198,12 +198,13 @@ th.a {
                 <tr>
                     <td colspan="2" ng-if="modal.check == 'true'">
                         <label style="margin-left:19px;">
-                        <input type="checkbox" ng-model="modal.default_checkbox" ng-click="default_checkbox_toggle()"/> 
+                        <input checked type="checkbox" ng-model="modal.default_checkbox"  ng-click="default_checkbox_toggle()"/>
                             Get default values 
                         </label>
                     </td>
                     <td colspan="2" ng-if="modal.check == 'false'">
-                        <label style="margin-left:19px;"> <input type="checkbox" ng-model="modal.default_checkbox" ng-click="default_checkbox_toggle()"/> 
+                        <label style="margin-left:19px;"> 
+                        <input type="checkbox" ng-model="modal.default_checkbox" ng-click="default_checkbox_toggle()"/> 
                             Get default values 
                         </label>
                     </td>
