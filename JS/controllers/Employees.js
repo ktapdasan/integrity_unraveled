@@ -1,5 +1,5 @@
 app.controller('Employees', function(
-  										$scope,
+                                        $scope,
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
@@ -8,7 +8,7 @@ app.controller('Employees', function(
                                         FileUploader,
                                         md5,
                                         $filter
-  									){
+                                    ){
 
     $scope.pk='';
     $scope.profile = {};
@@ -25,7 +25,7 @@ app.controller('Employees', function(
     $scope.groupings= {};
 
     $scope.employee = {};
-    $scope.employees={};
+    $scope.employees = {};
     $scope.employees.count = 0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
@@ -47,6 +47,29 @@ app.controller('Employees', function(
         company : '',
         government : ''
     };
+
+    $scope.genders = [
+        { pk:'1', gender:'Male'},
+        { pk:'2', gender:'Female'}
+    ];
+    $scope.civils = [
+        { pk:'1', civilstatus:'Married'},
+        { pk:'2', civilstatus:'Single'},
+        { pk:'3', civilstatus:'Divorced'},
+        { pk:'4', civilstatus:'Living Common Law'},
+        { pk:'5', civilstatus:'Widowed'}
+    ];
+    $scope.estatus = [
+        { pk:'1', emstatus:'Probationary'},
+        { pk:'2', emstatus:'Trainee'},
+        { pk:'3', emstatus:'Contractual'},
+        { pk:'4', emstatus:'Regular'},
+        { pk:'5', emstatus:'Consultant'}
+    ];
+    $scope.etype = [
+        { pk:'1', emtype:'Exempt'},
+        { pk:'2', emtype:'Non-Exempt'}
+    ];
 
     init();
 
@@ -417,159 +440,123 @@ app.controller('Employees', function(
 
     $scope.edit_employees = function(k){
         get_supervisors();
-
-        $scope.employee = {
-            intern_hours:'',
-            first_name:'',
-            middle_name:'',
-            last_name:'',
-            employee_id:'',
-            email_address:'',
-            business_email_address:'',
-            contact_number:'',
-            landline_number:'',
-            present_address:'',
-            permanent_address:'',
-            data_sss:'',
-            data_tin:'',
-            data_pagmid:'',
-            data_phid:'',
-            profile_picture:'./ASSETS/img/blank.gif',
-            salary_type:'bank',
-            salary_bank_name:'',
-            salary_account_number:'',
-            salary_mode_payment:'',
-            salary_amount:'',
-            departments_pk:'',
-            levels_pk:'',
-            titles_pk:'',
-            gender_pk:'',
-            religion:'',
-            employee_status_pk:'',
-            employment_type_pk:'',
-            civilstatus_pk:'',
-            birth_date:'',
-            date_started:'',
-            emergency_name:'',
-            emergency_contact_number:'',
-            timein_sunday:'',
-            timeout_sunday:'',
-            timein_monday:'',
-            timeout_monday:'',
-            timein_tuesday:'',
-            timeout_tuesday:'',
-            timein_wednesday:'',
-            timeout_wednesday:'',
-            timein_thursday:'',
-            timeout_thursday:'',
-            timein_friday:'',
-            timeout_friday:'',
-            timein_saturday:'',
-            timeout_saturday:'',
-            flexi_sunday:false,
-            flexi_monday:false,
-            flexi_tuesday:false,
-            flexi_wednesday:false,
-            flexi_thursday:false,
-            flexi_friday:false,
-            flexi_saturday:false
-        };
-    
-        $scope.genders = [
-        {
-        pk:'1',
-        gender:'Male'
-        },
-        {
-        pk:'2',
-        gender:'Female'
-        }
-        ];
-
-        $scope.civils = [
-        {
-            pk:'1',
-            civilstatus:'Married'
-        },
-        {
-            pk:'2',
-            civilstatus:'Single'
-        },
-        {
-            pk:'3',
-            civilstatus:'Divorced'
-        },
-        {
-            pk:'4',
-            civilstatus:'Living Common Law'
-        },
-        {
-            pk:'5',
-            civilstatus:'Widowed'
-        }
-        ];
-
-        $scope.estatus = [
-        {
-            pk:'1',
-            emstatus:'Probationary'
-        },
-        {
-            pk:'2',
-            emstatus:'Trainee'
-        },
-        {
-            pk:'3',
-            emstatus:'Contractual'
-        },
-        {
-            pk:'4',
-            emstatus:'Regular'
-        },
-        {
-            pk:'5',
-            emstatus:'Consultant'
-        }
-        ];
-
-        $scope.etype = [
-        {
-            pk:'1',
-            emtype:'Exempt'
-        },
-        {
-            pk:'2',
-            emtype:'Non-Exempt'
-        }
-        ];
-
-        if ($scope.employees.data[k].details.company.employee_id == undefined) {
-            $scope.employees.data[k].details.company.employee_id = null;
-        }
-        if ($scope.employees.data[k].details.company.business_email_address == undefined) {
-            $scope.employees.data[k].details.company.business_email_address = null;
-        }
-        if ($scope.employees.data[k].details.company.levels_pk == undefined) {
-            $scope.employees.data[k].details.company.levels_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.titles_pk == undefined) {
-            $scope.employees.data[k].details.company.titles_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.employee_status_pk == undefined) {
-            $scope.employees.data[k].details.company.employee_status_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.employment_type_pk == undefined) {
-            $scope.employees.data[k].details.company.employment_type_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.employment_type_pk == undefined) {
-            $scope.employees.data[k].details.company.employment_type_pk = null;
-        }
-        if ($scope.employees.data[k].details.company.salary.salary_type == undefined) {
-            $scope.employees.data[k].details.company.salary.salary_type = null;
-        }
-
-
         $scope.employee = $scope.employees.data[k];
+        
+        if ($scope.employees.data[k].details.company.work_schedule === undefined) {
+            $scope.employees.data[k].details.company.work_schedule = null;
+        }
+        else {
+            $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.ins;
+            $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.ins;
+            $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.ins;
+            $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.ins;
+            $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.ins;
+            $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.ins;
+            $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.ins;
+            $scope.employee.timeout_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.out;
+            $scope.employee.timeout_monday = $scope.employees.data[k].details.company.work_schedule.monday.out;
+            $scope.employee.timeout_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.out;
+            $scope.employee.timeout_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.out;
+            $scope.employee.timeout_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.out;
+            $scope.employee.timeout_friday = $scope.employees.data[k].details.company.work_schedule.friday.out;
+            $scope.employee.timeout_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.out;
+            $scope.employee.flexi_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
+            $scope.employee.flexi_monday = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
+            $scope.employee.flexi_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
+            $scope.employee.flexi_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
+            $scope.employee.flexi_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
+            $scope.employee.flexi_friday = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
+            $scope.employee.flexi_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
+        }
+
+        if ($scope.employees.data[k].details.government === undefined){
+            $scope.employees.data[k].details.government = null;
+        }
+        else {
+            $scope.employee.data_sss = $scope.employees.data[k].details.government.data_sss;
+            $scope.employee.data_tin = $scope.employees.data[k].details.government.data_tin;
+            $scope.employee.data_pagmid = $scope.employees.data[k].details.government.data_pagmid;
+            $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;
+        }
+
+        if ($scope.employees.data[k].details.company.hours === undefined) {
+            $scope.employees.data[k].details.company.hours = null;
+        }
+        if ($scope.employees.data[k].details.company.employee_id === undefined) {
+            $scope.employees.data[k].details.company.employee_id = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.email_address === undefined) {
+            $scope.employees.data[k].details.personal.email_address = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.business_email_address === undefined) {
+            $scope.employees.data[k].details.company.business_email_address = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.first_name === undefined) {
+            $scope.employees.data[k].details.personal.first_name = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.middle_name === undefined) {
+            $scope.employees.data[k].details.personal.middle_name = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.last_name === undefined) {
+            $scope.employees.data[k].details.personal.last_name = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.gender_pk === undefined) {
+            $scope.employees.data[k].details.personal.gender_pk = null;
+        }
+        if ($scope.employees.data[k].details.personal.religion === undefined) {
+            $scope.employees.data[k].details.personal.religion = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.profile_picture === undefined) {
+            $scope.employees.data[k].details.personal.profile_picture = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.birth_date === undefined) {
+            $scope.employees.data[k].details.personal.birth_date = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.contact_number === undefined) {
+            $scope.employees.data[k].details.personal.contact_number = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.profile_picture === undefined) {
+            $scope.employees.data[k].details.personal.profile_picture = './ASSETS/img/blank.gif';
+        }
+        if ($scope.employees.data[k].details.personal.landline_number === undefined) {
+            $scope.employees.data[k].details.personal.landline_number = 'No Data';
+        }
+        if ($scope.employees.data[k].details.company.salary === undefined) {
+            $scope.employees.data[k].details.company.salary = null;
+        }
+        else {
+            $scope.employee.salary_type            = $scope.employees.data[k].details.company.salary.salary_type;
+            $scope.employee.salary_bank_name       = $scope.employees.data[k].details.company.salary.bank_name;
+            $scope.employee.salary_account_number  = $scope.employees.data[k].details.company.salary.account_number;
+            $scope.employee.salary_mode_payment    = $scope.employees.data[k].details.company.salary.mode_payment;
+            $scope.employee.salary_amount          = $scope.employees.data[k].details.company.salary.amount;
+        }
+
+        if ($scope.employees.data[k].details.company.employee_status_pk === undefined){
+            $scope.employees.data[k].details.company.employee_status_pk = 3;
+        }
+        if ($scope.employees.data[k].details.company.employment_type_pk === undefined){
+            $scope.employees.data[k].details.company.employment_type_pk = 2;
+        }
+        if ($scope.employees.data[k].details.company.date_started === undefined){
+            $scope.employees.data[k].details.company.date_started = null;
+        }
+        if ($scope.employees.data[k].details.personal.present_address === undefined){
+            $scope.employees.data[k].details.personal.present_address = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.permanent_address === undefined){
+            $scope.employees.data[k].details.personal.permanent_address = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.emergency_contact_name === undefined){
+            $scope.employees.data[k].details.personal.emergency_contact_name = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.emergency_contact_number === undefined){
+            $scope.employees.data[k].details.personal.emergency_contact_number = 'No Data';
+        }
+        if ($scope.employees.data[k].details.personal.civilstatus_pk === undefined){
+            $scope.employees.data[k].details.personal.civilstatus_pk = 'No Data';
+        }
+
         $scope.employee.intern_hours           = $scope.employees.data[k].details.company.hours;
         $scope.employee.employee_id            = $scope.employees.data[k].details.company.employee_id;
         $scope.employee.email_address          = $scope.employees.data[k].details.personal.email_address;
@@ -581,16 +568,7 @@ app.controller('Employees', function(
         $scope.employee.landline_number        = $scope.employees.data[k].details.personal.landline_number;
         $scope.employee.present_address        = $scope.employees.data[k].details.personal.present_address;
         $scope.employee.permanent_address      = $scope.employees.data[k].details.personal.permanent_address;
-        $scope.employee.data_sss               = $scope.employees.data[k].details.government.data_sss;
-        $scope.employee.data_tin               = $scope.employees.data[k].details.government.data_tin;
-        $scope.employee.data_pagmid            = $scope.employees.data[k].details.government.data_pagmid;
-        $scope.employee.data_phid              = $scope.employees.data[k].details.government.data_phid;
         $scope.employee.profile_picture        = $scope.employees.data[k].details.personal.profile_picture;
-        $scope.employee.salary_type            = $scope.employees.data[k].details.company.salary.salary_type;
-        $scope.employee.salary_bank_name       = $scope.employees.data[k].details.company.salary.bank_name;
-        $scope.employee.salary_account_number  = $scope.employees.data[k].details.company.salary.account_number;
-        $scope.employee.salary_mode_payment    = $scope.employees.data[k].details.company.salary.mode_payment;
-        $scope.employee.salary_amount          = $scope.employees.data[k].details.company.salary.amount;
         $scope.employee.departments_pk         = $scope.employees.data[k].details.company.departments_pk;
         $scope.employee.levels_pk              = $scope.employees.data[k].details.company.levels_pk;
         $scope.employee.titles_pk              = $scope.employees.data[k].details.company.titles_pk;
@@ -603,30 +581,6 @@ app.controller('Employees', function(
         $scope.employee.date_started           = new Date($scope.employees.data[k].details.company.date_started);
         $scope.employee.emergency_name         = $scope.employees.data[k].details.personal.emergency_contact_name;
         $scope.employee.emergency_contact_number  = $scope.employees.data[k].details.personal.emergency_contact_number;
-
-        $scope.employee.timein_sunday          = new Date($scope.employees.data[k].details.company.work_schedule.sunday.ins);
-        $scope.employee.timein_monday          = new Date($scope.employees.data[k].details.company.work_schedule.monday.ins);
-        $scope.employee.timein_tuesday         = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.ins);
-        $scope.employee.timein_wednesday       = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.ins);
-        $scope.employee.timein_thursday        = new Date($scope.employees.data[k].details.company.work_schedule.thursday.ins);
-        $scope.employee.timein_friday          = new Date($scope.employees.data[k].details.company.work_schedule.friday.ins);
-        $scope.employee.timein_saturday        = new Date($scope.employees.data[k].details.company.work_schedule.saturday.ins);
-
-        $scope.employee.timeout_sunday         = new Date($scope.employees.data[k].details.company.work_schedule.sunday.out);
-        $scope.employee.timeout_monday         = new Date($scope.employees.data[k].details.company.work_schedule.monday.out);
-        $scope.employee.timeout_tuesday        = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.out);
-        $scope.employee.timeout_wednesday      = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.out);
-        $scope.employee.timeout_thursday       = new Date($scope.employees.data[k].details.company.work_schedule.thursday.out);
-        $scope.employee.timeout_friday         = new Date($scope.employees.data[k].details.company.work_schedule.friday.out);
-        $scope.employee.timeout_saturday       = new Date($scope.employees.data[k].details.company.work_schedule.saturday.out);
-        
-        $scope.employee.flexi_sunday           = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
-        $scope.employee.flexi_monday           = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
-        $scope.employee.flexi_tuesday          = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
-        $scope.employee.flexi_wednesday        = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
-        $scope.employee.flexi_thursday         = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
-        $scope.employee.flexi_friday           = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
-        $scope.employee.flexi_saturday         = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
 
         $scope.isShown = function(salarys_type) {
             return salarys_type === $scope.employee.salary_type;
@@ -727,206 +681,123 @@ app.controller('Employees', function(
 
         get_supervisors();
 
-        $scope.genders = [
-        {
-        pk:'1',
-        gender:'Male'
-        },
-        {
-        pk:'2',
-        gender:'Female'
+       $scope.employee = $scope.employees.data[k];
+        
+        if ($scope.employees.data[k].details.company.work_schedule === undefined) {
+            $scope.employees.data[k].details.company.work_schedule = null;
         }
-        ];
+        else {
+            $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.ins;
+            $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.ins;
+            $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.ins;
+            $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.ins;
+            $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.ins;
+            $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.ins;
+            $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.ins;
+            $scope.employee.timeout_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.out;
+            $scope.employee.timeout_monday = $scope.employees.data[k].details.company.work_schedule.monday.out;
+            $scope.employee.timeout_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.out;
+            $scope.employee.timeout_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.out;
+            $scope.employee.timeout_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.out;
+            $scope.employee.timeout_friday = $scope.employees.data[k].details.company.work_schedule.friday.out;
+            $scope.employee.timeout_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.out;
+            $scope.employee.flexi_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
+            $scope.employee.flexi_monday = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
+            $scope.employee.flexi_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
+            $scope.employee.flexi_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
+            $scope.employee.flexi_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
+            $scope.employee.flexi_friday = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
+            $scope.employee.flexi_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
+        }
 
-        $scope.civils = [
-        {
-            pk:'1',
-            civilstatus:'Married'
-        },
-        {
-            pk:'2',
-            civilstatus:'Single'
-        },
-        {
-            pk:'3',
-            civilstatus:'Divorced'
-        },
-        {
-            pk:'4',
-            civilstatus:'Living Common Law'
-        },
-        {
-            pk:'5',
-            civilstatus:'Widowed'
+        if ($scope.employees.data[k].details.government === undefined){
+            $scope.employees.data[k].details.government = null;
         }
-        ];
+        else {
+            $scope.employee.data_sss = $scope.employees.data[k].details.government.data_sss;
+            $scope.employee.data_tin = $scope.employees.data[k].details.government.data_tin;
+            $scope.employee.data_pagmid = $scope.employees.data[k].details.government.data_pagmid;
+            $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;
+        }
 
-        $scope.estatus = [
-        {
-            pk:'1',
-            emstatus:'Probationary'
-        },
-        {
-            pk:'2',
-            emstatus:'Trainee'
-        },
-        {
-            pk:'3',
-            emstatus:'Contractual'
-        },
-        {
-            pk:'4',
-            emstatus:'Regular'
-        },
-        {
-            pk:'5',
-            emstatus:'Consultant'
+        if ($scope.employees.data[k].details.company.hours === undefined) {
+            $scope.employees.data[k].details.company.hours = null;
         }
-        ];
-
-        $scope.etype = [
-        {
-            pk:'1',
-            emtype:'Exempt'
-        },
-        {
-            pk:'2',
-            emtype:'Non-Exempt'
+        if ($scope.employees.data[k].details.company.employee_id === undefined) {
+            $scope.employees.data[k].details.company.employee_id = 'No Data';
         }
-        ];
-
-
-        $scope.employee = $scope.employees.data[k];
-        if ($scope.employees.data[k].details.personal.gender_pk == undefined) {
-                  $scope.employees.data[k].details.personal.gender_pk = null;   
+        if ($scope.employees.data[k].details.personal.email_address === undefined) {
+            $scope.employees.data[k].details.personal.email_address = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.email_address == undefined) {
-            $scope.employees.data[k].details.personal.email_address = null;
+        if ($scope.employees.data[k].details.company.business_email_address === undefined) {
+            $scope.employees.data[k].details.company.business_email_address = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.business_email_address == undefined) {
-            $scope.employees.data[k].details.company.business_email_address = null;
+        if ($scope.employees.data[k].details.personal.first_name === undefined) {
+            $scope.employees.data[k].details.personal.first_name = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.contact_number == undefined) {
-            $scope.employees.data[k].details.personal.contact_number = 'No Data';
+        if ($scope.employees.data[k].details.personal.middle_name === undefined) {
+            $scope.employees.data[k].details.personal.middle_name = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.landline_number == undefined) {
-            $scope.employees.data[k].details.personal.landline_number = 'No Data';
+        if ($scope.employees.data[k].details.personal.last_name === undefined) {
+            $scope.employees.data[k].details.personal.last_name = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.present_address == undefined) {
-            $scope.employees.data[k].details.personal.present_address = 'No Data' ;
+        if ($scope.employees.data[k].details.personal.gender_pk === undefined) {
+            $scope.employees.data[k].details.personal.gender_pk = null;
         }
-        if ($scope.employees.data[k].details.personal.permanent_address == undefined) {
-            $scope.employees.data[k].details.personal.permanent_address = 'No Data';
-        }
-        if ($scope.employees.data[k].details.government.data_sss == undefined) {
-            $scope.employees.data[k].details.government.data_sss = 'No Data';
-        }
-        if ($scope.employees.data[k].details.government.data_tin == undefined) {
-            $scope.employees.data[k].details.government.data_tin = 'No Data';
-        }
-        if ($scope.employees.data[k].details.government.data_pagmid == undefined) {
-            $scope.employees.data[k].details.government.data_pagmid = 'No Data';
-        }
-        if ($scope.employees.data[k].details.government.data_phid == undefined) {
-            $scope.employees.data[k].details.government.data_phid = 'No Data';
-        }
-        if ($scope.employees.data[k].details.personal.profile_picture == undefined) {
-            $scope.employees.data[k].details.personal.profile_picture = './ASSETS/img/blank.gif';
-        }
-        if ($scope.employees.data[k].details.personal.religion == undefined) {
+        if ($scope.employees.data[k].details.personal.religion === undefined) {
             $scope.employees.data[k].details.personal.religion = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.sunday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.sunday.ins = 'No Data';
+        if ($scope.employees.data[k].details.personal.profile_picture === undefined) {
+            $scope.employees.data[k].details.personal.profile_picture = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.sunday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.sunday.out = 'No Data';
+        if ($scope.employees.data[k].details.personal.birth_date === undefined) {
+            $scope.employees.data[k].details.personal.birth_date = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.monday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.monday.ins = 'No Data';
+        if ($scope.employees.data[k].details.personal.contact_number === undefined) {
+            $scope.employees.data[k].details.personal.contact_number = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.monday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.monday.out = 'No Data';
+        if ($scope.employees.data[k].details.personal.profile_picture === undefined) {
+            $scope.employees.data[k].details.personal.profile_picture = './ASSETS/img/blank.gif';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.tuesday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.tuesday.ins = 'No Data';
+        if ($scope.employees.data[k].details.personal.landline_number === undefined) {
+            $scope.employees.data[k].details.personal.landline_number = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.tuesday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.tuesday.out = 'No Data';
+        if ($scope.employees.data[k].details.company.salary === undefined) {
+            $scope.employees.data[k].details.company.salary = null;
         }
-        if ($scope.employees.data[k].details.company.work_schedule.wednesday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.wednesday.ins = 'No Data';
+        else {
+            $scope.employee.salary_type            = $scope.employees.data[k].details.company.salary.salary_type;
+            $scope.employee.salary_bank_name       = $scope.employees.data[k].details.company.salary.bank_name;
+            $scope.employee.salary_account_number  = $scope.employees.data[k].details.company.salary.account_number;
+            $scope.employee.salary_mode_payment    = $scope.employees.data[k].details.company.salary.mode_payment;
+            $scope.employee.salary_amount          = $scope.employees.data[k].details.company.salary.amount;
         }
-        if ($scope.employees.data[k].details.company.work_schedule.wednesday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.wednesday.out = 'No Data';
+
+        if ($scope.employees.data[k].details.company.employee_status_pk === undefined){
+            $scope.employees.data[k].details.company.employee_status_pk = 3;
         }
-        if ($scope.employees.data[k].details.company.work_schedule.thursday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.thursday.ins = 'No Data';
+        if ($scope.employees.data[k].details.company.employment_type_pk === undefined){
+            $scope.employees.data[k].details.company.employment_type_pk = 2;
         }
-        if ($scope.employees.data[k].details.company.work_schedule.thursday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.thursday.out = 'No Data';
+        if ($scope.employees.data[k].details.company.date_started === undefined){
+            $scope.employees.data[k].details.company.date_started = null;
         }
-        if ($scope.employees.data[k].details.company.work_schedule.friday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.friday.ins = 'No Data';
+        if ($scope.employees.data[k].details.personal.present_address === undefined){
+            $scope.employees.data[k].details.personal.present_address = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.friday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.friday.out = 'No Data';
+        if ($scope.employees.data[k].details.personal.permanent_address === undefined){
+            $scope.employees.data[k].details.personal.permanent_address = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.saturday.ins == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.saturday.ins = 'No Data';
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.saturday.out == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.saturday.out = 'No Data';
-        }
-        if ($scope.employees.data[k].details.personal.emergency_contact_name == undefined) {
+        if ($scope.employees.data[k].details.personal.emergency_contact_name === undefined){
             $scope.employees.data[k].details.personal.emergency_contact_name = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.emergency_contact_number == undefined) {
+        if ($scope.employees.data[k].details.personal.emergency_contact_number === undefined){
             $scope.employees.data[k].details.personal.emergency_contact_number = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.sunday.flexi = false;
+        if ($scope.employees.data[k].details.personal.civilstatus_pk === undefined){
+            $scope.employees.data[k].details.personal.civilstatus_pk = 'No Data';
         }
-        if ($scope.employees.data[k].details.company.work_schedule.monday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.monday.flexi = false;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.tuesday.flexi = false;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.wednesday.flexi = false;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.thursday.flexi = false;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.friday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.friday.flexi = false;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi == undefined) {
-            $scope.employees.data[k].details.company.work_schedule.saturday.flexi = false;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.sunday.flexi = true;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.monday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.monday.flexi = true;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.tuesday.flexi = true;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.wednesday.flexi = true;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.thursday.flexi = true;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.friday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.friday.flexi = true;
-        }
-        if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi == 'true') {
-            $scope.employees.data[k].details.company.work_schedule.saturday.flexi = true;
-        }
-            
+
         $scope.employee.intern_hours           = $scope.employees.data[k].details.company.hours;
         $scope.employee.employee_id            = $scope.employees.data[k].details.company.employee_id;
         $scope.employee.email_address          = $scope.employees.data[k].details.personal.email_address;
@@ -938,16 +809,7 @@ app.controller('Employees', function(
         $scope.employee.landline_number        = $scope.employees.data[k].details.personal.landline_number;
         $scope.employee.present_address        = $scope.employees.data[k].details.personal.present_address;
         $scope.employee.permanent_address      = $scope.employees.data[k].details.personal.permanent_address;
-        $scope.employee.data_sss               = $scope.employees.data[k].details.government.data_sss;
-        $scope.employee.data_tin               = $scope.employees.data[k].details.government.data_tin;
-        $scope.employee.data_pagmid            = $scope.employees.data[k].details.government.data_pagmid;
-        $scope.employee.data_phid              = $scope.employees.data[k].details.government.data_phid;
         $scope.employee.profile_picture        = $scope.employees.data[k].details.personal.profile_picture;
-        $scope.employee.salary_type            = $scope.employees.data[k].details.company.salary.salary_type;
-        $scope.employee.salary_bank_name       = $scope.employees.data[k].details.company.salary.bank_name;
-        $scope.employee.salary_account_number  = $scope.employees.data[k].details.company.salary.account_number;
-        $scope.employee.salary_mode_payment    = $scope.employees.data[k].details.company.salary.mode_payment;
-        $scope.employee.salary_amount          = $scope.employees.data[k].details.company.salary.amount;
         $scope.employee.departments_pk         = $scope.employees.data[k].details.company.departments_pk;
         $scope.employee.levels_pk              = $scope.employees.data[k].details.company.levels_pk;
         $scope.employee.titles_pk              = $scope.employees.data[k].details.company.titles_pk;
@@ -961,54 +823,25 @@ app.controller('Employees', function(
         $scope.employee.emergency_name         = $scope.employees.data[k].details.personal.emergency_contact_name;
         $scope.employee.emergency_contact_number  = $scope.employees.data[k].details.personal.emergency_contact_number;
 
-        $scope.employee.timein_sunday          = new Date($scope.employees.data[k].details.company.work_schedule.sunday.ins);
-        $scope.employee.timein_monday          = new Date($scope.employees.data[k].details.company.work_schedule.monday.ins);
-        $scope.employee.timein_tuesday         = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.ins);
-        $scope.employee.timein_wednesday       = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.ins);
-        $scope.employee.timein_thursday        = new Date($scope.employees.data[k].details.company.work_schedule.thursday.ins);
-        $scope.employee.timein_friday          = new Date($scope.employees.data[k].details.company.work_schedule.friday.ins);
-        $scope.employee.timein_saturday        = new Date($scope.employees.data[k].details.company.work_schedule.saturday.ins);
+        // //Ken can only understand this below:D
+        // $scope.minus = 1;
+        // $scope.minus_20 = 20;
 
-        $scope.employee.timeout_sunday         = new Date($scope.employees.data[k].details.company.work_schedule.sunday.out);
-        $scope.employee.timeout_monday         = new Date($scope.employees.data[k].details.company.work_schedule.monday.out);
-        $scope.employee.timeout_tuesday        = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.out);
-        $scope.employee.timeout_wednesday      = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.out);
-        $scope.employee.timeout_thursday       = new Date($scope.employees.data[k].details.company.work_schedule.thursday.out);
-        $scope.employee.timeout_friday         = new Date($scope.employees.data[k].details.company.work_schedule.friday.out);
-        $scope.employee.timeout_saturday       = new Date($scope.employees.data[k].details.company.work_schedule.saturday.out);
+        // console.log($scope.level_title.data[$scope.employee.levels_pk].level_title);
+        // $scope.employee.titles_pk = parseInt($scope.employee.titles_pk) - parseInt($scope.minus);
+        // $scope.employee.titles = $scope.titles.data[$scope.employee.titles_pk].title;
         
-        $scope.employee.flexi_sunday           = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
-        $scope.employee.flexi_monday           = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
-        $scope.employee.flexi_tuesday          = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
-        $scope.employee.flexi_wednesday        = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
-        $scope.employee.flexi_thursday         = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
-        $scope.employee.flexi_friday           = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
-        $scope.employee.flexi_saturday         = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
-
-        //Ken can only understand this below:D
-        $scope.minus = 1;
-        $scope.minus_20 = 20;
-        $scope.employee.titles_pk = parseInt($scope.employee.titles_pk) - parseInt($scope.minus);
-        $scope.employee.titles = $scope.titles.data[$scope.employee.titles_pk].title;
+        // $scope.employee.levels_pk = parseInt($scope.employee.levels_pk) - parseInt($scope.minus);
+        // $scope.employee.levels = $scope.level_title.data[$scope.employee.levels_pk].level_title;
         
-        $scope.employee.levels_pk = parseInt($scope.employee.levels_pk) - parseInt($scope.minus);
-        $scope.employee.levels = $scope.level_title.data[$scope.employee.levels_pk].level_title;
+        // $scope.employee.departments_pk = parseInt($scope.employee.departments_pk) - parseInt($scope.minus_20);
+        // $scope.employee.departmentss = $scope.department.data[$scope.employee.departments_pk].department;
         
-        $scope.employee.departments_pk = parseInt($scope.employee.departments_pk) - parseInt($scope.minus_20);
-        $scope.employee.departmentss = $scope.department.data[$scope.employee.departments_pk].department;
-        
-        $scope.employee.employment_type_pk = parseInt($scope.employee.employment_type_pk) - parseInt($scope.minus);
-        $scope.employee.employment_typess = $scope.etype[$scope.employee.employment_type_pk].emtype;
+        // $scope.employee.employment_type_pk = parseInt($scope.employee.employment_type_pk) - parseInt($scope.minus);
+        // $scope.employee.employment_typess = $scope.etype[$scope.employee.employment_type_pk].emtype;
 
-        $scope.employee.employee_status_pk = parseInt($scope.employee.employee_status_pk) - parseInt($scope.minus);
-        $scope.employee.employee_statuses = $scope.estatus[$scope.employee.employee_status_pk].emstatus;
-
-        console.log($scope.employee.gender_pk);
-        $scope.employee.gender_pk = parseInt($scope.employee.gender_pk) - parseInt($scope.minus);
-        $scope.employee.gender_types = $scope.genders[$scope.employee.gender_pk].gender;
-
-        $scope.employee.civilstatus_pk = parseInt($scope.employee.civilstatus_pk) - parseInt($scope.minus);
-        $scope.employee.civil_types = $scope.civils[$scope.employee.civilstatus_pk].civilstatus;
+        // $scope.employee.employee_status_pk = parseInt($scope.employee.employee_status_pk) - parseInt($scope.minus);
+        // $scope.employee.employee_statuses = $scope.estatus[$scope.employee.employee_status_pk].emstatus;
 
         
         $scope.modal = {
