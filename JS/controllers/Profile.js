@@ -68,7 +68,6 @@ app.controller('Profile', function(
         var promise = EmployeesFactory.get_levels();
         promise.then(function(data){
             $scope.level_title.data = data.data.result;
-            // console.log($scope.level_title.data);
         })
         .then(null, function(data){
             

@@ -688,30 +688,54 @@ EOT;
 
         $sql = "begin;";
         $sql .= <<<EOT
-                insert into employees_backup
+                insert into employees
                 (
+                    employee_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    business_email_address,
+                    email_address,
                     details
                 )
                 values
                 (
+                    '$this->employee_id',
+                    '$this->first_name',
+                    '$this->middle_name',
+                    '$this->last_name',
+                    '$this->business_email_address',
+                    '$this->email_address',
                     '$details'
 
                 );
-
-            
 EOT;
-//         $sql .= <<<EOT
-//                 insert into accounts
-//                 (
-//                     employee_id,
-//                     password
-//                 )
-//                 values
-//                 (
-//                     '$this->employee_id',
-//                     md5('user123456')
-//                 );
-// EOT;
+        $sql .= <<<EOT
+                insert into accounts
+                (
+                    employee_id,
+                    password
+                )
+                values
+                (
+                    '$this->employee_id',
+                    md5('user123456')
+                );
+EOT;
+        $supervisor_pk = $extra['supervisor_pk'];
+        $sql .= <<<EOT
+                insert into groupings
+                (   
+                    employees_pk,
+                    supervisor_pk
+                )
+                values
+                (
+                    currval('employees_pk_seq'),
+                    $supervisor_pk
+                )
+                ;
+EOT;
 
         $sql .= "commit;";
 
