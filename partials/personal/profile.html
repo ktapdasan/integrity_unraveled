@@ -35,7 +35,7 @@
 
 }
 table{
-    width:500px;
+    width:550px;
    
     background-color:white;     
     font-size:12px;
@@ -48,6 +48,11 @@ th, td {
     font-size: 14px;
     word-wrap: break-word;
     width:40%;
+}
+
+#table2 th, td {
+    width:90px;
+    margin-left: 60px;
 }
 
 
@@ -73,27 +78,27 @@ th, td {
                 <img src="./ASSETS/img/blank.gif" class="imageprofile"/>
                 </div>
                 <div class ="col-md-4" style="padding:30px;word-wrap: break-word;">
-                       <h1 style="color:#2196F3;">Rafael Pascual  </h1>
-                <div style="font-weight:900;margin-top:-10px;margin-left:3px;">IT PROJECT MANAGER</div>
+                       <h1 style="color:#2196F3;">{{ profile.details.personal.first_name }} {{ profile.details.personal.last_name }} </h1>
+                <div style="font-weight:900;margin-top:-10px;margin-left:3px;">{{ profile.titles }}</div>
                 </div>
 
                      <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
                                                        
                             
-                             <div><b>Contact #:</b></div><div style="margin-left:30px;">111111</div> 
-                             <div><b>Email:</b></div><div style="margin-left:30px;">r.pascual@gmail.com</div>
-                             <div><b>Present Address:</b></div><div style="margin-left:30px;">111111</div>
-                             <div><b>Permanent Address:</b></div><div style="margin-left:30px;">blk 316 lot 6 maya street barangay rizal makati city</div>
+                             <div><b>Contact #:</b></div><div style="margin-left:30px;">{{ profile.details.personal.contact_number }}</div> 
+                             <div><b>Email:</b></div><div style="margin-left:30px;">{{ profile.details.personal.email_address }}</div>
+                             <div><b>Present Address:</b></div><div style="margin-left:30px;">{{ profile.details.personal.present_address }}</div>
+                             <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{ profile.details.personal.permanent_address }}</div>
                         
 
                       </div>
                       <div class ="col-md-2" style="word-wrap: break-word;font-size:12px;margin-top:20px;
                       padding-top:10px;padding-bottom:10px;">
 
-                            <div><b>Birthday:</b></div><div style="margin-left:30px;">111</div>
-                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">111111</div>
-                            <div><b>Religion:</b></div><div style="margin-left:30px;">111111</div>
-                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">111111</div>
+                            <div><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date:"MMMM dd, yyyy" }}</div>
+                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{ profile.civil_types }}</div>
+                            <div><b>Religion:</b></div><div style="margin-left:30px;">{{ profile.details.personal.religion }}</div>
+                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">{{ profile.details.personal.emergency_contact_name }} {{ profile.details.personal.emergency_contact_number }}</div>
                       </div>  
             
               </div>    
@@ -110,22 +115,25 @@ th, td {
 
                         <table>
                             <tr>
-                                <td>
+                                <td >
                                    <b> Employee ID:</b>
                                 </td>    
+                                <td>
+                                    {{ profile.details.company.employee_id }}
+                                </td>
                             </tr>   
                             <tr>
                                 <td>
                                    <div><b>Business Email Address:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div> {{ profile.details.company.business_email_address }}</div>
                                 </td>
                                 <td>
                                     <div><b>Start Date:</b></div>
                                 </td>
                                  <td>
-                                    <div>111111</div>
+                                    <div> {{ profile.details.company.date_started | date: "MMMM dd, yyyy" }} </div>
                                 </td>
                             </tr>
                             <tr>
@@ -133,14 +141,14 @@ th, td {
                                     <div><b>Position:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div> {{ profile.titles }}</div>
                                 </td>
 
                                 <td>
                                     <div><b>Supervisor:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{ profile.supervisor }}</div>
                                 </td>
 
                                
@@ -150,14 +158,14 @@ th, td {
                                     <div><b>Level Id:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{ profile.levels }}</div>
                                 </td>
 
                                 <td>
-                                    <div><b>Employee Type:</b></div>
+                                    <div><b>Employee Status:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111 </div>
+                                    <div>{{ profile.employment_status }}</div>
                                 </td>
 
                            </tr>
@@ -166,7 +174,7 @@ th, td {
                                     <div><b>Department:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{ profile.deparments }}</div>
                                 </td>
 
                            </tr>
@@ -175,7 +183,7 @@ th, td {
                                     <div><b>Employment Type:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{ profile.employment_typess }}</div>
                                 </td>
                             </tr>
                              <tr>
@@ -208,121 +216,8 @@ th, td {
                 </div>   
               </div>
 
-          </div>
-
-            <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-                      padding-top:10px;padding-bottom:10px;">
-            <div class="panel panel-default">
-                 <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
-                    <div class="panel-body">
-
-
-                        <table width="80%">
-                            <tr>
-                                <td>
-                                <div style="color:#2196F3;font-weight:bold;">Primary</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <div><b>School Name:</b></div>
-                                </td>
-                                <td>
-                                    <div>11111</div>
-                                </td>
-                                <td>
-                                    <div><b>Location:</b></div>
-                                </td>
-                                 <td>
-                                    <div>111111</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                   <td>
-                                    <div><b>From Date:</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                                    <td>
-                                        <div><b>To Date::</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                            </tr>
-                            <tr>
-                                <td >  <div style="color:#2196F3;font-weight:bold;">Secondary</div></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <div><b>School Name:</b></div>
-                                </td>
-                                <td>
-                                    <div>111111</div>
-                                </td>
-                                <td>
-                                    <div><b>Location:</b></div>
-                                </td>
-                                 <td>
-                                    <div>111111</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                   <td>
-                                    <div><b>From Date:</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                                    <td>
-                                        <div><b>To Date::</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                            </tr>
-                               <tr>
-                                <td> <div style="color:#2196F3;font-weight:bold;">Tertiary</div></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <div><b>School Name:</b></div>
-                                </td>
-                                <td>
-                                    <div>111111</div>
-                                </td>
-                                <td>
-                                    <div><b>Location:</b></div>
-                                </td>
-                                 <td>
-                                    <div>111111</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                   <td>
-                                    <div><b>From Date:</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                                    <td>
-                                        <div><b>To Date::</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                            </tr>
-
-                        </table>
-
-                    </div>
-                  </div>
-                </div>
-            </div>
-       <div class="row">    
-        <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
-                      padding-top:10px;padding-bottom:10px;">
+              <div class ="col-md-12" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+                      width:644px;margin-left:-15px;margin-top:10px;">
              <div class="panel panel-default">
                  <div class="panel-heading" style="font-weight:900">Government Mandated Benefits</div>
                     <div class="panel-body">
@@ -333,13 +228,13 @@ th, td {
                                 <div style="font-weight:bold;">PHIC:</div>
                                 </td>
                                 <td>
-                                      <div style="">11111</div>
+                                      <div style="">{{ profile.details.government.data_phid }}</div>
                                 </td>
                                 <td>
                                 <div style="font-weight:bold;">HDMF:</div>
                                 </td>
                                 <td>
-                                      <div style="">11111</div>
+                                      <div style="">{{ profile.details.government.data_pagmid }}</div>
                                 </td>
                             </tr>
                             <tr>    
@@ -347,13 +242,13 @@ th, td {
                                 <div style="font-weight:bold;">TIN:</div>
                                 </td>
                                 <td>
-                                      <div style="">11111</div>
+                                      <div style="">{{ profile.details.government.data_tin }}</div>
                                 </td>    
                                 <td>
                                 <div style="font-weight:bold;">SSS:</div>
                                 </td>
                                 <td>
-                                      <div style="">11111</div>
+                                      <div style="">{{ profile.details.government.data_sss }}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -362,6 +257,90 @@ th, td {
                     </div>
                 </div>
             </div>
+          </div>
+
+
+            <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+                      padding-top:10px;padding-bottom:10px;">
+            <div class="panel panel-default">
+                 <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
+                    <div class="panel-body">
+
+ 
+                        <table id="table2" width="100%" ng-repeat="education in profile.details.education.school_type">
+                            <tr >
+                                <td>
+                                <div >{{ education.educ_level }}</div>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td>
+                                   <div><b>School Name:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{ education.school_name }}</div>
+                                </td>
+                                <td>
+                                    <div><b>Location:</b></div>
+                                </td>
+                                 <td>
+                                    <div>{{ education.school_location }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                   <td>
+                                    <div><b>From Date:</b></div>
+                                    </td>
+                                    <td>
+                                        <div>{{ education.date_from_school | date: "MMMM dd, yyyy" }}</div>
+                                    </td>
+                                    <td>
+                                        <div><b>To Date::</b></div>
+                                    </td>
+                                    <td>
+                                        <div>{{ education.date_to_school | date: "MMMM dd, yyyy" }}</div>
+                                    </td>
+
+                            </tr>
+                           
+
+                        </table>
+                         
+
+
+                    </div>
+
+                  </div>
+
+
+
+              <div class ="col-md-12" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+                      width:644px;margin-left:-15px;margin-top:10px;">
+             <div class="panel panel-default">
+                 <div class="panel-heading" style="font-weight:900">Leave Balances</div>
+                    <div class="panel-body">
+
+                         <table style="margin-left:20px;"width="10%">
+                        
+                            <tr ng-repeat =" (k,v) in profile.leave_balances">   
+                                <td >
+                                    <b>{{ k }} :</b> 
+                                </td>
+                                <td>
+                                    {{ v }}
+                                </td>
+                            </tr>    
+                        </table>       
+
+ 
+                       
+                    </div>
+                </div>
+            </div>
+                </div>
+            
+          
+        
          </div>
         </div>         
       </div>

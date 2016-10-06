@@ -3,7 +3,7 @@ app.factory('EmployeesFactory', function($http){
     
     factory.fetch = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Employees/fetch.php',
+            url:'./FUNCTIONS/Employees/fetch.php', 
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -13,7 +13,7 @@ app.factory('EmployeesFactory', function($http){
                 return str.join("&");
             },
             data : data
-        })
+        }) 
 
         return promise;
     };

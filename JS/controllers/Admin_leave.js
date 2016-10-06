@@ -84,8 +84,11 @@ app.controller('Admin_leave', function(
             title    : 'Add New Leave Type',
             save     : 'Save',
             close    : 'Cancel',
-            check    : 'true'
+            check    : 'true',
+            default_checkbox : true
         };
+
+        $scope.default_checkbox_toggle();
 
         ngDialog.openConfirm({
             template: 'LeaveTypeModal',
