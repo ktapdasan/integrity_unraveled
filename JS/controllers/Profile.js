@@ -150,6 +150,17 @@ app.controller('Profile', function(
                 $scope.profile.details.personal.profile_picture = './ASSETS/img/blank.gif';
             }
 
+            var a = $scope.profile.leave_balances;
+            $scope.profile.leave_balances = {};
+
+             for(var i in $scope.leave_types.data){
+                if(a[$scope.leave_types.data[i].pk] === undefined){
+                    a[$scope.leave_types.data[i].pk] = 0;
+                }
+                $scope.profile.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
+               
+            }
+
             $scope.minus = 1;
             $scope.minus_20 = 20;
 
@@ -171,16 +182,7 @@ app.controller('Profile', function(
             $scope.profile.details.personal.civilstatus_pk = parseInt($scope.profile.details.personal.civilstatus_pk) - parseInt($scope.minus);
             $scope.profile.civil_types = $scope.civils[$scope.profile.details.personal.civilstatus_pk].civilstatus;
 
-            var a = $scope.profile.leave_balances;
-            $scope.profile.leave_balances = {};
-
-             for(var i in $scope.leave_types.data){
-                if(a[$scope.leave_types.data[i].pk] === undefined){
-                    a[$scope.leave_types.data[i].pk] = 0;
-                }s
-                $scope.profile.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
-               
-            }
+            
             
         })   
     } 
