@@ -155,6 +155,7 @@ $details['personal']                 = $personal;
 $details['education']                = $educations; 
 $details['government']               = $government; 
 $extra['details']                    = $details; 
+$extra['supervisor_pk'] = $_POST['supervisor_pk'];
 
 $data = $class-> create($extra);
 
