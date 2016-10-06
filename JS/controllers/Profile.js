@@ -149,7 +149,7 @@ app.controller('Profile', function(
             if ($scope.profile.details.personal.profile_picture === undefined || $scope.profile.details.personal.profile_picture === null) {
                 $scope.profile.details.personal.profile_picture = './ASSETS/img/blank.gif';
             }
-            
+
             $scope.minus = 1;
             $scope.minus_20 = 20;
 
@@ -168,9 +168,6 @@ app.controller('Profile', function(
             $scope.profile.details.company.employee_status_pk = parseInt($scope.profile.details.company.employee_status_pk) - parseInt($scope.minus);
             $scope.profile.employment_status = $scope.estatus[$scope.profile.details.company.employee_status_pk].emstatus;
 
-            $scope.profile.details.personal.gender_pk = parseInt($scope.profile.details.personal.gender_pk) - parseInt($scope.minus);
-            $scope.profile.gender_types = $scope.genders[$scope.profile.details.personal.gender_pk].gender;
-   
             $scope.profile.details.personal.civilstatus_pk = parseInt($scope.profile.details.personal.civilstatus_pk) - parseInt($scope.minus);
             $scope.profile.civil_types = $scope.civils[$scope.profile.details.personal.civilstatus_pk].civilstatus;
 
