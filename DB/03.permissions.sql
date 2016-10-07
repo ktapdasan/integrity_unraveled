@@ -16,6 +16,9 @@ values
 		"employees" : {
 			"list" : true,
 			"employees" : true
+		},
+		"payroll" : {
+			"timesheet" : true
 		},	
 		"management" : {
 			"manual log" : true,

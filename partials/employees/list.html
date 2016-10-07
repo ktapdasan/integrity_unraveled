@@ -29,12 +29,13 @@
 }
 
 .table1{
-    width: 91.3%;
+    width: 98.3%;
     margin:0 auto;
     background-color:white;
     font-size:12px;
     margin-top:3px;
     table-layout:fixed;
+    word-wrap: break-word;
 }
 th, td {
     text-align: left;
@@ -65,7 +66,6 @@ select{
 }
 
 
-
 </style>
 
 <div id="content2">
@@ -82,27 +82,19 @@ select{
         </div>
     </div>
     <div class="panel">
-        <div style="padding-left: 20px; padding-top:5px;"> 
-           
-        
-                <div class="bck">     
-            
-                    <div style="float:left; margin-left:20px;margin-top: 14px;">
-                        <label style="float:left;font-size: 13px;">Search</label><br>
-                        <input ng-model="filter.searchstring" type="text" style="width:230px; margin-left:-43px;float:left" ng-change= "show_employees()"/>
-                        <select ng-model="filter.status" style ="float:left;width:100px;margin-left:235px;
-                        margin-top:-32px;"ng-change= "show_employees()">
-                            <option>Active</option>
-                            <option>Inactive</option>
-                        </select>
-                    </div>
+        <div style="padding-left: 20px; padding-top:5px;">
+            <div class="bck">
+                <div style="float:left; margin-left:20px;margin-top: 14px;">
+                    <label style="float:left;font-size: 13px;">Search</label><br>
+                    <input ng-model="filter.searchstring" type="text" style="width:230px; margin-left:-43px;float:left" ng-change= "show_employees()"/>
+                    <select ng-model="filter.status" style ="float:left;width:100px;margin-left:235px;
+                    margin-top:-32px;"ng-change= "show_employees()">
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
              
-                                 
-           
-            
-
-
-                    <div style="float:left; margin-left:-178px;margin-top: 10px;margin-right: 6px;">
+                <div style="float:left; margin-left:-178px;margin-top: 10px;margin-right: 6px;">
                     <label style="float:left;font-size: 13px;">Select a Department</label><br>
                     <div
                         isteven-multi-select
@@ -117,9 +109,9 @@ select{
                             >
                     </div>
                     </br>
-                    </div>
+                </div>
 
-                    <div style="float:left; margin-top: 10px;margin-left:-18px;margin-right:10px;">
+                <div style="float:left; margin-top: 10px;margin-left:-18px;margin-right:10px;">
                     <label style="float:left;font-size: 13px;">Select a Level</label><br>
                     <div
                         isteven-multi-select
@@ -134,12 +126,12 @@ select{
                             >
                     </div>
                     </br> 
-                    </div>
+                </div>
 
-                    <div style="float:left; margin-top: 10px;margin-right: 10px;">
+                <div style="float:left; margin-top: 10px;margin-right: 10px;">
                     <label style="float:left;font-size: 13px;">Select a Position</label><br>
                  
-                        <div
+                    <div
                         isteven-multi-select
                         input-model="employees.filters.titles"
                         output-model="filter.titles"
@@ -153,64 +145,76 @@ select{
                     </div>
                     </br>
                    
-                    </div>
+                </div>
                 <div style="float:left; margin-top:33px;margin-right:15px;">
                     <input type="button" class="medium button blue fa-fa"  value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; ">
                 </div>
-                    <div style="float:left; margin-top:33px;">
+                <div style="float:left; margin-top:33px;">
 
                      <input type="button" class="medium button green fa-fa" value="&#xf1c3; EXPORT" ng-click="export_employeelist()"; style="float:left;margin-right:10px;">
-
-                        <a href = "#/employees/new"><input type="button" class="medium button red fa-fa" value="&#xf055; ADD NEW EMPLOYEE" style="float:left;margin-right:1px;">
-
-                        </a>
-                       
-                       
-                    </div>
-
-               </div>
-
+                        <a href = "#/employees/new"><input type="button" class="medium button red fa-fa" value="&#xf055; ADD NEW EMPLOYEE" style="float:left;margin-right:1px;"></a>
+                </div>
+            </div>
         </div>
-        </div> 
+    </div> 
 
-            <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
-           
-    </div>
+    <div>
         <div style="height:10px; width:100%;">
 
         </div>
        
-             <b class="total">Total: {{employees.count}}</b>
-            <table id="datatables-example" class="table1" width="90%" cellspacing="0">
+        <div style="width:98%;">
+            <div style="width:20%; float:left;">
+                <b class="total">Total: {{employees.count}}</b>
+            </div>
+            <div style="width:80%; float:left; text-align:right;">
+                <select ng-model="filter.max_count" ng-change="setPage(1)">
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <table id="datatables-example" class="table1" width="100%" cellspacing="0">
                 <thead>
-                   
                     <tr>
-                        <th col width="80" >Employee Number</th>
-                        <th col width="55">First Name</th>
-                        <th col width="65">Middle Name</th>
-                        <th col width="55">Last Name</th>
-                        <th col width="120">E-mails</th>
-                        <th col width="60">Supervisor</th>
-                        <th col width="90">Position</th>
-                        <th col width="70">Level</th>
-                        <th col width="65">Department</th>
-                        <th col width="50">Options</th>
+                        <th style="width:7%;">Employee #</th>
+                        <th style="width:18%;">Name</th>
+                        <th style="width:15%;">E-mails</th>
+                        <th style="width:10%;">Supervisor</th>
+                        <th style="width:10%;">Position</th>
+                        <th style="width:10%;">Level</th>
+                        <th style="width:10%;">Department</th>
+                        <th style="width:5%;">Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status"  title="View">
+                    <tr ng-repeat="(k, v) in items" style="cursor:pointer;" ng-if="employees.status"  title="View">
                         <td ng-click="view_employees(k)"title="View">{{v.details.company.employee_id}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.first_name}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.middle_name}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.last_name}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.email_address}}</br> {{v.details.company.business_email_address}}</td>
+                        <td ng-click="view_employees(k)"title="View">
+                            {{v.details.personal.last_name}}, 
+                            {{v.details.personal.first_name}} 
+                            {{v.details.personal.middle_name}}
+                        </td>
+                        <td ng-click="view_employees(k)"title="View">
+                            <div>{{v.details.personal.email_address}}</div> 
+                            <div>{{v.details.company.business_email_address}}</div>
+                        </td>
                         <td ng-click="view_employees(k)"title="View">
                             {{v.supervisor}}
                             <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
                         </td>
                         <td ng-click="view_employees(k)"title="View">{{v.title}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.level}} </br> {{v.details.company.hours}}</td> 
-                        <td ng-click="view_employees(k)"title="View">{{v.department}}</td>
+                        <td ng-click="view_employees(k)"title="View">
+                            <div>{{v.level}}</div> 
+                            <div>{{v.details.company.hours}} <span ng-if="v.details.company.hours">hrs</span></div>
+                        </td> 
+                        <td ng-click="view_employees(k)" title="View">{{v.department}}</td>
                         <td><center> 
                             <!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
                             <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
@@ -224,16 +228,41 @@ select{
                         </td>
                     </tr>
                     <tr ng-if="!employees.status" style = "text-align: center;">
-                        <td colspan = "10">No Data Found</td>
+                        <td colspan = "8" style="text-align:center;">No Data Found</td>
                     </tr>
 
                 </tbody>
             </table>
+        </div>
+
+        <div style="text-align:right;">
+            <!-- pager -->
+            <ul ng-if="pager.pages.length" class="pagination">
+                <li ng-class="{disabled:current_page === 1}">
+                    <a ng-click="setPage(1)">First</a>
+                </li>
+                <li ng-class="{disabled:current_page === 1}">
+                    <a ng-click="setPage(current_page - 1)">Previous</a>
+                </li>
+                <li ng-repeat="page in pager.pages" ng-class="{active:current_page === page}">
+                    <a ng-click="setPage(page)">{{page}}</a>
+                </li>                
+                <li ng-class="{disabled:current_page === pager.totalPages}">
+                    <a ng-click="setPage(current_page + 1)">Next</a>
+                </li>
+                <li ng-class="{disabled:current_page === pager.totalPages}">
+                    <a ng-click="setPage(pager.totalPages)">Last</a>
+                </li>
+            </ul>
+        </div>
        
         <div style="height:50px; width:100%;">
 
         </div>
     </div>
+
+    <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
+           
 </div>
 
 <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">

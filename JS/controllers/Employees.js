@@ -6,6 +6,8 @@ app.controller('Employees', function(
                                         ngDialog,
                                         UINotification,
                                         FileUploader,
+                                        PagerService,
+                                        cfpLoadingBar,
                                         md5,
                                         $filter
                                     ){
@@ -14,6 +16,7 @@ app.controller('Employees', function(
     $scope.profile = {};
     $scope.filter = {};
     $scope.filter.status = 'Active';
+    $scope.filter.max_count = "10";
 
     $scope.uploader = {};
     $scope.uploader.queue = {};
@@ -30,6 +33,8 @@ app.controller('Employees', function(
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
     $scope.employee.education = [];
+
+    $scope.items = [];
     
     $scope.modal = {};
     $scope.level_class = 'orig_width';
@@ -71,6 +76,10 @@ app.controller('Employees', function(
         { pk:'1', emtype:'Exempt'},
         { pk:'2', emtype:'Non-Exempt'}
     ];
+
+    $scope.pager = {};
+    $scope.setPage = setPage;
+    $scope.current_page = 1;
 
     init();
 
@@ -176,6 +185,7 @@ app.controller('Employees', function(
     }
 
     function employees(){
+        cfpLoadingBar.start();
         
         $scope.filter.archived = 'false';
 
@@ -193,11 +203,61 @@ app.controller('Employees', function(
 
             $scope.employees.data = a;
             $scope.employees.count = data.data.result.length;
+            setPage();
+
+            cfpLoadingBar.complete();
         })
         .then(null, function(data){
             $scope.employees.status = false;
+            cfpLoadingBar.complete();
         });
 
+    }
+
+    $scope.setPage = function(p){
+        $scope.current_page = p;
+
+        setPage();
+    }
+
+    function setPage() {
+        if($scope.current_page < 1){
+            //we should add 1 because once you click
+            //the pagination's previous button, current page
+            //will be deducted by 1
+            $scope.current_page++;
+        }
+        else if($scope.current_page > $scope.pager.totalPages){
+            //we should deduct 1 because once you click
+            //the pagination's next button, current page
+            //will be added by 1
+            $scope.current_page--;
+        }
+        else {
+            // get pager object from service
+            $scope.pager = PagerService.GetPager($scope.employees.data.length, $scope.current_page, parseInt($scope.filter.max_count));
+
+            // get current page of items
+            $scope.items = $scope.employees.data.slice($scope.pager.startIndex, $scope.pager.endIndex + 1);
+        }
+    }
+
+    $scope.paginateLeft = function(){
+        $scope.current_page--;
+        if($scope.current_page < 1){
+            $scope.current_page = 1;
+        }
+        
+        setPage();
+    }
+    $scope.paginateRight = function(){
+        $scope.current_page++;
+
+        if($scope.current_page > $scope.employees.data.length){
+            $scope.current_page = $scope.employees.data.length
+        }
+
+        setPage();
     }
 
     function get_positions(){

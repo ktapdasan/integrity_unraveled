@@ -13,6 +13,7 @@ app.controller('Header', function(
     $scope.menu = {
         home : 'active',
         employees : '',
+        payroll : '',
         timesheet : '',
         admin : '',
         manual : '',
@@ -202,6 +203,6 @@ app.controller('Header', function(
             $scope.menu[i] = '';
         }
 
-        $scope.menu[menu] = 'active';
+        $scope.menu[menu.split('/')[0]] = 'active';
     }
 });
