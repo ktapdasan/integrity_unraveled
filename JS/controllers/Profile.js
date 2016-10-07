@@ -36,7 +36,7 @@ app.controller('Profile', function(
             get_department();
             get_levels();
             leave_types();
-            // get_supervisors();
+            
         })
     }
 
@@ -132,6 +132,8 @@ app.controller('Profile', function(
                 { pk:'1', emtype:'Exempt'},
                 { pk:'2', emtype:'Non-Exempt'}
             ];
+
+
         var filters = { 
             'pk' : $scope.pk
         };
@@ -145,10 +147,38 @@ app.controller('Profile', function(
             $scope.profile.details = JSON.parse($scope.profile.details);
             $scope.profile.permission = JSON.parse($scope.profile.permission);
             $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
-            
-            if ($scope.profile.details.personal.profile_picture === undefined || $scope.profile.details.personal.profile_picture === null) {
-                $scope.profile.details.personal.profile_picture = './ASSETS/img/blank.gif';
-            }
+           
+            // if ($scope.profile.details.personal.profile_picture === undefined || $scope.profile.details.personal.profile_picture === null
+            //     || $scope.profile.details.personal.profile_picture == 'No Data') {
+            //     $scope.profile.details.personal.profile_picture = './ASSETS/img/blank.gif';
+            // }
+            // if ($scope.profile.details.personal.contact_number == 'undefined'  || $scope.profile.details.personal.birth_date == undefined){
+            //     $scope.profile.details.personal.contact_number = 'No Data';
+            // }
+            // if ($scope.profile.details.personal.present_address == 'Undefined' || $scope.profile.details.personal.present_address == undefined){
+            //     $scope.profile.details.personal.present_address = 'No Data';
+                
+            // }    
+            // if ($scope.profile.details.personal.permanent_address == 'Undefined' || $scope.profile.details.personal.permanent_address == undefined){
+            //     $scope.profile.details.personal.permanent_address = 'No Data';
+            // }    
+            // if ($scope.profile.details.personal.birth_date == 'Undefined' || $scope.profile.details.personal.birth_date == undefined){
+            //      $scope.profile.details.personal.birth_date == 'No Data';
+            // }
+            // if ($scope.profile.civil_types == 'Undefined' || $scope.profile.details.personal.civil_types == undefined){
+            //      $scope.profile.civil_types = 'No Data';
+            // }
+            // if ($scope.profile.details.personal.religion == 'Undefined'){
+            //      $scope.profile.details.personal.religion = 'No Data';
+            // }
+            // if ($scope.profile.details.personal.gender_pk == 'Undefined'){
+            //     $scope.profile.details.personal.gender_pk = 'No Data';
+            // }
+
+
+
+
+   
 
             var a = $scope.profile.leave_balances;
             $scope.profile.leave_balances = {};
@@ -160,7 +190,12 @@ app.controller('Profile', function(
                 $scope.profile.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
                
             }
-
+            $scope.isShown = function(salarys_type) {
+            return salarys_type === $scope.profile.details.company.salary.salary_type;
+            };
+   
+            
+       
             $scope.minus = 1;
             $scope.minus_20 = 20;
 
@@ -181,6 +216,10 @@ app.controller('Profile', function(
 
             $scope.profile.details.personal.civilstatus_pk = parseInt($scope.profile.details.personal.civilstatus_pk) - parseInt($scope.minus);
             $scope.profile.civil_types = $scope.civils[$scope.profile.details.personal.civilstatus_pk].civilstatus;
+
+
+            $scope.profile.details.personal.gender_pk = parseInt($scope.profile.details.personal.gender_pk) - parseInt($scope.minus);
+            $scope.profile.gender_type = $scope.genders[$scope.profile.details.personal.gender_pk].gender;
 
             
             

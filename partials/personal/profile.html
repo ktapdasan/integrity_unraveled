@@ -130,10 +130,13 @@ th, td {
                             <div style="color:#1c84c6;"><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date:"MMMM dd, yyyy" }}</div>
                             <div style="color:#1c84c6;"><b>Civil Status:</b></div><div style="margin-left:30px;">{{ profile.civil_types }}</div>
                             <div style="color:#1c84c6;"><b>Religion:</b></div><div style="margin-left:30px;">{{ profile.details.personal.religion }}</div>
-                             <div style="color:#1c84c6;"><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.details.personal.gender }}</div>
-                            <div style="color:#1c84c6;"><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">Name: {{ profile.details.personal.emergency_contact_name }} <br>Contact #: {{ profile.details.personal.emergency_contact_number }}</div>
+                             <div style="color:#1c84c6;"><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.gender_type }}</div>
+                          
                       </div>  
-            
+                            <div style="word-wrap: break-word;font-size:12px;margin-top:20px;
+                                padding-top:10px;padding-bottom:10px;width:150px;position:absolute;right:30px;">
+                              <div style="color:#1c84c6;"><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">Name: {{ profile.details.personal.emergency_contact_name }} <br>Contact #: {{ profile.details.personal.emergency_contact_number }}</div>
+                            </div>  
               </div>    
 
 
@@ -231,28 +234,69 @@ th, td {
                                     <div>{{ profile.employment_status }}</div>
                                 </td>
                              </tr>   
-                             <tr>
+                             <tr ng-show="{{profile.details.company.salary.salary_type !== null || profile.details.company.salary.salary_type !== undefined }}">
                                 <td>
                                     <div><b>Salary type:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{profile.details.company.salary.salary_type}}</div>
                                 </td>
                             </tr>
-                             <tr>
+                             <tr ng-show="isShown('bank')">
                                 <td>
                                     <div><b>Bank Name:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{profile.details.company.salary.salary_bank_name}}</div>
                                 </td>
                             </tr>
-                             <tr>
+                            <tr ng-show="isShown('bank')">
+                                <td>
+                                    <div><b>Account No:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{profile.details.company.salary.salary_account_number}}</div>
+                                </td>
+                             </tr>
+                             <tr ng-show="isShown('bank')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{profile.details.company.salary.amount}}</div>
+                                </td>
+                             </tr>
+
+                             <tr ng-show="isShown('wire')">
+                                <td>
+                                    <div><b>Mode Of Payment:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{profile.details.company.salary.salary_mode_payment}}</div>
+                                </td>
+                            </tr>
+                            <tr ng-show="isShown('wire')">
+                                <td>
+                                    <div><b>Account No:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{profile.details.company.salary.salary_account_number}}</div>
+                                </td>
+                             </tr>
+                             <tr ng-show="isShown('wire')">
+                                <td>
+                                    <div><b>Amount:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{profile.details.company.salary.amount}}</div>
+                                </td>
+                             </tr>
+                              <tr ng-show="isShown('cash')">
+                                <td>
+                                    <div><b>Amount:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{profile.details.company.salary.amount}}</div>
                                 </td>
                              </tr>
 
@@ -296,8 +340,7 @@ th, td {
                                       <div style="">{{ profile.details.government.data_sss }}</div>
                                 </td>
                             </tr>
-                            <tr>
-                            </tr>   
+                           
                         </table>       
                     </div>
                 </div>
