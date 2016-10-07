@@ -447,13 +447,13 @@ app.controller('Employees', function(
             $scope.employees.data[k].details.company.work_schedule = null;
         }
         if($scope.employees.data[k].details.company.work_schedule != null){
-            $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.ins;
-            $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.ins;
-            $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.ins;
-            $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.ins;
-            $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.ins;
-            $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.ins;
-            $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.ins;
+            $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.in;
+            $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.in;
+            $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.in;
+            $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.in;
+            $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.in;
+            $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.in;
+            $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.in;
             $scope.employee.timeout_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.out;
             $scope.employee.timeout_monday = $scope.employees.data[k].details.company.work_schedule.monday.out;
             $scope.employee.timeout_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.out;
@@ -536,7 +536,7 @@ app.controller('Employees', function(
         if ($scope.employees.data[k].details.personal.last_name === undefined) {
             $scope.employees.data[k].details.personal.last_name = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.gender_pk === undefined) {
+        if ($scope.employees.data[k].details.personal.gender_pk === undefined || $scope.employees.data[k].details.personal.gender_pk == 'Male' || $scope.employees.data[k].details.personal.gender_pk == 'Female') {
             $scope.employees.data[k].details.personal.gender_pk = null;
         }
         if ($scope.employees.data[k].details.personal.religion === undefined) {
@@ -653,6 +653,10 @@ app.controller('Employees', function(
         .then(function(value){
             return false;
         }, function(value){
+
+            if($scope.employee.profile_picture == null || $scope.employee.profile_picture == undefined || $scope.employee.profile_picture == 'No Data'){
+                $scope.employee.profile_picture = './ASSETS/img/blank.gif';
+            }
             
             //Date Started Filter
             var dated = new Date($scope.employee.date_started);
@@ -722,21 +726,21 @@ app.controller('Employees', function(
         if ($scope.employees.data[k].details.company.work_schedule === undefined) {
             $scope.employees.data[k].details.company.work_schedule = null;
         }
-        if($scope.employees.data[k].details.company.work_schedule != null){
-            $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.ins;
-            $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.ins;
-            $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.ins;
-            $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.ins;
-            $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.ins;
-            $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.ins;
-            $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.ins;
-            $scope.employee.timeout_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.out;
-            $scope.employee.timeout_monday = $scope.employees.data[k].details.company.work_schedule.monday.out;
-            $scope.employee.timeout_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.out;
-            $scope.employee.timeout_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.out;
-            $scope.employee.timeout_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.out;
-            $scope.employee.timeout_friday = $scope.employees.data[k].details.company.work_schedule.friday.out;
-            $scope.employee.timeout_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.out;
+        else if($scope.employees.data[k].details.company.work_schedule != null){
+            $scope.employee.timein_sunday = new Date($scope.employees.data[k].details.company.work_schedule.sunday.in);
+            $scope.employee.timein_monday = new Date($scope.employees.data[k].details.company.work_schedule.monday.in);
+            $scope.employee.timein_tuesday = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.in);
+            $scope.employee.timein_wednesday = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.in);
+            $scope.employee.timein_thursday = new Date($scope.employees.data[k].details.company.work_schedule.thursday.in);
+            $scope.employee.timein_friday = new Date($scope.employees.data[k].details.company.work_schedule.friday.in);
+            $scope.employee.timein_saturday = new Date($scope.employees.data[k].details.company.work_schedule.saturday.in);
+            $scope.employee.timeout_sunday = new Date($scope.employees.data[k].details.company.work_schedule.sunday.out);
+            $scope.employee.timeout_monday = new Date($scope.employees.data[k].details.company.work_schedule.monday.out);
+            $scope.employee.timeout_tuesday = new Date($scope.employees.data[k].details.company.work_schedule.tuesday.out);
+            $scope.employee.timeout_wednesday = new Date($scope.employees.data[k].details.company.work_schedule.wednesday.out);
+            $scope.employee.timeout_thursday = new Date($scope.employees.data[k].details.company.work_schedule.thursday.out);
+            $scope.employee.timeout_friday = new Date($scope.employees.data[k].details.company.work_schedule.friday.out);
+            $scope.employee.timeout_saturday = new Date($scope.employees.data[k].details.company.work_schedule.saturday.out);
 
             if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi == 'true') {
                 $scope.employee.flexi_sunday = true;
@@ -790,6 +794,12 @@ app.controller('Employees', function(
             $scope.employee.data_pagmid = $scope.employees.data[k].details.government.data_pagmid;
             $scope.employee.data_phid = $scope.employees.data[k].details.government.data_phid;
         }
+        if ($scope.employees.data[k].details.education === undefined){
+            $scope.employees.data[k].details.education = null;
+        }
+        else if($scope.employees.data[k].details.education !== null){
+            $scope.employee.educations = $scope.employees.data[k].details.education.school_type;
+        }
 
         if ($scope.employees.data[k].details.company.hours === undefined) {
             $scope.employees.data[k].details.company.hours = null;
@@ -812,7 +822,7 @@ app.controller('Employees', function(
         if ($scope.employees.data[k].details.personal.last_name === undefined) {
             $scope.employees.data[k].details.personal.last_name = 'No Data';
         }
-        if ($scope.employees.data[k].details.personal.gender_pk === undefined) {
+        if ($scope.employees.data[k].details.personal.gender_pk === undefined || $scope.employees.data[k].details.personal.gender_pk == 'Male' || $scope.employees.data[k].details.personal.gender_pk == 'Female') {
             $scope.employees.data[k].details.personal.gender_pk = null;
         }
         if ($scope.employees.data[k].details.personal.religion === undefined) {
@@ -894,6 +904,10 @@ app.controller('Employees', function(
         $scope.employee.date_started           = $scope.employees.data[k].details.company.date_started;
         $scope.employee.emergency_name         = $scope.employees.data[k].details.personal.emergency_contact_name;
         $scope.employee.emergency_contact_number  = $scope.employees.data[k].details.personal.emergency_contact_number;
+
+        if($scope.employee.profile_picture == null || $scope.employee.profile_picture == undefined || $scope.employee.profile_picture == 'No Data'){
+                $scope.employee.profile_picture = './ASSETS/img/blank.gif';
+        }
 
         if ($scope.employee.salary_type != null || $scope.employee.salary_type != undefined){
         $scope.isShown = function(salarys_type) {

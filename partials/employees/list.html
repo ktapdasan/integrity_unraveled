@@ -906,10 +906,10 @@ select{
             </style>
         <div class="container">
            <div class="row">
-            <div class ="col-md-2" style="padding:5px;word-wrap: break-word;">
+            <div class ="col-md-2" style="padding-top:45px;word-wrap: break-word;">
                     <img src="{{employee.profile_picture}}" class="imageprofile"/>
                 </div>
-                <div class ="col-md-4" style="padding:6px;word-wrap: break-word;margin-top:40px">
+                <div class ="col-md-4" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
                     <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
                     <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
                 </div>
@@ -977,7 +977,7 @@ select{
                                     <div><b>Supervisor:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div></div>
                                 </td>
 
                                
@@ -1023,7 +1023,7 @@ select{
                                     <div>{{employee.salary_type}}</div>
                                 </td>
                             </tr>
-                             <tr ng-show="isShown('Bank')">
+                             <tr ng-show="isShown('bank')">
                                 <td>
                                     <div><b>Bank Name:</b></div>
                                 </td>
@@ -1031,7 +1031,7 @@ select{
                                     <div>{{employee.salary_bank_name}}</div>
                                 </td>
                             </tr>
-                            <tr ng-show="isShown('Bank')">
+                            <tr ng-show="isShown('bank')">
                                 <td>
                                     <div><b>Account No:</b></div>
                                 </td>
@@ -1039,7 +1039,7 @@ select{
                                     <div>{{employee.salary_account_number}}</div>
                                 </td>
                              </tr>
-                             <tr ng-show="isShown('Bank')">
+                             <tr ng-show="isShown('bank')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
@@ -1048,7 +1048,7 @@ select{
                                 </td>
                              </tr>
 
-                             <tr ng-show="isShown('Wire')">
+                             <tr ng-show="isShown('wire')">
                                 <td>
                                     <div><b>Mode Of Payment:</b></div>
                                 </td>
@@ -1056,7 +1056,7 @@ select{
                                     <div>{{employee.salary_mode_payment}}</div>
                                 </td>
                             </tr>
-                            <tr ng-show="isShown('Wire')">
+                            <tr ng-show="isShown('wire')">
                                 <td>
                                     <div><b>Account No:</b></div>
                                 </td>
@@ -1064,7 +1064,7 @@ select{
                                     <div>{{employee.salary_account_number}}</div>
                                 </td>
                              </tr>
-                             <tr ng-show="isShown('Wire')">
+                             <tr ng-show="isShown('wire')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
@@ -1072,7 +1072,7 @@ select{
                                     <div>{{employee.salary_amount}}</div>
                                 </td>
                              </tr>
-                              <tr ng-show="isShown('Cash')">
+                              <tr ng-show="isShown('cash')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>

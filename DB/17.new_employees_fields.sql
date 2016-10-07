@@ -254,41 +254,71 @@ education - {
 EXAMPLES
 update employees set
 details = jsonb_set(details, '{company}', ' {
-	"departments_pk": "22",
-	"employee_id": "201400004",
+	"departments_pk": "26",
+	"employee_id": "201400072",
 	"date_started": "03/01/2016",
-	"levels_pk": "8",
-	"titles_pk": "8",
-	"supervisor": "10",
+	"levels_pk": "7",
+	"titles_pk": "14",
+	"supervisor": "28",
 	"employee_status_pk": "3",
 	"employment_type_pk": "1",
-	"business_email_address": "grace_lacerna@chrsglobal.com",
+	"business_email_address": "ken.tapdasan@chrsglobal.com",
 	"salary": 
 	{
 	"salary_type": "cash",
 	"amount": "12000"
 	},
-	"company_work_schedule": {
+	"work_schedule": {
 		"friday": {
-			"ins": "09:00",
+			"in": "09:00",
 			"out": "18:00"
 		},
 		"monday": {
-			"ins": "09:00",
+			"in": "09:00",
+			"out": "18:00"
+		},
+		"sunday": {
+			"in": "09:00",
+			"out": "18:00"
+		},
+		"saturday": {
+			"in": "null",
+			"out": "null"
+		},
+		"tuesday": {
+			"in": "09:00",
+			"out": "18:00"
+		},
+		"thursday": {
+			"in": "09:00",
+			"out": "18:00"
+		},
+		"wednesday": {
+			"in": "09:00",
+			"out": "18:00"
+		}
+	},
+	"company_work_schedule": {
+		"friday": {
+			"in": "09:00",
+			"out": "18:00"
+		},
+		"monday": {
+			"in": "09:00",
 			"out": "18:00"
 		},
 		"sunday": null,
 		"tuesday": {
-			"ins": "09:00",
+			"in": "09:00",
 			"out": "18:00"
 		},
 		"saturday": null,
 		"thursday": {
-			"ins": "09:00",
+			"in": "09:00",
 			"out": "18:00"
 		},
 		"wednesday": {
-			"ins": "09:00",
+			"in": "09:00",
 			"out": "18:00"
 		}
 	}
@@ -296,7 +326,7 @@ details = jsonb_set(details, '{company}', ' {
 
 }
 ', true)
-where pk = 19;
+where pk = 12;
 
 
 update employees set
@@ -336,15 +366,15 @@ details = jsonb_set(details, '{education}', '
 {
 "school_type": 
 	    [{"educ_level": "Primary", 
-		"school_name": "Elem School", 
-		"date_to_school": "1995-07-27", 
-		"school_location": "Where", 
-		"date_from_school": "1995-07-27"}, 
+		"school_name": "San Miguel Elementary School", 
+		"date_to_school": "2008-06-03", 
+		"school_location": "Dasmarinas Salitran III", 
+		"date_from_school": "2009-03-16"}, 
 		{"educ_level": "Tertiary", 
-		"school_name": "Tertiary School", 
-		"date_to_school": "1992-03-22", 
-		"school_location": "Where", 
-		"date_from_school": "1992-03-22"}]
+		"school_name": "Saint John Bosco Institute of Arts and Sciences", 
+		"date_to_school": "2013-03-01", 
+		"school_location": "Mandaluyong Daang Bakal", 
+		"date_from_school": "2015-03-16"}]
 }
 ', true)
 where pk = 12;

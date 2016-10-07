@@ -532,13 +532,13 @@ body>footer .footer-main {
                             <label style="display:block; float:left; padding-top:10px; padding-right:10px">Salary Type:</label>
                         </td>
                         <td>
-                            <input type="radio" id="Bank" name="salarys" ng-model="employees.salary_type" value="Bank"> Bank</input>
-                            <input type="radio" id="Wire" name="salarys" ng-model="employees.salary_type" value="Wire"> Wire Transfer</input>
-                            <input type="radio" id="Cash" name="salarys" ng-model="employees.salary_type" value="Cash"> Cash</input>
+                            <input type="radio" id="bank" name="salarys" ng-model="employees.salary_type" value="bank"> Bank</input>
+                            <input type="radio" id="wire" name="salarys" ng-model="employees.salary_type" value="wire"> Wire Transfer</input>
+                            <input type="radio" id="cash" name="salarys" ng-model="employees.salary_type" value="cash"> Cash</input>
                         </td>
                     </tr>
                 </tr>
-                <tr ng-show="isShown('Bank')">
+                <tr ng-show="isShown('bank')">
                     <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Bank Name:</label>
                     </td>
@@ -554,7 +554,7 @@ body>footer .footer-main {
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
                     </td>
                 </tr>
-                <tr ng-show="isShown('Bank')">
+                <tr ng-show="isShown('bank')">
                      <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                     </td>
@@ -563,7 +563,7 @@ body>footer .footer-main {
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
-                <tr ng-show="isShown('Wire')">
+                <tr ng-show="isShown('wire')">
                       <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Mode of Payment:</label>
                     </td>
@@ -580,7 +580,7 @@ body>footer .footer-main {
                     </td>
 
                 </tr>
-                <tr ng-show="isShown('Wire')">
+                <tr ng-show="isShown('wire')">
                     <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                     </td>
@@ -589,7 +589,7 @@ body>footer .footer-main {
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
-                <tr ng-show="isShown('Cash')">
+                <tr ng-show="isShown('cash')">
                      <td> 
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                     </td>
