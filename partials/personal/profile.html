@@ -35,8 +35,8 @@
 
 }
 table{
-    width:550px;
-   
+    width:580px;
+    table-layout:fixed;
     background-color:white;     
     font-size:12px;
     margin-top:3px;
@@ -44,7 +44,7 @@ table{
     word-wrap: break-word;
 }
 th, td {
-
+        word-break:break-all;
     font-size: 14px;
     word-wrap: break-word;
     width:40%;
@@ -53,6 +53,38 @@ th, td {
 #table2 th, td {
     width:90px;
     margin-left: 60px;
+}
+
+.leave-square {
+
+    width: 100px;
+    height: 130px; 
+    float: left;
+    margin-left:14px;
+    border: 1px solid #CCC;
+    padding-top: 10px;
+    
+}
+
+.leave-square .leave-circle {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #CCC;
+    border-radius: 50%; 
+    padding-:50px;
+    padding: 29px 5px;
+    font-size: 16px;
+    text-align: center;
+    margin-left: 9px;
+    color: #e30000;
+}
+
+.leave-square label {
+    width: 100%;
+    text-align: center;
+    margin-top:3px;
+    margin-bottom: 20PX;
+    color: #1c84c6;font-size:12px;
 }
 
 
@@ -85,21 +117,21 @@ th, td {
                      <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
                                                        
                             
-                             <div><b>Contact #:</b></div><div style="margin-left:30px;">{{ profile.details.personal.contact_number }}</div> 
-                             <div><b>Email:</b></div><div style="margin-left:30px;">{{ profile.details.personal.email_address }}</div>
-                             <div><b>Present Address:</b></div><div style="margin-left:30px;">{{ profile.details.personal.present_address }}</div>
-                             <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{ profile.details.personal.permanent_address }}</div>
+                             <div style="color:#1c84c6;"><b>Contact #:</b></div><div style="margin-left:30px;">{{ profile.details.personal.contact_number }}</div> 
+                             <div style="color:#1c84c6;"><b>Email:</b></div><div style="margin-left:30px;">{{ profile.details.personal.email_address }}</div>
+                             <div style="color:#1c84c6;"><b>Present Address:</b></div><div style="margin-left:30px;">{{ profile.details.personal.present_address }}</div>
+                             <div style="color:#1c84c6;"><b>Permanent Address:</b></div><div style="margin-left:30px;">{{ profile.details.personal.permanent_address }}</div>
                         
 
                       </div>
-                      <div class ="col-md-2" style="word-wrap: break-word;font-size:12px;margin-top:20px;
+                      <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
                       padding-top:10px;padding-bottom:10px;">
 
-                            <div><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date:"MMMM dd, yyyy" }}</div>
-                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{ profile.civil_types }}</div>
-                            <div><b>Religion:</b></div><div style="margin-left:30px;">{{ profile.details.personal.religion }}</div>
-                             <div><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.details.personal.gender }}</div>
-                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">{{ profile.details.personal.emergency_contact_name }} {{ profile.details.personal.emergency_contact_number }}</div>
+                            <div style="color:#1c84c6;"><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date:"MMMM dd, yyyy" }}</div>
+                            <div style="color:#1c84c6;"><b>Civil Status:</b></div><div style="margin-left:30px;">{{ profile.civil_types }}</div>
+                            <div style="color:#1c84c6;"><b>Religion:</b></div><div style="margin-left:30px;">{{ profile.details.personal.religion }}</div>
+                             <div style="color:#1c84c6;"><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.details.personal.gender }}</div>
+                            <div style="color:#1c84c6;"><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">Name: {{ profile.details.personal.emergency_contact_name }} <br>Contact #: {{ profile.details.personal.emergency_contact_number }}</div>
                       </div>  
             
               </div>    
@@ -116,34 +148,54 @@ th, td {
 
                         <table>
                             <tr>
-                                <td >
+                                <td style="width:33%;" >
                                    <b> Employee ID:</b>
                                 </td>    
-                                <td>
+                                <td style="width:50%;">
                                     {{ profile.details.company.employee_id }}
                                 </td>
                             </tr>   
                             <tr>
-                                <td>
-                                   <div><b>Business Email Address:</b></div>
-                                </td>
-                                <td>
-                                    <div> {{ profile.details.company.business_email_address }}</div>
-                                </td>
                                 <td>
                                     <div><b>Start Date:</b></div>
                                 </td>
                                  <td>
                                     <div> {{ profile.details.company.date_started | date: "MMMM dd, yyyy" }} </div>
                                 </td>
+
+                            <tr>
+                            </tr>    
+                                <td>
+                                   <div><b>Business Email Address:</b></div>
+                                </td>
+                                <td>
+                                    <div> {{ profile.details.company.business_email_address }}</div>
+                                </td>
+                             
                             </tr>
                             <tr>
+                             
+                             
+                                <td>
+                                    <div><b>Level</b></div>
+                                </td>
+                                <td>
+                                    <div>{{ profile.levels }}</div>
+                                </td>
+                            </tr>
+                         
+                           <tr>
                                 <td>
                                     <div><b>Position:</b></div>
                                 </td>
                                 <td>
                                     <div> {{ profile.titles }}</div>
                                 </td>
+
+                          
+
+                           </tr>
+                            <tr>
 
                                 <td>
                                     <div><b>Supervisor:</b></div>
@@ -153,22 +205,6 @@ th, td {
                                 </td>
 
                                
-                            </tr>
-                           <tr>
-                                <td>
-                                    <div><b>Level Id:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ profile.levels }}</div>
-                                </td>
-
-                                <td>
-                                    <div><b>Employee Status:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ profile.employment_status }}</div>
-                                </td>
-
                            </tr>
                            <tr>
                                 <td>
@@ -187,6 +223,14 @@ th, td {
                                     <div>{{ profile.employment_typess }}</div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <div><b>Employee Status:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{ profile.employment_status }}</div>
+                                </td>
+                             </tr>   
                              <tr>
                                 <td>
                                     <div><b>Salary type:</b></div>
@@ -265,41 +309,47 @@ th, td {
                       padding-top:10px;padding-bottom:10px;">
             <div class="panel panel-default">
                  <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
-                    <div class="panel-body">
+                    <div class="panel-body" word-wrap: break-word;>
 
  
-                        <table id="table2" width="100%" ng-repeat="education in profile.details.education.school_type">
+                        <table id="table2" width="90%" ng-repeat="education in profile.details.education.school_type">
                             <tr >
-                                <td>
-                                <div >{{ education.educ_level }}</div>
+                                <td style="width:33%" >
+                                <div style="color:#1c84c6;margin-bottom:-20px"><b><i>{{ education.educ_level }}</i><b></div>
                                 </td>
+                                <td style="width:73%">
+                                </td>    
                             </tr>
                             <tr >
-                                <td>
+                                <td >
                                    <div><b>School Name:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{ education.school_name }}</div>
+                                    <div style="margin-top:15px;">{{ education.school_name }}asdaaadsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                                    </div>
                                 </td>
-                                <td>
+                               
+                            </tr>
+                            <tr>
+                                 <td>
                                     <div><b>Location:</b></div>
                                 </td>
                                  <td>
                                     <div>{{ education.school_location }}</div>
                                 </td>
-                            </tr>
+                            </td>
                             <tr>
                                    <td>
-                                    <div><b>From Date:</b></div>
+                                    <div ><b >From Date:</b></div>
+                                    <div>{{ education.date_from_school | date: "MMMM dd, yyyy" }}</div>
                                     </td>
+                                   
                                     <td>
-                                        <div>{{ education.date_from_school | date: "MMMM dd, yyyy" }}</div>
-                                    </td>
-                                    <td>
-                                        <div><b>To Date::</b></div>
-                                    </td>
-                                    <td>
+                                        <div><b>To Date:</b></div>
                                         <div>{{ education.date_to_school | date: "MMMM dd, yyyy" }}</div>
+                                    </td>
+                                    <td>
+                                        <div></div>
                                     </td>
 
                             </tr>
@@ -321,19 +371,11 @@ th, td {
                  <div class="panel-heading" style="font-weight:900">Leave Balances</div>
                     <div class="panel-body">
 
-                         <table style="margin-left:20px;"width="10%">
-                        
-                            <tr ng-repeat =" (k,v) in profile.leave_balances">   
-                                <td >
-                                    <b>{{ k }} :</b> 
-                                </td>
-                                <td>
-                                    {{ v }}
-                                </td>
-                            </tr>    
-                        </table>       
-
- 
+                          <div class="leave-square" style="margin-bottom:10px;" ng-repeat="(k, v) in profile.leave_balances">
+                            <div class="leave-circle" >{{v}}</div>
+                            <label>{{k}}</label>
+                        </div> 
+                 
                        
                     </div>
                 </div>
