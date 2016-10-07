@@ -254,20 +254,19 @@ education - {
 EXAMPLES
 update employees set
 details = jsonb_set(details, '{company}', ' {
-	"departments_pk": "26",
-	"employee_id": "201400072",
+	"departments_pk": "22",
+	"employee_id": "201400004",
 	"date_started": "03/01/2016",
 	"levels_pk": "8",
 	"titles_pk": "8",
-	"supervisor": "17",
+	"supervisor": "10",
 	"employee_status_pk": "3",
 	"employment_type_pk": "1",
-	"email_address": "ktapdasan.chrs@gmail.com",
-	"business_email_address": "ken.tapdasan@chrsglobal.com",
+	"business_email_address": "grace_lacerna@chrsglobal.com",
 	"salary": 
 	{
 	"salary_type": "cash",
-	"amount": "55555555"
+	"amount": "12000"
 	},
 	"company_work_schedule": {
 		"friday": {
@@ -297,7 +296,7 @@ details = jsonb_set(details, '{company}', ' {
 
 }
 ', true)
-where pk = 12;
+where pk = 19;
 
 
 update employees set
