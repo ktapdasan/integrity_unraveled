@@ -928,9 +928,11 @@ select{
                       padding-top:10px;padding-bottom:10px;">
 
                             <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
-                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_types}}</div>
+                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
                             <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
-                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;"><b>Clarissa Mae F. Tapdasan - 09301986993</b></div>
+                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
+                                Name: {{employee.emergency_name}}<br>Contact #: {{employee.emergency_contact_number}}
+                            </div>
                       </div>  
                 
 
@@ -982,7 +984,7 @@ select{
                             </tr>
                            <tr>
                                 <td>
-                                    <div><b>Level Id:</b></div>
+                                    <div><b>Level:</b></div>
                                 </td>
                                 <td>
                                     <div>{{employee.levels}}</div>
@@ -1001,7 +1003,7 @@ select{
                                     <div><b>Department:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employee.departmentss}}</div>
+                                    <div>{{employee.departments}}</div>
                                 </td>
 
                            </tr>
@@ -1010,31 +1012,72 @@ select{
                                     <div><b>Employment Type:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employee.employment_typess}}</div>
+                                    <div>{{employee.employment_types}}</div>
                                 </td>
                             </tr>
-                             <tr>
+                             <tr ng-show="{{employee.salary_type!==undefined}}">
                                 <td>
                                     <div><b>Salary type:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employeed.salary_type}}</div>
+                                    <div>{{employee.salary_type}}</div>
                                 </td>
                             </tr>
-                             <tr>
+                             <tr ng-show="isShown('Bank')">
                                 <td>
                                     <div><b>Bank Name:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{employee.salary_bank_name}}</div>
                                 </td>
                             </tr>
-                             <tr>
+                            <tr ng-show="isShown('Bank')">
+                                <td>
+                                    <div><b>Account No:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.salary_account_number}}</div>
+                                </td>
+                             </tr>
+                             <tr ng-show="isShown('Bank')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
-                                    <div>111111</div>
+                                    <div>{{employee.salary_amount}}</div>
+                                </td>
+                             </tr>
+
+                             <tr ng-show="isShown('Wire')">
+                                <td>
+                                    <div><b>Mode Of Payment:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.salary_mode_payment}}</div>
+                                </td>
+                            </tr>
+                            <tr ng-show="isShown('Wire')">
+                                <td>
+                                    <div><b>Account No:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.salary_account_number}}</div>
+                                </td>
+                             </tr>
+                             <tr ng-show="isShown('Wire')">
+                                <td>
+                                    <div><b>Amount:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.salary_amount}}</div>
+                                </td>
+                             </tr>
+                              <tr ng-show="isShown('Cash')">
+                                <td>
+                                    <div><b>Amount:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.salary_amount}}</div>
                                 </td>
                              </tr>
 

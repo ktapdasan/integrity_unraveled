@@ -55,7 +55,7 @@ app.controller('New_Employees', function(
         data_pagmid: null,
         data_tin: null,
         intern_hours:'',
-        salary_type:'bank',
+        salary_type:'Bank',
         bank_name:'',
         account_number:'',
         amount:'',
