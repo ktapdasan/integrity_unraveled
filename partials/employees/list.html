@@ -199,22 +199,21 @@ select{
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status"  title="View">
-                        <td >{{v.details.company.employee_id}}</td>
-                        <td>{{v.details.personal.first_name}}</td>
-                        <td>{{v.details.personal.middle_name}}</td>
-                        <td>{{v.details.personal.last_name}}</td>
-                        <td>{{v.details.personal.email_address}}</br> {{v.details.company.business_email_address}}</td>
-                        <td>
+                        <td ng-click="view_employees(k)"title="View">{{v.details.company.employee_id}}</td>
+                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.first_name}}</td>
+                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.middle_name}}</td>
+                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.last_name}}</td>
+                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.email_address}}</br> {{v.details.company.business_email_address}}</td>
+                        <td ng-click="view_employees(k)"title="View">
                             {{v.supervisor}}
                             <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
                         </td>
-                        <td>{{v.title}}</td>
-                        <td>{{v.level}} </br> {{v.details.company.hours}}</td> 
-                        <td>{{v.department}}</td>
+                        <td ng-click="view_employees(k)"title="View">{{v.title}}</td>
+                        <td ng-click="view_employees(k)"title="View">{{v.level}} </br> {{v.details.company.hours}}</td> 
+                        <td ng-click="view_employees(k)"title="View">{{v.department}}</td>
                         <td><center> 
                             <!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
                             <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
-                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="view_employees(k)"title="View">
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
 
                             <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px" ng-if="v.archived=='f'" ng-click="delete_employees(k)" title="Delete">
@@ -508,7 +507,7 @@ select{
                     </table>
                     </div>
                      <div ng-if="tab.education">
-                         <table class="tblemployees" ng-repeat="form in employee.education track by $index" ng-init="name = form.educ_level
+                         <table class="tblemployees" ng-repeat="form in employee.educations track by $index" ng-init="name = form.educ_level
                         ">
                         <tr>
                          
@@ -544,7 +543,9 @@ select{
                                 <input ng-model="form.date_to_school" type="date" id="datefrom" style="display: block; float: left; width:320px; height:25px;" />
                             </td>
                         </tr>
-                        <tr>
+                        </table>
+                        <table>
+                            <tr>
                                 <td colspan = "4">
                                     <center style="font-size: 18px; font-style: bold">
                                         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
@@ -1017,7 +1018,7 @@ select{
                                     <div><b>Salary type:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employee.salary_type}}</div>
+                                    <div>{{employeed.salary_type}}</div>
                                 </td>
                             </tr>
                              <tr>
@@ -1051,10 +1052,11 @@ select{
                     <div class="panel-body">
 
 
-                        <table width="80%">
+                        <table width="80%" ng-repeat="form in employee.educations track by $index" ng-init="name = form.educ_level
+                        ">
                             <tr>
                                 <td>
-                                <div style="color:#2196F3;font-weight:bold;">Primary</div>
+                                <div style="color:#2196F3;font-weight:bold;">{{form.educ_level}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -1062,13 +1064,13 @@ select{
                                    <div><b>School Name:</b></div>
                                 </td>
                                 <td>
-                                    <div>11111</div>
+                                    <div>{{form.school_name}}</div>
                                 </td>
                                 <td>
                                     <div><b>Location:</b></div>
                                 </td>
                                  <td>
-                                    <div>111111</div>
+                                    <div>{{form.school_location}}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -1076,78 +1078,15 @@ select{
                                     <div><b>From Date:</b></div>
                                     </td>
                                     <td>
-                                        <div>111111</div>
+                                        <div>{{form.date_from_school}}</div>
                                     </td>
                                     <td>
                                         <div><b>To Date::</b></div>
                                     </td>
                                     <td>
-                                        <div>111111</div>
+                                        <div>{{form.date_to_school}}</div>
                                     </td>
                             </tr>
-                            <tr>
-                                <td >  <div style="color:#2196F3;font-weight:bold;">Secondary</div></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <div><b>School Name:</b></div>
-                                </td>
-                                <td>
-                                    <div>111111</div>
-                                </td>
-                                <td>
-                                    <div><b>Location:</b></div>
-                                </td>
-                                 <td>
-                                    <div>111111</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                   <td>
-                                    <div><b>From Date:</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                                    <td>
-                                        <div><b>To Date::</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                            </tr>
-                               <tr>
-                                <td> <div style="color:#2196F3;font-weight:bold;">Tertiary</div></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <div><b>School Name:</b></div>
-                                </td>
-                                <td>
-                                    <div>111111</div>
-                                </td>
-                                <td>
-                                    <div><b>Location:</b></div>
-                                </td>
-                                 <td>
-                                    <div>111111</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                   <td>
-                                    <div><b>From Date:</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                                    <td>
-                                        <div><b>To Date::</b></div>
-                                    </td>
-                                    <td>
-                                        <div>111111</div>
-                                    </td>
-                            </tr>
-
                         </table>
 
                     </div>
@@ -1194,20 +1133,13 @@ select{
                             </tr>   
                         </table>       
                     </div>
-                    <div class="panel-body"?
-                        <table width = "30%">
-                            <tr>
-                                <td colspan = "4">
-                                    <center style="font-size: 18px; font-style: bold">
+                    
+                </div>
+                    <div>
+                                    <center style="font-size: 18px; font-style: bold;margin-left:200px;">
                                         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
                                     </center>
-                                </td>
-                            </tr>
-
-
-                        </table>
                     </div>
-                </div>
             </div>
          </div>
         </div>         

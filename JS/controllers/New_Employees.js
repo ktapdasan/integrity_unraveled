@@ -104,6 +104,35 @@ app.controller('New_Employees', function(
     $scope.uploader = {};
     $scope.uploader.queue = {};
 
+    $scope.genders = [
+        { pk:'1', gender:'Male'},
+        { pk:'2', gender:'Female'}
+    ];
+    $scope.civils = [
+        { pk:'1', civilstatus:'Married'},
+        { pk:'2', civilstatus:'Single'},
+        { pk:'3', civilstatus:'Divorced'},
+        { pk:'4', civilstatus:'Living Common Law'},
+        { pk:'5', civilstatus:'Widowed'}
+    ];
+    $scope.estatus = [
+        { pk:'1', emstatus:'Probationary'},
+        { pk:'2', emstatus:'Trainee'},
+        { pk:'3', emstatus:'Contractual'},
+        { pk:'4', emstatus:'Regular'},
+        { pk:'5', emstatus:'Consultant'}
+    ];
+    $scope.etype = [
+        { pk:'1', emtype:'Exempt'},
+        { pk:'2', emtype:'Non-Exempt'}
+    ];
+
+    $scope.stype = [
+    { pk:'1', sctype:'Primary'},
+    { pk:'2', sctype:'Secondary'},
+    { pk:'3', sctype:'Tertiary'}
+    ];
+
     init();
 
     function init(){
@@ -348,88 +377,7 @@ app.controller('New_Employees', function(
         return salarys_type === $scope.employees.salary_type;
     };
 
-    $scope.genders = [
-    {
-        pk:'1',
-        gender:'Male'
-    },
-    {
-        pk:'2',
-        gender:'Female'
-    }
-    ];
-
-    $scope.civils = [
-    {
-        pk:'1',
-        civilstatus:'Married'
-    },
-    {
-        pk:'2',
-        civilstatus:'Single'
-    },
-    {
-        pk:'3',
-        civilstatus:'Divorced'
-    },
-    {
-        pk:'4',
-        civilstatus:'Living Common Law'
-    },
-    {
-        pk:'5',
-        civilstatus:'Widowed'
-    }
-    ];
-
-    $scope.estatus = [
-    {
-        pk:'1',
-        emstatus:'Probationary'
-    },
-    {
-        pk:'2',
-        emstatus:'Trainee'
-    },
-    {
-        pk:'3',
-        emstatus:'Contractual'
-    },
-    {
-        pk:'4',
-        emstatus:'Regular'
-    },
-    {
-        pk:'5',
-        emstatus:'Consultant'
-    }
-    ];
-
-    $scope.etype = [
-    {
-        pk:'1',
-        emtype:'Exempt'
-    },
-    {
-        pk:'2',
-        emtype:'Non-Exempt'
-    }
-    ];
-
-    $scope.stype = [
-    {
-        pk:'1',
-        sctype:'Primary'
-    },
-    {
-        pk:'2',
-        sctype:'Secondary'
-    },
-    {
-        pk:'3',
-        sctype:'Tertiary'
-    }
-    ];
+    
 
     /*
     UPLOADER

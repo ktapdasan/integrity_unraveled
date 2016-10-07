@@ -78,7 +78,7 @@ th, td {
                 <img src="{{profile.details.personal.profile_picture}}" class="imageprofile"/>
                 </div>
                 <div class ="col-md-4" style="padding:30px;word-wrap: break-word;">
-                       <h1 style="color:#2196F3;">{{ profile.details.personal.first_name }} {{ profile.details.personal.last_name }} </h1>
+                       <h1 style="color:#2196F3;">{{ profile.details.personal.first_name }} {{ profile.details.personal.middle_name }} {{ profile.details.personal.last_name }} </h1>
                 <div style="font-weight:900;margin-top:-10px;margin-left:3px;">{{ profile.titles }}</div>
                 </div>
 
@@ -98,7 +98,7 @@ th, td {
                             <div><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date:"MMMM dd, yyyy" }}</div>
                             <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{ profile.civil_types }}</div>
                             <div><b>Religion:</b></div><div style="margin-left:30px;">{{ profile.details.personal.religion }}</div>
-                             <div><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.details.personal.gender_pk }}</div>
+                             <div><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.details.personal.gender }}</div>
                             <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">{{ profile.details.personal.emergency_contact_name }} {{ profile.details.personal.emergency_contact_number }}</div>
                       </div>  
             
