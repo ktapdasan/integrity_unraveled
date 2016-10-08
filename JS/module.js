@@ -140,17 +140,10 @@ app.config(function($routeProvider){
         controller: 'Admin_memo',
         templateUrl: 'partials/admin/memo/index.html'
     })
-<<<<<<< Updated upstream
     .when('/admin/requests',
     {
         controller: 'Admin_request',
         templateUrl: 'partials/admin/requests/index.html'
-=======
-    .when('/admin/request',
-    {
-        controller: 'Admin_request',
-        templateUrl: 'partials/admin/request/index.html'
->>>>>>> Stashed changes
     })
     .when('/management/leaves',
     {
