@@ -15,7 +15,7 @@ drop table requests_handlers;
 -- );
 -- alter table requests_handlers owner to chrs;
 
-drop table requests;
+drop table requests cascade;
 create table requests (
 	pk serial primary key,
 	request_type_pk int references request_type(pk),
@@ -24,10 +24,13 @@ create table requests (
 	archived boolean default false
 );
 alter table requests owner to chrs;
-
+drop table requests_status cascade;
 create table requests_status (
 	requests_pk int references requests(pk),
 	status text default 'Pending',
-	remarks text
+	remarks text,
+	created_by int references employees(pk),
+	date_created timestamptz default now(),
+	archived boolean default false
 );
-alter table requests owner to chrs;
+alter table requests_status owner to chrs;

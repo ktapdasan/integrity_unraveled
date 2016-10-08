@@ -78,6 +78,7 @@ app.controller('Admin_memo', function(
         })
         .then(null, function(data){
             $scope.memo.status = false;
+            $scope.memo.count="";
         });
     }
 

@@ -1,24 +1,19 @@
-app.controller('Employees_overtime', function(
+app.controller('HRIS_Request', function(
                                         $scope,
                                         SessionFactory,
                                         EmployeesFactory,
                                         TimelogFactory,
                                         ngDialog,
                                         UINotification,
-                                        CutoffFactory,
+                                        RequestFactory,
                                         md5
                                     ){
 
     $scope.profile = {};
     $scope.filter = {};
-    $scope.log = {};
-    $scope.log.time_log = new Date;
-   
-    
-    $scope.overtime = {};
-    $scope.overtime.count= 0 ;
 
     $scope.modal = {};
+    $scope.request = {};
 
     init();
 
@@ -29,6 +24,8 @@ app.controller('Employees_overtime', function(
             $scope.pk = data.data[_id];
 
             get_profile();
+            
+
         })
         .then(null, function(data){
             window.location = './login.html';
@@ -39,16 +36,20 @@ app.controller('Employees_overtime', function(
         var filters = { 
             'pk' : $scope.pk
         };
-        
+
         var promise = EmployeesFactory.profile(filters);
         promise.then(function(data){
             $scope.profile = data.data.result[0];
+            $scope.profile.details = JSON.parse($scope.profile.details);
+            $scope.profile.permission = JSON.parse($scope.profile.permission);
+            $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
+
             DEFAULTDATES();
-            fetch_myemployees();
-            timesheet_overtime();
+            request();
             
-        })   
-    } 
+            
+        })         
+    }
 
     function DEFAULTDATES(){
         var today = new Date();
@@ -72,85 +73,79 @@ app.controller('Employees_overtime', function(
 
     }
 
-    function getMonday(d) {
-        var d = new Date(d);
-        var day = d.getDay(),
-            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-
-        var new_date = new Date(d.setDate(diff));
-        var dd = new_date.getDate();
-        var mm = new_date.getMonth()+1; //January is 0!
-        var yyyy = new_date.getFullYear();
-
-        if(dd<10) {
-            dd='0'+dd
-        } 
-
-        if(mm<10) {
-            mm='0'+mm
-        } 
-
-        var monday = yyyy+'-'+mm+'-'+dd;
-
-        return monday;
+    
+    $scope.show_request = function(){
+        
+        request();
     }
+   
 
+    function request(){
 
-    $scope.timesheet_overtime = function(){
-        timesheet_overtime();
-    }
-
-    function timesheet_overtime() {
-        var filter = {};
-        filter.employees_pk =  $scope.profile.pk;
+        var filter={};
 
         var datefrom = new Date($scope.filter.datefrom);
         var dd = datefrom.getDate();
         var mm = datefrom.getMonth()+1; //January is 0!
         var yyyy = datefrom.getFullYear();
 
-
+        var filter={};
         var dateto = new Date($scope.filter.dateto);
         var Dd = dateto.getDate();
         var Mm = dateto.getMonth()+1; //January is 0!
         var Yyyy = dateto.getFullYear();
 
-       
+
         filter.datefrom=yyyy+'-'+mm+'-'+dd;
         filter.dateto=Yyyy+'-'+Mm+'-'+Dd;
+        filter.pk = $scope.profile.pk;
 
-        var promise = TimelogFactory.timesheet_overtime(filter);
+        
+        var promise = RequestFactory.get_request(filter);
         promise.then(function(data){
-            $scope.overtime.status = true;
-            $scope.overtime.data = data.data.result;
-            $scope.overtime.count = data.data.result.length;
-            
-            /*console.log($scope.overtime.data);*/
-        }) 
+            $scope.request.status = true;
+            $scope.request.data = data.data.result;
+            var count = data.data.result.length;
+
+            if (count==0) {
+                $scope.request.count="";
+            }
+            else{
+                $scope.request.count="Total: " + count;
+            }
+             
+        })
         .then(null, function(data){
-            $scope.overtime.status = false;
+            $scope.request.status = false;
+            $scope.request.count="";
         });
-     
+
     }
 
-    $scope.cancel = function(k){
-        $scope.log.remarks = '';
+
+    $scope.update_request = function(k){
+     
         $scope.modal = {
-                title : '',
-                message: 'Are you sure you want to cancel your request',
-                save : 'Delete',
-                close : 'Cancel'
-            };
-        
+
+            title           : 'Update Status',
+            save            : 'Save',
+            close           : 'Cancel',
+            pk              : $scope.request.data[k].pk,
+            created_by      : $scope.profile.pk,
+            employees_pk    : $scope.request.data[k].created_by
+        };
+
         ngDialog.openConfirm({
-            template: 'DisapproveModal',
+            template: 'UpdateRequestModal',
             className: 'ngdialog-theme-plain custom-widththreefifty',
             preCloseCallback: function(value) {
-                var nestedConfirmDialog;                
+                var nestedConfirmDialog;
+
+                
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Cancel Overtime' +
+                                '<p>Are you sure you want to '+ $scope.modal.status +' this Request?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -161,45 +156,28 @@ app.controller('Employees_overtime', function(
 
                 return nestedConfirmDialog;
             },
-            
             scope: $scope,
             showClose: false
         })
         .then(function(value){
             return false;
         }, function(value){
-
             
-                $scope.overtime["employees_pk"] = $scope.profile.pk,
-                $scope.overtime.pk = $scope.overtime.data[k].pk
-                $scope.overtime.status = "Cancelled";
-                $scope.overtime.pk =  $scope.overtime.data[k].pk;
-                if($scope.log.remarks==''){
-                    $scope.overtime.remarks="Cancelled";
-                }else{
-                    $scope.overtime.remarks =  $scope.log.remarks;
-            
-            };
-
-            var promise = TimelogFactory.cancel_overtime($scope.overtime);
+            var promise = RequestFactory.update_request($scope.modal);
             promise.then(function(data){
+
                 UINotification.success({
-                                        message: 'You have successfully cancelled your request', 
+                                        message: 'You have successfully added new Request', 
                                         title: 'SUCCESS', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
                                     });
-
-                /*$scope.overtime.data.splice(k, 1);
-
-                if($scope.overtime.data.length < 1){
-                    $scope.overtime.status = false;
-                }*/
-                timesheet_overtime();
+                request();
             })
             .then(null, function(data){
+                
                 UINotification.error({
-                                        message: 'An error occured, unable to cancel, please try again.', 
+                                        message: 'An error occured, unable to save changes, please try again.', 
                                         title: 'ERROR', 
                                         delay : 5000,
                                         positionY: 'top', positionX: 'right'
@@ -210,27 +188,7 @@ app.controller('Employees_overtime', function(
         });
     }
 
-    function fetch_myemployees(){
-        var filter  = {
-            pk : $scope.profile.pk
-        }
-        
-        $scope.myemployees=[];
-        var promise = EmployeesFactory.get_myemployees(filter);
-        promise.then(function(data){
-            var a = data.data.result;
-            $scope.myemployees.data=[];
-            for(var i in a){
-                $scope.myemployees.push({
-                                            pk: a[i].employees_pk,
-                                            name: a[i].name,
-                                            ticked: false
-                                        });
-            }
-        })
-        .then(null, function(data){
-            $scope.myemployees = [];
-        });
-    }
-    
+
+
+
 });

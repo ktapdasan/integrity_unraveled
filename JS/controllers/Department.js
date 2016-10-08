@@ -13,7 +13,6 @@ app.controller('Department', function(
     $scope.filter.status= 'Active';
     $scope.department={};
     $scope.departments={};
-    $scope.departments.count=0;
     $scope.modal = {};
     
  
@@ -308,11 +307,19 @@ app.controller('Department', function(
         promise.then(function(data){
             $scope.departments.status = true;
             $scope.departments.data = data.data.result;
-            $scope.departments.count = data.data.result.length;
+            var count = data.data.result.length;
+
+            if (count==0) {
+                $scope.departments.count="";
+            }
+            else{
+                $scope.departments.count="Total: " + count;
+            }
 
         })
         .then(null, function(data){
             $scope.departments.status = false;
+            $scope.departments.count="";
         });
     }
 

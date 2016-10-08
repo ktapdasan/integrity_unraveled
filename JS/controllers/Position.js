@@ -14,7 +14,6 @@ app.controller('Position', function(
     $scope.filter.status=  "Active";
     
     $scope.titles= {};
-    $scope.titles.count=0;
     $scope.modal = {};
 
 
@@ -312,11 +311,18 @@ app.controller('Position', function(
         promise.then(function(data){
             $scope.titles.status = true;
             $scope.titles.data = data.data.result;
-            $scope.titles.count = data.data.result.length;
+            var count = data.data.result.length;
 
+            if (count==0) {
+                $scope.titles.count="";
+            }
+            else{
+                $scope.titles.count="Total: " + count;
+            }
         })
         .then(null, function(data){
             $scope.titles.status = false;
+            $scope.titles.count="";
         });
     }
 });

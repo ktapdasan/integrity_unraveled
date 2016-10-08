@@ -16,7 +16,6 @@ app.controller('Levels', function(
 
     $scope.modal = {};
     $scope.levels = {};
-    $scope.level_title.count=0;
 
 
     init();
@@ -278,11 +277,19 @@ $scope.restore_level = function(k){
         promise.then(function(data){
             $scope.level_title.status = true;
             $scope.level_title.data = data.data.result;
-            $scope.level_title.count = data.data.result.length;
+            var count = data.data.result.length;
+
+            if (count==0) {
+                $scope.level_title.count="";
+            }
+            else{
+                $scope.level_title.count="Total: " + count;
+            }
 
         })
         .then(null, function(data){
             $scope.level_title.status = false;
+            $scope.level_title.count="";
         });
     }
 });

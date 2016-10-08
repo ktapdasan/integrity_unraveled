@@ -94,6 +94,7 @@ app.controller('Admin_request', function(
         })
         .then(null, function(data){
             $scope.request_type.status = false;
+            $scope.request_type.count="";
         });
     }
   

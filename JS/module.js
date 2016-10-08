@@ -55,6 +55,11 @@ app.config(function($routeProvider){
         controller: 'DailyPassSlip',
         templateUrl: 'partials/timesheet/dps.html'
     })
+     .when('/timesheet/request',
+    {
+        controller: 'Request',
+        templateUrl: 'partials/timesheet/request.html'
+    })
     .when('/employees/list',
     {
         controller: 'Employees',
@@ -69,6 +74,11 @@ app.config(function($routeProvider){
     {
         controller: 'Employees',
         templateUrl: 'partials/employees/edit.html'
+    })
+    .when('/employees/request',
+    {
+        controller: 'HRIS_Request',
+        templateUrl: 'partials/employees/request.html'
     })
     .when('/employees/timesheet',
     {
@@ -130,10 +140,17 @@ app.config(function($routeProvider){
         controller: 'Admin_memo',
         templateUrl: 'partials/admin/memo/index.html'
     })
+<<<<<<< Updated upstream
     .when('/admin/requests',
     {
         controller: 'Admin_request',
         templateUrl: 'partials/admin/requests/index.html'
+=======
+    .when('/admin/request',
+    {
+        controller: 'Admin_request',
+        templateUrl: 'partials/admin/request/index.html'
+>>>>>>> Stashed changes
     })
     .when('/management/leaves',
     {

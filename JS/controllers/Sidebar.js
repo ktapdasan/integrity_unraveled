@@ -221,6 +221,9 @@ app.controller('Sidebar', function(
         else if($scope.notifications.data[k].table_from == "leave_cancellation"){
             location = "#/management/leaves";
         }
+        else if($scope.notifications.data[k].table_from == "request_result"){
+            location = "#/timesheet/request";
+        }
         var data=$scope.notifications.data[k];
 
         read_notifs(data);

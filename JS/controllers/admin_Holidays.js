@@ -79,6 +79,7 @@ app.controller('admin_Holidays', function(
         })
         .then(null, function(data){
             $scope.holiday.status = false;
+            $scope.holiday.count="";
         });
     }
 
