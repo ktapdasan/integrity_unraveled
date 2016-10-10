@@ -323,9 +323,7 @@ select{
                                </td>
                                 <td id="css">    
                                     <input name="firstName" required ng-model="employee.first_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="2"/>
-                                    <span style="color:red" ng-show="myForm.firstName.$dirty && myForm.firstName.$invalid">
-                                    <span ng-show="myForm.firstName.$error.required">First Name is required.</span>
-                                    </span>
+                                    <span style="color:red;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
                                 </td>
                                 <td>
                                     <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">E-mail Address:</label>
@@ -343,9 +341,7 @@ select{
                                 </td>
                                 <td id="css">
                                     <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="3"/>
-                                    <span style="color:red" ng-show="myForm.middleName.$dirty && myForm.middleName.$invalid">
-                                    <span ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
-                                    </span>
+                                    <span style="color:red;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
                                 </td>
                                 <td>
                                 <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
@@ -367,9 +363,7 @@ select{
                                 </td>
                                  <td id="css">
                                     <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="4"/>
-                                    <span style="color:red" ng-show="myForm.lastName.$dirty && myForm.lastName.$invalid">
-                                    <span ng-show="myForm.lastName.$error.required">Last Name is required.</span>
-                                    </span>
+                                    <span style="color:red;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
                                 </td>
                                  <td>
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
@@ -437,7 +431,7 @@ select{
                             <label style="display:block; float:left; padding-top:10px; padding-right:5px">In case of Emergency who to contact:</label> 
                         </td>
                              <td id="css">     
-                                <input name="ename" tabindex="13" required ng-model="employee.emergency_name"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Name" capitalize-first />
+                                <input name="ename" tabindex="13" required ng-model="employee.emergency_contact_name"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Name" capitalize-first />
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ename.$error.required">Contact person is required.</span>
                             </td>
                         <td>
@@ -568,9 +562,7 @@ select{
                                 </td>
                                 <td id="css">
                                     <input name="user" required ng-model = "employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:320px; height:25px;" tabindex="1"/>
-
-                                    <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
-                                    <span ng-show="myForm.user.$error.required">Employee ID is required.</span>
+                                    <span style="color:red" ng-show="myForm.user.$error.required">Employee ID is required.</span>
                                     </span>
                                 </td>
                                 <td>
