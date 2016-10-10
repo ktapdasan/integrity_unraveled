@@ -149,7 +149,7 @@ th, td {
                  <div class="panel-heading" style="font-weight:900">Company Profile</div>
                     <div class="panel-body">
 
-                        <table>
+                        <table style="margin-left:30px;">
                             <tr>
                                 <td style="width:33%;" >
                                    <b> Employee ID:</b>
@@ -234,7 +234,7 @@ th, td {
                                     <div>{{ profile.employment_status }}</div>
                                 </td>
                              </tr>   
-                             <tr ng-show="{{profile.details.company.salary.salary_type !== null || profile.details.company.salary.salary_type !== undefined }}">
+                             <tr ng-show=" profile.details.company.salary !== null ">
                                 <td>
                                     <div><b>Salary type:</b></div>
                                 </td>
