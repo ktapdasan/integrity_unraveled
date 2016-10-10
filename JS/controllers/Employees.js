@@ -890,8 +890,8 @@ app.controller('Employees', function(
             }
         }
 
-        if ($scope.employees.data[k].details.education === undefined) {
-            $scope.employees.data[k].details.education = null;
+        if ($scope.employees.data[k].details.government === undefined) {
+            $scope.employees.data[k].details.government = null;
             $scope.employee.data_sss = ' ';
             $scope.employee.data_tin = ' ';
             $scope.employee.data_pagmid = ' ';
@@ -1480,8 +1480,8 @@ app.controller('Employees', function(
             }
         }
 
-        if ($scope.employees.data[k].details.education === undefined) {
-            $scope.employees.data[k].details.education = null;
+        if ($scope.employees.data[k].details.government === undefined) {
+            $scope.employees.data[k].details.government = null;
             $scope.employee.data_sss = ' ';
             $scope.employee.data_tin = ' ';
             $scope.employee.data_pagmid = ' ';
