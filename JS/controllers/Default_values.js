@@ -50,9 +50,13 @@ app.controller('Default_values', function(
         sunday : false
     };
 
+
+
     $scope.birthday_leave.data = {
         status : false
     };
+
+    $scope.multiplelogs= {};
 
     init();
 
@@ -819,6 +823,56 @@ app.controller('Default_values', function(
                             
         });
     
+    }
+
+
+      $scope.update_multiple_logs = function(k){
+       
+       $scope.modal = {
+                title : '',
+                message: 'Are you sure you want to update this multiple logs?',
+                save : 'Save',
+                close : 'Cancel'
+            };
+       ngDialog.openConfirm({
+            template: 'ConfirmModal',
+            className: 'ngdialog-theme-plain',
+            
+            scope: $scope,
+            showClose: false
+        })
+        
+        .then(function(value){
+            return false;
+        }, function(value){
+
+            // console.log($scope.multiplelogs);
+            var promise = DefaultvaluesFactory.multiplelogs($scope.multiplelogs);
+            promise.then(function(data){
+                
+
+            
+            UINotification.success({
+                                    message: 'You have successfully Updated multiplelogs', 
+                                    title: 'SUCCESS', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+            show_list();
+
+            })
+            .then(null, function(data){
+                
+                UINotification.error({
+                                        message: 'An error occured, unable to update, please try again.', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+            });         
+
+                            
+        });
     }
 
     
