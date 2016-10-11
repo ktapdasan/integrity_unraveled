@@ -141,6 +141,7 @@ app.controller('Request', function(
         promise.then(function(data){
             $scope.request_type.status = true;
             $scope.request_type.data = data.data.result;
+           
 
 
         })

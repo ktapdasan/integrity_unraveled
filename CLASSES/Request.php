@@ -137,7 +137,7 @@ EOT;
           return ClassParent::update($sql);
     }
 
-    public function get_request($data){
+ public function get_request($data){
 
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
@@ -147,24 +147,62 @@ EOT;
         $date_to = $data['dateto'];
         
         $sql = <<<EOT
-                select
-                pk,
-                request_type_pk,
-                created_by,
-                date_created:: date as datecreated,
-                (select type from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as type,
-                (select remarks from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as reason,
-                (select status from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as status
-                from requests
-                where
-                date_created::date between '$date_from' and '$date_to'
-                and
-                created_by = $this->pk 
-                and
-                archived = 'false'
-                ;
+                    select
+                    pk,
+                    request_type_pk,
+                    created_by,
+                    date_created:: date as datecreated,
+                    (select type from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as type,
+                    (select remarks from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as reason,
+                    (select status from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as status,
+                    (select request_type.recipient from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as recipient
+                    from requests
+                    where
+                    date_created::date between '$date_from' and '$date_to'
+                    and
+                    created_by = $this->pk 
+                    and
+                    archived = 'false'
+                    ;
 EOT;
 
+        return ClassParent::get($sql);
+    }
+
+    public function get_hris_request($data){
+
+        foreach($data as $k=>$v){
+            $data[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $data['datefrom'] ;
+        $date_to = $data['dateto'];
+        
+        $sql = <<<EOT
+                with Q as
+                (
+                    select
+                    pk,
+                    request_type_pk,
+                    created_by,
+                    date_created:: date as datecreated,
+                    (select type from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as type,
+                    (select remarks from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as reason,
+                    (select status from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as status,
+                    (select request_type.recipient from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as recipient
+                    from requests
+                    where
+                    date_created::date between '$date_from' and '$date_to'
+                    and
+                    archived = 'false'
+                
+                )
+                select
+                *
+                from Q as A
+                where  $this->pk  = any(A.recipient)
+                ;
+EOT;
         return ClassParent::get($sql);
     }
 
