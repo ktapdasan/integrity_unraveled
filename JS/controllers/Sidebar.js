@@ -275,10 +275,10 @@ app.controller('Sidebar', function(
             $scope.memo.data = data.data.result;
             $scope.memo.status = true;
             $scope.memo.hide = true;
-      
+            
             $scope.animation_arrow.stop = '0';
             $scope.animation_arrow.opacity = '1';
-
+           
             
            
         })
@@ -326,6 +326,7 @@ app.controller('Sidebar', function(
             title        : 'Memo',
             close        : 'Close',
             pk           : $scope.memo.data[k].pk,
+            created_by_pk: $scope.memo.data[k].created_by_pk,
             memo         : $scope.memo.data[k].memo,
             created_by   : $scope.memo.data[k].created_by,
             date_created : $scope.memo.data[k].date_created,

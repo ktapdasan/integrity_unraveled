@@ -1303,18 +1303,18 @@
                         {{ modal.memo }}
                         <br><br>
                          <i style="font-size:12px;color:#AAA;">
-                            {{ modal.created_by }}
+                             {{ modal.created_by }} 
                             <br>
-                            {{ modal.date_created }}
+                            {{ modal.date_created }} 
 
                         </i>
                     </td>
                 </tr>
             </table>
-            </div>
+            </div> 
             <br>
-            <a ng-click="memo_tracker()" ><u>Seen by</u></a>
-            {{ modal.count }}
+            <a ng-click="memo_tracker()" ng-show="profile.pk == modal.created_by_pk" ><u>Seen by</u>
+            {{ modal.count }} </a>
         <div class="ngdialog-buttons">          
             <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
         </div>

@@ -97,6 +97,7 @@ EOT;
                 memo,
                 (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = created_by) as created_by,
                 substring(memo for 25)||'...' as limitedmemo,
+                (select pk from employees where pk = created_by) as created_by_pk,
                 date_created::timestamp (0) as date_created,
                 read
                 from memo
