@@ -157,6 +157,23 @@ app.factory('RequestFactory', function($http){
 
         return promise;
     };
+
+    factory.get_hris_request = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Request/get_hris_request.php',
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        })
+
+        return promise;
+    };
     
     return factory;
 });

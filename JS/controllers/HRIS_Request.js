@@ -101,7 +101,7 @@ app.controller('HRIS_Request', function(
         filter.pk = $scope.profile.pk;
 
         
-        var promise = RequestFactory.get_request(filter);
+        var promise = RequestFactory.get_hris_request(filter);
         promise.then(function(data){
             $scope.request.status = true;
             $scope.request.data = data.data.result;
