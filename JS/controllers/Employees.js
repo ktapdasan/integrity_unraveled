@@ -498,10 +498,8 @@ app.controller('Employees', function(
             else if ($scope.employees.data[k].details.company.work_schedule != null) {
                 
                 //Company -> Work Schedule - > Sunday Validator
-                if ($scope.employees.data[k].details.company.work_schedule.sunday === undefined) {
-                    $scope.employees.data[k].details.company.work_schedule.sunday = null;
-                }
-                else if ($scope.employees.data[k].details.company.work_schedule.sunday != null) {
+                
+                if ($scope.employees.data[k].details.company.work_schedule.sunday != null) {
 
                     //Company -> Work Schedule - > Sunday -> In Validator
                     if ($scope.employees.data[k].details.company.work_schedule.sunday.in === undefined) {
