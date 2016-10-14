@@ -255,23 +255,160 @@ app.controller('New_Employees', function(
             $scope.employees.education[i].date_from_school = $filter('date')($scope.employees.education[i].date_from_school, "yyyy-MM-dd");
             $scope.employees.education[i].date_to_school = $filter('date')($scope.employees.education[i].date_to_school, "yyyy-MM-dd");
         }
-        $scope.employees.date_started = $filter('date')($scope.employees.date_started, "MM-dd-yyyy");
-        $scope.employees.birth_date = $filter('date')($scope.employees.birth_date, "MM-dd-yyyy");
-        
-        $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timein_wednesday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "yyyy-MM-dd HH:mm");
-        $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "yyyy-MM-dd HH:mm");
+        var date1 = new Date();
+            var dd1 = date1.getDate();
+            var mm1 = date1.getMonth()+1;
+            var yyyy1 = date1.getFullYear();
+            var addDate1 = mm1+'-'+dd1+'-'+yyyy1;
+
+            var date2 = new Date();
+            var dd2 = date2.getDate();
+            var mm2 = date2.getMonth()+1;
+            var yyyy2 = date2.getFullYear();
+            var addDate2 = mm2+'-'+dd2+'-'+yyyy2;
+
+            var date3 = new Date();
+            var dd3 = date3.getDate();
+            var mm3 = date3.getMonth()+1;
+            var yyyy3 = date3.getFullYear();
+            var addDate3 = mm3+'-'+dd3+'-'+yyyy3;
+
+            var date4 = new Date();
+            var dd4 = date4.getDate();
+            var mm4 = date4.getMonth()+1;
+            var yyyy4 = date4.getFullYear();
+            var addDate4 = mm4+'-'+dd4+'-'+yyyy4;
+
+            var date5 = new Date();
+            var dd5 = date5.getDate();
+            var mm5 = date5.getMonth()+1;
+            var yyyy5 = date5.getFullYear();
+            var addDate5 = mm5+'-'+dd5+'-'+yyyy5;
+
+            var date6 = new Date();
+            var dd6 = date6.getDate();
+            var mm6 = date6.getMonth()+1;
+            var yyyy6 = date6.getFullYear();
+            var addDate6 = mm6+'-'+dd6+'-'+yyyy6;
+
+            var date7 = new Date();
+            var dd7 = date7.getDate();
+            var mm7 = date7.getMonth()+1;
+            var yyyy7 = date7.getFullYear();
+            var addDate7 = mm7+'-'+dd7+'-'+yyyy7;
+
+            var date8 = new Date();
+            var dd8 = date8.getDate();
+            var mm8 = date8.getMonth()+1;
+            var yyyy8 = date8.getFullYear();
+            var addDate8 = mm8+'-'+dd8+'-'+yyyy8;
+
+            var date9 = new Date();
+            var dd9 = date9.getDate();
+            var mm9 = date9.getMonth()+1;
+            var yyyy9 = date9.getFullYear();
+            var addDate9 = mm9+'-'+dd9+'-'+yyyy9;
+
+            var date10 = new Date();
+            var dd10 = date10.getDate();
+            var mm10 = date10.getMonth()+1;
+            var yyyy10 = date10.getFullYear();
+            var addDate10 = mm10+'-'+dd10+'-'+yyyy10;
+
+            var date11 = new Date();
+            var dd11 = date11.getDate();
+            var mm11 = date11.getMonth()+1;
+            var yyyy11 = date11.getFullYear();
+            var addDate11 = mm11+'-'+dd11+'-'+yyyy11;
+
+            var date12 = new Date();
+            var dd12 = date12.getDate();
+            var mm12 = date12.getMonth()+1;
+            var yyyy12 = date12.getFullYear();
+            var addDate12 = mm12+'-'+dd12+'-'+yyyy12;
+
+            var date13 = new Date();
+            var dd13 = date13.getDate();
+            var mm13 = date13.getMonth()+1;
+            var yyyy13 = date13.getFullYear();
+            var addDate13 = mm13+'-'+dd13+'-'+yyyy13;
+
+            var date14 = new Date();
+            var dd14 = date14.getDate();
+            var mm14 = date14.getMonth()+1;
+            var yyyy14 = date14.getFullYear();
+            var addDate14 = mm14+'-'+dd14+'-'+yyyy14;
+
+            var dated = new Date($scope.employee.date_started);
+            var dds = dated.getDate();
+            var mms = dated.getMonth()+1;
+            var yyyys = dated.getFullYear();
+            $scope.employee.date_started = mms+'-'+dds+'-'+yyyys;
+
+            var dateb = new Date($scope.employee.birth_date);
+            var ddk = dateb.getDate();
+            var mmk = dateb.getMonth()+1;
+            var yyyyk = dateb.getFullYear();
+            $scope.employee.birth_date = mmk+'-'+ddk+'-'+yyyyk;
+
+            $scope.employee.timein_sunday = $filter('date')($scope.employee.timein_sunday, "HH:mm");
+            $scope.employee.timein_monday = $filter('date')($scope.employee.timein_monday, "HH:mm");
+            $scope.employee.timein_tuesday = $filter('date')($scope.employee.timein_tuesday, "HH:mm");
+            $scope.employee.timein_wednesday = $filter('date')($scope.employee.timein_wednesday, "HH:mm");
+            $scope.employee.timein_thursday = $filter('date')($scope.employee.timein_thursday, "HH:mm");
+            $scope.employee.timein_friday = $filter('date')($scope.employee.timein_friday, "HH:mm");
+            $scope.employee.timein_saturday = $filter('date')($scope.employee.timein_saturday, "HH:mm");
+            
+            $scope.employee.timeout_sunday = $filter('date')($scope.employee.timeout_sunday, "HH:mm");
+            $scope.employee.timeout_monday = $filter('date')($scope.employee.timeout_monday, "HH:mm");
+            $scope.employee.timeout_tuesday = $filter('date')($scope.employee.timeout_tuesday, "HH:mm");
+            $scope.employee.timeout_wednesday = $filter('date')($scope.employee.timeout_wednesday, "HH:mm");
+            $scope.employee.timeout_thursday = $filter('date')($scope.employee.timeout_thursday, "HH:mm");
+            $scope.employee.timeout_friday = $filter('date')($scope.employee.timeout_friday, "HH:mm");
+            $scope.employee.timeout_saturday = $filter('date')($scope.employee.timeout_saturday, "HH:mm");
+            
+            if ($scope.employee.timein_sunday != null) {$scope.employee.time_insunday = addDate1 + ' ' +  $scope.employee.timein_sunday;}
+            else{$scope.employee.time_insunday = null;}
+            
+            if ($scope.employee.timeout_sunday != null) {$scope.employee.time_outsunday = addDate2 + ' ' +  $scope.employee.timeout_sunday;}
+            else{$scope.employee.time_outsunday = null; }
+            
+            if ($scope.employee.timein_monday != null) {$scope.employee.time_inmonday = addDate3 + ' ' +  $scope.employee.timein_monday;}
+            else{$scope.employee.time_inmonday = null; }
+
+            if ($scope.employee.timeout_monday != null) {$scope.employee.time_outmonday = addDate4 + ' ' +  $scope.employee.timeout_monday;}
+            else{$scope.employee.time_outmonday = null; }
+
+            if ($scope.employee.timein_tuesday != null) {$scope.employee.time_intuesday = addDate5 + ' ' +  $scope.employee.timein_tuesday;}
+            else{$scope.employee.time_intuesday = null; }
+
+            if ($scope.employee.timeout_tuesday != null) {$scope.employee.time_intuesday = addDate6 + ' ' +  $scope.employee.timeout_tuesday;}
+            else{$scope.employee.time_intuesday = null; }
+
+            if ($scope.employee.timein_wednesday != null) {$scope.employee.time_inwednesday = addDate7 + ' ' +  $scope.employee.timein_wednesday;}
+            else{$scope.employee.time_inwednesday = null; }
+
+            if ($scope.employee.timeout_wednesday != null) {$scope.employee.time_outwednesday = addDate8 + ' ' +  $scope.employee.timeout_wednesday;}
+            else{$scope.employee.time_outwednesday = null; }
+
+            if ($scope.employee.timein_thursday != null) {$scope.employee.time_inthursday = addDate9 + ' ' +  $scope.employee.timein_thursday;}
+            else{$scope.employee.time_inthursday = null; }
+
+            if ($scope.employee.timeout_thursday != null) {$scope.employee.time_outthursday = addDate10 + ' ' +  $scope.employee.timeout_thursday;}
+            else{$scope.employee.time_outthursday = null; }
+
+            if ($scope.employee.timein_friday != null) {$scope.employee.time_infriday = addDate11 + ' ' +  $scope.employee.timein_friday;}
+            else{$scope.employee.time_infriday = null; }
+
+            if ($scope.employee.timeout_friday != null) {$scope.employee.time_outfriday = addDate12 + ' ' +  $scope.employee.timeout_friday;}
+            else{$scope.employee.time_outfriday = null; }
+
+            if ($scope.employee.timein_saturday != null) {$scope.employee.time_insaturday = addDate13 + ' ' +  $scope.employee.timein_saturday;}
+            else{$scope.employee.time_insaturday = null; }
+
+            if ($scope.employee.timeout_saturday != null) {$scope.employee.time_outsaturday = addDate14 + ' ' +  $scope.employee.timeout_saturday;}
+            else{$scope.employee.time_outsaturday = null; }
+
         
         $scope.employees.education = JSON.stringify($scope.employees.education);
        
