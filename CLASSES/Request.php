@@ -44,7 +44,7 @@ class Request extends ClassParent {
         $sql = <<<EOT
                 with Q as
                 (
-                    select pk, type, unnest(recipient) as employees_pk from request_type
+                    select pk, type,recipient, unnest(recipient) as employees_pk from request_type
                     where archived = $this->archived
                     $where
                 ),
@@ -53,15 +53,17 @@ class Request extends ClassParent {
                     select
                         pk,
                         type,
-                        employees_pk || '|' || (select (details->'personal'->>'first_name')::text ||' '|| (details->'personal'->>'last_name')::text from employees where employees.pk = Q.employees_pk) as recipient
+                        array_to_string(recipient, ',', '*') as recipient,
+                        employees_pk || '|' || (select (details->'personal'->>'first_name')::text ||' '|| (details->'personal'->>'last_name')::text from employees where employees.pk = Q.employees_pk) as recipients
                     from Q
                 )
                 select
                     pk,
                     type,
-                    array_to_string(array_agg(recipient), ',') as recipients
+                    recipient,
+                    array_to_string(array_agg(recipients), ',') as recipients
                 from R
-                group by pk, type
+                group by pk, type, recipient
                 order by type
                 ;
 EOT;
@@ -210,6 +212,8 @@ EOT;
         
         $remarks = $extra['remarks'];
         $request_type_pk = $extra['request_type_pk'];
+        $re = $extra['recipient'];
+        $recipient=(explode(",",$re));
 
         $sql = 'begin;';
 
@@ -242,6 +246,29 @@ EOT;
                 )
                 ;
 EOT;
+    for ($i=0; $i < sizeof($recipient) ; $i++) { 
+        $sql .= <<<EOT
+               insert into notifications
+                (   
+                    notification,
+                    table_from,
+                    table_from_pk,
+                    employees_pk,
+                    created_by      
+                )
+                values
+                (    
+                    'Request',
+                    'requests',
+                    currval('requests_pk_seq'),
+                    '$recipient[$i]',
+                    '$this->pk'
+                )
+                ;
+EOT;
+    }
+        
+
         $sql .= "commit;";
         return ClassParent::insert($sql);
     }
@@ -303,7 +330,7 @@ EOT;
                 values
                 (    
                     'Request',
-                    'request_result',
+                    'requests_result',
                     '$this->pk',
                     $employees_pk,
                     $created_by

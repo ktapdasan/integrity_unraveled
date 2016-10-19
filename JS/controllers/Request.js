@@ -190,7 +190,14 @@ app.controller('Request', function(
         .then(function(value){
             return false;
         }, function(value){
-            
+
+        $scope.modal.request_type_pk = $scope.request_type.data[$scope.modal.request_types].pk;
+        $scope.modal.recipient = $scope.request_type.data[$scope.modal.request_types].recipient.split(",");
+        
+
+        console.log($scope.modal);
+       
+                    
             var promise = RequestFactory.add_request($scope.modal);
             promise.then(function(data){
 
