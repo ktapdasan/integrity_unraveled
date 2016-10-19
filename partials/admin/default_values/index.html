@@ -349,7 +349,40 @@ th {
 </div>           
         
 
+ 
+            <div style ="margin-left:690px;margin-top:-200px;">
+                <h3>Multiple Logs</h3>
+                <table>
+                    <tr>
+                        <td>Log In</td>
+                        <td><select style="cursor:pointer;" ng-model="multiplelogs.login">
+                            <option  value="first"> First</option>
+                            <option value="last"> Last</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Log Out</td>
+                        <td>
+                        <select style="cursor:pointer;" ng-model="multiplelogs.logout">
+                            <option value="first"> First</option>
+                            <option value="last"> Last</option>
+                        </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan = "2" > 
+                             <input type="button" style="float:right;" class="medium button blue fa-fa" value = "Update" ng-click="update_multiple_logs(k)"  /> 
+                        </td>
+                    </tr>    
 
+                </table>
+
+
+            </div>    
+
+
+        
 
        
 

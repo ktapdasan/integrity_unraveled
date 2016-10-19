@@ -536,6 +536,30 @@ EOT;
         return ClassParent::insert($sql);
     }
 
+    public function multiplelogs($data){
+        
+        $login = $data['login'];
+        $logout= $data['logout'];
+
+        $sql = <<<EOT
+                insert into 
+                default_values 
+                (
+                    name, 
+                    details
+                ) 
+                values
+                (
+                    'multiple_logs', 
+                    '{"in":"$login", "out":"$logout"}'
+                )
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+
 }
 
 ?>

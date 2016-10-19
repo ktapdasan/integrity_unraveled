@@ -24,7 +24,7 @@ $class =  new Employees(
                             $_POST['salary_bank_name'],
                             $_POST['salary_mode_payment'],
                             $_POST['salary_account_number'],
-                            $_POST['salary_amount'],
+                            $_POST['amount'],
                             $_POST['gender_pk'],
                             $_POST['religion'],
                             $_POST['employee_status_pk'],
@@ -42,12 +42,12 @@ $class =  new Employees(
                             $_POST['timeout_sunday'],
                             $_POST['timeout_monday'],
                             $_POST['timeout_tuesday'],
-                            $_POST['timeout_wednesday'],
                             $_POST['timeout_thursday'],
                             $_POST['timeout_friday'],
                             $_POST['timeout_saturday'],
+                            $_POST['timeout_wednesday'],
                             $_POST['profile_picture'],
-                            $_POST['emergency_name'],
+                            $_POST['emergency_contact_name'],
                             $_POST['emergency_contact_number'],
                             $_POST['flexi_sunday'],
                             $_POST['flexi_monday'],
@@ -64,6 +64,7 @@ $class =  new Employees(
 $company = array();
 $personal = array();
 $government = array();
+$education = array();
 
 if ($_POST['levels_pk'] == 3){
     $company['employee_id']            = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
@@ -72,7 +73,6 @@ if ($_POST['levels_pk'] == 3){
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
     $company['business_email_address'] = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
     $company['supervisor']             = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
-    $company['levels_pk']              = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['employee_status_pk']     = pg_escape_string(strip_tags(trim($_POST['employee_status_pk'])));
@@ -91,7 +91,7 @@ if ($_POST['levels_pk'] == 3){
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
     $personal['civilstatus_pk']        = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
     $personal['profile_picture']       = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
-    $personal['emergency_contact_name']     = pg_escape_string(strip_tags(trim($_POST['emergency_name'])));
+    $personal['emergency_contact_name']     = pg_escape_string(strip_tags(trim($_POST['emergency_contact_name'])));
     $personal['emergency_contact_number']   = pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));
     $personal['birth_date']                 = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 
@@ -99,149 +99,7 @@ if ($_POST['levels_pk'] == 3){
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
     $government['data_phid']           = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
-
-    //FALSE
-    if ($_POST['timein_sunday'] == null || $_POST['timein_sunday'] === undefined) {
-        $company['work_schedule']['sunday'] = null;
-    }
-    if ($_POST['timeout_sunday'] == null || $_POST['timeout_sunday'] === undefined) {
-        $company['work_schedule']['sunday'] = null;
-    }
-    if ($_POST['flexi_sunday'] == false || $_POST['flexi_sunday'] === undefined) {
-        $company['work_schedule']['sunday'] = null;
-    }
-
-    if ($_POST['timein_monday'] == null || $_POST['timein_monday'] === undefined) {
-        $company['work_schedule']['monday'] = null;
-    }
-    if ($_POST['timeout_monday'] == null || $_POST['timeout_monday'] === undefined) {
-        $company['work_schedule']['monday'] = null;
-    }
-    if ($_POST['flexi_monday'] == false || $_POST['flexi_monday'] === undefined) {
-        $company['work_schedule']['monday'] = null;
-    }
-
-    if ($_POST['timein_tuesday'] == null || $_POST['timein_tuesday'] === undefined) {
-        $company['work_schedule']['tuesday'] = null;
-    }
-    if ($_POST['timeout_tuesday'] == null || $_POST['timeout_tuesday'] === undefined) {
-        $company['work_schedule']['tuesday'] = null;
-    }
-    if ($_POST['flexi_tuesday'] == false || $_POST['flexi_tuesday'] === undefined) {
-        $company['work_schedule']['tuesday'] = null;
-    }
-
-    if ($_POST['timein_wednesday'] == null || $_POST['timein_wednesday'] === undefined) {
-        $company['work_schedule']['wednesday'] = null;
-    }
-    if ($_POST['timeout_wednesday'] == null || $_POST['timeout_wednesday'] === undefined) {
-        $company['work_schedule']['wednesday'] = null;
-    }
-    if ($_POST['flexi_wednesday'] == false || $_POST['flexi_wednesday'] === undefined) {
-        $company['work_schedule']['wednesday'] = null;
-    }
-
-    if ($_POST['timein_thursday'] == null || $_POST['timein_thursday'] === undefined) {
-        $company['work_schedule']['thursday'] = null;
-    }
-    if ($_POST['timeout_thursday'] == null || $_POST['timeout_thursday'] === undefined) {
-        $company['work_schedule']['thursday'] = null;
-    }
-    if ($_POST['flexi_thursday'] == false || $_POST['flexi_thursday'] === undefined) {
-        $company['work_schedule']['thursday'] = null;
-    }
-
-    if ($_POST['timein_friday'] == null || $_POST['timein_friday'] === undefined) {
-        $company['work_schedule']['friday'] = null;
-    }
-    if ($_POST['timeout_friday'] == null || $_POST['timeout_friday'] === undefined) {
-        $company['work_schedule']['friday'] = null;
-    }
-    if ($_POST['flexi_friday'] == false || $_POST['flexi_friday'] === undefined) {
-        $company['work_schedule']['friday'] = null;
-    }
-
-    if ($_POST['timein_saturday'] == null || $_POST['timein_saturday'] === undefined) {
-        $company['work_schedule']['saturday'] = null;
-    }
-    if ($_POST['timeout_saturday'] == null || $_POST['timeout_saturday'] === undefined) {
-        $company['work_schedule']['saturday'] = null;
-    }
-    if ($_POST['flexi_saturday'] == false || $_POST['flexi_saturday'] === undefined) {
-        $company['work_schedule']['saturday'] = null;
-    }
-
-    //TRUE
-    if ($_POST['timein_sunday'] != null || $_POST['timein_sunday'] !== undefined) {
-        $company['work_schedule']['sunday']['in']          = pg_escape_string($_POST['timein_sunday']);
-    }
-    if ($_POST['timeout_sunday'] != null || $_POST['timeout_sunday'] !== undefined) {
-        $company['work_schedule']['sunday']['out']         = pg_escape_string($_POST['timeout_sunday']);
-    }
-    if ($_POST['flexi_sunday'] != false || $_POST['flexi_sunday'] !== undefined) {
-        $company['work_schedule']['sunday']['flexi']       = pg_escape_string($_POST['flexi_sunday']);
-    }
-    if ($_POST['timein_monday'] != null || $_POST['timein_monday'] !== undefined) {
-        $company['work_schedule']['monday']['in']          = pg_escape_string($_POST['timein_monday']);
-    }
-    if ($_POST['timeout_monday'] != null || $_POST['timeout_monday'] !== undefined) {
-       $company['work_schedule']['monday']['out']          = pg_escape_string($_POST['timeout_monday']);
-    }
-    if ($_POST['flexi_monday'] != false || $_POST['flexi_monday'] !== undefined) {
-        $company['work_schedule']['monday']['flexi']        = pg_escape_string($_POST['flexi_monday']);
-    }
-    if ($_POST['timein_tuesday'] != null || $_POST['timein_tuesday'] !== undefined) {
-        $company['work_schedule']['tuesday']['in']         = pg_escape_string($_POST['timein_tuesday']);
-    }
-    if ($_POST['timeout_tuesday'] != null || $_POST['timeout_tuesday'] !== undefined) {
-        $company['work_schedule']['tuesday']['out']        = pg_escape_string($_POST['timeout_tuesday']);
-    }
-    if ($_POST['flexi_tuesday'] != false || $_POST['flexi_tuesday'] !== undefined) {
-        $company['work_schedule']['tuesday']['flexi']       = pg_escape_string($_POST['flexi_tuesday']);
-    }
-
-    if ($_POST['timein_wednesday'] != null || $_POST['timein_wednesday'] !== undefined) {
-        $company['work_schedule']['wednesday']['in']       = pg_escape_string($_POST['timein_wednesday']);
-    }
-    if ($_POST['timeout_wednesday'] != null || $_POST['timeout_wednesday'] !== undefined) {
-        $company['work_schedule']['wednesday']['out']       = pg_escape_string($_POST['timeout_wednesday']);
-    }
-    if ($_POST['flexi_wednesday'] != false || $_POST['flexi_wednesday'] !== undefined) {
-        $company['work_schedule']['wednesday']['flexi']     = pg_escape_string($_POST['flexi_wednesday']);
-    }
-
-    if ($_POST['timein_thursday'] != null || $_POST['timein_thursday'] !== undefined) {
-        $company['work_schedule']['thursday']['in']        = pg_escape_string($_POST['timein_thursday']);
-    }
-    if ($_POST['timeout_thursday'] != null || $_POST['timeout_thursday'] !== undefined) {
-        $company['work_schedule']['thursday']['out']        = pg_escape_string($_POST['timeout_thursday']);
-    }
-    if ($_POST['flexi_thursday'] != false || $_POST['flexi_thursday'] !== undefined) {
-        $company['work_schedule']['thursday']['flexi']      = pg_escape_string($_POST['flexi_thursday']);
-    }
-
-    if ($_POST['timein_friday'] != null || $_POST['timein_friday'] !== undefined) {
-        $company['work_schedule']['friday']['in']          = pg_escape_string($_POST['timein_friday']);
-    }
-    if ($_POST['timeout_friday'] != null || $_POST['timeout_friday'] !== undefined) {
-        $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
-    }
-    if ($_POST['flexi_friday'] != false || $_POST['flexi_friday'] !== undefined) {
-        $company['work_schedule']['friday']['flexi']        = pg_escape_string($_POST['flexi_friday']);
-    }
-
-    if ($_POST['timein_saturday'] != null || $_POST['timein_saturday'] !== undefined) {
-        $company['work_schedule']['saturday']['in']        = pg_escape_string($_POST['timein_saturday']);
-    }
-    if ($_POST['timeout_saturday'] != null || $_POST['timeout_saturday'] !== undefined) {
-        $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
-    }
-    if ($_POST['flexi_saturday'] != false || $_POST['flexi_saturday'] !== undefined) {
-        $company['work_schedule']['saturday']['flexi']      = pg_escape_string($_POST['flexi_saturday']);
-    }
 }
-    
-   
     
 if ($_POST['levels_pk'] != 3){
     $company['employee_id']            = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
@@ -250,11 +108,11 @@ if ($_POST['levels_pk'] != 3){
     $company['business_email_address'] = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['supervisor']             = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
-    $company['levels_pk']              = pg_escape_string(strip_tags(trim($_POST['levels_pk'])));
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
     $company['employee_status_pk']     = pg_escape_string(strip_tags(trim($_POST['employee_status_pk'])));
     $company['employment_type_pk']     = pg_escape_string(strip_tags(trim($_POST['employment_type_pk'])));
+    $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
@@ -268,175 +126,126 @@ if ($_POST['levels_pk'] != 3){
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
     $personal['civilstatus_pk']        = pg_escape_string(strip_tags(trim($_POST['civilstatus_pk'])));
     $personal['profile_picture']       = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
-    $personal['birth_date']            = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
+    $personal['emergency_contact_name']     = pg_escape_string(strip_tags(trim($_POST['emergency_contact_name'])));
+    $personal['emergency_contact_number']   = pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));
+    $personal['birth_date']                 = pg_escape_string(strip_tags(trim($_POST['birth_date'])));
 
     $government['data_sss']            = pg_escape_string(strip_tags(trim($_POST['data_sss'])));
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
     $government['data_phid']           = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
-    //FALSE
-    if ($_POST['timein_sunday'] == null || $_POST['timein_sunday'] === undefined) {
-        $company['work_schedule']['sunday'] = null;
-    }
-    if ($_POST['timeout_sunday'] == null || $_POST['timeout_sunday'] === undefined) {
-        $company['work_schedule']['sunday'] = null;
-    }
-    if ($_POST['flexi_sunday'] == false || $_POST['flexi_sunday'] === undefined) {
-        $company['work_schedule']['sunday'] = null;
-    }
-
-    if ($_POST['timein_monday'] == null || $_POST['timein_monday'] === undefined) {
-        $company['work_schedule']['monday'] = null;
-    }
-    if ($_POST['timeout_monday'] == null || $_POST['timeout_monday'] === undefined) {
-        $company['work_schedule']['monday'] = null;
-    }
-    if ($_POST['flexi_monday'] == false || $_POST['flexi_monday'] === undefined) {
-        $company['work_schedule']['monday'] = null;
-    }
-
-    if ($_POST['timein_tuesday'] == null || $_POST['timein_tuesday'] === undefined) {
-        $company['work_schedule']['tuesday'] = null;
-    }
-    if ($_POST['timeout_tuesday'] == null || $_POST['timeout_tuesday'] === undefined) {
-        $company['work_schedule']['tuesday'] = null;
-    }
-    if ($_POST['flexi_tuesday'] == false || $_POST['flexi_tuesday'] === undefined) {
-        $company['work_schedule']['tuesday'] = null;
-    }
-
-    if ($_POST['timein_wednesday'] == null || $_POST['timein_wednesday'] === undefined) {
-        $company['work_schedule']['wednesday'] = null;
-    }
-    if ($_POST['timeout_wednesday'] == null || $_POST['timeout_wednesday'] === undefined) {
-        $company['work_schedule']['wednesday'] = null;
-    }
-    if ($_POST['flexi_wednesday'] == false || $_POST['flexi_wednesday'] === undefined) {
-        $company['work_schedule']['wednesday'] = null;
-    }
-
-    if ($_POST['timein_thursday'] == null || $_POST['timein_thursday'] === undefined) {
-        $company['work_schedule']['thursday'] = null;
-    }
-    if ($_POST['timeout_thursday'] == null || $_POST['timeout_thursday'] === undefined) {
-        $company['work_schedule']['thursday'] = null;
-    }
-    if ($_POST['flexi_thursday'] == false || $_POST['flexi_thursday'] === undefined) {
-        $company['work_schedule']['thursday'] = null;
-    }
-
-    if ($_POST['timein_friday'] == null || $_POST['timein_friday'] === undefined) {
-        $company['work_schedule']['friday'] = null;
-    }
-    if ($_POST['timeout_friday'] == null || $_POST['timeout_friday'] === undefined) {
-        $company['work_schedule']['friday'] = null;
-    }
-    if ($_POST['flexi_friday'] == false || $_POST['flexi_friday'] === undefined) {
-        $company['work_schedule']['friday'] = null;
-    }
-
-    if ($_POST['timein_saturday'] == null || $_POST['timein_saturday'] === undefined) {
-        $company['work_schedule']['saturday'] = null;
-    }
-    if ($_POST['timeout_saturday'] == null || $_POST['timeout_saturday'] === undefined) {
-        $company['work_schedule']['saturday'] = null;
-    }
-    if ($_POST['flexi_saturday'] == false || $_POST['flexi_saturday'] === undefined) {
-        $company['work_schedule']['saturday'] = null;
-    }
-
-    //TRUE
-    if ($_POST['timein_sunday'] != null || $_POST['timein_sunday'] !== undefined) {
-        $company['work_schedule']['sunday']['in']          = pg_escape_string($_POST['timein_sunday']);
-    }
-    if ($_POST['timeout_sunday'] != null || $_POST['timeout_sunday'] !== undefined) {
-        $company['work_schedule']['sunday']['out']         = pg_escape_string($_POST['timeout_sunday']);
-    }
-    if ($_POST['flexi_sunday'] != false || $_POST['flexi_sunday'] !== undefined) {
-        $company['work_schedule']['sunday']['flexi']       = pg_escape_string($_POST['flexi_sunday']);
-    }
-    if ($_POST['timein_monday'] != null || $_POST['timein_monday'] !== undefined) {
-        $company['work_schedule']['monday']['in']          = pg_escape_string($_POST['timein_monday']);
-    }
-    if ($_POST['timeout_monday'] != null || $_POST['timeout_monday'] !== undefined) {
-       $company['work_schedule']['monday']['out']          = pg_escape_string($_POST['timeout_monday']);
-    }
-    if ($_POST['flexi_monday'] != false || $_POST['flexi_monday'] !== undefined) {
-        $company['work_schedule']['monday']['flexi']        = pg_escape_string($_POST['flexi_monday']);
-    }
-    if ($_POST['timein_tuesday'] != null || $_POST['timein_tuesday'] !== undefined) {
-        $company['work_schedule']['tuesday']['in']         = pg_escape_string($_POST['timein_tuesday']);
-    }
-    if ($_POST['timeout_tuesday'] != null || $_POST['timeout_tuesday'] !== undefined) {
-        $company['work_schedule']['tuesday']['out']        = pg_escape_string($_POST['timeout_tuesday']);
-    }
-    if ($_POST['flexi_tuesday'] != false || $_POST['flexi_tuesday'] !== undefined) {
-        $company['work_schedule']['tuesday']['flexi']       = pg_escape_string($_POST['flexi_tuesday']);
-    }
-
-    if ($_POST['timein_wednesday'] != null || $_POST['timein_wednesday'] !== undefined) {
-        $company['work_schedule']['wednesday']['in']       = pg_escape_string($_POST['timein_wednesday']);
-    }
-    if ($_POST['timeout_wednesday'] != null || $_POST['timeout_wednesday'] !== undefined) {
-        $company['work_schedule']['wednesday']['out']       = pg_escape_string($_POST['timeout_wednesday']);
-    }
-    if ($_POST['flexi_wednesday'] != false || $_POST['flexi_wednesday'] !== undefined) {
-        $company['work_schedule']['wednesday']['flexi']     = pg_escape_string($_POST['flexi_wednesday']);
-    }
-
-    if ($_POST['timein_thursday'] != null || $_POST['timein_thursday'] !== undefined) {
-        $company['work_schedule']['thursday']['in']        = pg_escape_string($_POST['timein_thursday']);
-    }
-    if ($_POST['timeout_thursday'] != null || $_POST['timeout_thursday'] !== undefined) {
-        $company['work_schedule']['thursday']['out']        = pg_escape_string($_POST['timeout_thursday']);
-    }
-    if ($_POST['flexi_thursday'] != false || $_POST['flexi_thursday'] !== undefined) {
-        $company['work_schedule']['thursday']['flexi']      = pg_escape_string($_POST['flexi_thursday']);
-    }
-
-    if ($_POST['timein_friday'] != null || $_POST['timein_friday'] !== undefined) {
-        $company['work_schedule']['friday']['in']          = pg_escape_string($_POST['timein_friday']);
-    }
-    if ($_POST['timeout_friday'] != null || $_POST['timeout_friday'] !== undefined) {
-        $company['work_schedule']['friday']['out']          = pg_escape_string($_POST['timeout_friday']);
-    }
-    if ($_POST['flexi_friday'] != false || $_POST['flexi_friday'] !== undefined) {
-        $company['work_schedule']['friday']['flexi']        = pg_escape_string($_POST['flexi_friday']);
-    }
-
-    if ($_POST['timein_saturday'] != null || $_POST['timein_saturday'] !== undefined) {
-        $company['work_schedule']['saturday']['in']        = pg_escape_string($_POST['timein_saturday']);
-    }
-    if ($_POST['timeout_saturday'] != null || $_POST['timeout_saturday'] !== undefined) {
-        $company['work_schedule']['saturday']['out']        = pg_escape_string($_POST['timeout_saturday']);
-    }
-    if ($_POST['flexi_saturday'] != false || $_POST['flexi_saturday'] !== undefined) {
-        $company['work_schedule']['saturday']['flexi']      = pg_escape_string($_POST['flexi_saturday']);
-    }
-    $company['date_started']                            = pg_escape_string(strip_tags(trim($_POST['date_started'])));
-    
     //Salary Type
     if ($_POST['salary_type'] == 'bank'){
         $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
         $company['salary']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['salary_bank_name'])));
         $company['salary']['account_number']       = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
-        $company['salary']['amount']               = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
+        $company['salary']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
 
     }
     if ($_POST['salary_type'] == 'wire'){
        $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
        $company['salary']['mode_payment']          = pg_escape_string(strip_tags(trim($_POST['salary_mode_payment'])));
        $company['salary']['account_number']        = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
-       $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
+       $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
 
     }
     if ($_POST['salary_type'] == 'cash'){
        $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
-       $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['salary_amount'])));
+       $company['salary']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
     } 
-}   
+}
 
+if ($_POST['timein_sunday'] != 'data' ) {
+    $company['work_schedule']['sunday']['in'] = pg_escape_string($_POST['timein_sunday']);
+}
+if ($_POST['timeout_sunday'] != 'data' ) {
+    $company['work_schedule']['sunday']['out'] = pg_escape_string($_POST['timeout_sunday']);
+}
+if ($_POST['flexi_sunday'] != 'data' ) {
+    $company['work_schedule']['sunday']['flexi'] = pg_escape_string($_POST['flexi_sunday']);
+}
+else {
+   $company['work_schedule']['sunday'] = null;
+}
+
+if ($_POST['timein_monday'] != 'data' ) {
+    $company['work_schedule']['monday']['in'] = pg_escape_string($_POST['timein_monday']);
+}
+if ($_POST['timeout_monday'] != 'data' ) {
+    $company['work_schedule']['monday']['out'] = pg_escape_string($_POST['timeout_monday']);
+}
+if ($_POST['flexi_monday'] != 'data' ) {
+    $company['work_schedule']['monday']['flexi'] = pg_escape_string($_POST['flexi_monday']);
+}
+else {
+   $company['work_schedule']['monday'] = null;
+}
+
+if ($_POST['timein_tuesday'] != 'data' ) {
+    $company['work_schedule']['tuesday']['in'] = pg_escape_string($_POST['timein_tuesday']);
+}
+if ($_POST['timeout_tuesday'] != 'data' ) {
+    $company['work_schedule']['tuesday']['out'] = pg_escape_string($_POST['timeout_tuesday']);
+}
+if ($_POST['flexi_tuesday'] != 'data' ) {
+    $company['work_schedule']['tuesday']['flexi'] = pg_escape_string($_POST['flexi_tuesday']);
+}
+else {
+   $company['work_schedule']['tuesday'] = null;
+}
+
+if ($_POST['timein_wednesday'] != 'data' ) {
+    $company['work_schedule']['wednesday']['in'] = pg_escape_string($_POST['timein_wednesday']);
+}
+if ($_POST['timeout_wednesday'] != 'data' ) {
+    $company['work_schedule']['wednesday']['out'] = pg_escape_string($_POST['timeout_wednesday']);
+}
+if ($_POST['flexi_wednesday'] != 'data' ) {
+    $company['work_schedule']['wednesday']['flexi'] = pg_escape_string($_POST['flexi_wednesday']);
+}
+else {
+   $company['work_schedule']['wednesday'] = null;
+}
+
+if ($_POST['timein_thursday'] != 'data' ) {
+    $company['work_schedule']['thursday']['in'] = pg_escape_string($_POST['timein_thursday']);
+}
+if ($_POST['timeout_thursday'] != 'data' ) {
+    $company['work_schedule']['thursday']['out'] = pg_escape_string($_POST['timeout_thursday']);
+}
+if ($_POST['flexi_thursday'] != 'data' ) {
+    $company['work_schedule']['thursday']['flexi'] = pg_escape_string($_POST['flexi_thursday']);
+}
+else {
+   $company['work_schedule']['thursday'] = null;
+}
+
+if ($_POST['timein_friday'] != 'data' ) {
+    $company['work_schedule']['friday']['in'] = pg_escape_string($_POST['timein_friday']);
+}
+if ($_POST['timeout_friday'] != 'data' ) {
+    $company['work_schedule']['friday']['out'] = pg_escape_string($_POST['timeout_friday']);
+}
+if ($_POST['flexi_friday'] != 'data' ) {
+    $company['work_schedule']['friday']['flexi'] = pg_escape_string($_POST['flexi_friday']);
+}
+else {
+   $company['work_schedule']['friday'] = null;
+}
+
+if ($_POST['timein_saturday'] != 'data' ) {
+    $company['work_schedule']['saturday']['in'] = pg_escape_string($_POST['timein_saturday']);
+}
+if ($_POST['timeout_saturday'] != 'data' ) {
+    $company['work_schedule']['saturday']['out'] = pg_escape_string($_POST['timeout_saturday']);
+}
+if ($_POST['flexi_saturday'] != 'data' ) {
+    $company['work_schedule']['saturday']['flexi'] = pg_escape_string($_POST['flexi_saturday']);
+}
+else {
+   $company['work_schedule']['saturday'] = null;
+}
 
 $details = array();
 $details['company'] = $company;
