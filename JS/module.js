@@ -27,7 +27,7 @@ app.config(function($routeProvider){
     })
     .when('/calendar',
     {
-        controller: 'Admin_calendar',
+        controller: 'Calendar',
         templateUrl: 'partials/admin/calendar/admin.html'
     })
     .when('/timesheet',
