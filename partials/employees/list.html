@@ -347,11 +347,10 @@ select{
                                 <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
                             </td>
                             <td id="css">
-                                <select name="gender" required ng-model="employee.gender_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
+                                <select name="gender" required ng-model="employee.gender" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.pk}}">
-                                        {{v.gender}}
-                                    </option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
                             </td>  
@@ -369,11 +368,13 @@ select{
                                 <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
                             </td>
                             <td id="css">
-                                <select name="cistatus" required ng-model="employee.civilstatus_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
+                                <select name="cistatus" required ng-model="employee.civilstatus" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.pk}}">
-                                        {{v.civilstatus}}
-                                    </option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Living Common Law">Living Common Law</option>
+                                    <option value="Widowed">Widowed</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
                             </td> 
@@ -536,6 +537,7 @@ select{
                             <td id="css">
                                 <input ng-model="form.date_to_school" type="date" id="datefrom" style="display: block; float: left; width:320px; height:25px;" />
                             </td>
+
                         </tr>
                         </table>
                         <table>
@@ -597,11 +599,13 @@ select{
                                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Employee Status:</label>
                                     </td>
                                     <td id="css">
-                                        <select name="employeet" required ng-model="employee.employee_status_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
+                                        <select name="employeet" required ng-model="employee.employee_status" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
                                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                            <option ng-repeat="v in estatus" style="cursor:pointer;" value="{{v.pk}}">
-                                                {{v.emstatus}}
-                                            </option>
+                                            <option value="Probationary">Probationary</option>
+                                            <option value="Trainee">Trainee</option>
+                                            <option value="Contractual">Contractual</option>
+                                            <option value="Regular">Regular</option>
+                                            <option value="Consultant">Consultant</option>
                                         </select>
                                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employeet.$error.required">Employee status is required.</span>
                                     </td>  
@@ -625,11 +629,10 @@ select{
                                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employment Type:</label>
                                     </td>
                                     <td id="css">
-                                        <select name="employmenttype" required ng-model="employee.employment_type_pk" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+                                        <select name="employmenttype" required ng-model="employee.employment_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
                                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                            <option ng-repeat="v in etype" style="cursor:pointer;" value="{{v.pk}}">
-                                                {{v.emtype}}
-                                            </option>
+                                            <option value="Exempt">Exempt</option>
+                                            <option value="Non-Exempt">Non-Exempt</option>
                                         </select>
                                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment type is required.</span>
 
@@ -701,7 +704,7 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
                     </td>
                     <td id="css">
-                        <input name="a_mount" required ng-model="employee.salary_amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
@@ -727,7 +730,7 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
                     </td>
                     <td id="css">
-                        <input name="a_mount" required ng-model="employee.salary_amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
                 </tr>
@@ -736,7 +739,7 @@ select{
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
                     </td>
                     <td id="css">
-                        <input name="a_mount" required ng-model="employee.salary_amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+                        <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
                 </tr>

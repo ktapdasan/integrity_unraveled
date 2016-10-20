@@ -57,6 +57,7 @@ app.controller('New_Employees', function(
         intern_hours:'',
         salary_type:'bank',
         bank_name:'',
+        rate_type:'',
         account_number:'',
         amount:'',
         mode_payment:'',
@@ -74,10 +75,10 @@ app.controller('New_Employees', function(
         timeout_thursday:null,
         timeout_friday:null,
         timeout_saturday:null,
-        permanent_address:'No Data',
-        present_address:'No Data',
+        permanent_address:' ',
+        present_address:' ',
         emergency_contact_number:null,
-        emergency_name:'No Data',
+        emergency_name:' ',
         contact_number:null,
         landline_number:null,
         flexi_sunday:false,
@@ -104,35 +105,12 @@ app.controller('New_Employees', function(
     $scope.uploader = {};
     $scope.uploader.queue = {};
 
-    $scope.genders = [
-        { pk:'1', gender:'Male'},
-        { pk:'2', gender:'Female'}
-    ];
-    $scope.civils = [
-        { pk:'1', civilstatus:'Married'},
-        { pk:'2', civilstatus:'Single'},
-        { pk:'3', civilstatus:'Divorced'},
-        { pk:'4', civilstatus:'Living Common Law'},
-        { pk:'5', civilstatus:'Widowed'}
-    ];
-    $scope.estatus = [
-        { pk:'1', emstatus:'Probationary'},
-        { pk:'2', emstatus:'Trainee'},
-        { pk:'3', emstatus:'Contractual'},
-        { pk:'4', emstatus:'Regular'},
-        { pk:'5', emstatus:'Consultant'}
-    ];
-    $scope.etype = [
-        { pk:'1', emtype:'Exempt'},
-        { pk:'2', emtype:'Non-Exempt'}
-    ];
-
     $scope.stype = [
         { pk:'1', sctype:'Primary'},
         { pk:'2', sctype:'Secondary'},
         { pk:'3', sctype:'Tertiary'}
     ];
-
+    
     init();
 
     function init(){
@@ -358,6 +336,7 @@ app.controller('New_Employees', function(
         education:[{educ_level: "Primary"}],
         salary_type:'bank',
         bank_name:'',
+        rate_type:'',
         account_number:'',
         amount:'',
         mode_payment:'',
@@ -375,10 +354,10 @@ app.controller('New_Employees', function(
         timeout_thursday:null,
         timeout_friday:null,
         timeout_saturday:null,
-        permanent_address:'No Data',
-        present_address:'No Data',
+        permanent_address:' ',
+        present_address:' ',
         emergency_contact_number:null,
-        emergency_name:'No Data',
+        emergency_name:' ',
         contact_number:null,
         landline_number:null,
         flexi_sunday:false,

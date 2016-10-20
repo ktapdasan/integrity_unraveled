@@ -150,10 +150,10 @@ body>footer .footer-main {
     <div>
         <form name="myForm">
         <ul id="tabs">
-            <li ng-class="current.personal"><a  name="tab1">Personal Information</a></li>
-            <li ng-class="current.education"><a  name="tab2">Educational Attainment</a></li>
-            <li ng-class="current.company"><a  name="tab3">Company Profile</a></li>
-            <li ng-class="current.government"><a  name="tab4">Government Mandated Benefits</a></li>    
+            <li ng-class="current.personal"><a ng-click="change_tab('personal')" name="tab1">Personal Information</a></li>
+            <li ng-class="current.education"><a ng-click="change_tab('education')" name="tab2">Educational Attainment</a></li>
+            <li ng-class="current.company"><a ng-click="change_tab('company')" name="tab3">Company Profile</a></li>
+            <li ng-class="current.government"><a ng-click="change_tab('government')" name="tab4">Government Mandated Benefits</a></li>    
         </ul>
 
             <div>
@@ -216,9 +216,8 @@ body>footer .footer-main {
                             <td id="css">
                                 <select name="gender" tabindex="7" required ng-model="employees.gender" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    <option ng-repeat="v in genders" style="cursor:pointer;" value="{{v.pk}}">
-                                        {{v.gender}}
-                                    </option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
                             </td>  
@@ -228,9 +227,11 @@ body>footer .footer-main {
                             <td id="css">
                                 <select name="cistatus" tabindex="8" required ng-model="employees.civilstatus" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    <option ng-repeat="v in civils" style="cursor:pointer;" value="{{v.pk}}">
-                                        {{v.civilstatus}}
-                                    </option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Living Common Law">Living Common Law</option>
+                                    <option value="Widowed">Widowed</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
                             </td> 
@@ -505,9 +506,12 @@ body>footer .footer-main {
                     <td id="css">
                         <select name="employeet" required ng-model="employees.employee_status" style="display: block; float: left; width:340px;padding:5px;" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in estatus" style="cursor:pointer;" value="{{v.pk}}">
-                                {{v.emstatus}}
-                            </option>
+                            
+                            <option value="Probationary">Probationary</option>
+                            <option value="Trainee">Trainee</option>
+                            <option value="Contractual">Contractual</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Consultant">Consultant</option>
                         </select>
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employeet.$error.required">Employee status is required.</span>
                     </td>
@@ -520,9 +524,8 @@ body>footer .footer-main {
                     <td id="css">
                         <select name="employmenttype" required ng-model="employees.employment_type" style="display: block; float: left; width:340px;padding:5px;" >
                             <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                            <option ng-repeat="v in etype" style="cursor:pointer;" value="{{v.pk}}">
-                                {{v.emtype}}
-                            </option>
+                           <option value="Exempt">Exempt</option>
+                            <option value="Non-Exempt">Non-Exempt</option>
                         </select>
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment type is required.</span>
 
@@ -536,6 +539,7 @@ body>footer .footer-main {
                             <input type="radio" id="wire" name="salarys" ng-model="employees.salary_type" value="wire"> Wire Transfer</input>
                             <input type="radio" id="cash" name="salarys" ng-model="employees.salary_type" value="cash"> Cash</input>
                         </td>
+                        
                     </tr>
                 </tr>
                 <tr ng-show="isShown('bank')">
@@ -562,6 +566,17 @@ body>footer .footer-main {
                         <input name="a_mount" required ng-model="employees.amount" type = "text" is-number style="display: block; float: left; width:340px; height:38px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
+                    <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Rate Type:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ratype" required ng-model="employees.rate_type" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="Daily">Daily</option>
+                                   <option value="Mothly">Mothly</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
                 </tr>
                 <tr ng-show="isShown('wire')">
                       <td> 
@@ -588,6 +603,20 @@ body>footer .footer-main {
                         <input name="a_mount" required ng-model="employees.amount" type = "text" is-number style="display: block; float: left; width:340px; height:38px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
+                    <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Rate Type:</label>
+                            </td>
+                             <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Rate Type:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ratype" required ng-model="employees.rate_type" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="Daily">Daily</option>
+                                   <option value="Mothly">Mothly</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
                 </tr>
                 <tr ng-show="isShown('cash')">
                      <td> 
@@ -597,6 +626,20 @@ body>footer .footer-main {
                         <input name="a_mount" required ng-model="employees.amount" type = "text" is-number style="display: block; float: left; width:340px; height:38px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
+                    <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Rate Type:</label>
+                            </td>
+                            <td>
+                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Rate Type:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ratype" required ng-model="employees.rate_type" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="Daily">Daily</option>
+                                   <option value="Mothly">Mothly</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td>
                 </tr>
                 <tr>
                     <td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
