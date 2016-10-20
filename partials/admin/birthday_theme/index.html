@@ -102,7 +102,7 @@ select{
                 </thead>
                 <tbody>
                     <tr ng-repeat="(k, v) in birthday.data" style="cursor:pointer;" ng-if="birthday.status">
-                        <td><img src="{{v.location}}" /></td>
+                        <td><img src="{{v.location}}" width="232" height="116"/></td>
                         <td>{{v.month}}</td>
                         <td><center>
                             <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px" ng-click="edit_birthday(k)" title="Edit">
