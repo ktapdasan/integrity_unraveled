@@ -100,6 +100,49 @@ EOT;
 
         return ClassParent::insert($sql);
     }
+
+     public function save_myevents($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $created_by=$extra['created_by'];
+        $date_from=$extra['date_from'];
+        $date_to=$extra['date_to'];
+        $description=$extra['description'];
+        $location=$extra['location'];
+        $colors=$extra['colors'];
+        $rec=$extra['recipient'];
+
+        // $dat=implode(',', $rec);
+        $recipient="{".$rec."}";
+
+        $sql = <<<EOT
+                INSERT INTO calendar
+                (
+                    created_by,
+                    time_from,
+                    time_to,
+                    description,
+                    location,
+                    color,
+                    recipient
+                )
+                values
+                (
+                    '$created_by',
+                    '$date_from 00:00:00',
+                    '$date_to 23:59:59',
+                    '$description',
+                    '$location',
+                    '$colors',
+                    '$recipient'
+                )
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
 }
 
 ?>

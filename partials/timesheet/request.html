@@ -165,10 +165,10 @@ th {
                 <table>
                     <tr>
                         <td>
-                            <label style = "font-size:20px;">Type:</label>
+                            <label style = "font-size:20px;">Types:</label>
                             <br>
-                            <select ng-model="modal.request_type_pk" style="display: block; float: left;font-size:15px; width:300px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                                <option ng-repeat="(k, v) in request_type.data" style="cursor:pointer;" value="{{v.pk}}">
+                            <select ng-model="modal.request_types" style="display: block; float: left;font-size:15px; width:300px;padding:8px;height:25px border:0px solid #f0f0f0;; " tabindex="5">
+                                <option ng-repeat="(k, v) in request_type.data" style="cursor:pointer;" value="{{k}}">
                                     {{v.type}}
                                 </option>
                             </select>

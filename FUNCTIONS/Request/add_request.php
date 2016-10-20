@@ -11,6 +11,7 @@ $class = new Request(
 
 $extra['remarks'] = $_POST['remarks'];
 $extra['request_type_pk'] = $_POST['request_type_pk'];
+$extra['recipient'] = $_POST['recipient'];
 
 $data = $class->add_request($extra);
 

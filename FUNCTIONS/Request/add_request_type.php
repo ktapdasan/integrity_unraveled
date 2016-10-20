@@ -1,7 +1,7 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Request.php');
-
+print_r($_POST);
 $class = new Request(
 						NULL,
 	                    $_POST['type'],
