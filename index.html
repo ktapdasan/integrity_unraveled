@@ -331,6 +331,7 @@
                     <li ng-class="menu.admin" ng-if="profile.permission.administration">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret" ></span></a>
                         <ul class="dropdown-menu">
+                            <li><a style="cursor:pointer;" href="#/admin/birthday_theme" ng-click="menuclicked('admin')">Birthday Theme</a></li>
                             <li><a style="cursor:pointer;" href="#/admin/calendar" ng-click="menuclicked('admin')">Calendar</a></li>
                             <!-- <li><a style="cursor:pointer;" href="#/admin/cutoff" ng-click="menuclicked('admin')">Cut Off</a></li> -->
                             <li><a style="cursor:pointer;" href="#/admin/default_values" ng-click="menuclicked('admin')">Default Values</a></li>
@@ -592,6 +593,7 @@
     <script src="./JS/controllers/Admin_request.js"></script>
     <script src="./JS/controllers/Request.js"></script>
     <script src="./JS/controllers/HRIS_Request.js"></script>
+    <script src="./JS/controllers/Admin_birthday_theme.js"></script>
     
     <!-- ADMIN -->
     <script src="./JS/controllers/Department.js"></script>
@@ -616,9 +618,9 @@
     <script src="./JS/factories/DefaultFactory.js"></script>  
     <script src="./JS/factories/MemoFactory.js"></script>
     <script src="./JS/factories/RequestFactory.js"></script>  
+    <script src="./JS/factories/BirthdayFactory.js"></script>
 
-    <script src="./JS/factories/MemoFactory.js"></script>
-    <script src="./JS/factories/RequestFactory.js"></script>  
+
 
 
     <!-- DIRECTIVES -->
