@@ -75,10 +75,10 @@ app.controller('New_Employees', function(
         timeout_thursday:null,
         timeout_friday:null,
         timeout_saturday:null,
-        permanent_address:' ',
-        present_address:' ',
+        permanent_address:'',
+        present_address:'',
         emergency_contact_number:null,
-        emergency_name:' ',
+        emergency_name:'',
         contact_number:null,
         landline_number:null,
         flexi_sunday:false,
@@ -234,60 +234,74 @@ app.controller('New_Employees', function(
             $scope.employees.education[i].date_to_school = $filter('date')($scope.employees.education[i].date_to_school, "yyyy-MM-dd");
         }
 
-            var dated = new Date($scope.employee.date_started);
+        if ($scope.employees.data_sss == null) {
+            $scope.employees.data_sss = 'No Data';
+        }
+        if ($scope.employees.data_phid == null) {
+            $scope.employees.data_phid = 'No Data';
+        }
+        if ($scope.employees.data_pagmid == null) {
+            $scope.employees.data_pagmid = 'No Data';
+        }
+        if ($scope.employees.data_tin == null) {
+            $scope.employees.data_tin = 'No Data';
+        }
+
+            var dated = new Date($scope.employees.date_started);
             var dds = dated.getDate();
             var mms = dated.getMonth()+1;
             var yyyys = dated.getFullYear();
-            $scope.employee.date_started = mms+'-'+dds+'-'+yyyys;
+            $scope.employees.date_started = mms+'-'+dds+'-'+yyyys;
 
-            var dateb = new Date($scope.employee.birth_date);
+            var dateb = new Date($scope.employees.birth_date);
             var ddk = dateb.getDate();
             var mmk = dateb.getMonth()+1;
             var yyyyk = dateb.getFullYear();
-            $scope.employee.birth_date = mmk+'-'+ddk+'-'+yyyyk;
+            $scope.employees.birth_date = mmk+'-'+ddk+'-'+yyyyk;
 
-            $scope.employee.timein_sunday = $filter('date')($scope.employee.timein_sunday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timein_monday = $filter('date')($scope.employee.timein_monday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timein_tuesday = $filter('date')($scope.employee.timein_tuesday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timein_wednesday = $filter('date')($scope.employee.timein_wednesday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timein_thursday = $filter('date')($scope.employee.timein_thursday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timein_friday = $filter('date')($scope.employee.timein_friday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timein_saturday = $filter('date')($scope.employee.timein_saturday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "yyyy-MM-dd HH:mm");
             
-            $scope.employee.timeout_sunday = $filter('date')($scope.employee.timeout_sunday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timeout_monday = $filter('date')($scope.employee.timeout_monday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timeout_tuesday = $filter('date')($scope.employee.timeout_tuesday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timeout_wednesday = $filter('date')($scope.employee.timeout_wednesday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timeout_thursday = $filter('date')($scope.employee.timeout_thursday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timeout_friday = $filter('date')($scope.employee.timeout_friday, "yyyy-MM-dd HH:mm");
-            $scope.employee.timeout_saturday = $filter('date')($scope.employee.timeout_saturday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timeout_wednesday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "yyyy-MM-dd HH:mm");
 
-            if ($scope.employee.timein_sunday == 'null' || $scope.employee.timein_sunday == undefined) {$scope.employee.timein_sunday = 'data'};
-            if ($scope.employee.timein_monday == 'null' || $scope.employee.timein_monday == undefined) {$scope.employee.timein_monday = 'data'};
-            if ($scope.employee.timein_tuesday == 'null'|| $scope.employee.timein_tuesday == undefined) {$scope.employee.timein_tuesday = 'data'};
-            if ($scope.employee.timein_wednesday == 'null'|| $scope.employee.timein_wednesday == undefined) {$scope.employee.timein_wednesday = 'data'};
-            if ($scope.employee.timein_thursday == 'null' || $scope.employee.timein_thursday == undefined) {$scope.employee.timein_thursday = 'data'};
-            if ($scope.employee.timein_friday == 'null' || $scope.employee.timein_friday == undefined) {$scope.employee.timein_friday = 'data'};
-            if ($scope.employee.timein_saturday == 'null' || $scope.employee.timein_saturday == undefined) {$scope.employee.timein_saturday = 'data'};
+            if ($scope.employees.timein_sunday == 'null' || $scope.employees.timein_sunday == undefined) {$scope.employees.timein_sunday = 'data'};
+            if ($scope.employees.timein_monday == 'null' || $scope.employees.timein_monday == undefined) {$scope.employees.timein_monday = 'data'};
+            if ($scope.employees.timein_tuesday == 'null'|| $scope.employees.timein_tuesday == undefined) {$scope.employees.timein_tuesday = 'data'};
+            if ($scope.employees.timein_wednesday == 'null'|| $scope.employees.timein_wednesday == undefined) {$scope.employees.timein_wednesday = 'data'};
+            if ($scope.employees.timein_thursday == 'null' || $scope.employees.timein_thursday == undefined) {$scope.employees.timein_thursday = 'data'};
+            if ($scope.employees.timein_friday == 'null' || $scope.employees.timein_friday == undefined) {$scope.employees.timein_friday = 'data'};
+            if ($scope.employees.timein_saturday == 'null' || $scope.employees.timein_saturday == undefined) {$scope.employees.timein_saturday = 'data'};
 
-            if ($scope.employee.timeout_sunday == 'null' || $scope.employee.timeout_sunday == undefined) {$scope.employee.timeout_sunday = 'data'};
-            if ($scope.employee.timeout_monday == 'null' || $scope.employee.timeout_monday == undefined) {$scope.employee.timeout_monday = 'data'};
-            if ($scope.employee.timeout_tuesday == 'null' || $scope.employee.timeout_tuesday == undefined) {$scope.employee.timeout_tuesday = 'data'};
-            if ($scope.employee.timeout_wednesday == 'null' || $scope.employee.timeout_wednesday == undefined) {$scope.employee.timeout_wednesday = 'data'};
-            if ($scope.employee.timeout_thursday == 'null' || $scope.employee.timeout_thursday == undefined) {$scope.employee.timeout_thursday = 'data'};
-            if ($scope.employee.timeout_friday == 'null' || $scope.employee.timeout_friday == undefined) {$scope.employee.timeout_friday = 'data'};
-            if ($scope.employee.timeout_saturday == 'null' || $scope.employee.timeout_saturday == undefined) {$scope.employee.timeout_saturday = 'data'};
+            if ($scope.employees.timeout_sunday == 'null' || $scope.employees.timeout_sunday == undefined) {$scope.employees.timeout_sunday = 'data'};
+            if ($scope.employees.timeout_monday == 'null' || $scope.employees.timeout_monday == undefined) {$scope.employees.timeout_monday = 'data'};
+            if ($scope.employees.timeout_tuesday == 'null' || $scope.employees.timeout_tuesday == undefined) {$scope.employees.timeout_tuesday = 'data'};
+            if ($scope.employees.timeout_wednesday == 'null' || $scope.employees.timeout_wednesday == undefined) {$scope.employees.timeout_wednesday = 'data'};
+            if ($scope.employees.timeout_thursday == 'null' || $scope.employees.timeout_thursday == undefined) {$scope.employees.timeout_thursday = 'data'};
+            if ($scope.employees.timeout_friday == 'null' || $scope.employees.timeout_friday == undefined) {$scope.employees.timeout_friday = 'data'};
+            if ($scope.employees.timeout_saturday == 'null' || $scope.employees.timeout_saturday == undefined) {$scope.employees.timeout_saturday = 'data'};
 
-            if ($scope.employee.flexi_sunday == 'null' || $scope.employee.flexi_sunday == false) {$scope.employee.flexi_sunday = 'data'};
-            if ($scope.employee.flexi_monday == 'null' || $scope.employee.flexi_monday == false) {$scope.employee.flexi_monday = 'data'};
-            if ($scope.employee.flexi_tuesday == 'null'|| $scope.employee.flexi_tuesday == false) {$scope.employee.flexi_tuesday = 'data'};
-            if ($scope.employee.flexi_wednesday == 'null' || $scope.employee.flexi_wednesday == false) {$scope.employee.flexi_wednesday = 'data'};
-            if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false) {$scope.employee.flexi_thursday = 'data'};
-            if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false) {$scope.employee.flexi_friday = 'data'};
-            if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false) {$scope.employee.flexi_saturday = 'data'};
+            if ($scope.employees.flexi_sunday == 'null' || $scope.employees.flexi_sunday == false) {$scope.employees.flexi_sunday = 'data'};
+            if ($scope.employees.flexi_monday == 'null' || $scope.employees.flexi_monday == false) {$scope.employees.flexi_monday = 'data'};
+            if ($scope.employees.flexi_tuesday == 'null'|| $scope.employees.flexi_tuesday == false) {$scope.employees.flexi_tuesday = 'data'};
+            if ($scope.employees.flexi_wednesday == 'null' || $scope.employees.flexi_wednesday == false) {$scope.employees.flexi_wednesday = 'data'};
+            if ($scope.employees.flexi_thursday == 'null' || $scope.employees.flexi_thursday == false) {$scope.employees.flexi_thursday = 'data'};
+            if ($scope.employees.flexi_friday == 'null' || $scope.employees.flexi_friday == false) {$scope.employees.flexi_friday = 'data'};
+            if ($scope.employees.flexi_saturday == 'null' || $scope.employees.flexi_saturday == false) {$scope.employees.flexi_saturday = 'data'};
 
+            
         $scope.employees.education = JSON.stringify($scope.employees.education);
-       
+        
         var promise = EmployeesFactory.submit_employees($scope.employees);
         promise.then(function(data){
 
@@ -333,11 +347,11 @@ app.controller('New_Employees', function(
         data_pagmid: null,
         data_tin: null,
         intern_hours:'',
-        education:[{educ_level: "Primary"}],
         salary_type:'bank',
         bank_name:'',
         rate_type:'',
         account_number:'',
+        education: [{educ_level: "Primary"}],
         amount:'',
         mode_payment:'',
         timein_sunday:null,
@@ -354,10 +368,10 @@ app.controller('New_Employees', function(
         timeout_thursday:null,
         timeout_friday:null,
         timeout_saturday:null,
-        permanent_address:' ',
-        present_address:' ',
+        permanent_address:'',
+        present_address:'',
         emergency_contact_number:null,
-        emergency_name:' ',
+        emergency_name:'',
         contact_number:null,
         landline_number:null,
         flexi_sunday:false,

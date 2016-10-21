@@ -2,6 +2,9 @@
 require_once('../connect.php');
 require_once('../../CLASSES/Employees.php');
 
+$educationk = json_decode($_POST['educations'], true);
+
+
 $class =  new Employees(
                             $_POST['pk'],
                             $_POST['employee_id'],
@@ -26,13 +29,14 @@ $class =  new Employees(
                             $_POST['salary_account_number'],
                             $_POST['amount'],
                             $_POST['gender'],
+                            $_POST['landline_number'],
+                            $_POST['rate_type'],
                             $_POST['religion'],
                             $_POST['employee_status'],
                             $_POST['employment_type'],
                             $_POST['civilstatus'],
                             $_POST['birth_date'],
                             $_POST['date_started'],
-                            $_POST['educations'],
                             $_POST['timein_sunday'],
                             $_POST['timein_monday'],
                             $_POST['timein_tuesday'],
@@ -100,6 +104,8 @@ if ($_POST['levels_pk'] == 3){
     $government['data_tin']            = pg_escape_string(strip_tags(trim($_POST['data_tin'])));
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
     $government['data_phid']           = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
+
+    $educations['school_type']           = $educationk;
 }
     
 if ($_POST['levels_pk'] != 3){
@@ -111,8 +117,8 @@ if ($_POST['levels_pk'] != 3){
     $company['supervisor']             = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
-    $company['employee_status']     = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
-    $company['employment_type']     = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
+    $company['employee_status']        = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
+    $company['employment_type']        = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
     $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
@@ -123,9 +129,9 @@ if ($_POST['levels_pk'] != 3){
     $personal['landline_number']       = pg_escape_string(strip_tags(trim($_POST['landline_number'])));
     $personal['present_address']       = pg_escape_string(strip_tags(trim($_POST['present_address'])));
     $personal['permanent_address']     = pg_escape_string(strip_tags(trim($_POST['permanent_address'])));
-    $personal['gender']             = pg_escape_string(strip_tags(trim($_POST['gender'])));
+    $personal['gender']                = pg_escape_string(strip_tags(trim($_POST['gender'])));
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
-    $personal['civilstatus']        = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
+    $personal['civilstatus']           = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
     $personal['profile_picture']       = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
     $personal['emergency_contact_name']     = pg_escape_string(strip_tags(trim($_POST['emergency_contact_name'])));
     $personal['emergency_contact_number']   = pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));
@@ -136,9 +142,12 @@ if ($_POST['levels_pk'] != 3){
     $government['data_pagmid']         = pg_escape_string(strip_tags(trim($_POST['data_pagmid'])));
     $government['data_phid']           = pg_escape_string(strip_tags(trim($_POST['data_phid'])));
 
+    $educations['school_type']           = $educationk;
+
     //Salary Type
     if ($_POST['salary_type'] == 'bank'){
         $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
+        $company['salary']['details']['rate_type']            = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
         $company['salary']['details']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['bank_name'])));
         $company['salary']['details']['account_number']       = pg_escape_string(strip_tags(trim($_POST['account_number'])));
         $company['salary']['details']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
@@ -146,6 +155,7 @@ if ($_POST['levels_pk'] != 3){
     }
     if ($_POST['salary_type'] == 'wire'){
        $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
+       $company['salary']['details']['rate_type']             = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
        $company['salary']['details']['mode_payment']          = pg_escape_string(strip_tags(trim($_POST['mode_payment'])));
        $company['salary']['details']['account_number']        = pg_escape_string(strip_tags(trim($_POST['account_number'])));
        $company['salary']['details']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
@@ -153,6 +163,7 @@ if ($_POST['levels_pk'] != 3){
     }
     if ($_POST['salary_type'] == 'cash'){
        $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
+       $company['salary']['details']['rate_type']            = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
        $company['salary']['details']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
     }
 }
@@ -252,6 +263,7 @@ $details = array();
 $details['company'] = $company;
 $details['personal'] = $personal;
 $details['government'] = $government;
+$details['education'] = $educations; 
 
 $extra['details'] = $details;
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];

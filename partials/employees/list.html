@@ -540,6 +540,24 @@ select{
 
                         </tr>
                         </table>
+                        <br/>
+                         <table>
+                        <tr>
+                            <td >
+                                <select name="school" required ng-model="employees.school_type" style="display: block; float: left; width:290px;padding:5px;margin-top:20px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                    
+                                        <option value="Primary">Primary</option>
+                                        <option value="Secondary">Secondary</option>
+                                        <option value="Tertiary">Tertiary</option>
+                                   
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="addNewChoice()" class="large button green fa-fa" style="display: block; float: left; width:150px; height:25px;" >+ Add Education</button>
+                            </td>
+                        </tr>
+                 </table>
                         <table>
                             <tr>
                                 <td colspan = "4">
@@ -707,6 +725,17 @@ select{
                         <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
+                    <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="Daily">Daily</option>
+                                   <option value="Monthly">Monthly</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
                 </tr>
                 <tr ng-show="isShown('wire')">
                       <td> 
@@ -733,6 +762,17 @@ select{
                         <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
+                     <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="Daily">Daily</option>
+                                   <option value="Monthly">Monthly</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
                 </tr>
                 <tr ng-show="isShown('cash')">
                      <td> 
@@ -742,6 +782,17 @@ select{
                         <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
                         <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
                     </td>
+                     <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;">
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="Daily">Daily</option>
+                                   <option value="Monthly">Monthly</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
                 </tr>
                              <tr>
                     <td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
@@ -1039,7 +1090,7 @@ select{
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employee.salary_amount}}</div>
+                                    <div>{{employee.amount}}</div>
                                 </td>
                              </tr>
 
@@ -1064,7 +1115,7 @@ select{
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employee.salary_amount}}</div>
+                                    <div>{{employee.amount}}</div>
                                 </td>
                              </tr>
                               <tr ng-show="isShown('cash')">
@@ -1072,7 +1123,7 @@ select{
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
-                                    <div>{{employee.salary_amount}}</div>
+                                    <div>{{employee.amount}}</div>
                                 </td>
                              </tr>
 
@@ -1108,7 +1159,7 @@ select{
                                     <div><b>Location:</b></div>
                                 </td>
                                  <td>
-                                    <div>{{form.school_location}}</div>
+                                    <div>{{form.school_location }}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -1116,13 +1167,13 @@ select{
                                     <div><b>From Date:</b></div>
                                     </td>
                                     <td>
-                                        <div>{{form.date_from_school}}</div>
+                                        <div>{{form.date_from_school | date }}</div>
                                     </td>
                                     <td>
-                                        <div><b>To Date::</b></div>
+                                        <div><b>To Date:</b></div>
                                     </td>
                                     <td>
-                                        <div>{{form.date_to_school}}</div>
+                                        <div>{{form.date_to_school | date }}</div>
                                     </td>
                             </tr>
                         </table>
