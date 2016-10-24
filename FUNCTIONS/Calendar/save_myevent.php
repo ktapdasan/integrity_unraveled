@@ -21,7 +21,9 @@ $extra = array(
                 "location" => $_POST['location'],
                 "date_from" => $_POST['date_from'],
                 "date_to" => $_POST['date_to'],
-                "recipient" => $_POST['recipient']
+                "recipient" => $_POST['recipient'],
+                "time_from" => $_POST['time_from'],
+                "time_to" => $_POST['time_to']
             );
 
 $data = $class->save_myevents($extra);

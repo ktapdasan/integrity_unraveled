@@ -2,7 +2,7 @@
 employees table new jsonb fields
 *****/
 
-create table employees_backup
+create table employees
 (
 	pk serial primary key,
 	details jsonb,
@@ -10,77 +10,7 @@ create table employees_backup
 	date_created timestamptz default now(),
 	archived boolean default false
 );
-alter table employees_backup owner to chrs;
-
-create table employment_statuses
-(
-	pk serial primary key,
-	status text not null,
-	archived boolean default false
-);
-alter table employment_statuses owner to chrs;
-
-insert into employment_statuses (status)
-values
-(
-	'Probationary'
-),
-(
-	'Trainee'
-),
-(
-	'Contractual'
-),
-(
-	'Regular'
-),
-(
-	'Consultant'
-);
-
-create table employee_types
-(
-	pk serial primary key,
-	type text not null,
-	archived boolean default false
-);
-alter table employee_types owner to chrs;
-
-insert into employee_types (type)
-values
-(
-	'Exempt'
-),
-(
-	'Non-exempt'
-);
-
-create table civil_statuses
-(
-	pk serial primary key,
-	status text not null,
-	archived boolean default false
-);
-alter table civil_statuses owner to chrs;
-
-insert into civil_statuses (status)
-values
-(
-	'Married'
-),
-(
-	'Single'
-),
-(
-	'Divorce'
-),
-(
-	'Living Common Law'
-),
-(
-	'Widowed'
-)
-;
+alter table employees owner to chrs;
 
 create table salary_types
 (
@@ -105,25 +35,6 @@ values
 	'wire'
 );
 
-create table gender_type
-(
-	pk serial primary key,
-	type text not null,
-	archived boolean default false
-);
-alter table gender_type owner to chrs;
-
-insert into gender_type
-(
-	type
-)
-values
-(
-	'Male'
-),
-(
-	'Female'
-);
 
 /*IMPORTANT!*/
 -- For profile pic upload please create folder on - ASSETS/uploads/profile for it to save!
@@ -254,76 +165,51 @@ education - {
 EXAMPLES
 update employees set
 details = jsonb_set(details, '{company}', ' {
-	"departments_pk": "26",
-	"employee_id": "201400072",
-	"date_started": "03/01/2016",
-	"levels_pk": "7",
-	"titles_pk": "14",
-	"supervisor": "28",
-	"employee_status_pk": "3",
-	"employment_type_pk": "1",
-	"business_email_address": "ken.tapdasan@chrsglobal.com",
-	"salary": 
-	{
-	"salary_type": "cash",
-	"amount": "12000"
-	},
-	"work_schedule": {
-		"friday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"monday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"sunday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"saturday": {
-			"in": "null",
-			"out": "null"
-		},
-		"tuesday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"thursday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"wednesday": {
-			"in": "09:00",
-			"out": "18:00"
-		}
-	},
-	"company_work_schedule": {
-		"friday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"monday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"sunday": null,
-		"tuesday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"saturday": null,
-		"thursday": {
-			"in": "09:00",
-			"out": "18:00"
-		},
-		"wednesday": {
-			"in": "09:00",
-			"out": "18:00"
-		}
-	}
-	
-
+    "departments_pk": "26",
+    "employee_id": "201400072",
+    "date_started": "03-01-2016",
+    "levels_pk": "7",
+    "titles_pk": "14",
+    "supervisor": "28",
+    "employee_status": "Contractual",
+    "employment_type": "Non-Exempt",
+    "business_email_address": "ken.tapdasan@chrsglobal.com",
+    "salary": {
+        "salary_type": "cash",
+        "details": {
+            "amount": "12000",
+            "rate_type": "Daily"
+        }
+    },
+    "work_schedule": {
+        "friday": {
+            "in": "07-27-1995 09:00",
+            "out": "07-27-1995 18:00",
+            "flexi": "true"
+        },
+        "monday": {
+            "in": "07-27-1995 09:00",
+            "out": "07-27-1995 18:00",
+            "flexi": "true"
+        },
+        "sunday": null,
+        "saturday": null,
+        "tuesday": {
+            "in": "07-27-1995 09:00",
+            "out": "07-27-1995 18:00",
+            "flexi": "true"
+        },
+        "thursday": {
+            "in": "07-27-1995 09:00",
+            "out": "07-27-1995 18:00",
+            "flexi": "true"
+        },
+        "wednesday": {
+            "in": "07-27-1995 09:00",
+            "out": "07-27-1995 18:00",
+            "flexi": "true"
+        }
+    }
 }
 ', true)
 where pk = 12;
@@ -332,31 +218,31 @@ where pk = 12;
 update employees set
 details = jsonb_set(details, '{government}', ' 
 {
-"data_sss": "N/A", 
-"data_tin": "N/A", 
-"data_phid": "N/A", 
-"data_pagmid": "N/A"
+    "data_sss": "N/A",
+    "data_tin": "N/A",
+    "data_phid": "N/A",
+    "data_pagmid": "N/A"
 }
 ', true);
 
 update employees set
 details = jsonb_set(details, '{personal}', ' 
 {
-"first_name": "Ken", 
-"middle_name": "Villanueva", 
-"last_name": "Tapdasan", 
-"email_address": "ktapdasan.chrs@gmail.com",
-"gender_pk": "1",
-"civilstatus_pk": "2",
-"religion": "Catholic",
-"present_address": "Mandaluyong",
-"permanent_address": "Dasmarinas",
-"birth_date": "1995-07-27",
-"contact_number": "09504151950",
-"landline_number": "5340368",
-"profile_picture": "./ASSETS/uploads/profile/Ken/profile.jpg",
-"emergency_contact_name": "Clarissa Mae Fortuno",
-"emergency_contact_number": "09504151950"
+    "first_name": "Ken",
+    "middle_name": "Villanueva",
+    "last_name": "Tapdasan",
+    "email_address": "ktapdasan.chrs@gmail.com",
+    "gender": "Male",
+    "civilstatus": "Single",
+    "religion": "Catholic",
+    "present_address": "Mandaluyong",
+    "permanent_address": "Dasmarinas",
+    "birth_date": "7-27-1995",
+    "contact_number": "09504151950",
+    "landline_number": "5340368",
+    "profile_picture": "./ASSETS/img/blank.gif",
+    "emergency_contact_name": "Clarissa Mae Fortuno",
+    "emergency_contact_number": "09504151950"
 }
 ', true)
 where pk = 12;
@@ -364,20 +250,127 @@ where pk = 12;
 update employees set
 details = jsonb_set(details, '{education}', ' 
 {
-"school_type": 
-	    [{"educ_level": "Primary", 
-		"school_name": "San Miguel Elementary School", 
-		"date_to_school": "2008-06-03", 
-		"school_location": "Dasmarinas Salitran III", 
-		"date_from_school": "2009-03-16"}, 
-		{"educ_level": "Tertiary", 
-		"school_name": "Saint John Bosco Institute of Arts and Sciences", 
-		"date_to_school": "2013-03-01", 
-		"school_location": "Mandaluyong Daang Bakal", 
-		"date_from_school": "2015-03-16"}]
+    "school_type": [
+        {
+            "educ_level": "Primary",
+            "school_name": "San Miguel Elementary School",
+            "date_to_school": "2008-06-03",
+            "school_location": "Dasmarinas Salitran III",
+            "date_from_school": "2009-03-16"
+        },
+        {
+            "educ_level": "Tertiary",
+            "school_name": "Saint John Bosco Institute of Arts and Sciences",
+            "date_to_school": "2013-03-01",
+            "school_location": "Mandaluyong Daang Bakal",
+            "date_from_school": "2015-03-16"
+        }
+    ]
 }
 ', true)
 where pk = 12;
+
+*/
+/*
+Example: When All Data is Completly Inserted or Updated
+(JSON DATA)
+{
+    "company": {
+        "salary": {
+            "details": {
+                "amount": "12000",
+                "rate_type": "Monthly"
+            },
+            "salary_type": "cash"
+        },
+        "levels_pk": "7",
+        "titles_pk": "14",
+        "supervisor": "28",
+        "employee_id": "201400072",
+        "date_started": "03-1-2016",
+        "work_schedule": {
+            "friday": {
+                "in": "10-20-2016 09:00",
+                "out": "10-20-2016 18:00",
+                "flexi": "true"
+            },
+            "monday": {
+                "in": "10-20-2016 09:00",
+                "out": "10-20-2016 18:00",
+                "flexi": "true"
+            },
+            "sunday": null,
+            "tuesday": {
+                "in": "10-20-2016 09:00",
+                "out": "10-20-2016 18:00",
+                "flexi": "true"
+            },
+            "saturday": null,
+            "thursday": {
+                "in": "10-20-2016 09:00",
+                "out": "10-20-2016 18:00",
+                "flexi": "true"
+            },
+            "wednesday": {
+                "in": "10-20-2016 09:00",
+                "out": 10-20-2016 18:00",
+                "flexi": "true"
+            }
+        },
+        "departments_pk": "26",
+        "employee_status": "Contractual",
+        "employment_type": "Non-Exempt",
+        "business_email_address": "ken.tapdasan@chrsglobal.com"
+    },
+    "personal": {
+        "gender": "Male",
+        "religion": "Catholic",
+        "last_name": "Tapdasan",
+        "birth_date": "07-27-1995",
+        "first_name": "Ken",
+        "civilstatus": "Single",
+        "middle_name": "Villanueva",
+        "email_address": "ktapdasan.chrs@gmail.com",
+        "contact_number": "09504151950",
+        "landline_number": "5340368",
+        "present_address": "Mandaluyong",
+        "profile_picture": "./ASSETS/img/blank.gif",
+        "permanent_address": "Dasmarinas",
+        "emergency_contact_name": "Rheyan Lipardo",
+        "emergency_contact_number": "09159766579"
+    },
+    "education": {
+        "school_type": [
+            {
+                "educ_level": "Primary",
+                "school_name": "San Miguel Elementary School",
+                "date_to_school": "2008-06-03",
+                "school_location": "Dasmarinas Salitran III",
+                "date_from_school": "2009-03-16"
+            },
+            {
+                "educ_level": "Tertiary",
+                "school_name": "Saint John Bosco Institute of Arts and Sciences",
+                "date_to_school": "2013-03-01",
+                "school_location": "Mandaluyong Daang Bakal",
+                "date_from_school": "2015-03-16"
+            },
+            {
+                "educ_level": "Secondary",
+                "school_name": "DNNHS",
+                "date_to_school": "2222-03-23",
+                "school_location": "Dasmarinas Salitran III",
+                "date_from_school": "1970-01-01"
+            }
+        ]
+    },
+    "government": {
+        "data_sss": "N/A",
+        "data_tin": "N/A",
+        "data_phid": "N/A",
+        "data_pagmid": "N/A"
+    }
+}
 
 
 
