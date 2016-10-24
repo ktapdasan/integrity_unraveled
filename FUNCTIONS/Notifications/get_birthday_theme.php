@@ -1,16 +1,15 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Birthday.php');
-
+// print_r($_POST);
 $class = new Birthday_theme(
-						Null, 
 						Null,
-						Null,
-						Null,
+						date('F'),
 						Null,
 						Null
 					);
-$data = $class->get_birthday();
+
+$data = $class->current_month();
 
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){
@@ -19,4 +18,4 @@ if($data['status']){
 
 header('Content-Type: application/json');
 print(json_encode($data));
-?>
+?> 

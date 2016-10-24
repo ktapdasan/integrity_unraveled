@@ -102,5 +102,14 @@ app.factory('NotificationsFactory', function($http){
 
     };
 
+    factory.get_birthday_theme = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Notifications/get_birthday_theme.php',
+            method: 'GET'
+        })
+
+        return promise;
+    };
+
     return factory;
 });

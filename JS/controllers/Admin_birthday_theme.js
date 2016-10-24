@@ -17,6 +17,8 @@ app.controller('Admin_birthday_theme', function(
 
     $scope.uploader = {};
     $scope.uploader.queue = {};
+    $scope.month=[];
+
 
 
  
@@ -36,6 +38,9 @@ app.controller('Admin_birthday_theme', function(
             window.location = './login.html';
         });
     }
+
+
+
 
     function get_profile(){
         var filters = { 
@@ -73,7 +78,8 @@ app.controller('Admin_birthday_theme', function(
         promise.then(function(data){
             $scope.birthday.status = true;
             $scope.birthday.data = data.data.result;
-            var count = data.data.result.length;
+            $scope.birthday.length = data.data.result.length;
+             count = data.data.result.length;
 
             if (count==0) {
                 $scope.birthday.count="";
@@ -146,12 +152,33 @@ app.controller('Admin_birthday_theme', function(
 
 
 $scope.add_birthday = function(){
+ 
+        $scope.months = ["January", "February" , "March", "April" , "May" , "June" , "July" , "August" , 
+        "September" , "October" , "November" , "December"];
+
+
+        for (var x = 0 ; x < $scope.birthday.length ; x++) {
+    
+            for (var i = 0; i < 12; i++) {
+
+                if ( $scope.months[i] == $scope.birthday.data[x].month) {
+                       
+                        $scope.months.splice(i, 1);
+                         
+                }
+
+            }
+                
+        } 
+
+
         $scope.modal = {
-            title : 'Upload Birthday Image Theme',
-            save : 'Apply Changes',
-            close : 'CLOSE', 
-            imagevalue: '',
-            birthdaymonth: ''
+            title           : 'Upload Birthday Image Theme',
+            save            : 'Apply Changes',
+            close           : 'CLOSE', 
+            imagevalue      : '',
+            birthdaymonth   : '',
+            months          :$scope.months
         };
 
     
@@ -219,6 +246,26 @@ $scope.add_birthday = function(){
 
 $scope.edit_birthday = function(k){
 
+    $scope.months = ["January", "February" , "March", "April" , "May" , "June" , "July" , "August" , 
+        "September" , "October" , "November" , "December"];
+
+
+        for (var x = 0 ; x < $scope.birthday.length ; x++) {
+    
+            for (var i = 0; i < 12; i++) {
+
+                if ( $scope.months[i] == $scope.birthday.data[x].month) {
+                       
+                        $scope.months.splice(i, 1);
+                         
+                }
+
+            }
+                
+        } 
+
+        $scope.months.push($scope.birthday.data[k].month);
+
 
         $scope.modal = {
             title           : 'Edit Birthday Image Theme',
@@ -226,9 +273,9 @@ $scope.edit_birthday = function(k){
             close           : 'CLOSE', 
             imagevalue      : $scope.birthday.data[k].location,
             birthdaymonth   : $scope.birthday.data[k].month,
-            pk              : $scope.birthday.data[k].pk
+            pk              : $scope.birthday.data[k].pk,
+            months          : $scope.months
         };
-
     
 
         ngDialog.openConfirm({
@@ -259,7 +306,6 @@ $scope.edit_birthday = function(k){
         }, function(value){
            
            
-
             var promise = BirthdayFactory.update_birthday_theme($scope.modal);
             promise.then(function(data){
                 

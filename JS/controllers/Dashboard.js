@@ -29,6 +29,7 @@ app.controller('Dashboard', function(
     $scope.font;
     $scope.read={};
     $scope.headerBackground="stop";
+    $scope.birthday={};
 
     $scope.current_date={};
 
@@ -89,6 +90,7 @@ app.controller('Dashboard', function(
             get_current_date();
             get_approved_leaves();
             get_birthday();
+            birthday();
         })   
     }
 
@@ -469,6 +471,23 @@ app.controller('Dashboard', function(
 
             $scope.birthdays.status = false;
 
+        });
+    }
+
+    function birthday(){
+
+       
+        var promise = NotificationsFactory.get_birthday_theme();
+        promise.then(function(data){
+            $scope.birthday.status = true;
+            $scope.birthday.data = data.data.result;
+            
+        
+
+        })
+        .then(null, function(data){
+            $scope.birthday.status = false;
+            $scope.birthday.count="";
         });
     }
 

@@ -1,7 +1,7 @@
 <?php
 require_once('../connect.php');
 require_once('../../CLASSES/Birthday.php');
-// print_r($_POST);
+
 $filters = array(
 					'pk' => NULL,
 					'month' => NULL,
@@ -15,7 +15,7 @@ foreach($_POST as $k=>$v){
 }
 
 
-$class = new Birthday(
+$class = new Birthday_theme(
 						$filters['pk'], 
 						$filters['month'], 
 						$filters['location'],

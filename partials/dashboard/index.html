@@ -256,12 +256,8 @@ body{
             
             <div class="notification_data">
                 <ul class="nav">
-                    <li>
-                        <p>
-                            <h4 style="color:#9999ff;">
-                                BIRTHDAY CELEBRANT OF THE MONTH
-                            </h4>
-                        </p>
+                    <li  ng-repeat="(k,v) in birthday.data">
+                        <img src ="{{v.location}}" width ="230" height="116" style="margin-left:-10px" />
                     </li>
                     <li ng-repeat="(k,v) in birthdays.data" style="padding-top:15px;padding-bottom:20px;padding-left:10px">
                             <p style="font-size:13px;margin-bottom:0px; color:red;" ng-class="v.birthday===v.now && 'display'|| 'hide'">

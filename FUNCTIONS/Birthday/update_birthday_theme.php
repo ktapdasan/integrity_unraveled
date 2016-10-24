@@ -3,7 +3,7 @@ require_once('../connect.php');
 require_once('../../CLASSES/Birthday.php');
 
 
-$class = new Birthday(
+$class = new Birthday_theme(
                             $_POST['pk'],
                             $_POST['birthdaymonth'],
                             $_POST['imagevalue'],
