@@ -18,4 +18,4 @@ if($data['status']){
 
 header('Content-Type: application/json');
 print(json_encode($data));
-?> 
+?>

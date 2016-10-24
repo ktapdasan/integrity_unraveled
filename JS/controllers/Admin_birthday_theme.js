@@ -210,8 +210,23 @@ $scope.add_birthday = function(){
             return false;
         }, function(value){
            
-            
+            if ($scope.modal.birthdaymonth == null || $scope.modal.birthdaymonth =="" ) {
+                
+
+                 UINotification.error({
+                                        message: 'Please select birthday month', 
+                                        title: 'ERROR', 
+                                        delay : 5000,
+                                        positionY: 'top', positionX: 'right'
+                                    });
+                return false;
+
+            console.log($scope.modal.birthdaymonth);
+
+             }
+        
             var promise = BirthdayFactory.add_birthday_theme($scope.modal);
+
             promise.then(function(data){
                 
 
