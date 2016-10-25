@@ -183,30 +183,30 @@ details = jsonb_set(details, '{company}', ' {
     },
     "work_schedule": {
         "friday": {
-            "in": "07-27-1995 09:00",
-            "out": "07-27-1995 18:00",
+            "in": "09:00",
+            "out": "18:00",
             "flexi": "true"
         },
         "monday": {
-            "in": "07-27-1995 09:00",
-            "out": "07-27-1995 18:00",
+            "in": "09:00",
+            "out": "18:00",
             "flexi": "true"
         },
         "sunday": null,
         "saturday": null,
         "tuesday": {
-            "in": "07-27-1995 09:00",
-            "out": "07-27-1995 18:00",
+            "in": "09:00",
+            "out": "18:00",
             "flexi": "true"
         },
         "thursday": {
-            "in": "07-27-1995 09:00",
-            "out": "07-27-1995 18:00",
+            "in": "09:00",
+            "out": "18:00",
             "flexi": "true"
         },
         "wednesday": {
-            "in": "07-27-1995 09:00",
-            "out": "07-27-1995 18:00",
+            "in": "09:00",
+            "out": "18:00",
             "flexi": "true"
         }
     }
@@ -290,30 +290,30 @@ Example: When All Data is Completly Inserted or Updated
         "date_started": "03-1-2016",
         "work_schedule": {
             "friday": {
-                "in": "10-20-2016 09:00",
-                "out": "10-20-2016 18:00",
+                "in": "09:00",
+                "out": "18:00",
                 "flexi": "true"
             },
             "monday": {
-                "in": "10-20-2016 09:00",
-                "out": "10-20-2016 18:00",
+                "in": "09:00",
+                "out": "18:00",
                 "flexi": "true"
             },
             "sunday": null,
             "tuesday": {
-                "in": "10-20-2016 09:00",
-                "out": "10-20-2016 18:00",
+                "in": "09:00",
+                "out": "18:00",
                 "flexi": "true"
             },
             "saturday": null,
             "thursday": {
-                "in": "10-20-2016 09:00",
-                "out": "10-20-2016 18:00",
+                "in": "09:00",
+                "out": "18:00",
                 "flexi": "true"
             },
             "wednesday": {
-                "in": "10-20-2016 09:00",
-                "out": 10-20-2016 18:00",
+                "in": "09:00",
+                "out": 18:00",
                 "flexi": "true"
             }
         },

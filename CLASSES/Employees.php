@@ -201,6 +201,7 @@ EOT;
                     (select department from departments where pk = cast(employees.details->'company'->>'departments_pk' as int)) as department,
                     date_created,
                     details, 
+                    leave_balances,
                     employees.archived,
                     employees_permissions.permission
                 from employees

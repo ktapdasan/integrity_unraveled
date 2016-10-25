@@ -2,6 +2,7 @@ app.controller('Employees', function(
                                     $scope,
                                     SessionFactory,
                                     EmployeesFactory,
+                                    LeaveFactory,
                                     TimelogFactory,
                                     ngDialog,
                                     UINotification,
@@ -28,7 +29,9 @@ app.controller('Employees', function(
     $scope.groupings= {};
 
     $scope.employee = {};
+    $scope.leave_types = [];
     $scope.employees = {};
+    $scope.time_employee = {};
     $scope.employees.count = 0;
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
@@ -67,6 +70,7 @@ app.controller('Employees', function(
             fetch_department();
             fetch_levels();
             fetch_titles();
+            leave_types();
 })
         .then(null, function(data){
             window.location = './login.html';
@@ -102,45 +106,45 @@ app.controller('Employees', function(
         var today = new Date();
 
         var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
 
-if(dd<10) {
-    dd='0'+dd
-} 
+        if(dd<10) {
+            dd='0'+dd
+        } 
 
-if(mm<10) {
-    mm='0'+mm
-} 
+        if(mm<10) {
+            mm='0'+mm
+        } 
 
-today = yyyy+'-'+mm+'-'+dd;
+        today = yyyy+'-'+mm+'-'+dd;
 
-$scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
-$scope.filter.date_to = new Date();
+        $scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
+        $scope.filter.date_to = new Date();
 
-}
+        }
 
-function getMonday(d) {
-    var d = new Date(d);
-    var day = d.getDay(),
-diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+        function getMonday(d) {
+            var d = new Date(d);
+            var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
 
-var new_date = new Date(d.setDate(diff));
-var dd = new_date.getDate();
-var mm = new_date.getMonth()+1; //January is 0!
-var yyyy = new_date.getFullYear();
+        var new_date = new Date(d.setDate(diff));
+        var dd = new_date.getDate();
+        var mm = new_date.getMonth()+1; //January is 0!
+        var yyyy = new_date.getFullYear();
 
-if(dd<10) {
-    dd='0'+dd
-} 
+        if(dd<10) {
+            dd='0'+dd
+        } 
 
-if(mm<10) {
-    mm='0'+mm
-} 
+        if(mm<10) {
+            mm='0'+mm
+        } 
 
-var monday = yyyy+'-'+mm+'-'+dd;
+        var monday = yyyy+'-'+mm+'-'+dd;
 
-return monday;
+        return monday;
 }
 
 
@@ -218,6 +222,21 @@ function get_supervisors(){
 
     });
 }
+
+function leave_types(){
+        var filter = {
+            archived : false
+        };
+        $scope.leave_types.data = [];
+        var promise = LeaveFactory.get_leave_types(filter);
+        promise.then(function(data){
+        $scope.leave_types.status = true;
+        $scope.leave_types.data = data.data.result;
+        })
+        .then(null, function(data){
+            
+        });
+    }
 
 $scope.export_employees = function(){
     window.open('./FUNCTIONS/Timelog/employees_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
@@ -416,6 +435,7 @@ $scope.activate_employees = function(k){
 
 $scope.edit_employees = function(k){
     get_supervisors();
+    console.log($scope.employees.data);
     $scope.employee = $scope.employees.data[k];
 
 // Undefined? Nested If/Else is here to help - Ken Tapdasan
@@ -489,7 +509,8 @@ if ($scope.employees.data[k].details.company.work_schedule.sunday.in === undefin
     $scope.employee.timein_sunday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.sunday.in !== undefined) {
-    $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.in;
+    $scope.time_employee.sunday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_sunday = new Date($scope.time_employee.sunday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.sunday.in);
 }
 
 //Company -> Work Schedule - > Sunday -> Out Validator
@@ -497,7 +518,8 @@ if ($scope.employees.data[k].details.company.work_schedule.sunday.out === undefi
     $scope.employee.timeout_sunday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.sunday.out !== undefined) {
-    $scope.employee.timeout_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.out;
+    $scope.time_employee.sunday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_sunday = new Date($scope.time_employee.sunday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.sunday.out);
 }
 
 //Company -> Work Schedule - > Sunday -> Flexi Validator
@@ -519,7 +541,8 @@ if ($scope.employees.data[k].details.company.work_schedule.monday.in === undefin
     $scope.employee.timein_monday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.monday.in !== undefined) {
-    $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.in;
+    $scope.time_employee.monday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_monday = new Date($scope.time_employee.monday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.monday.in);
 }
 
 //Company -> Work Schedule - > Monday -> Out Validator
@@ -527,7 +550,8 @@ if ($scope.employees.data[k].details.company.work_schedule.monday.out === undefi
     $scope.employee.timeout_monday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.monday.out !== undefined) {
-    $scope.employee.timeout_monday = $scope.employees.data[k].details.company.work_schedule.monday.out;
+    $scope.time_employee.monday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_monday = new Date($scope.time_employee.monday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.monday.out);
 }
 
 //Company -> Work Schedule - > Monday -> Flexi Validator
@@ -550,7 +574,8 @@ if ($scope.employees.data[k].details.company.work_schedule.tuesday.in === undefi
     $scope.employee.timein_tuesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.in !== undefined) {
-    $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.in;
+     $scope.time_employee.tuesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_tuesday = new Date($scope.time_employee.tuesday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.tuesday.in);
 }
 
 //Company -> Work Schedule - > Tuesday -> Out Validator
@@ -558,7 +583,8 @@ if ($scope.employees.data[k].details.company.work_schedule.tuesday.out === undef
     $scope.employee.timeout_tuesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.out !== undefined) {
-    $scope.employee.timeout_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.out;
+    $scope.time_employee.tuesday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_tuesday = new Date($scope.time_employee.tuesday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.tuesday.out);
 }
 
 //Company -> Work Schedule - > Tuesday -> Flexi Validator
@@ -581,7 +607,8 @@ if ($scope.employees.data[k].details.company.work_schedule.wednesday.in === unde
     $scope.employee.timein_wednesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.wednesday.in !== undefined) {
-    $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.in;
+    $scope.time_employee.wednesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_wednesday = new Date($scope.time_employee.wednesday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.wednesday.in);
 }
 
 //Company -> Work Schedule - > Wednesday -> Out Validator
@@ -589,7 +616,8 @@ if ($scope.employees.data[k].details.company.work_schedule.wednesday.out === und
     $scope.employee.timeout_wednesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.wednesday.out !== undefined) {
-    $scope.employee.timeout_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.out;
+    $scope.time_employee.wednesday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_wednesday = new Date($scope.time_employee.wednesday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.wednesday.out);
 }
 
 //Company -> Work Schedule - > Wednesday -> Flexi Validator
@@ -612,7 +640,8 @@ if ($scope.employees.data[k].details.company.work_schedule.thursday.in === undef
     $scope.employee.timein_thursday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.thursday.in !== undefined) {
-    $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.in;
+    $scope.time_employee.thursday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_thursday = new Date($scope.time_employee.thursday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.thursday.in);
 }
 
 //Company -> Work Schedule - > Thursday -> Out Validator
@@ -620,7 +649,8 @@ if ($scope.employees.data[k].details.company.work_schedule.thursday.out === unde
     $scope.employee.timeout_thursday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.thursday.out !== undefined) {
-    $scope.employee.timeout_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.out;
+    $scope.time_employee.thursday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_thursday = new Date($scope.time_employee.thursday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.thursday.out);
 }
 
 //Company -> Work Schedule - > Thursday -> Flexi Validator
@@ -643,7 +673,8 @@ if ($scope.employees.data[k].details.company.work_schedule.friday.in === undefin
     $scope.employee.timein_friday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.friday.in !== undefined) {
-    $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.in;
+    $scope.time_employee.friday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_friday = new Date($scope.time_employee.friday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.friday.in);
 }
 
 //Company -> Work Schedule - > Friday -> Out Validator
@@ -651,7 +682,8 @@ if ($scope.employees.data[k].details.company.work_schedule.friday.out === undefi
     $scope.employee.timeout_friday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.friday.out !== undefined) {
-    $scope.employee.timeout_friday = $scope.employees.data[k].details.company.work_schedule.friday.out;
+    $scope.time_employee.friday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_friday = new Date($scope.time_employee.friday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.friday.out);
 }
 
 //Company -> Work Schedule - > Friday -> Flexi Validator
@@ -674,7 +706,8 @@ if ($scope.employees.data[k].details.company.work_schedule.saturday.in === undef
     $scope.employee.timein_saturday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.saturday.in !== undefined) {
-    $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.in;
+    $scope.time_employee.saturday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_saturday = new Date($scope.time_employee.saturday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.saturday.in);
 }
 
 //Company -> Work Schedule - > Saturday -> Out Validator
@@ -682,7 +715,8 @@ if ($scope.employees.data[k].details.company.work_schedule.saturday.out === unde
     $scope.employee.timeout_saturday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.saturday.out !== undefined) {
-    $scope.employee.timeout_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.out;
+    $scope.time_employee.saturday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_saturday = new Date($scope.time_employee.saturday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.saturday.out);
 }
 
 //Company -> Work Schedule - > Saturday -> Flexi Validator
@@ -1016,21 +1050,21 @@ ngDialog.openConfirm({
     var yyyyk = dateb.getFullYear();
     $scope.employee.birth_date = mmk+'-'+ddk+'-'+yyyyk;
 
-    $scope.employee.timein_sunday = $filter('date')($scope.employee.timein_sunday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timein_monday = $filter('date')($scope.employee.timein_monday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timein_tuesday = $filter('date')($scope.employee.timein_tuesday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timein_wednesday = $filter('date')($scope.employee.timein_wednesday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timein_thursday = $filter('date')($scope.employee.timein_thursday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timein_friday = $filter('date')($scope.employee.timein_friday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timein_saturday = $filter('date')($scope.employee.timein_saturday, "yyyy-MM-dd HH:mm");
+    $scope.employee.timein_sunday = $filter('date')($scope.employee.timein_sunday, "HH:mm");
+    $scope.employee.timein_monday = $filter('date')($scope.employee.timein_monday, "HH:mm");
+    $scope.employee.timein_tuesday = $filter('date')($scope.employee.timein_tuesday, "HH:mm");
+    $scope.employee.timein_wednesday = $filter('date')($scope.employee.timein_wednesday, "HH:mm");
+    $scope.employee.timein_thursday = $filter('date')($scope.employee.timein_thursday, "HH:mm");
+    $scope.employee.timein_friday = $filter('date')($scope.employee.timein_friday, "HH:mm");
+    $scope.employee.timein_saturday = $filter('date')($scope.employee.timein_saturday, "HH:mm");
 
-    $scope.employee.timeout_sunday = $filter('date')($scope.employee.timeout_sunday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timeout_monday = $filter('date')($scope.employee.timeout_monday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timeout_tuesday = $filter('date')($scope.employee.timeout_tuesday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timeout_wednesday = $filter('date')($scope.employee.timeout_wednesday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timeout_thursday = $filter('date')($scope.employee.timeout_thursday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timeout_friday = $filter('date')($scope.employee.timeout_friday, "yyyy-MM-dd HH:mm");
-    $scope.employee.timeout_saturday = $filter('date')($scope.employee.timeout_saturday, "yyyy-MM-dd HH:mm");
+    $scope.employee.timeout_sunday = $filter('date')($scope.employee.timeout_sunday, "HH:mm");
+    $scope.employee.timeout_monday = $filter('date')($scope.employee.timeout_monday, "HH:mm");
+    $scope.employee.timeout_tuesday = $filter('date')($scope.employee.timeout_tuesday, "HH:mm");
+    $scope.employee.timeout_wednesday = $filter('date')($scope.employee.timeout_wednesday, "HH:mm");
+    $scope.employee.timeout_thursday = $filter('date')($scope.employee.timeout_thursday, "HH:mm");
+    $scope.employee.timeout_friday = $filter('date')($scope.employee.timeout_friday, "HH:mm");
+    $scope.employee.timeout_saturday = $filter('date')($scope.employee.timeout_saturday, "HH:mm");
 
     if ($scope.employee.timein_sunday == 'null' || $scope.employee.timein_sunday == undefined) {$scope.employee.timein_sunday = 'data'};
     if ($scope.employee.timein_monday == 'null' || $scope.employee.timein_monday == undefined) {$scope.employee.timein_monday = 'data'};
@@ -1055,7 +1089,7 @@ ngDialog.openConfirm({
     if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'data'};
     if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'data'};
     if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'data'};
-
+   
     var promise = EmployeesFactory.edit_employees($scope.employee);
     promise.then(function(data){
 
@@ -1086,10 +1120,23 @@ ngDialog.openConfirm({
 });
 }
 $scope.view_employees = function(k){
-
     get_supervisors();
 
     $scope.employee = $scope.employees.data[k];
+    $scope.employees.data[k].leave_balances = JSON.parse($scope.employees.data[k].leave_balances);
+    $scope.employee.leave_balances = $scope.employees.data[k].leave_balances;
+
+    var a = $scope.employee.leave_balances;
+    
+    $scope.employee.leave_balances = {};
+   
+    for(var i in $scope.leave_types.data){
+        if(a[$scope.leave_types.data[i].pk] === undefined){
+            a[$scope.leave_types.data[i].pk] = 0;
+        }
+        $scope.employee.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
+        
+    }
 
 // Undefined? Nested If/Else is here to help - Ken Tapdasan
 
@@ -1155,7 +1202,8 @@ if ($scope.employees.data[k].details.company.work_schedule.sunday.in === undefin
     $scope.employee.timein_sunday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.sunday.in !== undefined) {
-    $scope.employee.timein_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.in;
+    $scope.time_employee.sunday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_sunday = new Date($scope.time_employee.sunday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.sunday.in);
 }
 
 //Company -> Work Schedule - > Sunday -> Out Validator
@@ -1163,16 +1211,17 @@ if ($scope.employees.data[k].details.company.work_schedule.sunday.out === undefi
     $scope.employee.timeout_sunday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.sunday.out !== undefined) {
-    $scope.employee.timeout_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.out;
+    $scope.time_employee.sunday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_sunday = new Date($scope.time_employee.sunday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.sunday.out);
 }
 
 //Company -> Work Schedule - > Sunday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi === undefined) {
-    $scope.employee.flexi_sunday = false;
+    $scope.employee.flexi_sunday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.sunday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.sunday.flexi = 'Yes';
     }
     $scope.employee.flexi_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
 }
@@ -1185,7 +1234,8 @@ if ($scope.employees.data[k].details.company.work_schedule.monday.in === undefin
     $scope.employee.timein_monday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.monday.in !== undefined) {
-    $scope.employee.timein_monday = $scope.employees.data[k].details.company.work_schedule.monday.in;
+    $scope.time_employee.monday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_monday = new Date($scope.time_employee.monday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.monday.in);
 }
 
 //Company -> Work Schedule - > Monday -> Out Validator
@@ -1193,16 +1243,17 @@ if ($scope.employees.data[k].details.company.work_schedule.monday.out === undefi
     $scope.employee.timeout_monday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.monday.out !== undefined) {
-    $scope.employee.timeout_monday = $scope.employees.data[k].details.company.work_schedule.monday.out;
+    $scope.time_employee.monday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_monday = new Date($scope.time_employee.monday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.monday.out);
 }
 
 //Company -> Work Schedule - > Monday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.monday.flexi === undefined) {
-    $scope.employee.flexi_monday = false;
+    $scope.employee.flexi_monday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.monday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.monday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.monday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.monday.flexi = 'Yes';
     }
     $scope.employee.flexi_monday = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
 }
@@ -1216,7 +1267,8 @@ if ($scope.employees.data[k].details.company.work_schedule.tuesday.in === undefi
     $scope.employee.timein_tuesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.in !== undefined) {
-    $scope.employee.timein_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.in;
+     $scope.time_employee.tuesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_tuesday = new Date($scope.time_employee.tuesday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.tuesday.in);
 }
 
 //Company -> Work Schedule - > Tuesday -> Out Validator
@@ -1224,16 +1276,17 @@ if ($scope.employees.data[k].details.company.work_schedule.tuesday.out === undef
     $scope.employee.timeout_tuesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.out !== undefined) {
-    $scope.employee.timeout_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.out;
+    $scope.time_employee.tuesday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_tuesday = new Date($scope.time_employee.tuesday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.tuesday.out);
 }
 
 //Company -> Work Schedule - > Tuesday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi === undefined) {
-    $scope.employee.flexi_tuesday = false;
+    $scope.employee.flexi_tuesday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.tuesday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.tuesday.flexi = 'Yes';
     }
     $scope.employee.flexi_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
 }
@@ -1247,7 +1300,8 @@ if ($scope.employees.data[k].details.company.work_schedule.wednesday.in === unde
     $scope.employee.timein_wednesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.wednesday.in !== undefined) {
-    $scope.employee.timein_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.in;
+    $scope.time_employee.wednesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_wednesday = new Date($scope.time_employee.wednesday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.wednesday.in);
 }
 
 //Company -> Work Schedule - > Wednesday -> Out Validator
@@ -1255,16 +1309,17 @@ if ($scope.employees.data[k].details.company.work_schedule.wednesday.out === und
     $scope.employee.timeout_wednesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.wednesday.out !== undefined) {
-    $scope.employee.timeout_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.out;
+    $scope.time_employee.wednesday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_wednesday = new Date($scope.time_employee.wednesday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.wednesday.out);
 }
 
 //Company -> Work Schedule - > Wednesday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi === undefined) {
-    $scope.employee.flexi_wednesday = false;
+    $scope.employee.flexi_wednesday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.wednesday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.wednesday.flexi = 'Yes';
     }
     $scope.employee.flexi_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
 }
@@ -1278,7 +1333,8 @@ if ($scope.employees.data[k].details.company.work_schedule.thursday.in === undef
     $scope.employee.timein_thursday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.thursday.in !== undefined) {
-    $scope.employee.timein_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.in;
+    $scope.time_employee.thursday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_thursday = new Date($scope.time_employee.thursday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.thursday.in);
 }
 
 //Company -> Work Schedule - > Thursday -> Out Validator
@@ -1286,16 +1342,17 @@ if ($scope.employees.data[k].details.company.work_schedule.thursday.out === unde
     $scope.employee.timeout_thursday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.thursday.out !== undefined) {
-    $scope.employee.timeout_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.out;
+    $scope.time_employee.thursday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_thursday = new Date($scope.time_employee.thursday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.thursday.out);
 }
 
 //Company -> Work Schedule - > Thursday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi === undefined) {
-    $scope.employee.flexi_thursday = false;
+    $scope.employee.flexi_thursday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.thursday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.thursday.flexi = 'Yes';
     }
     $scope.employee.flexi_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
 }
@@ -1309,7 +1366,8 @@ if ($scope.employees.data[k].details.company.work_schedule.friday.in === undefin
     $scope.employee.timein_friday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.friday.in !== undefined) {
-    $scope.employee.timein_friday = $scope.employees.data[k].details.company.work_schedule.friday.in;
+    $scope.time_employee.friday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_friday = new Date($scope.time_employee.friday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.friday.in);
 }
 
 //Company -> Work Schedule - > Friday -> Out Validator
@@ -1317,16 +1375,17 @@ if ($scope.employees.data[k].details.company.work_schedule.friday.out === undefi
     $scope.employee.timeout_friday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.friday.out !== undefined) {
-    $scope.employee.timeout_friday = $scope.employees.data[k].details.company.work_schedule.friday.out;
+    $scope.time_employee.friday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_friday = new Date($scope.time_employee.friday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.friday.out);
 }
 
 //Company -> Work Schedule - > Friday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.friday.flexi === undefined) {
-    $scope.employee.flexi_friday = false;
+    $scope.employee.flexi_friday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.friday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.friday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.friday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.friday.flexi = 'Yes';
     }
     $scope.employee.flexi_friday = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
 }
@@ -1340,7 +1399,8 @@ if ($scope.employees.data[k].details.company.work_schedule.saturday.in === undef
     $scope.employee.timein_saturday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.saturday.in !== undefined) {
-    $scope.employee.timein_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.in;
+    $scope.time_employee.saturday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timein_saturday = new Date($scope.time_employee.saturday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.saturday.in);
 }
 
 //Company -> Work Schedule - > Saturday -> Out Validator
@@ -1348,16 +1408,17 @@ if ($scope.employees.data[k].details.company.work_schedule.saturday.out === unde
     $scope.employee.timeout_saturday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.saturday.out !== undefined) {
-    $scope.employee.timeout_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.out;
+    $scope.time_employee.saturday_out = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.employee.timeout_saturday = new Date($scope.time_employee.saturday_out + ' ' + $scope.employees.data[k].details.company.work_schedule.saturday.out);
 }
 
 //Company -> Work Schedule - > Saturday -> Flexi Validator
 if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi === undefined) {
-    $scope.employee.flexi_saturday = false;
+    $scope.employee.flexi_saturday = 'No';
 }
 else if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi !== undefined) {
     if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.saturday.flexi = true;
+        $scope.employees.data[k].details.company.work_schedule.saturday.flexi = 'Yes';
     }
     $scope.employee.flexi_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
 }
@@ -1612,6 +1673,8 @@ else if ($scope.employees.data[k].details.education != null) {
         $scope.employee.educations = $scope.employee.education;
     }
 }
+
+$scope.employee.leave_balances
 if ($scope.employee.salary_type != null || $scope.employee.salary_type != undefined){
     $scope.isShown = function(salarys_type) {
         return salarys_type === $scope.employee.salary_type;

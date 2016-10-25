@@ -259,21 +259,21 @@ app.controller('New_Employees', function(
             var yyyyk = dateb.getFullYear();
             $scope.employees.birth_date = mmk+'-'+ddk+'-'+yyyyk;
 
-            $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "HH:mm");
+            $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "HH:mm");
+            $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "HH:mm");
+            $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
+            $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "HH:mm");
+            $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "HH:mm");
+            $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "HH:mm");
             
-            $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timeout_wednesday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "yyyy-MM-dd HH:mm");
-            $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "yyyy-MM-dd HH:mm");
+            $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "HH:mm");
+            $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "HH:mm");
+            $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "HH:mm");
+            $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timeout_wednesday, "HH:mm");
+            $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "HH:mm");
+            $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "HH:mm");
+            $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "HH:mm");
 
             if ($scope.employees.timein_sunday == 'null' || $scope.employees.timein_sunday == undefined) {$scope.employees.timein_sunday = 'data'};
             if ($scope.employees.timein_monday == 'null' || $scope.employees.timein_monday == undefined) {$scope.employees.timein_monday = 'data'};
