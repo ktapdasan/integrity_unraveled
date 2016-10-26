@@ -57,6 +57,7 @@ app.controller('New_Employees', function(
         intern_hours:'',
         salary_type:'bank',
         bank_name:'',
+        pay_period:'',
         rate_type:'',
         account_number:'',
         amount:'',
@@ -291,13 +292,13 @@ app.controller('New_Employees', function(
             if ($scope.employees.timeout_friday == 'null' || $scope.employees.timeout_friday == undefined) {$scope.employees.timeout_friday = 'data'};
             if ($scope.employees.timeout_saturday == 'null' || $scope.employees.timeout_saturday == undefined) {$scope.employees.timeout_saturday = 'data'};
 
-            if ($scope.employees.flexi_sunday == 'null' || $scope.employees.flexi_sunday == false) {$scope.employees.flexi_sunday = 'data'};
-            if ($scope.employees.flexi_monday == 'null' || $scope.employees.flexi_monday == false) {$scope.employees.flexi_monday = 'data'};
-            if ($scope.employees.flexi_tuesday == 'null'|| $scope.employees.flexi_tuesday == false) {$scope.employees.flexi_tuesday = 'data'};
-            if ($scope.employees.flexi_wednesday == 'null' || $scope.employees.flexi_wednesday == false) {$scope.employees.flexi_wednesday = 'data'};
-            if ($scope.employees.flexi_thursday == 'null' || $scope.employees.flexi_thursday == false) {$scope.employees.flexi_thursday = 'data'};
-            if ($scope.employees.flexi_friday == 'null' || $scope.employees.flexi_friday == false) {$scope.employees.flexi_friday = 'data'};
-            if ($scope.employees.flexi_saturday == 'null' || $scope.employees.flexi_saturday == false) {$scope.employees.flexi_saturday = 'data'};
+            if ($scope.employee.flexi_sunday == 'null' || $scope.employee.flexi_sunday == false || $scope.employee.flexi_sunday == undefined) {$scope.employee.flexi_sunday = 'false'};
+            if ($scope.employee.flexi_monday == 'null' || $scope.employee.flexi_monday == false || $scope.employee.flexi_monday == undefined) {$scope.employee.flexi_monday = 'false'};
+            if ($scope.employee.flexi_tuesday == 'null'|| $scope.employee.flexi_tuesday == false || $scope.employee.flexi_tuesday == undefined) {$scope.employee.flexi_tuesday = 'false'};
+            if ($scope.employee.flexi_wednesday == 'null' || $scope.employee.flexi_wednesday == false || $scope.employee.flexi_wednesday == undefined) {$scope.employee.flexi_wednesday = 'false'};
+            if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'false'};
+            if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'false'};
+            if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'false'};
 
             
         $scope.employees.education = JSON.stringify($scope.employees.education);
@@ -349,6 +350,7 @@ app.controller('New_Employees', function(
         intern_hours:'',
         salary_type:'bank',
         bank_name:'',
+        pay_period:'',
         rate_type:'',
         account_number:'',
         education: [{educ_level: "Primary"}],

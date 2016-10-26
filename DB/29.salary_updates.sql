@@ -10,7 +10,7 @@ create table pay_period (
 	period text not null,
 	archived boolean default false
 );
-alter table rate_types owner to chrs;
+alter table pay_period owner to chrs;
 
 insert into rate_types
 (

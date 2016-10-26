@@ -176,38 +176,39 @@ details = jsonb_set(details, '{company}', ' {
     "business_email_address": "ken.tapdasan@chrsglobal.com",
     "salary": {
         "salary_type": "cash",
+        "rate_type_pk": "2",
+        "pay_period_pk": "1",
         "details": {
-            "amount": "12000",
-            "rate_type": "Daily"
+            "amount": "12000"
         }
     },
     "work_schedule": {
         "friday": {
             "in": "09:00",
             "out": "18:00",
-            "flexi": "true"
+            "flexible": "true"
         },
         "monday": {
             "in": "09:00",
             "out": "18:00",
-            "flexi": "true"
+            "flexible": "true"
         },
         "sunday": null,
         "saturday": null,
         "tuesday": {
             "in": "09:00",
             "out": "18:00",
-            "flexi": "true"
+            "flexible": "true"
         },
         "thursday": {
             "in": "09:00",
             "out": "18:00",
-            "flexi": "true"
+            "flexible": "true"
         },
         "wednesday": {
             "in": "09:00",
             "out": "18:00",
-            "flexi": "true"
+            "flexible": "true"
         }
     }
 }
@@ -278,10 +279,10 @@ Example: When All Data is Completly Inserted or Updated
     "company": {
         "salary": {
             "details": {
-                "amount": "12000",
-                "rate_type": "Monthly"
+                "amount": "12000"
             },
-            "salary_type": "cash"
+            "salary_type": "cash",
+            "rate_type_pk": "2"
         },
         "levels_pk": "7",
         "titles_pk": "14",

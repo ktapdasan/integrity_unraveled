@@ -731,10 +731,27 @@ select{
                             <td id="css">
                                 <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="Daily">Daily</option>
-                                   <option value="Monthly">Monthly</option>
+                                   <option value="2">Daily</option>
+                                   <option value="3">Monthly</option>
+                                   <option value="1">Hourly</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
+                </tr>
+                 <tr ng-show="isShown('bank')">
+                    <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="1">Daily</option>
+                                   <option value="2">Weekly</option>
+                                   <option value="3">Semi-Monthly</option>
+                                   <option value="4">Monthly</option>
+                                   <option value="5">Annually</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                             </td> 
                 </tr>
                 <tr ng-show="isShown('wire')">
@@ -768,10 +785,27 @@ select{
                             <td id="css">
                                 <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="Daily">Daily</option>
-                                   <option value="Monthly">Monthly</option>
+                                   <option value="2">Daily</option>
+                                   <option value="3">Monthly</option>
+                                   <option value="1">Hourly</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
+                </tr>
+                <tr ng-show="isShown('wire')">
+                    <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="1">Daily</option>
+                                   <option value="2">Weekly</option>
+                                   <option value="3">Semi-Monthly</option>
+                                   <option value="4">Monthly</option>
+                                   <option value="5">Annually</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                             </td> 
                 </tr>
                 <tr ng-show="isShown('cash')">
@@ -788,10 +822,27 @@ select{
                             <td id="css">
                                 <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;">
                                     <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="Daily">Daily</option>
-                                   <option value="Monthly">Monthly</option>
+                                   <option value="2">Daily</option>
+                                   <option value="3">Monthly</option>
+                                   <option value="1">Hourly</option>
                                 </select>
                                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+                            </td> 
+                </tr>
+                <tr ng-show="isShown('cash')">
+                    <td>
+                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
+                            </td>
+                            <td id="css">
+                                <select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                                   <option value="1">Daily</option>
+                                   <option value="2">Weekly</option>
+                                   <option value="3">Semi-Monthly</option>
+                                   <option value="4">Monthly</option>
+                                   <option value="5">Annually</option>
+                                </select>
+                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                             </td> 
                 </tr>
                              <tr>
