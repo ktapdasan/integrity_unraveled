@@ -435,7 +435,7 @@ $scope.activate_employees = function(k){
 
 $scope.edit_employees = function(k){
     get_supervisors();
-    console.log($scope.employees.data);
+    
     $scope.employee = $scope.employees.data[k];
 
 // Undefined? Nested If/Else is here to help - Ken Tapdasan
@@ -457,6 +457,13 @@ if ($scope.employees.data[k].details.company.salary.salary_type === undefined) {
 else if ($scope.employees.data[k].details.company.salary.salary_type !== undefined) {
     $scope.employee.salary_type = $scope.employees.data[k].details.company.salary.salary_type;
 }
+//Company -> Salary - > Period Pay Validator
+if ($scope.employees.data[k].details.company.salary.pay_period_pk === undefined) {
+    $scope.employees.data[k].details.company.salary.pay_period_pk = null;
+}
+else if ($scope.employees.data[k].details.company.salary.pay_period_pk !== undefined) {
+    $scope.employee.pay_period = $scope.employees.data[k].details.company.salary.pay_period_pk;
+}
 //Company -> Salary - > Salary Bank Name Validator
 if ($scope.employees.data[k].details.company.salary.details.bank_name === undefined) {
     $scope.employees.data[k].details.company.salary.details.bank_name = null;
@@ -472,11 +479,11 @@ else if ($scope.employees.data[k].details.company.salary.details.account_number 
     $scope.employee.account_number = $scope.employees.data[k].details.company.salary.details.account_number;
 }
 //Company -> Salary - > Rate Type
-if ($scope.employees.data[k].details.company.salary.details.rate_type === undefined) {
-    $scope.employees.data[k].details.company.salary.details.rate_type = null;
+if ($scope.employees.data[k].details.company.salary.rate_type_pk === undefined) {
+    $scope.employees.data[k].details.company.salary.rate_type_pk = null;
 }
-else if ($scope.employees.data[k].details.company.salary.details.rate_type !== undefined) {
-    $scope.employee.rate_type = $scope.employees.data[k].details.company.salary.details.rate_type;
+else if ($scope.employees.data[k].details.company.salary.rate_type_pk !== undefined) {
+    $scope.employee.rate_type = $scope.employees.data[k].details.company.salary.rate_type_pk;
 }
 //Company -> Salary - > Salary Amount Validator
 if ($scope.employees.data[k].details.company.salary.details.amount === undefined) {
@@ -523,14 +530,18 @@ else if ($scope.employees.data[k].details.company.work_schedule.sunday.out !== u
 }
 
 //Company -> Work Schedule - > Sunday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible === undefined) {
     $scope.employee.flexi_sunday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.sunday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.sunday.flexible = true;
     }
-    $scope.employee.flexi_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible == true || $scope.employee.flexi_sunday == 'Yes') {
+
+        $scope.employee.flexi_sunday = true;    
+    }
+    
 }
 }
 //Company -> Work Schedule - > Monday Validator
@@ -555,14 +566,17 @@ else if ($scope.employees.data[k].details.company.work_schedule.monday.out !== u
 }
 
 //Company -> Work Schedule - > Monday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.monday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.monday.flexible === undefined) {
     $scope.employee.flexi_monday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.monday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.monday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.monday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.monday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.monday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.monday.flexible = true;
     }
-    $scope.employee.flexi_monday = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.monday.flexible == true || $scope.employee.flexi_monday == 'Yes') {
+
+        $scope.employee.flexi_monday = true;    
+    }
 }
 }
 
@@ -588,14 +602,17 @@ else if ($scope.employees.data[k].details.company.work_schedule.tuesday.out !== 
 }
 
 //Company -> Work Schedule - > Tuesday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible === undefined) {
     $scope.employee.flexi_tuesday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.tuesday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.tuesday.flexible = true;
     }
-    $scope.employee.flexi_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible == true || $scope.employee.flexi_tuesday == 'Yes') {
+
+        $scope.employee.flexi_tuesday = true;    
+    }
 }
 }
 
@@ -621,14 +638,17 @@ else if ($scope.employees.data[k].details.company.work_schedule.wednesday.out !=
 }
 
 //Company -> Work Schedule - > Wednesday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible === undefined) {
     $scope.employee.flexi_wednesday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.wednesday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.wednesday.flexible = true;
     }
-    $scope.employee.flexi_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible == true || $scope.employee.flexi_wednesday == 'Yes') {
+
+        $scope.employee.flexi_wednesday = true;    
+    }
 }
 }
 
@@ -654,14 +674,17 @@ else if ($scope.employees.data[k].details.company.work_schedule.thursday.out !==
 }
 
 //Company -> Work Schedule - > Thursday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible === undefined) {
     $scope.employee.flexi_thursday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.thursday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.thursday.flexible = true;
     }
-    $scope.employee.flexi_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible == true || $scope.employee.flexi_thursday == 'Yes') {
+
+        $scope.employee.flexi_thursday = true;    
+    }
 }
 }
 
@@ -687,14 +710,17 @@ else if ($scope.employees.data[k].details.company.work_schedule.friday.out !== u
 }
 
 //Company -> Work Schedule - > Friday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.friday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.friday.flexible === undefined) {
     $scope.employee.flexi_friday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.friday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.friday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.friday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.friday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.friday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.friday.flexible = true;
     }
-    $scope.employee.flexi_friday = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.friday.flexible == true || $scope.employee.flexi_friday == 'Yes') {
+
+        $scope.employee.flexi_friday = true;    
+    }
 }
 }
 
@@ -720,14 +746,17 @@ else if ($scope.employees.data[k].details.company.work_schedule.saturday.out !==
 }
 
 //Company -> Work Schedule - > Saturday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible === undefined) {
     $scope.employee.flexi_saturday = false;
 }
-else if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.saturday.flexi = true;
+else if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.saturday.flexible = true;
     }
-    $scope.employee.flexi_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
+    if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible == true || $scope.employee.flexi_saturday == 'Yes') {
+
+        $scope.employee.flexi_saturday = true;    
+    }
 }
 }
 
@@ -1082,13 +1111,13 @@ ngDialog.openConfirm({
     if ($scope.employee.timeout_friday == 'null' || $scope.employee.timeout_friday == undefined) {$scope.employee.timeout_friday = 'data'};
     if ($scope.employee.timeout_saturday == 'null' || $scope.employee.timeout_saturday == undefined) {$scope.employee.timeout_saturday = 'data'};
 
-    if ($scope.employee.flexi_sunday == 'null' || $scope.employee.flexi_sunday == false || $scope.employee.flexi_sunday == undefined) {$scope.employee.flexi_sunday = 'data'};
-    if ($scope.employee.flexi_monday == 'null' || $scope.employee.flexi_monday == false || $scope.employee.flexi_monday == undefined) {$scope.employee.flexi_monday = 'data'};
-    if ($scope.employee.flexi_tuesday == 'null'|| $scope.employee.flexi_tuesday == false || $scope.employee.flexi_tuesday == undefined) {$scope.employee.flexi_tuesday = 'data'};
-    if ($scope.employee.flexi_wednesday == 'null' || $scope.employee.flexi_wednesday == false || $scope.employee.flexi_wednesday == undefined) {$scope.employee.flexi_wednesday = 'data'};
-    if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'data'};
-    if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'data'};
-    if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'data'};
+    if ($scope.employee.flexi_sunday == 'null' || $scope.employee.flexi_sunday == false || $scope.employee.flexi_sunday == undefined) {$scope.employee.flexi_sunday = 'false'};
+    if ($scope.employee.flexi_monday == 'null' || $scope.employee.flexi_monday == false || $scope.employee.flexi_monday == undefined) {$scope.employee.flexi_monday = 'false'};
+    if ($scope.employee.flexi_tuesday == 'null'|| $scope.employee.flexi_tuesday == false || $scope.employee.flexi_tuesday == undefined) {$scope.employee.flexi_tuesday = 'false'};
+    if ($scope.employee.flexi_wednesday == 'null' || $scope.employee.flexi_wednesday == false || $scope.employee.flexi_wednesday == undefined) {$scope.employee.flexi_wednesday = 'false'};
+    if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'false'};
+    if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'false'};
+    if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'false'};
    
     var promise = EmployeesFactory.edit_employees($scope.employee);
     promise.then(function(data){
@@ -1157,6 +1186,13 @@ if ($scope.employees.data[k].details.company.salary.salary_type === undefined) {
 else if ($scope.employees.data[k].details.company.salary.salary_type !== undefined) {
     $scope.employee.salary_type = $scope.employees.data[k].details.company.salary.salary_type;
 }
+//Company -> Salary - > Period Pay Validator
+if ($scope.employees.data[k].details.company.salary.pay_period_pk === undefined) {
+    $scope.employees.data[k].details.company.salary.pay_period_pk = null;
+}
+else if ($scope.employees.data[k].details.company.salary.pay_period_pk !== undefined) {
+    $scope.employee.pay_period = $scope.employees.data[k].details.company.salary.pay_period_pk;
+}
 //Company -> Salary - > Salary Bank Name Validator
 if ($scope.employees.data[k].details.company.salary.details.bank_name === undefined) {
     $scope.employees.data[k].details.company.salary.details.bank_name = null;
@@ -1170,6 +1206,13 @@ if ($scope.employees.data[k].details.company.salary.details.account_number === u
 }
 else if ($scope.employees.data[k].details.company.salary.details.account_number !== undefined) {
     $scope.employee.account_number = $scope.employees.data[k].details.company.salary.details.account_number;
+}
+//Company -> Salary - > Rate Type
+if ($scope.employees.data[k].details.company.salary.rate_type_pk === undefined) {
+    $scope.employees.data[k].details.company.salary.rate_type_pk = null;
+}
+else if ($scope.employees.data[k].details.company.salary.rate_type_pk !== undefined) {
+    $scope.employee.rate_type = $scope.employees.data[k].details.company.salary.rate_type_pk;
 }
 //Company -> Salary - > Salary Amount Validator
 if ($scope.employees.data[k].details.company.salary.details.amount === undefined) {
@@ -1216,14 +1259,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.sunday.out !== u
 }
 
 //Company -> Work Schedule - > Sunday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible === undefined) {
     $scope.employee.flexi_sunday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.sunday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.sunday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.sunday.flexible = 'Yes';
     }
-    $scope.employee.flexi_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.flexi;
+    $scope.employee.flexi_sunday = $scope.employees.data[k].details.company.work_schedule.sunday.flexible;
 }
 }
 //Company -> Work Schedule - > Monday Validator
@@ -1248,14 +1291,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.monday.out !== u
 }
 
 //Company -> Work Schedule - > Monday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.monday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.monday.flexible === undefined) {
     $scope.employee.flexi_monday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.monday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.monday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.monday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.monday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.monday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.monday.flexible = 'Yes';
     }
-    $scope.employee.flexi_monday = $scope.employees.data[k].details.company.work_schedule.monday.flexi;
+    $scope.employee.flexi_monday = $scope.employees.data[k].details.company.work_schedule.monday.flexible;
 }
 }
 
@@ -1281,14 +1324,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.tuesday.out !== 
 }
 
 //Company -> Work Schedule - > Tuesday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible === undefined) {
     $scope.employee.flexi_tuesday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.tuesday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.tuesday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.tuesday.flexible = 'Yes';
     }
-    $scope.employee.flexi_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.flexi;
+    $scope.employee.flexi_tuesday = $scope.employees.data[k].details.company.work_schedule.tuesday.flexible;
 }
 }
 
@@ -1314,14 +1357,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.wednesday.out !=
 }
 
 //Company -> Work Schedule - > Wednesday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible === undefined) {
     $scope.employee.flexi_wednesday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.wednesday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.wednesday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.wednesday.flexible = 'Yes';
     }
-    $scope.employee.flexi_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.flexi;
+    $scope.employee.flexi_wednesday = $scope.employees.data[k].details.company.work_schedule.wednesday.flexible;
 }
 }
 
@@ -1347,14 +1390,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.thursday.out !==
 }
 
 //Company -> Work Schedule - > Thursday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible === undefined) {
     $scope.employee.flexi_thursday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.thursday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.thursday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.thursday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.thursday.flexible = 'Yes';
     }
-    $scope.employee.flexi_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.flexi;
+    $scope.employee.flexi_thursday = $scope.employees.data[k].details.company.work_schedule.thursday.flexible;
 }
 }
 
@@ -1380,14 +1423,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.friday.out !== u
 }
 
 //Company -> Work Schedule - > Friday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.friday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.friday.flexible === undefined) {
     $scope.employee.flexi_friday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.friday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.friday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.friday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.friday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.friday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.friday.flexible = 'Yes';
     }
-    $scope.employee.flexi_friday = $scope.employees.data[k].details.company.work_schedule.friday.flexi;
+    $scope.employee.flexi_friday = $scope.employees.data[k].details.company.work_schedule.friday.flexible;
 }
 }
 
@@ -1413,14 +1456,14 @@ else if ($scope.employees.data[k].details.company.work_schedule.saturday.out !==
 }
 
 //Company -> Work Schedule - > Saturday -> Flexi Validator
-if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi === undefined) {
+if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible === undefined) {
     $scope.employee.flexi_saturday = 'No';
 }
-else if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi !== undefined) {
-    if ($scope.employees.data[k].details.company.work_schedule.saturday.flexi == 'true') {
-        $scope.employees.data[k].details.company.work_schedule.saturday.flexi = 'Yes';
+else if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible !== undefined) {
+    if ($scope.employees.data[k].details.company.work_schedule.saturday.flexible == 'true') {
+        $scope.employees.data[k].details.company.work_schedule.saturday.flexible = 'Yes';
     }
-    $scope.employee.flexi_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.flexi;
+    $scope.employee.flexi_saturday = $scope.employees.data[k].details.company.work_schedule.saturday.flexible;
 }
 }
 

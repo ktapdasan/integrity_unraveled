@@ -110,29 +110,6 @@ app.controller('Profile', function(
          get_positions();
          leave_types();
 
-         $scope.genders = [
-                { pk:'1', gender:'Male'},
-                { pk:'2', gender:'Female'}
-            ];
-            $scope.civils = [
-                { pk:'1', civilstatus:'Married'},
-                { pk:'2', civilstatus:'Single'},
-                { pk:'3', civilstatus:'Divorced'},
-                { pk:'4', civilstatus:'Living Common Law'},
-                { pk:'5', civilstatus:'Widowed'}
-            ];
-            $scope.estatus = [
-                { pk:'1', emstatus:'Probationary'},
-                { pk:'2', emstatus:'Trainee'},
-                { pk:'3', emstatus:'Contractual'},
-                { pk:'4', emstatus:'Regular'},
-                { pk:'5', emstatus:'Consultant'}
-            ];
-            $scope.etype = [
-                { pk:'1', emtype:'Exempt'},
-                { pk:'2', emtype:'Non-Exempt'}
-            ];
-
 
         var filters = { 
             'pk' : $scope.pk
@@ -251,39 +228,36 @@ app.controller('Profile', function(
 
 
            
-            if ($scope.profile.details.company.employment_type_pk == 'NaN' || $scope.profile.details.company.employment_type_pk == undefined){
+            if ($scope.profile.details.company.employment_type == 'NaN' || $scope.profile.details.company.employment_type_pk == undefined){
                  $scope.profile.employment_typess = 'No Data';
             }
             else{
-                $scope.profile.details.company.employment_type_pk = parseInt($scope.profile.details.company.employment_type_pk) - parseInt($scope.minus);
-                $scope.profile.employment_typess = $scope.etype[$scope.profile.details.company.employment_type_pk].emtype;
+                $scope.profile.employment_typess = $scope.profile.details.company.employment_type;
             }
 
 
-            if ($scope.profile.employment_status == undefined){
-                $scope.profile.employment_status = 'No Data';
-            }
-            else{
-                $scope.profile.details.company.employee_status_pk = parseInt($scope.profile.details.company.employee_status_pk) - parseInt($scope.minus);
-                $scope.profile.employment_status = $scope.estatus[$scope.profile.details.company.employee_status_pk].emstatus;
-            }
-
-
-            if($scope.profile.civil_types == undefined){
-                 $scope.profile.civil_types = 'No Data';
+            if ($scope.profile.details.company.employee_status == undefined){
+                $scope.profile.details.company.employee_status = 'No Data';
             }
             else{
-                $scope.profile.details.personal.civilstatus_pk = parseInt($scope.profile.details.personal.civilstatus_pk) - parseInt($scope.minus);
-                $scope.profile.civil_types = $scope.civils[$scope.profile.details.personal.civilstatus_pk].civilstatus;
+                $scope.profile.employment_status = $scope.profile.details.company.employee_status;
             }
 
 
-            if($scope.profile.gender_type == undefined){
-                $scope.profile.gender_type = 'No Data';
+            if($scope.profile.details.personal.civilstatus == undefined){
+                 $scope.profile.details.personal.civilstatus = 'No Data';
             }
             else{
-                $scope.profile.details.personal.gender_pk = parseInt($scope.profile.details.personal.gender_pk) - parseInt($scope.minus);
-                $scope.profile.gender_type = $scope.genders[$scope.profile.details.personal.gender_pk].gender;
+                
+                $scope.profile.civil_types = $scope.profile.details.personal.civilstatus;
+
+            }
+            if($scope.profile.details.personal.gender == undefined){
+                $scope.profile.gender = 'No Data';
+            }
+            else{
+                
+                $scope.profile.gender_type = $scope.profile.details.personal.gender;
             }
 
             
