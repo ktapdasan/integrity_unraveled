@@ -1195,6 +1195,22 @@ select{
                                     <div>{{employee.amount}}</div>
                                 </td>
                              </tr>
+                             <tr ng-show="isShown('bank')">
+                                <td>
+                                    <div><b>Rate Type:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.ratypes}}</div>
+                                </td>
+                            </tr>
+                            <tr ng-show="isShown('bank')">
+                                <td>
+                                    <div><b>Pay Period:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.pay_periodl}}</div>
+                                </td>
+                            </tr>
 
                              <tr ng-show="isShown('wire')">
                                 <td>
@@ -1217,9 +1233,25 @@ select{
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
-                                    <div>{employee.amount}}</div>
+                                    <div>{{employee.amount}}</div>
                                 </td>
                              </tr>
+                             <tr ng-show="isShown('wire')">
+                                <td>
+                                    <div><b>Rate Type:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.ratypes}}</div>
+                                </td>
+                            </tr>
+                            <tr ng-show="isShown('wire')">
+                                <td>
+                                    <div><b>Pay Period:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.pay_periodl}}</div>
+                                </td>
+                            </tr>
                               <tr ng-show="isShown('cash')">
                                 <td>
                                     <div><b>Amount:</b></div>
@@ -1228,6 +1260,22 @@ select{
                                     <div>{{employee.amount}}</div>
                                 </td>
                              </tr>
+                             <tr ng-show="isShown('cash')">
+                                <td>
+                                    <div><b>Rate Type:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.ratypes}}</div>
+                                </td>
+                            </tr>
+                            <tr ng-show="isShown('cash')">
+                                <td>
+                                    <div><b>Pay Period:</b></div>
+                                </td>
+                                <td>
+                                    <div>{{employee.pay_periodl}}</div>
+                                </td>
+                            </tr>
 
                     </table>
                         

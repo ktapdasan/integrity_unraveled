@@ -8,6 +8,8 @@ $education = json_decode($_POST['education'], true);
 $class = new Employees(
                             NULL,
                             $_POST['employee_id'],
+                            $_POST['leave_balances_intern'], //Has Default Value on New Employee JS
+                            $_POST['leave_balances_fte'], //Has Default Value on New Employee JS
                             $_POST['first_name'],
                             $_POST['middle_name'],
                             $_POST['last_name'],
@@ -232,6 +234,13 @@ $details['education']                = $educations;
 $details['government']               = $government; 
 $extra['details']                    = $details; 
 $extra['supervisor_pk'] = $_POST['supervisor_pk'];
+
+if ($_POST['levels_pk'] == 3){
+    $extra['leave_balances'] = $_POST['leave_balances_intern'];
+}
+if ($_POST['levels_pk'] != 3){
+    $extra['leave_balances'] = $_POST['leave_balances_fte'];
+}
 
 $data = $class-> create($extra);
 

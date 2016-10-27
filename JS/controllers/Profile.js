@@ -212,9 +212,6 @@ app.controller('Profile', function(
             };
             }
             
-       
-            $scope.minus = 1;
-            $scope.minus_20 = 20;
 
             $scope.profile.details.company.titles_pk = parseInt($scope.profile.details.company.titles_pk) - parseInt($scope.minus);
             $scope.profile.titles = $scope.titles.data[$scope.profile.details.company.titles_pk].title;
@@ -228,7 +225,7 @@ app.controller('Profile', function(
 
 
            
-            if ($scope.profile.details.company.employment_type == 'NaN' || $scope.profile.details.company.employment_type_pk == undefined){
+            if ($scope.profile.details.company.employment_type == undefined){
                  $scope.profile.employment_typess = 'No Data';
             }
             else{

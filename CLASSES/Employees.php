@@ -688,6 +688,7 @@ EOT;
         $details = json_encode($array);
 
         $sql = "begin;";
+        $leave_balances = $extra['leave_balances'];
         $sql .= <<<EOT
                 insert into employees
                 (
@@ -697,7 +698,9 @@ EOT;
                     last_name,
                     business_email_address,
                     email_address,
-                    details
+                    details,
+                    leave_balances
+                    
                 )
                 values
                 (
@@ -707,8 +710,8 @@ EOT;
                     '$this->last_name',
                     '$this->business_email_address',
                     '$this->email_address',
-                    '$details'
-
+                    '$details',
+                    '$leave_balances'
                 );
 EOT;
         $sql .= <<<EOT

@@ -282,40 +282,41 @@ Example: When All Data is Completly Inserted or Updated
                 "amount": "12000"
             },
             "salary_type": "cash",
-            "rate_type_pk": "2"
+            "rate_type_pk": "2",
+            "pay_period_pk": "1"
         },
         "levels_pk": "7",
         "titles_pk": "14",
         "supervisor": "28",
         "employee_id": "201400072",
-        "date_started": "03-1-2016",
+        "date_started": "03-01-2016",
         "work_schedule": {
             "friday": {
                 "in": "09:00",
                 "out": "18:00",
-                "flexi": "true"
+                "flexible": "true"
             },
             "monday": {
                 "in": "09:00",
                 "out": "18:00",
-                "flexi": "true"
+                "flexible": "true"
             },
             "sunday": null,
             "tuesday": {
                 "in": "09:00",
                 "out": "18:00",
-                "flexi": "true"
+                "flexible": "true"
             },
             "saturday": null,
             "thursday": {
                 "in": "09:00",
                 "out": "18:00",
-                "flexi": "true"
+                "flexible": "true"
             },
             "wednesday": {
                 "in": "09:00",
-                "out": 18:00",
-                "flexi": "true"
+                "out": "18:00",
+                "flexible": "true"
             }
         },
         "departments_pk": "26",
@@ -327,7 +328,7 @@ Example: When All Data is Completly Inserted or Updated
         "gender": "Male",
         "religion": "Catholic",
         "last_name": "Tapdasan",
-        "birth_date": "07-27-1995",
+        "birth_date": "7-27-1995",
         "first_name": "Ken",
         "civilstatus": "Single",
         "middle_name": "Villanueva",
@@ -337,8 +338,8 @@ Example: When All Data is Completly Inserted or Updated
         "present_address": "Mandaluyong",
         "profile_picture": "./ASSETS/img/blank.gif",
         "permanent_address": "Dasmarinas",
-        "emergency_contact_name": "Rheyan Lipardo",
-        "emergency_contact_number": "09159766579"
+        "emergency_contact_name": "Clarissa Mae Fortuno",
+        "emergency_contact_number": "09504151950"
     },
     "education": {
         "school_type": [

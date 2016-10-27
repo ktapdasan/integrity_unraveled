@@ -77,6 +77,8 @@ app.controller('New_Employees', function(
         timeout_friday:null,
         timeout_saturday:null,
         permanent_address:'',
+        leave_balances_intern:'{"1": "0", "3": "0", "4": "0", "5": "0", "7": "0"}',
+        leave_balances_fte:'{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}',
         present_address:'',
         emergency_contact_number:null,
         emergency_name:'',

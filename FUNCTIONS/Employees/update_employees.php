@@ -149,22 +149,25 @@ if ($_POST['levels_pk'] != 3){
     if ($_POST['salary_type'] == 'bank'){
         $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
         $company['salary']['rate_type_pk']            = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
-        $company['salary']['details']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['bank_name'])));
-        $company['salary']['details']['account_number']       = pg_escape_string(strip_tags(trim($_POST['account_number'])));
+        $company['salary']['pay_period_pk']            = pg_escape_string(strip_tags(trim($_POST['pay_period'])));
+        $company['salary']['details']['bank_name']            = pg_escape_string(strip_tags(trim($_POST['salary_bank_name'])));
+        $company['salary']['details']['account_number']       = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
         $company['salary']['details']['amount']               = pg_escape_string(strip_tags(trim($_POST['amount'])));
 
     }
     if ($_POST['salary_type'] == 'wire'){
        $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
        $company['salary']['rate_type_pk']             = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
-       $company['salary']['details']['mode_payment']          = pg_escape_string(strip_tags(trim($_POST['mode_payment'])));
-       $company['salary']['details']['account_number']        = pg_escape_string(strip_tags(trim($_POST['account_number'])));
+       $company['salary']['pay_period_pk']            = pg_escape_string(strip_tags(trim($_POST['pay_period'])));
+       $company['salary']['details']['mode_payment']          = pg_escape_string(strip_tags(trim($_POST['salary_mode_payment'])));
+       $company['salary']['details']['account_number']        = pg_escape_string(strip_tags(trim($_POST['salary_account_number'])));
        $company['salary']['details']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
 
     }
     if ($_POST['salary_type'] == 'cash'){
        $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
        $company['salary']['rate_type_pk']            = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
+       $company['salary']['pay_period_pk']            = pg_escape_string(strip_tags(trim($_POST['pay_period'])));
        $company['salary']['details']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
     }
 }
