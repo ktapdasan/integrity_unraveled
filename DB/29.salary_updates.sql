@@ -5,12 +5,12 @@ create table rate_types (
 );
 alter table rate_types owner to chrs;
 
-create table pay_period (
+create table pay_periods (
 	pk serial primary key,
 	period text not null,
 	archived boolean default false
 );
-alter table rate_types owner to chrs;
+alter table pay_periods owner to chrs;
 
 insert into rate_types
 (
@@ -28,7 +28,7 @@ values
 )
 ;
 
-insert into pay_period
+insert into pay_periods
 (
 	period
 )
