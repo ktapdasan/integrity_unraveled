@@ -1,14 +1,14 @@
 app.controller('Employees', function(
-                                    $scope,
-                                    SessionFactory,
-                                    EmployeesFactory,
-                                    LeaveFactory,
-                                    TimelogFactory,
-                                    ngDialog,
-                                    UINotification,
-                                    FileUploader,
-                                    md5,
-                                    $filter
+    $scope,
+    SessionFactory,
+    EmployeesFactory,
+    LeaveFactory,
+    TimelogFactory,
+    ngDialog,
+    UINotification,
+    FileUploader,
+    md5,
+    $filter
     ){
 
     $scope.pk='';
@@ -85,7 +85,7 @@ app.controller('Employees', function(
             fetch_levels();
             fetch_titles();
             leave_types();
-})
+        })
         .then(null, function(data){
             window.location = './login.html';
         });
@@ -120,45 +120,45 @@ app.controller('Employees', function(
         var today = new Date();
 
         var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
 
-        if(dd<10) {
-            dd='0'+dd
-        } 
+if(dd<10) {
+    dd='0'+dd
+} 
 
-        if(mm<10) {
-            mm='0'+mm
-        } 
+if(mm<10) {
+    mm='0'+mm
+} 
 
-        today = yyyy+'-'+mm+'-'+dd;
+today = yyyy+'-'+mm+'-'+dd;
 
-        $scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
-        $scope.filter.date_to = new Date();
+$scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
+$scope.filter.date_to = new Date();
 
-        }
+}
 
-        function getMonday(d) {
-            var d = new Date(d);
-            var day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+function getMonday(d) {
+    var d = new Date(d);
+    var day = d.getDay(),
+diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
 
-        var new_date = new Date(d.setDate(diff));
-        var dd = new_date.getDate();
-        var mm = new_date.getMonth()+1; //January is 0!
-        var yyyy = new_date.getFullYear();
+var new_date = new Date(d.setDate(diff));
+var dd = new_date.getDate();
+var mm = new_date.getMonth()+1; //January is 0!
+var yyyy = new_date.getFullYear();
 
-        if(dd<10) {
-            dd='0'+dd
-        } 
+if(dd<10) {
+    dd='0'+dd
+} 
 
-        if(mm<10) {
-            mm='0'+mm
-        } 
+if(mm<10) {
+    mm='0'+mm
+} 
 
-        var monday = yyyy+'-'+mm+'-'+dd;
+var monday = yyyy+'-'+mm+'-'+dd;
 
-        return monday;
+return monday;
 }
 
 
@@ -238,19 +238,19 @@ function get_supervisors(){
 }
 
 function leave_types(){
-        var filter = {
-            archived : false
-        };
-        $scope.leave_types.data = [];
-        var promise = LeaveFactory.get_leave_types(filter);
-        promise.then(function(data){
+    var filter = {
+        archived : false
+    };
+    $scope.leave_types.data = [];
+    var promise = LeaveFactory.get_leave_types(filter);
+    promise.then(function(data){
         $scope.leave_types.status = true;
         $scope.leave_types.data = data.data.result;
-        })
-        .then(null, function(data){
-            
-        });
-    }
+    })
+    .then(null, function(data){
+
+    });
+}
 
 $scope.export_employees = function(){
     window.open('./FUNCTIONS/Timelog/employees_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
@@ -449,7 +449,7 @@ $scope.activate_employees = function(k){
 
 $scope.edit_employees = function(k){
     get_supervisors();
-    
+
     $scope.employee = $scope.employees.data[k];
 
 // Undefined? Nested If/Else is here to help - Ken Tapdasan
@@ -556,7 +556,7 @@ else if ($scope.employees.data[k].details.company.work_schedule.sunday.flexible 
 
         $scope.employee.flexi_sunday = true;    
     }
-    
+
 }
 }
 //Company -> Work Schedule - > Monday Validator
@@ -603,7 +603,7 @@ if ($scope.employees.data[k].details.company.work_schedule.tuesday.in === undefi
     $scope.employee.timein_tuesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.in !== undefined) {
-     $scope.time_employee.tuesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.time_employee.tuesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
     $scope.employee.timein_tuesday = new Date($scope.time_employee.tuesday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.tuesday.in);
 }
 
@@ -1026,16 +1026,16 @@ else if ($scope.employees.data[k].details.education != null) {
 }
 
 $scope.addNewChoice = function() {
-        if ($scope.employees.school_type == 'Primary'){
-            $scope.employee.educations.push({educ_level: "Primary"});
-        }
-        else if ($scope.employees.school_type == 'Secondary'){
-            $scope.employee.educations.push({educ_level: "Secondary" });
-        }
-        else if ($scope.employees.school_type == 'Tertiary'){
-            $scope.employee.educations.push({educ_level: "Tertiary" });
-        }
-    };
+    if ($scope.employees.school_type == 'Primary'){
+        $scope.employee.educations.push({educ_level: "Primary"});
+    }
+    else if ($scope.employees.school_type == 'Secondary'){
+        $scope.employee.educations.push({educ_level: "Secondary" });
+    }
+    else if ($scope.employees.school_type == 'Tertiary'){
+        $scope.employee.educations.push({educ_level: "Tertiary" });
+    }
+};
 
 $scope.isShown = function(salarys_type) {
     return salarys_type === $scope.employee.salary_type;
@@ -1078,8 +1078,8 @@ ngDialog.openConfirm({
     }
 
     for(var z in $scope.employee.educations){
-            $scope.employee.educations[z].date_from_school = $filter('date')($scope.employee.educations[z].date_from_school, "yyyy-MM-dd");
-            $scope.employee.educations[z].date_to_school = $filter('date')($scope.employee.educations[z].date_to_school, "yyyy-MM-dd");
+        $scope.employee.educations[z].date_from_school = $filter('date')($scope.employee.educations[z].date_from_school, "yyyy-MM-dd");
+        $scope.employee.educations[z].date_to_school = $filter('date')($scope.employee.educations[z].date_to_school, "yyyy-MM-dd");
     }
     $scope.employee.educations = JSON.stringify($scope.employee.educations);
     var dated = new Date($scope.employee.date_started);
@@ -1133,7 +1133,7 @@ ngDialog.openConfirm({
     if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'false'};
     if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'false'};
     if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'false'};
-    
+
     var promise = EmployeesFactory.edit_employees($scope.employee);
     promise.then(function(data){
 
@@ -1172,15 +1172,15 @@ $scope.view_employees = function(k){
         $scope.employees.data[k].leave_balances = JSON.parse($scope.employees.data[k].leave_balances);
         $scope.employee.leave_balances = $scope.employees.data[k].leave_balances;
         var a = $scope.employee.leave_balances;
-    
+
         $scope.employee.leave_balances = {};
-   
+
         for(var i in $scope.leave_types.data){
             if(a[$scope.leave_types.data[i].pk] === undefined){
                 a[$scope.leave_types.data[i].pk] = 0;
             }
             $scope.employee.leave_balances[$scope.leave_types.data[i].name] = a[$scope.leave_types.data[i].pk];
-        
+
         }
     }
 
@@ -1327,7 +1327,7 @@ if ($scope.employees.data[k].details.company.work_schedule.tuesday.in === undefi
     $scope.employee.timein_tuesday = null;
 }
 else if ($scope.employees.data[k].details.company.work_schedule.tuesday.in !== undefined) {
-     $scope.time_employee.tuesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
+    $scope.time_employee.tuesday_in = $filter('date')(new Date(), "yyyy-MM-dd");
     $scope.employee.timein_tuesday = new Date($scope.time_employee.tuesday_in + ' ' + $scope.employees.data[k].details.company.work_schedule.tuesday.in);
 }
 

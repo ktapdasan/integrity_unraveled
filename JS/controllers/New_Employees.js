@@ -1,12 +1,12 @@
 app.controller('New_Employees', function(
-                                            $scope,
-                                            SessionFactory,
-                                            EmployeesFactory,
-                                            md5,
-                                            UINotification,
-                                            FileUploader,
-                                            $filter
-                                        ){
+    $scope,
+    SessionFactory,
+    EmployeesFactory,
+    md5,
+    UINotification,
+    FileUploader,
+    $filter
+    ){
 
     $scope.pk='';
     $scope.employee={
@@ -55,7 +55,7 @@ app.controller('New_Employees', function(
         data_pagmid: null,
         data_tin: null,
         intern_hours:'',
-        salary_type:'bank',
+        salary_type:'',
         bank_name:'',
         pay_period:'',
         rate_type:'',
@@ -94,7 +94,7 @@ app.controller('New_Employees', function(
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
-    
+
     $scope.filter={};
 
     $scope.level_class = 'orig_width';
@@ -109,11 +109,11 @@ app.controller('New_Employees', function(
     $scope.uploader.queue = {};
 
     $scope.stype = [
-        { pk:'1', sctype:'Primary'},
-        { pk:'2', sctype:'Secondary'},
-        { pk:'3', sctype:'Tertiary'}
+    { pk:'1', sctype:'Primary'},
+    { pk:'2', sctype:'Secondary'},
+    { pk:'3', sctype:'Tertiary'}
     ];
-    
+
     init();
 
     function init(){
@@ -147,7 +147,7 @@ app.controller('New_Employees', function(
         $scope.current[tab] = 'current';
     }
 
-    
+
 
     function get_positions(){
         var promise = EmployeesFactory.get_positions();
@@ -164,7 +164,7 @@ app.controller('New_Employees', function(
         var promise = EmployeesFactory.get_department(filter);
         promise.then(function(data){
             $scope.department.data = data.data.result;
-            
+
         })
 
         .then(null, function(data){
@@ -210,7 +210,7 @@ app.controller('New_Employees', function(
         var promise = EmployeesFactory.get_gender();
         promise.then(function(data){
             $scope.type.data = data.data.result;
-            
+
         })
 
         .then(null, function(data){
@@ -229,7 +229,7 @@ app.controller('New_Employees', function(
             $scope.employees.education.push({educ_level: "Tertiary" });
         }
     };
-    
+
     $scope.submit_employees = function(){
         get_supervisors();
         for(var i in $scope.employees.education){
@@ -250,61 +250,61 @@ app.controller('New_Employees', function(
             $scope.employees.data_tin = 'No Data';
         }
 
-            var dated = new Date($scope.employees.date_started);
-            var dds = dated.getDate();
-            var mms = dated.getMonth()+1;
-            var yyyys = dated.getFullYear();
-            $scope.employees.date_started = mms+'-'+dds+'-'+yyyys;
+        var dated = new Date($scope.employees.date_started);
+        var dds = dated.getDate();
+        var mms = dated.getMonth()+1;
+        var yyyys = dated.getFullYear();
+        $scope.employees.date_started = mms+'-'+dds+'-'+yyyys;
 
-            var dateb = new Date($scope.employees.birth_date);
-            var ddk = dateb.getDate();
-            var mmk = dateb.getMonth()+1;
-            var yyyyk = dateb.getFullYear();
-            $scope.employees.birth_date = mmk+'-'+ddk+'-'+yyyyk;
+        var dateb = new Date($scope.employees.birth_date);
+        var ddk = dateb.getDate();
+        var mmk = dateb.getMonth()+1;
+        var yyyyk = dateb.getFullYear();
+        $scope.employees.birth_date = mmk+'-'+ddk+'-'+yyyyk;
 
-            $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "HH:mm");
-            $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "HH:mm");
-            $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "HH:mm");
-            $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
-            $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "HH:mm");
-            $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "HH:mm");
-            $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "HH:mm");
-            
-            $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "HH:mm");
-            $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "HH:mm");
-            $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "HH:mm");
-            $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timeout_wednesday, "HH:mm");
-            $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "HH:mm");
-            $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "HH:mm");
-            $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "HH:mm");
+        $scope.employees.timein_sunday = $filter('date')($scope.employees.timein_sunday, "HH:mm");
+        $scope.employees.timein_monday = $filter('date')($scope.employees.timein_monday, "HH:mm");
+        $scope.employees.timein_tuesday = $filter('date')($scope.employees.timein_tuesday, "HH:mm");
+        $scope.employees.timein_wednesday = $filter('date')($scope.employees.timein_wednesday, "HH:mm");
+        $scope.employees.timein_thursday = $filter('date')($scope.employees.timein_thursday, "HH:mm");
+        $scope.employees.timein_friday = $filter('date')($scope.employees.timein_friday, "HH:mm");
+        $scope.employees.timein_saturday = $filter('date')($scope.employees.timein_saturday, "HH:mm");
 
-            if ($scope.employees.timein_sunday == 'null' || $scope.employees.timein_sunday == undefined) {$scope.employees.timein_sunday = 'data'};
-            if ($scope.employees.timein_monday == 'null' || $scope.employees.timein_monday == undefined) {$scope.employees.timein_monday = 'data'};
-            if ($scope.employees.timein_tuesday == 'null'|| $scope.employees.timein_tuesday == undefined) {$scope.employees.timein_tuesday = 'data'};
-            if ($scope.employees.timein_wednesday == 'null'|| $scope.employees.timein_wednesday == undefined) {$scope.employees.timein_wednesday = 'data'};
-            if ($scope.employees.timein_thursday == 'null' || $scope.employees.timein_thursday == undefined) {$scope.employees.timein_thursday = 'data'};
-            if ($scope.employees.timein_friday == 'null' || $scope.employees.timein_friday == undefined) {$scope.employees.timein_friday = 'data'};
-            if ($scope.employees.timein_saturday == 'null' || $scope.employees.timein_saturday == undefined) {$scope.employees.timein_saturday = 'data'};
+        $scope.employees.timeout_sunday = $filter('date')($scope.employees.timeout_sunday, "HH:mm");
+        $scope.employees.timeout_monday = $filter('date')($scope.employees.timeout_monday, "HH:mm");
+        $scope.employees.timeout_tuesday = $filter('date')($scope.employees.timeout_tuesday, "HH:mm");
+        $scope.employees.timeout_wednesday = $filter('date')($scope.employees.timeout_wednesday, "HH:mm");
+        $scope.employees.timeout_thursday = $filter('date')($scope.employees.timeout_thursday, "HH:mm");
+        $scope.employees.timeout_friday = $filter('date')($scope.employees.timeout_friday, "HH:mm");
+        $scope.employees.timeout_saturday = $filter('date')($scope.employees.timeout_saturday, "HH:mm");
 
-            if ($scope.employees.timeout_sunday == 'null' || $scope.employees.timeout_sunday == undefined) {$scope.employees.timeout_sunday = 'data'};
-            if ($scope.employees.timeout_monday == 'null' || $scope.employees.timeout_monday == undefined) {$scope.employees.timeout_monday = 'data'};
-            if ($scope.employees.timeout_tuesday == 'null' || $scope.employees.timeout_tuesday == undefined) {$scope.employees.timeout_tuesday = 'data'};
-            if ($scope.employees.timeout_wednesday == 'null' || $scope.employees.timeout_wednesday == undefined) {$scope.employees.timeout_wednesday = 'data'};
-            if ($scope.employees.timeout_thursday == 'null' || $scope.employees.timeout_thursday == undefined) {$scope.employees.timeout_thursday = 'data'};
-            if ($scope.employees.timeout_friday == 'null' || $scope.employees.timeout_friday == undefined) {$scope.employees.timeout_friday = 'data'};
-            if ($scope.employees.timeout_saturday == 'null' || $scope.employees.timeout_saturday == undefined) {$scope.employees.timeout_saturday = 'data'};
+        if ($scope.employees.timein_sunday == 'null' || $scope.employees.timein_sunday == undefined) {$scope.employees.timein_sunday = 'data'};
+        if ($scope.employees.timein_monday == 'null' || $scope.employees.timein_monday == undefined) {$scope.employees.timein_monday = 'data'};
+        if ($scope.employees.timein_tuesday == 'null'|| $scope.employees.timein_tuesday == undefined) {$scope.employees.timein_tuesday = 'data'};
+        if ($scope.employees.timein_wednesday == 'null'|| $scope.employees.timein_wednesday == undefined) {$scope.employees.timein_wednesday = 'data'};
+        if ($scope.employees.timein_thursday == 'null' || $scope.employees.timein_thursday == undefined) {$scope.employees.timein_thursday = 'data'};
+        if ($scope.employees.timein_friday == 'null' || $scope.employees.timein_friday == undefined) {$scope.employees.timein_friday = 'data'};
+        if ($scope.employees.timein_saturday == 'null' || $scope.employees.timein_saturday == undefined) {$scope.employees.timein_saturday = 'data'};
 
-            if ($scope.employee.flexi_sunday == 'null' || $scope.employee.flexi_sunday == false || $scope.employee.flexi_sunday == undefined) {$scope.employee.flexi_sunday = 'false'};
-            if ($scope.employee.flexi_monday == 'null' || $scope.employee.flexi_monday == false || $scope.employee.flexi_monday == undefined) {$scope.employee.flexi_monday = 'false'};
-            if ($scope.employee.flexi_tuesday == 'null'|| $scope.employee.flexi_tuesday == false || $scope.employee.flexi_tuesday == undefined) {$scope.employee.flexi_tuesday = 'false'};
-            if ($scope.employee.flexi_wednesday == 'null' || $scope.employee.flexi_wednesday == false || $scope.employee.flexi_wednesday == undefined) {$scope.employee.flexi_wednesday = 'false'};
-            if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'false'};
-            if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'false'};
-            if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'false'};
+        if ($scope.employees.timeout_sunday == 'null' || $scope.employees.timeout_sunday == undefined) {$scope.employees.timeout_sunday = 'data'};
+        if ($scope.employees.timeout_monday == 'null' || $scope.employees.timeout_monday == undefined) {$scope.employees.timeout_monday = 'data'};
+        if ($scope.employees.timeout_tuesday == 'null' || $scope.employees.timeout_tuesday == undefined) {$scope.employees.timeout_tuesday = 'data'};
+        if ($scope.employees.timeout_wednesday == 'null' || $scope.employees.timeout_wednesday == undefined) {$scope.employees.timeout_wednesday = 'data'};
+        if ($scope.employees.timeout_thursday == 'null' || $scope.employees.timeout_thursday == undefined) {$scope.employees.timeout_thursday = 'data'};
+        if ($scope.employees.timeout_friday == 'null' || $scope.employees.timeout_friday == undefined) {$scope.employees.timeout_friday = 'data'};
+        if ($scope.employees.timeout_saturday == 'null' || $scope.employees.timeout_saturday == undefined) {$scope.employees.timeout_saturday = 'data'};
 
-            
+        if ($scope.employee.flexi_sunday == 'null' || $scope.employee.flexi_sunday == false || $scope.employee.flexi_sunday == undefined) {$scope.employee.flexi_sunday = 'false'};
+        if ($scope.employee.flexi_monday == 'null' || $scope.employee.flexi_monday == false || $scope.employee.flexi_monday == undefined) {$scope.employee.flexi_monday = 'false'};
+        if ($scope.employee.flexi_tuesday == 'null'|| $scope.employee.flexi_tuesday == false || $scope.employee.flexi_tuesday == undefined) {$scope.employee.flexi_tuesday = 'false'};
+        if ($scope.employee.flexi_wednesday == 'null' || $scope.employee.flexi_wednesday == false || $scope.employee.flexi_wednesday == undefined) {$scope.employee.flexi_wednesday = 'false'};
+        if ($scope.employee.flexi_thursday == 'null' || $scope.employee.flexi_thursday == false || $scope.employee.flexi_thursday == undefined) {$scope.employee.flexi_thursday = 'false'};
+        if ($scope.employee.flexi_friday == 'null' || $scope.employee.flexi_friday == false || $scope.employee.flexi_friday == undefined) {$scope.employee.flexi_friday = 'false'};
+        if ($scope.employee.flexi_saturday == 'null' || $scope.employee.flexi_saturday == false || $scope.employee.flexi_saturday == undefined) {$scope.employee.flexi_saturday = 'false'};
+
+
         $scope.employees.education = JSON.stringify($scope.employees.education);
-        
+
         var promise = EmployeesFactory.submit_employees($scope.employees);
         promise.then(function(data){
 
@@ -327,65 +327,65 @@ app.controller('New_Employees', function(
         });
 
         $scope.employees={
-        profile_picture:'./ASSETS/img/blank.gif',
-        first_name:'',
-        middle_name:'',
-        last_name:'',
-        email_address:'',
-        gender:'',
-        religion:'',
-        civilstatus:'',
-        employee_id:'',
-        date_started: new Date(),
-        business_email_address:'',
-        birth_date:'',
-        titles_pk:'',
-        levels_pk:'',
-        supervisor_pk:'',
-        departments_pk:'',
-        employee_status:'',
-        employment_type:'',
-        data_sss: null,
-        data_phid: null,
-        data_pagmid: null,
-        data_tin: null,
-        intern_hours:'',
-        salary_type:'bank',
-        bank_name:'',
-        pay_period:'',
-        rate_type:'',
-        account_number:'',
-        education: [{educ_level: "Primary"}],
-        amount:'',
-        mode_payment:'',
-        timein_sunday:null,
-        timein_monday:null,
-        timein_tuesday:null,
-        timein_wednesday:null,
-        timein_thursday:null,
-        timein_friday:null,
-        timein_saturday:null,
-        timeout_sunday:null,
-        timeout_monday:null,
-        timeout_tuesday:null,
-        timeout_wednesday:null,
-        timeout_thursday:null,
-        timeout_friday:null,
-        timeout_saturday:null,
-        permanent_address:'',
-        present_address:'',
-        emergency_contact_number:null,
-        emergency_name:'',
-        contact_number:null,
-        landline_number:null,
-        flexi_sunday:false,
-        flexi_monday:false,
-        flexi_tuesday:false,
-        flexi_wednesday:false,
-        flexi_thursday:false,
-        flexi_friday:false,
-        flexi_saturday:false
-    };
+            profile_picture:'./ASSETS/img/blank.gif',
+            first_name:'',
+            middle_name:'',
+            last_name:'',
+            email_address:'',
+            gender:'',
+            religion:'',
+            civilstatus:'',
+            employee_id:'',
+            date_started: new Date(),
+            business_email_address:'',
+            birth_date:'',
+            titles_pk:'',
+            levels_pk:'',
+            supervisor_pk:'',
+            departments_pk:'',
+            employee_status:'',
+            employment_type:'',
+            data_sss: null,
+            data_phid: null,
+            data_pagmid: null,
+            data_tin: null,
+            intern_hours:'',
+            salary_type:'',
+            bank_name:'',
+            pay_period:'',
+            rate_type:'',
+            account_number:'',
+            education: [{educ_level: "Primary"}],
+            amount:'',
+            mode_payment:'',
+            timein_sunday:null,
+            timein_monday:null,
+            timein_tuesday:null,
+            timein_wednesday:null,
+            timein_thursday:null,
+            timein_friday:null,
+            timein_saturday:null,
+            timeout_sunday:null,
+            timeout_monday:null,
+            timeout_tuesday:null,
+            timeout_wednesday:null,
+            timeout_thursday:null,
+            timeout_friday:null,
+            timeout_saturday:null,
+            permanent_address:'',
+            present_address:'',
+            emergency_contact_number:null,
+            emergency_name:'',
+            contact_number:null,
+            landline_number:null,
+            flexi_sunday:false,
+            flexi_monday:false,
+            flexi_tuesday:false,
+            flexi_wednesday:false,
+            flexi_thursday:false,
+            flexi_friday:false,
+            flexi_saturday:false
+        };
     }
 
     $scope.level_changed = function(){
@@ -408,63 +408,63 @@ app.controller('New_Employees', function(
         return salarys_type === $scope.employees.salary_type;
     };
 
-    
 
-    /*
-    UPLOADER
-    */
-    var uploader = $scope.uploader = new FileUploader({
-        url: 'FUNCTIONS/Employees/upload_profile_pic.php'
-    });
 
-    // FILTERS
+/*
+UPLOADER
+*/
+var uploader = $scope.uploader = new FileUploader({
+    url: 'FUNCTIONS/Employees/upload_profile_pic.php'
+});
 
-    uploader.filters.push({
-        name: 'customFilter',
-        fn: function(item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 10;
-        }
-    });
+// FILTERS
 
-    // CALLBACKS
+uploader.filters.push({
+    name: 'customFilter',
+    fn: function(item /*{File|FileLikeObject}*/, options) {
+        return this.queue.length < 10;
+    }
+});
 
-    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-        //console.info('onWhenAddingFileFailed', item, filter, options);
-    };
-    uploader.onAfterAddingFile = function(fileItem) {
-        //console.info('onAfterAddingFile', fileItem);
-    };
-    uploader.onAfterAddingAll = function(addedFileItems) {
-        //console.info('onAfterAddingAll', addedFileItems);
-    };
-    uploader.onBeforeUploadItem = function(item) {
-        //console.info('onBeforeUploadItem', item);
-    };
-    uploader.onProgressItem = function(fileItem, progress) {
-        //console.info('onProgressItem', fileItem, progress);
-    };
-    uploader.onProgressAll = function(progress) {
-        //console.info('onProgressAll', progress);
-    };
-    uploader.onSuccessItem = function(fileItem, response, status, headers) {
-        //console.info('onSuccessItem', fileItem, response, status, headers);
-    };
-    uploader.onErrorItem = function(fileItem, response, status, headers) {
-        //console.info('onErrorItem', fileItem, response, status, headers);
-    };
-    uploader.onCancelItem = function(fileItem, response, status, headers) {
-        //console.info('onCancelItem', fileItem, response, status, headers);
-    };
-    uploader.onCompleteItem = function(fileItem, response, status, headers) {
-        //console.info('onCompleteItem', fileItem, respsonse, status, headers);
-        //$scope.data.quotationmodal.attachment = response.file;
-        $scope.employees.profile_picture = response.file;
-        //console.log(response);
-    };
-    uploader.onCompleteAll = function() {
-        //console.info('onCompleteAll');
-    };
-    /*
-    END OF UPLOADER
-    */
+// CALLBACKS
+
+uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+//console.info('onWhenAddingFileFailed', item, filter, options);
+};
+uploader.onAfterAddingFile = function(fileItem) {
+//console.info('onAfterAddingFile', fileItem);
+};
+uploader.onAfterAddingAll = function(addedFileItems) {
+//console.info('onAfterAddingAll', addedFileItems);
+};
+uploader.onBeforeUploadItem = function(item) {
+//console.info('onBeforeUploadItem', item);
+};
+uploader.onProgressItem = function(fileItem, progress) {
+//console.info('onProgressItem', fileItem, progress);
+};
+uploader.onProgressAll = function(progress) {
+//console.info('onProgressAll', progress);
+};
+uploader.onSuccessItem = function(fileItem, response, status, headers) {
+//console.info('onSuccessItem', fileItem, response, status, headers);
+};
+uploader.onErrorItem = function(fileItem, response, status, headers) {
+//console.info('onErrorItem', fileItem, response, status, headers);
+};
+uploader.onCancelItem = function(fileItem, response, status, headers) {
+//console.info('onCancelItem', fileItem, response, status, headers);
+};
+uploader.onCompleteItem = function(fileItem, response, status, headers) {
+//console.info('onCompleteItem', fileItem, respsonse, status, headers);
+//$scope.data.quotationmodal.attachment = response.file;
+$scope.employees.profile_picture = response.file;
+//console.log(response);
+};
+uploader.onCompleteAll = function() {
+//console.info('onCompleteAll');
+};
+/*
+END OF UPLOADER
+*/
 });

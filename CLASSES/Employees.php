@@ -758,7 +758,6 @@ EOT;
 
         
         $details = json_encode($extra['details']);
-        // $personal = json_encode($extra['personal']);
 
         $sql = "begin;";
         $sql .= <<<EOT

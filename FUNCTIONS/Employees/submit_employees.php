@@ -67,15 +67,15 @@ $class = new Employees(
 //Company Array! Ken
 $company = array();
 $company['employee_id']              = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
-$company['employee_status']       = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
-$company['employment_type']       = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
+$company['employee_status']          = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
+$company['employment_type']          = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
 $company['departments_pk']           = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
 $company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
 $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
 $company['date_started']             = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 $company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
 
-//Salary Type
+    //Salary Type
     if ($_POST['salary_type'] == 'bank'){
         $company['salary']['salary_type']          = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
         $company['salary']['rate_type_pk']            = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
@@ -202,11 +202,11 @@ if ($_POST['levels_pk'] != 3){
 
 //Personal Array!
 $personal = array();
-$personal['civilstatus']          = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
+$personal['civilstatus']             = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
 $personal['first_name']              = pg_escape_string(strip_tags(trim($_POST['first_name'])));
 $personal['middle_name']             = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
 $personal['last_name']               = pg_escape_string(strip_tags(trim($_POST['last_name'])));
-$personal['gender']               = pg_escape_string(strip_tags(trim($_POST['gender'])));
+$personal['gender']                  = pg_escape_string(strip_tags(trim($_POST['gender'])));
 $personal['religion']                = pg_escape_string(strip_tags(trim($_POST['religion'])));
 $personal['email_address']           = pg_escape_string(strip_tags(trim($_POST['email_address'])));
 $personal['birth_date']              = pg_escape_string(strip_tags(trim($_POST['birth_date'])));

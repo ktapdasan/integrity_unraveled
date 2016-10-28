@@ -81,8 +81,8 @@ if ($_POST['levels_pk'] == 3){
     $company['supervisor']             = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
     $company['titles_pk']              = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
     $company['departments_pk']         = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
-    $company['employee_status']     = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
-    $company['employment_type']     = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
+    $company['employee_status']        = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
+    $company['employment_type']        = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
     $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
@@ -93,9 +93,9 @@ if ($_POST['levels_pk'] == 3){
     $personal['landline_number']       = pg_escape_string(strip_tags(trim($_POST['landline_number'])));
     $personal['present_address']       = pg_escape_string(strip_tags(trim($_POST['present_address'])));
     $personal['permanent_address']     = pg_escape_string(strip_tags(trim($_POST['permanent_address'])));
-    $personal['gender']             = pg_escape_string(strip_tags(trim($_POST['gender'])));
+    $personal['gender']                = pg_escape_string(strip_tags(trim($_POST['gender'])));
     $personal['religion']              = pg_escape_string(strip_tags(trim($_POST['religion'])));
-    $personal['civilstatus']        = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
+    $personal['civilstatus']           = pg_escape_string(strip_tags(trim($_POST['civilstatus'])));
     $personal['profile_picture']       = pg_escape_string(strip_tags(trim($_POST['profile_picture'])));
     $personal['emergency_contact_name']     = pg_escape_string(strip_tags(trim($_POST['emergency_contact_name'])));
     $personal['emergency_contact_number']   = pg_escape_string(strip_tags(trim($_POST['emergency_contact_number'])));

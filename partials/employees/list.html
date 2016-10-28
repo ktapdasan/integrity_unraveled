@@ -41,14 +41,14 @@ th, td {
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
-       overflow: hidden;
+    overflow: hidden;
     word-break:break-all;
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
 
 th {
-      font-size:13px;
+    font-size:13px;
     background-color:white;
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
@@ -83,1446 +83,1446 @@ select{
     </div>
     <div class="panel">
         <div style="padding-left: 20px; padding-top:5px;"> 
-           
-        
-                <div class="bck">     
-            
-                    <div style="float:left; margin-left:20px;margin-top: 14px;">
-                        <label style="float:left;font-size: 13px;">Search</label><br>
-                        <input ng-model="filter.searchstring" type="text" style="width:230px; margin-left:-43px;float:left" ng-change= "show_employees()"/>
-                        <select ng-model="filter.status" style ="float:left;width:100px;margin-left:235px;
-                        margin-top:-32px;"ng-change= "show_employees()">
-                            <option>Active</option>
-                            <option>Inactive</option>
-                        </select>
-                    </div>
-             
-                                 
-           
-            
 
 
-                    <div style="float:left; margin-left:-178px;margin-top: 10px;margin-right: 6px;">
-                    <label style="float:left;font-size: 13px;">Select a Department</label><br>
-                    <div
-                        isteven-multi-select
-                        input-model="employees.filters.department"
-                        output-model="filter.department"
-                        button-label="icon name"
-                        item-label="icon name maker"
-                        tick-property="ticked"
-                        selection-mode="single"
-                        style="width:150px; float:left;"
-                        max-height="200px"
-                            >
-                    </div>
-                    </br>
-                    </div>
+            <div class="bck">     
 
-                    <div style="float:left; margin-top: 10px;margin-left:-18px;margin-right:10px;">
-                    <label style="float:left;font-size: 13px;">Select a Level</label><br>
-                    <div
-                        isteven-multi-select
-                        input-model="employees.filters.level_title"
-                        output-model="filter.level_title"
-                        button-label="icon name"
-                        item-label="icon name maker"
-                        tick-property="ticked"
-                        selection-mode="single"
-                        style="width:150px; float:left;"
-                        max-height="200px"
-                            >
-                    </div>
-                    </br> 
-                    </div>
+                <div style="float:left; margin-left:20px;margin-top: 14px;">
+                    <label style="float:left;font-size: 13px;">Search</label><br>
+                    <input ng-model="filter.searchstring" type="text" style="width:230px; margin-left:-43px;float:left" ng-change= "show_employees()"/>
+                    <select ng-model="filter.status" style ="float:left;width:100px;margin-left:235px;
+                    margin-top:-32px;"ng-change= "show_employees()">
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            </div>
 
-                    <div style="float:left; margin-top: 10px;margin-right: 10px;">
-                    <label style="float:left;font-size: 13px;">Select a Position</label><br>
-                 
-                        <div
-                        isteven-multi-select
-                        input-model="employees.filters.titles"
-                        output-model="filter.titles"
-                        button-label="icon name"
-                        item-label="icon name maker"
-                        tick-property="ticked"
-                        selection-mode="single"
-                        style="width:150px;float:left;"
-                        max-height="200px"
-                            >
-                    </div>
-                    </br>
-                   
-                    </div>
-                <div style="float:left; margin-top:33px;margin-right:15px;">
-                    <input type="button" class="medium button blue fa-fa"  value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; ">
-                </div>
-                    <div style="float:left; margin-top:33px;">
 
-                     <input type="button" class="medium button green fa-fa" value="&#xf1c3; EXPORT" ng-click="export_employeelist()"; style="float:left;margin-right:10px;">
 
-                        <a href = "#/employees/new"><input type="button" class="medium button green fa-fa" value="&#xf055; ADD NEW EMPLOYEE" style="float:left;margin-right:1px;">
 
-                        </a>
-                       
-                       
-                    </div>
 
-               </div>
 
-        </div>
-        </div> 
-
-            <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
-           
+            <div style="float:left; margin-left:-178px;margin-top: 10px;margin-right: 6px;">
+                <label style="float:left;font-size: 13px;">Select a Department</label><br>
+                <div
+                isteven-multi-select
+                input-model="employees.filters.department"
+                output-model="filter.department"
+                button-label="icon name"
+                item-label="icon name maker"
+                tick-property="ticked"
+                selection-mode="single"
+                style="width:150px; float:left;"
+                max-height="200px"
+                >
+            </div>
+        </br>
     </div>
-        <div style="height:10px; width:100%;">
 
-        </div>
-       
-             <b class="total">Total: {{employees.count}}</b>
-            <table id="datatables-example" class="table1" width="90%" cellspacing="0">
-                <thead>
-                   
-                    <tr>
-                        <th col width="80" >Employee Number</th>
-                        <th col width="55">First Name</th>
-                        <th col width="65">Middle Name</th>
-                        <th col width="55">Last Name</th>
-                        <th col width="120">E-mails</th>
-                        <th col width="60">Supervisor</th>
-                        <th col width="90">Position</th>
-                        <th col width="70">Level</th>
-                        <th col width="65">Department</th>
-                        <th col width="50">Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status"  title="View">
-                        <td ng-click="view_employees(k)"title="View">{{v.details.company.employee_id}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.first_name}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.middle_name}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.last_name}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.details.personal.email_address}}</br> {{v.details.company.business_email_address}}</td>
-                        <td ng-click="view_employees(k)"title="View">
-                            {{v.supervisor}}
-                            <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
-                        </td>
-                        <td ng-click="view_employees(k)"title="View">{{v.title}}</td>
-                        <td ng-click="view_employees(k)"title="View">{{v.level}} </br> {{v.details.company.hours}}</td> 
-                        <td ng-click="view_employees(k)"title="View">{{v.department}}</td>
-                        <td><center> 
-                            <!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
-                            <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
-                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
-
-                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px" ng-if="v.archived=='f'" ng-click="delete_employees(k)" title="Delete">
-                            
-                            <input type="image" src="ASSETS/img/activate.png" alt="delete"style="width:16px; height:16px" ng-if="v.archived=='t'" ng-click="activate_employees(k)" title="Activate">
-                                
-                        </center>
-                        </td>
-                    </tr>
-                    <tr ng-if="!employees.status" style = "text-align: center;">
-                        <td colspan = "10">No Data Found</td>
-                    </tr>
-
-                </tbody>
-            </table>
-       
-        <div style="height:50px; width:100%;">
-
-        </div>
+    <div style="float:left; margin-top: 10px;margin-left:-18px;margin-right:10px;">
+        <label style="float:left;font-size: 13px;">Select a Level</label><br>
+        <div
+        isteven-multi-select
+        input-model="employees.filters.level_title"
+        output-model="filter.level_title"
+        button-label="icon name"
+        item-label="icon name maker"
+        tick-property="ticked"
+        selection-mode="single"
+        style="width:150px; float:left;"
+        max-height="200px"
+        >
     </div>
+</br> 
+</div>
+
+<div style="float:left; margin-top: 10px;margin-right: 10px;">
+    <label style="float:left;font-size: 13px;">Select a Position</label><br>
+
+    <div
+    isteven-multi-select
+    input-model="employees.filters.titles"
+    output-model="filter.titles"
+    button-label="icon name"
+    item-label="icon name maker"
+    tick-property="ticked"
+    selection-mode="single"
+    style="width:150px;float:left;"
+    max-height="200px"
+    >
+</div>
+</br>
+
+</div>
+<div style="float:left; margin-top:33px;margin-right:15px;">
+    <input type="button" class="medium button blue fa-fa"  value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; ">
+</div>
+<div style="float:left; margin-top:33px;">
+
+    <input type="button" class="medium button green fa-fa" value="&#xf1c3; EXPORT" ng-click="export_employeelist()"; style="float:left;margin-right:10px;">
+
+    <a href = "#/employees/new"><input type="button" class="medium button green fa-fa" value="&#xf055; ADD NEW EMPLOYEE" style="float:left;margin-right:1px;">
+
+    </a>
+
+
+</div>
+
+</div>
+
+</div>
+</div> 
+
+<!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
+
+</div>
+<div style="height:10px; width:100%;">
+
+</div>
+
+<b class="total">Total: {{employees.count}}</b>
+<table id="datatables-example" class="table1" width="90%" cellspacing="0">
+    <thead>
+
+        <tr>
+            <th col width="80" >Employee Number</th>
+            <th col width="55">First Name</th>
+            <th col width="65">Middle Name</th>
+            <th col width="55">Last Name</th>
+            <th col width="120">E-mails</th>
+            <th col width="60">Supervisor</th>
+            <th col width="90">Position</th>
+            <th col width="70">Level</th>
+            <th col width="65">Department</th>
+            <th col width="50">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status"  title="View">
+            <td ng-click="view_employees(k)"title="View">{{v.details.company.employee_id}}</td>
+            <td ng-click="view_employees(k)"title="View">{{v.details.personal.first_name}}</td>
+            <td ng-click="view_employees(k)"title="View">{{v.details.personal.middle_name}}</td>
+            <td ng-click="view_employees(k)"title="View">{{v.details.personal.last_name}}</td>
+            <td ng-click="view_employees(k)"title="View">{{v.details.personal.email_address}}</br> {{v.details.company.business_email_address}}</td>
+            <td ng-click="view_employees(k)"title="View">
+                {{v.supervisor}}
+                <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
+            </td>
+            <td ng-click="view_employees(k)"title="View">{{v.title}}</td>
+            <td ng-click="view_employees(k)"title="View">{{v.level}} </br> {{v.details.company.hours}}</td> 
+            <td ng-click="view_employees(k)"title="View">{{v.department}}</td>
+            <td><center> 
+<!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
+    <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
+    <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
+
+    <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px" ng-if="v.archived=='f'" ng-click="delete_employees(k)" title="Delete">
+
+    <input type="image" src="ASSETS/img/activate.png" alt="delete"style="width:16px; height:16px" ng-if="v.archived=='t'" ng-click="activate_employees(k)" title="Activate">
+
+</center>
+</td>
+</tr>
+<tr ng-if="!employees.status" style = "text-align: center;">
+    <td colspan = "10">No Data Found</td>
+</tr>
+
+</tbody>
+</table>
+
+<div style="height:50px; width:100%;">
+
+</div>
+</div>
 </div>
 
 <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">
-    <div class="ngdialog-message" style="width: 500px;">
-        <div style="margin-top: -5px;">
-            <h3><span style="color:#0c79be; margin-left:25px">{{ modal.title }}</span></h3>
-        </div>
+<div class="ngdialog-message" style="width: 500px;">
+<div style="margin-top: -5px;">
+<h3><span style="color:#0c79be; margin-left:25px">{{ modal.title }}</span></h3>
+</div>
 
-            <style type="text/css">
-                #submit {
-                    color: #2196f3 !important;
-                }
+<style type="text/css">
+#submit {
+    color: #2196f3 !important;
+}
 
-                #submit:hover{
-                    background-color: #e7e7e7;
-                }
+#submit:hover{
+    background-color: #e7e7e7;
+}
 
-                body>footer {
-                    /*background-color: #eee;*/
-                    font-size: 11px;
-                    position: fixed;
-                    bottom: 0;
-                    padding: 8px;
-                    /*width: 100%;*/
-                    width: 400px;
+body>footer {
+    /*background-color: #eee;*/
+    font-size: 11px;
+    position: fixed;
+    bottom: 0;
+    padding: 8px;
+    /*width: 100%;*/
+    width: 400px;
 
-                    max-height: 450px;
-                    display: block;
+    max-height: 450px;
+    display: block;
 
-                    /*additional remove to make a footer and uncomment comments above*/
-                    margin-left: 75%;
-                }
+    /*additional remove to make a footer and uncomment comments above*/
+    margin-left: 75%;
+}
 
-                body>footer .footer-main {
-                    width: 100%;
-                    text-align: right;   
-                }
+body>footer .footer-main {
+    width: 100%;
+    text-align: right;   
+}
 
-                .red {
-                    color: #ff0000;
-                }
+.red {
+    color: #ff0000;
+}
 
-                .container {
-                    width: 500px;
-                    clear: both;
-                }
-                .container input {
-                    width: 100%;
-                    clear: both;
-                }
-                #css .ng-dirty.ng-valid {
-                border:1px solid Green;
-                }
-                #css .ng-dirty.ng-invalid {
-                     border:1px solid Red;
-                }
+.container {
+    width: 500px;
+    clear: both;
+}
+.container input {
+    width: 100%;
+    clear: both;
+}
+#css .ng-dirty.ng-valid {
+    border:1px solid Green;
+}
+#css .ng-dirty.ng-invalid {
+    border:1px solid Red;
+}
 
-            </style>
-    
-            <div id="content2" style="margin: 20px; border:0px solid #f0f0f0;">
-            
-                 <div>
-                    <div class="content-box-large">
-                        <div class="panel-title">
-                            <ul class="nav nav-tabs">
-                                <li ng-class="current.personal">
-                                    <a style="cursor:pointer;" ng-click="change_tab('personal')" name="tab1">Personal Information</a>
-                                </li>
-                                <li ng-class="current.education">
-                                    <a style="cursor:pointer;" ng-click="change_tab('education')" name="tab2">Education Information</a>
-                                </li>
-                                <li ng-class="current.company">
-                                    <a style="cursor:pointer;" ng-click="change_tab('company')" name="tab3">Company Information</a>
-                                </li>
-                                <li ng-class="current.government">
-                                    <a style="cursor:pointer;" ng-click="change_tab('government')" name="tab4">Government Information</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <form name="myForm" novalidate>
-                    <div ng-if="tab.personal">
-                    <table class="tblemployees">
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">First Name:</label> 
-                               </td>
-                                <td id="css">    
-                                    <input name="firstName" required ng-model="employee.first_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="2"/>
-                                    <span style="color:red;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">E-mail Address:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="email" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="7"/>
-                                    
-                                    <span style="color:red" ng-show="myForm.email.$error.required">E-mail Address is required.</span>
-                                    <span style="color:red" ng-show="myForm.email.$error.email">Please, write a valid E-mail Address address.</span>
-                                </td>                        
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Middle Name:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="3"/>
-                                    <span style="color:red;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
-                                </td>
-                                <td>
-                                <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
-                            </td>
-                            <td id="css">
-                                <select name="gender" required ng-model="employee.gender" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
-                            </td>  
-                                 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Last Name:</label>
-                                </td>
-                                 <td id="css">
-                                    <input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="4"/>
-                                    <span style="color:red;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
-                                </td>
-                                 <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
-                            </td>
-                            <td id="css">
-                                <select name="cistatus" required ng-model="employee.civilstatus" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Divorced">Divorced</option>
-                                    <option value="Living Common Law">Living Common Law</option>
-                                    <option value="Widowed">Widowed</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
-                            </td> 
-                               
-                            </tr>
-                             <tr>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Contact Number:</label> 
-                            </td>
-                            <td id="css">     
-                                <input name="cnumber" required ng-model="employee.contact_number"  type="text" style="display: block; float: left; width:320px; height:25px;" is-number placeholder="(Optional)" />
-                            </td>
-                             <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Landline Number:</label> 
-                            </td>
-                            <td id="css">     
-                                <input name="lnumber" required ng-model="employee.landline_number"  type="text" style="display: block; float: left; width:320px; height:25px;"  is-number placeholder="(Optional)"/>
-                            </td>
-                        </tr> 
-                         <tr>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Present Address:</label> 
-                            </td>
-                            <td id="css">     
-                                <input name="paddress" required ng-model="employee.present_address"  type="text" style="display: block; float: left; width:320px; height:25px;"  capitalize-first />
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.paddress.$error.required">Present address is required.</span>
-                            </td>
-                             <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Permanent Address:</label> 
-                            </td>
-                            <td id="css">     
-                                <input name="pladdress" required ng-model="employee.permanent_address"  type="text" style="display: block; float: left; width:320px; height:25px;"  capitalize-first />
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.pladdress.$error.required">Permanent address is required.</span>
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Religion:</label> 
-                            </td>
-                            <td id="css">     
-                                <input name="religions" required ng-model="employee.religion"  type="text" style="display: block; float: left; width:320px; height:25px;" capitalize-first />
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.religions.$error.required">Religion is required.</span>
-                            </td>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
-                            </td>
-                            <td id="css">
-                                <input name="bdate" ng-model="employee.birth_date" ng-change="employee.birth_dates = employee.birth_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bdate.$error.required">Birth Date is required.</span>
-                            </td>
+</style>
 
-                        </tr>
-                         <tr>
-                         <td>
-                            <label style="display:block; float:left; padding-top:10px; padding-right:5px">In case of Emergency who to contact:</label> 
-                        </td>
-                             <td id="css">     
-                                <input name="ename" tabindex="13" required ng-model="employee.emergency_contact_name"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Name" capitalize-first />
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ename.$error.required">Contact person is required.</span>
-                            </td>
-                        <td>
-                            <label style="display:block; float:left; padding-top:10px; padding-right:10px">Contact number:</label> 
-                        </td>
-                             <td id="css">     
-                                <input name="enumber" tabindex="14" required ng-model="employee.emergency_contact_number"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Contact Number" is-number/>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.enumber.$error.required">Contact number is required.</span>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">Upload Profile Pic:</label>
-                            </td>
-                            <td colspan="2">
-                                <div style="margin-top: 20px;">
-                                    <span style="font-size:12px; color:#FF0000;">* Only jpg, png files are allowed.</span>
-                                    <input type="file"  nv-file-select="" accept=".jpg,.png,.jpeg" uploader="uploader" />
-                                    <br/>
-                                </div>
+<div id="content2" style="margin: 20px; border:0px solid #f0f0f0;">
 
-                                <div>
-                                    <div>
-                                        <div>
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <img src="{{employee.profile_picture}}" style="width:200px;"/>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div style="width:200px; margin-left:10px;">
-                                            <!-- Upload progress: -->
-                                            <div class="progress" style="">
-                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-                                            </div>
-                                            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                                <span class="glyphicon glyphicon-upload"></span> Upload
-                                            </button>
-                                            <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                                                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                            </button>
+<div>
+<div class="content-box-large">
+<div class="panel-title">
+<ul class="nav nav-tabs">
+<li ng-class="current.personal">
+<a style="cursor:pointer;" ng-click="change_tab('personal')" name="tab1">Personal Information</a>
+</li>
+<li ng-class="current.education">
+<a style="cursor:pointer;" ng-click="change_tab('education')" name="tab2">Education Information</a>
+</li>
+<li ng-class="current.company">
+<a style="cursor:pointer;" ng-click="change_tab('company')" name="tab3">Company Information</a>
+</li>
+<li ng-class="current.government">
+<a style="cursor:pointer;" ng-click="change_tab('government')" name="tab4">Government Information</a>
+</li>
+</ul>
+</div>
+</div>
+<form name="myForm" novalidate>
+<div ng-if="tab.personal">
+<table class="tblemployees">
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">First Name:</label> 
+</td>
+<td id="css">    
+<input name="firstName" required ng-model="employee.first_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="2"/>
+<span style="color:red;" ng-show="myForm.firstName.$error.required">First Name is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;">E-mail Address:</label>
+</td>
+<td id="css">
+<input name="email" required ng-model="employee.email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="7"/>
 
-                                        </div>
+<span style="color:red" ng-show="myForm.email.$error.required">E-mail Address is required.</span>
+<span style="color:red" ng-show="myForm.email.$error.email">Please, write a valid E-mail Address address.</span>
+</td>                        
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px ; font-size:14px; width:120px ; border:0px solid #f0f0f0;">Middle Name:</label>
+</td>
+<td id="css">
+<input name="middleName" required ng-model="employee.middle_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="3"/>
+<span style="color:red;" ng-show="myForm.middleName.$error.required">Middle Name is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:-10px; padding-right:10px">Gender:</label>
+</td>
+<td id="css">
+<select name="gender" required ng-model="employee.gender" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.gender.$error.required">Gender is required.</span>
+</td>  
 
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                           
-                            <tr>
-                                <td colspan = "4">
-                                    <center style="font-size: 18px; font-style: bold">
-                                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-                                        <button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
-                                        || myForm.firstName.$dirty && myForm.firstName.$invalid
-                                        || myForm.middleName.$dirty && myForm.middleName.$invalid
-                                        || myForm.lastName.$dirty && myForm.lastName.$invalid
-                                       " class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Last Name:</label>
+</td>
+<td id="css">
+<input name="lastName" required ng-model="employee.last_name" type="text" style="display: block; float: left; width:320px; height:25px;" tabindex="4"/>
+<span style="color:red;" ng-show="myForm.lastName.$error.required">Last Name is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Civil Status:</label>
+</td>
+<td id="css">
+<select name="cistatus" required ng-model="employee.civilstatus" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="Single">Single</option>
+<option value="Married">Married</option>
+<option value="Divorced">Divorced</option>
+<option value="Living Common Law">Living Common Law</option>
+<option value="Widowed">Widowed</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.cistatus.$error.required">Civil Status is required.</span>
+</td> 
 
-                                    </center>
-                                </td>
-                            </tr>
-                    </table>
-                    </div>
-                     <div ng-if="tab.education">
-                         <table class="tblemployees" ng-repeat="form in employee.educations track by $index" ng-init="name = form.educ_level
-                        ">
-                        <tr>
-                         
-                            <td><h4 style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;" ><div class ="labelbck">{{form.educ_level}}<div class="skew"></div></div></h4></td>
-                            
-                        </tr>
-                          <tr>
-                                <td> 
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">School Name:</label>
-                                </td>
-                                 <td id="css">
-                                <input name="snschool" required ng-model="form.school_name" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
-                            </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> School Location:</label>
-                                </td>
-                                <td id="css">
-                                <input name="slschool" required ng-model="form.school_location" type = "text" style="display: block; float: left; width:320px; height:25px;" />
-                            </td>
-                            </tr>
-                        <tr>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
-                            </td>
-                            <td id="css">
-                                <input ng-model="form.date_from_school" type="date" id="datefrom" style="display: block; float: left; width:320px; height:25px;" />
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Contact Number:</label> 
+</td>
+<td id="css">     
+<input name="cnumber" required ng-model="employee.contact_number"  type="text" style="display: block; float: left; width:320px; height:25px;" is-number placeholder="(Optional)" />
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Landline Number:</label> 
+</td>
+<td id="css">     
+<input name="lnumber" required ng-model="employee.landline_number"  type="text" style="display: block; float: left; width:320px; height:25px;"  is-number placeholder="(Optional)"/>
+</td>
+</tr> 
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Present Address:</label> 
+</td>
+<td id="css">     
+<input name="paddress" required ng-model="employee.present_address"  type="text" style="display: block; float: left; width:320px; height:25px;"  capitalize-first />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.paddress.$error.required">Present address is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Permanent Address:</label> 
+</td>
+<td id="css">     
+<input name="pladdress" required ng-model="employee.permanent_address"  type="text" style="display: block; float: left; width:320px; height:25px;"  capitalize-first />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.pladdress.$error.required">Permanent address is required.</span>
+</td>
+</tr> 
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Religion:</label> 
+</td>
+<td id="css">     
+<input name="religions" required ng-model="employee.religion"  type="text" style="display: block; float: left; width:320px; height:25px;" capitalize-first />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.religions.$error.required">Religion is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Birth Date :</label>
+</td>
+<td id="css">
+<input name="bdate" ng-model="employee.birth_date" ng-change="employee.birth_dates = employee.birth_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bdate.$error.required">Birth Date is required.</span>
+</td>
 
-                            </td>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
-                            </td>
-                            <td id="css">
-                                <input ng-model="form.date_to_school" type="date" id="datefrom" style="display: block; float: left; width:320px; height:25px;" />
-                            </td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:5px">In case of Emergency who to contact:</label> 
+</td>
+<td id="css">     
+<input name="ename" tabindex="13" required ng-model="employee.emergency_contact_name"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Name" capitalize-first />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ename.$error.required">Contact person is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Contact number:</label> 
+</td>
+<td id="css">     
+<input name="enumber" tabindex="14" required ng-model="employee.emergency_contact_number"  type="text" style="display: block; float: left; width:320px; height:25px;" placeholder="Contact Person Contact Number" is-number/>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.enumber.$error.required">Contact number is required.</span>
+</td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Upload Profile Pic:</label>
+</td>
+<td colspan="2">
+<div style="margin-top: 20px;">
+<span style="font-size:12px; color:#FF0000;">* Only jpg, png files are allowed.</span>
+<input type="file"  nv-file-select="" accept=".jpg,.png,.jpeg" uploader="uploader" />
+<br/>
+</div>
 
-                        </tr>
-                        </table>
-                        <br/>
-                         <table>
-                        <tr>
-                            <td >
-                                <select name="school" required ng-model="employees.school_type" style="display: block; float: left; width:290px;padding:5px;margin-top:20px;" >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                    
-                                        <option value="Primary">Primary</option>
-                                        <option value="Secondary">Secondary</option>
-                                        <option value="Tertiary">Tertiary</option>
-                                   
-                                </select>
-                            </td>
-                            <td>
-                                <button type="button" ng-click="addNewChoice()" class="large button green fa-fa" style="display: block; float: left; width:150px; height:25px;" >+ Add Education</button>
-                            </td>
-                        </tr>
-                 </table>
-                        <table>
-                            <tr>
-                                <td colspan = "4">
-                                    <center style="font-size: 18px; font-style: bold">
-                                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-                                        <button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
-                                        || myForm.email.$dirty && myForm.email.$invalid
-                                        || myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+<div>
+<div>
+<div>
+<table class="table">
+<tbody>
+<tr>
+<td>
+<img src="{{employee.profile_picture}}" style="width:200px;"/>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="width:200px; margin-left:10px;">
+<!-- Upload progress: -->
+<div class="progress" style="">
+<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+</div>
+<button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+<span class="glyphicon glyphicon-upload"></span> Upload
+</button>
+<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+</button>
 
-                                    </center>
-                                </td>
-                            </tr>
-                    </table>
-                    </div>
+</div>
 
-                    <div ng-if="tab.company">
-                         <table class="tblemployees">
-                            
-                            <tr>
-                                <td> 
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">Employee ID:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="user" required ng-model = "employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:320px; height:25px;" tabindex="1"/>
-                                    <span style="color:red" ng-show="myForm.user.$error.required">Employee ID is required.</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> Business E-mail Address:</label>
-                                </td>
-                                <td id="css">
-                                    <input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="6"/>
-                                    
-                                    <span style="color:red" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
-                                    <span style="color:red" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
-                                </td>
-                            </tr>
-                           
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Department:</label>
-                                </td>
-                                
-                                <td id="css">
-                                    <select required ng-model="employee.departments_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="8">
-                                        <!-- <option style="display:none">-- Please Select One --</option> -->
-                                        <option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
+</div>
+</div>
+</td>
+</tr>
 
-                                            {{v.department}}
+<tr>
+<td colspan = "4">
+<center style="font-size: 18px; font-style: bold">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+<button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
+|| myForm.firstName.$dirty && myForm.firstName.$invalid
+|| myForm.middleName.$dirty && myForm.middleName.$invalid
+|| myForm.lastName.$dirty && myForm.lastName.$invalid
+" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
 
-                                        </option>
+</center>
+</td>
+</tr>
+</table>
+</div>
+<div ng-if="tab.education">
+<table class="tblemployees" ng-repeat="form in employee.educations track by $index" ng-init="name = form.educ_level
+">
+<tr>
 
-                                    </select>
-                                    
-                                </td>
-                                 <td>
-                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Employee Status:</label>
-                                    </td>
-                                    <td id="css">
-                                        <select name="employeet" required ng-model="employee.employee_status" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
-                                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                            <option value="Probationary">Probationary</option>
-                                            <option value="Trainee">Trainee</option>
-                                            <option value="Contractual">Contractual</option>
-                                            <option value="Regular">Regular</option>
-                                            <option value="Consultant">Consultant</option>
-                                        </select>
-                                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employeet.$error.required">Employee status is required.</span>
-                                    </td>  
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Level:</label>
-                                </td>
-                              
-                                <td id="css">
-                                    <select required ng-model="employee.levels_pk" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px;" tabindex="9" ng-change = "level_changed()" ng-class = "level_class">
-                                            <option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}" >
-                                                {{v.level_title}}
-                                            </option>
-                                    </select> 
-                                    
-                                    <input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "10" ng-model = "employee.intern_hours"  ng-show="show_hours" required/>   
-                                </td>
+<td><h4 style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;" ><div class ="labelbck">{{form.educ_level}}<div class="skew"></div></div></h4></td>
 
-                                <td>
-                                        <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employment Type:</label>
-                                    </td>
-                                    <td id="css">
-                                        <select name="employmenttype" required ng-model="employee.employment_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
-                                            <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                            <option value="Exempt">Exempt</option>
-                                            <option value="Non-Exempt">Non-Exempt</option>
-                                        </select>
-                                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment type is required.</span>
+</tr>
+<tr>
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">School Name:</label>
+</td>
+<td id="css">
+<input name="snschool" required ng-model="form.school_name" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> School Location:</label>
+</td>
+<td id="css">
+<input name="slschool" required ng-model="form.school_location" type = "text" style="display: block; float: left; width:320px; height:25px;" />
+</td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">From Date:</label>
+</td>
+<td id="css">
+<input ng-model="form.date_from_school" type="date" id="datefrom" style="display: block; float: left; width:320px; height:25px;" />
 
-                                    </td>   
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Position:</label>
-                                </td>
-                                <td id="css">
-                                    <select required ng-model="employee.titles_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                                        <!-- <option style="display:none">-- Please Select One --</option> -->
-                                        <option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
-                                            {{v.title}}
-                                        </option>
-                                    </select>           
-                                </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Supervisor:</label>
-                                </td>
-                                <td id="css">
-                                    <select required ng-model="employee.supervisor_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
-                                        <!-- <option style="display:none">-- Please Select One --</option> -->
-                                        <option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
-                                            {{v.name}}
-                                        </option>
-                                    </select>           
-                                </td>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">To Date:</label>
+</td>
+<td id="css">
+<input ng-model="form.date_to_school" type="date" id="datefrom" style="display: block; float: left; width:320px; height:25px;" />
+</td>
+
+</tr>
+</table>
+<br/>
+<table>
+<tr>
+<td >
+<select name="school" required ng-model="employees.school_type" style="display: block; float: left; width:290px;padding:5px;margin-top:20px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+
+<option value="Primary">Primary</option>
+<option value="Secondary">Secondary</option>
+<option value="Tertiary">Tertiary</option>
+
+</select>
+</td>
+<td>
+<button type="button" ng-click="addNewChoice()" class="large button green fa-fa" style="display: block; float: left; width:150px; height:25px;" >+ Add Education</button>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td colspan = "4">
+<center style="font-size: 18px; font-style: bold">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+<button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
+|| myForm.email.$dirty && myForm.email.$invalid
+|| myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+
+</center>
+</td>
+</tr>
+</table>
+</div>
+
+<div ng-if="tab.company">
+<table class="tblemployees">
+
+<tr>
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">Employee ID:</label>
+</td>
+<td id="css">
+<input name="user" required ng-model = "employee.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:320px; height:25px;" tabindex="1"/>
+<span style="color:red" ng-show="myForm.user.$error.required">Employee ID is required.</span>
+</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> Business E-mail Address:</label>
+</td>
+<td id="css">
+<input name="businessEmail" required ng-model="employee.business_email_address" type="email" style="display: block; float: left; width:320px; height:25px;" tabindex="6"/>
+
+<span style="color:red" ng-show="myForm.businessEmail.$error.required">Business E-mail Address is required.</span>
+<span style="color:red" ng-show="myForm.businessEmail.$error.email">Please, write a valid Business E-mail Address address.</span>
+</td>
+</tr>
+
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Department:</label>
+</td>
+
+<td id="css">
+<select required ng-model="employee.departments_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="8">
+<!-- <option style="display:none">-- Please Select One --</option> -->
+<option ng-repeat="(k, v) in department.data" style="cursor:pointer;" value="{{v.pk}}">
+
+{{v.department}}
+
+</option>
+
+</select>
+
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Employee Status:</label>
+</td>
+<td id="css">
+<select name="employeet" required ng-model="employee.employee_status" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="Probationary">Probationary</option>
+<option value="Trainee">Trainee</option>
+<option value="Contractual">Contractual</option>
+<option value="Regular">Regular</option>
+<option value="Consultant">Consultant</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employeet.$error.required">Employee status is required.</span>
+</td>  
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Level:</label>
+</td>
+
+<td id="css">
+<select required ng-model="employee.levels_pk" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px;" tabindex="9" ng-change = "level_changed()" ng-class = "level_class">
+<option ng-repeat="(k, v) in level_title.data" style="cursor:pointer;" value="{{v.pk}}" >
+{{v.level_title}}
+</option>
+</select> 
+
+<input type="text" placeholder = 'no. of hours' is-number maxlength = "3" size = "10" ng-model = "employee.intern_hours"  ng-show="show_hours" required/>   
+</td>
+
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">Employment Type:</label>
+</td>
+<td id="css">
+<select name="employmenttype" required ng-model="employee.employment_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="Exempt">Exempt</option>
+<option value="Non-Exempt">Non-Exempt</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment type is required.</span>
+
+</td>   
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Position:</label>
+</td>
+<td id="css">
+<select required ng-model="employee.titles_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
+<!-- <option style="display:none">-- Please Select One --</option> -->
+<option ng-repeat="(k, v) in titles.data" style="cursor:pointer;" value="{{v.pk}}">
+{{v.title}}
+</option>
+</select>           
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Supervisor:</label>
+</td>
+<td id="css">
+<select required ng-model="employee.supervisor_pk" style="display: block; float: left; width:320px; height:25px border:0px solid #f0f0f0;; " tabindex="5">
+<!-- <option style="display:none">-- Please Select One --</option> -->
+<option ng-repeat="(k, v) in employees.supervisors" style="cursor:pointer;" value="{{v.pk}}">
+{{v.name}}
+</option>
+</select>           
+</td>
 
 
-                            </tr>
-                             <tr>
-                        <td>
-                            <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Salary Type:</label>
-                        </td>
-                        <td>
-                            <input type="radio" id="bank" name="salarys" ng-model="employee.salary_type" value="bank"> Bank</input>
-                            <input type="radio" id="wire" name="salarys" ng-model="employee.salary_type" value="wire"> Wire Transfer</input>
-                            <input type="radio" id="cash" name="salarys" ng-model="employee.salary_type" value="cash"> Cash</input>
-                        </td>
-                         <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Start Date:</label>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Salary Type:</label>
+</td>
+<td>
+<input type="radio" id="bank" name="salarys" ng-model="employee.salary_type" value="bank"> Bank</input>
+<input type="radio" id="wire" name="salarys" ng-model="employee.salary_type" value="wire"> Wire Transfer</input>
+<input type="radio" id="cash" name="salarys" ng-model="employee.salary_type" value="cash"> Cash</input>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Start Date:</label>
 
-                    </td>
-                    <td id="css">
-                        <input name="inputd" ng-model="employee.date_started" type="date"  style="display: block; float: left; width:320px; height:25px;" ng-required="true" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.required">Start Date is required.</span>
-                    </tr>
-                    </tr>
-                </tr>
-                <tr ng-show="isShown('bank')">
-                    <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Bank Name:</label>
-                    </td>
-                    <td id="css">
-                        <input name="bname" required ng-model="employee.salary_bank_name" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bname.$error.required">Bank Name is required.</span>
-                    </td>
-                   <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Account Number:</label>
-                    </td>
-                    <td id="css">
-                        <input name="aname" required ng-model="employee.salary_account_number" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
-                    </td>
-                </tr>
-                <tr ng-show="isShown('bank')">
-                     <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
-                    </td>
-                    <td id="css">
-                        <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
-                    </td>
-                    <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
-                            </td>
-                            <td id="css">
-                                <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="2">Daily</option>
-                                   <option value="3">Monthly</option>
-                                   <option value="1">Hourly</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
-                            </td> 
-                </tr>
-                 <tr ng-show="isShown('bank')">
-                    <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
-                            </td>
-                            <td id="css">
-                                <select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="1">Daily</option>
-                                   <option value="2">Weekly</option>
-                                   <option value="3">Semi-Monthly</option>
-                                   <option value="4">Monthly</option>
-                                   <option value="5">Annually</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
-                            </td> 
-                </tr>
-                <tr ng-show="isShown('wire')">
-                      <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Mode of Payment:</label>
-                    </td>
-                    <td id="css">
-                        <input name="mpayment" required ng-model="employee.salary_mode_payment" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.mpayment.$error.required">Mode of payment is required.</span>
-                    </td>
-                    <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Account Number:</label>
-                    </td>
-                    <td id="css">
-                        <input name="aname" required ng-model="employee.salary_account_number" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
-                    </td>
+</td>
+<td id="css">
+<input name="inputd" ng-model="employee.date_started" type="date"  style="display: block; float: left; width:320px; height:25px;" ng-required="true" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.inputd.$error.required">Start Date is required.</span>
+</tr>
+</tr>
+</tr>
+<tr ng-show="isShown('bank')">
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Bank Name:</label>
+</td>
+<td id="css">
+<input name="bname" required ng-model="employee.salary_bank_name" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.bname.$error.required">Bank Name is required.</span>
+</td>
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Account Number:</label>
+</td>
+<td id="css">
+<input name="aname" required ng-model="employee.salary_account_number" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
+</td>
+</tr>
+<tr ng-show="isShown('bank')">
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
+</td>
+<td id="css">
+<input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
+</td>
+<td id="css">
+<select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="2">Daily</option>
+<option value="3">Monthly</option>
+<option value="1">Hourly</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+</td> 
+</tr>
+<tr ng-show="isShown('bank')">
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
+</td>
+<td id="css">
+<select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="1">Daily</option>
+<option value="2">Weekly</option>
+<option value="3">Semi-Monthly</option>
+<option value="4">Monthly</option>
+<option value="5">Annually</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
+</td> 
+</tr>
+<tr ng-show="isShown('wire')">
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Mode of Payment:</label>
+</td>
+<td id="css">
+<input name="mpayment" required ng-model="employee.salary_mode_payment" type = "text"  style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.mpayment.$error.required">Mode of payment is required.</span>
+</td>
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Account Number:</label>
+</td>
+<td id="css">
+<input name="aname" required ng-model="employee.salary_account_number" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
+</td>
 
-                </tr>
-                <tr ng-show="isShown('wire')">
-                    <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
-                    </td>
-                    <td id="css">
-                        <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
-                    </td>
-                     <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
-                            </td>
-                            <td id="css">
-                                <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="2">Daily</option>
-                                   <option value="3">Monthly</option>
-                                   <option value="1">Hourly</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
-                            </td> 
-                </tr>
-                <tr ng-show="isShown('wire')">
-                    <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
-                            </td>
-                            <td id="css">
-                                <select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="1">Daily</option>
-                                   <option value="2">Weekly</option>
-                                   <option value="3">Semi-Monthly</option>
-                                   <option value="4">Monthly</option>
-                                   <option value="5">Annually</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
-                            </td> 
-                </tr>
-                <tr ng-show="isShown('cash')">
-                     <td> 
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
-                    </td>
-                    <td id="css">
-                        <input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
-                        <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
-                    </td>
-                     <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
-                            </td>
-                            <td id="css">
-                                <select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;">
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="2">Daily</option>
-                                   <option value="3">Monthly</option>
-                                   <option value="1">Hourly</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
-                            </td> 
-                </tr>
-                <tr ng-show="isShown('cash')">
-                    <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
-                            </td>
-                            <td id="css">
-                                <select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
-                                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                                   <option value="1">Daily</option>
-                                   <option value="2">Weekly</option>
-                                   <option value="3">Semi-Monthly</option>
-                                   <option value="4">Monthly</option>
-                                   <option value="5">Annually</option>
-                                </select>
-                                <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
-                            </td> 
-                </tr>
-                             <tr>
-                    <td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
+</tr>
+<tr ng-show="isShown('wire')">
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
+</td>
+<td id="css">
+<input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
+</td>
+<td id="css">
+<select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="2">Daily</option>
+<option value="3">Monthly</option>
+<option value="1">Hourly</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+</td> 
+</tr>
+<tr ng-show="isShown('wire')">
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
+</td>
+<td id="css">
+<select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="1">Daily</option>
+<option value="2">Weekly</option>
+<option value="3">Semi-Monthly</option>
+<option value="4">Monthly</option>
+<option value="5">Annually</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
+</td> 
+</tr>
+<tr ng-show="isShown('cash')">
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
+</td>
+<td id="css">
+<input name="a_mount" required ng-model="employee.amount" type = "text" is-number style="display: block; float: left; width:320px; height:25px;" />
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.a_mount.$error.required">Amount is required.</span>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Rate Type:</label>
+</td>
+<td id="css">
+<select name="ratype" required ng-model="employee.rate_type" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;">
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="2">Daily</option>
+<option value="3">Monthly</option>
+<option value="1">Hourly</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
+</td> 
+</tr>
+<tr ng-show="isShown('cash')">
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
+</td>
+<td id="css">
+<select name="ptype" required ng-model="employee.pay_period" style="display: block; float: left; height:25px border:0px; solid #f0f0f0;  margin-right: 10px; width:320px;" >
+<option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+<option value="1">Daily</option>
+<option value="2">Weekly</option>
+<option value="3">Semi-Monthly</option>
+<option value="4">Monthly</option>
+<option value="5">Annually</option>
+</select>
+<span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
+</td> 
+</tr>
+<tr>
+<td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
 
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Sunday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-change="date_time.timein = employee.timein_sunday "/>
-                        
-                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_sunday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Monday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Sunday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-change="date_time.timein = employee.timein_sunday "/>
 
-                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_monday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Tuesday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_sunday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Monday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_tuesday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Wednesday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_monday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Tuesday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_wednesday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Thursday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_tuesday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Wednesday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_thursday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Friday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_wednesday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Thursday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
 
-                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_friday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Saturday:</label>
-                    </td>
-                    <td>
-                        <input  type="text" placeholder="Time-In" ng-model="employee.timein_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>  
-                        <input  type="text" placeholder="Time-Out" ng-model="employee.timeout_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
-                        <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
-                        <input  type="checkbox" ng-model="employee.flexi_saturday" style="display: block; float: left; width:20px; height:34px;"/>
-                    </td>
-                </tr>
-                            <tr>
-                                <td colspan = "4">
-                                    <center style="font-size: 18px; font-style: bold">
-                                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-                                        <button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
-                                        || myForm.email.$dirty && myForm.email.$invalid
-                                        || myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_thursday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Friday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
 
-                                    </center>
-                                </td>
-                            </tr>
-                    </table>
-                    </div>    
-                     <div ng-if="tab.government">
-                         <table class="tblemployees">
-                          <tr>
-                                <td> 
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">PHIC:</label>
-                                </td>
-                                  <td id="css">
-                                        <input placeholder="(Optional)" id="phone" class="form-control" maxlength="14" ng-model="employee.data_phid" style="display: block; float: left; width:340px; height:36px;" />
-                                    </td>
-                                <td>
-                                    <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> HDMF:</label>
-                                </td>
-                               <td id="css">
-                                    <input placeholder="(Optional)" class="form-control" ng-model="employee.data_pagmid" maxlength="14" style="display: block; float: left; width:340px; height:36px;" />
-                                </td>
-                            </tr>
-                         <tr>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">TIN:</label>
-                            </td>
-                            <td id="css">
-                                <input placeholder="(Optional)" class="form-control" name="tin" ng-model="employee.data_tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;" />
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_friday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Saturday:</label>
+</td>
+<td>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>  
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
+<input  type="checkbox" ng-model="employee.flexi_saturday" style="display: block; float: left; width:20px; height:34px;"/>
+</td>
+</tr>
+<tr>
+<td colspan = "4">
+<center style="font-size: 18px; font-style: bold">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+<button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
+|| myForm.email.$dirty && myForm.email.$invalid
+|| myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
 
-                            </td>
-                            <td>
-                                <label style="display:block; float:left; padding-top:10px; padding-right:10px">SSS:</label>
-                            </td>
-                             <td id="css">
-                                <input placeholder="(Optional)" class="form-control" maxlength="12" ng-model="employee.data_sss" style="display: block; float: left; width:340px; height:36px;" />
-                            </td>
-                        </tr>
-                        <tr>
-                                <td colspan = "4">
-                                    <center style="font-size: 18px; font-style: bold">
-                                        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-                                        <button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
-                                        || myForm.email.$dirty && myForm.email.$invalid
-                                        || myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+</center>
+</td>
+</tr>
+</table>
+</div>    
+<div ng-if="tab.government">
+<table class="tblemployees">
+<tr>
+<td> 
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px  ; border:0px solid #f0f0f0;">PHIC:</label>
+</td>
+<td id="css">
+<input placeholder="(Optional)" id="phone" class="form-control" maxlength="14" ng-model="employee.data_phid" style="display: block; float: left; width:340px; height:36px;" />
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px ; border:0px solid #f0f0f0;"> HDMF:</label>
+</td>
+<td id="css">
+<input placeholder="(Optional)" class="form-control" ng-model="employee.data_pagmid" maxlength="14" style="display: block; float: left; width:340px; height:36px;" />
+</td>
+</tr>
+<tr>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">TIN:</label>
+</td>
+<td id="css">
+<input placeholder="(Optional)" class="form-control" name="tin" ng-model="employee.data_tin" maxlength="15" style="display: block; float: left; width:340px; height:36px;" />
 
-                                    </center>
-                                </td>
-                            </tr>
-                    </table>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+</td>
+<td>
+<label style="display:block; float:left; padding-top:10px; padding-right:10px">SSS:</label>
+</td>
+<td id="css">
+<input placeholder="(Optional)" class="form-control" maxlength="12" ng-model="employee.data_sss" style="display: block; float: left; width:340px; height:36px;" />
+</td>
+</tr>
+<tr>
+<td colspan = "4">
+<center style="font-size: 18px; font-style: bold">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+<button type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid
+|| myForm.email.$dirty && myForm.email.$invalid
+|| myForm.businessEmail.$dirty && myForm.businessEmail.$invalid" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+
+</center>
+</td>
+</tr>
+</table>
+</div>
+</form>
+</div>
+</div>
+</div>
 
 </script>
 <script type="text/ng-template" id="ViewModal" class="ngdialog-buttons">
-    <div class="ngdialog-message" style="width: 1000px;">
-        <style type ="text/css">
-            
-            .imageprofile{
-                border-radius:50%;
-                height:180px;
-                border: 5px solid white;
+<div class="ngdialog-message" style="width: 1000px;">
+<style type ="text/css">
 
-            }
+.imageprofile{
+    border-radius:50%;
+    height:180px;
+    border: 5px solid white;
 
-            #table2 th, td {
-                width:90px;
-                margin-left: 60px;
-            }
+}
 
-            .leave-square {
-                width: 100px;
-                height: 140px; 
-                float: left;
-                margin-left:14px;
-                border: 1px solid #CCC;
-                padding-top: 10px;
-                
-            }
+#table2 th, td {
+    width:90px;
+    margin-left: 60px;
+}
 
-            .leave-square .leave-circle {
-                width: 80px;
-                height: 80px;
-                border: 2px solid #CCC;
-                border-radius: 50%; 
-                padding-:50px;
-                padding: 29px 5px;
-                font-size: 16px;
-                text-align: center;
-                margin-left: 9px;
-                color: #e30000;
-            }
+.leave-square {
+    width: 100px;
+    height: 140px; 
+    float: left;
+    margin-left:14px;
+    border: 1px solid #CCC;
+    padding-top: 10px;
 
-            .leave-square label {
-                width: 100%;
-                text-align: center;
-                margin-top:3px;
-                margin-bottom: 20PX;
-                color: #1c84c6;font-size:12px;
-            }
+}
 
-            </style>
-        <div class="container">
-           <div class="row">
-            <div class ="col-md-2" style="padding-top:45px;word-wrap: break-word;">
-                    <img src="{{employee.profile_picture}}" class="imageprofile"/>
-                </div>
-                <div class ="col-md-4" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
-                    <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
-                    <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
-                </div>
-                <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
-                                                       
-                            
-                             <div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
-                             <div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
-                             <div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
-                             <div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
-                             <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
-                        
+.leave-square .leave-circle {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #CCC;
+    border-radius: 50%; 
+    padding-:50px;
+    padding: 29px 5px;
+    font-size: 16px;
+    text-align: center;
+    margin-left: 9px;
+    color: #e30000;
+}
 
-                      </div>
-                      <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
-                      padding-top:10px;padding-bottom:10px;">
+.leave-square label {
+    width: 100%;
+    text-align: center;
+    margin-top:3px;
+    margin-bottom: 20PX;
+    color: #1c84c6;font-size:12px;
+}
 
-                            <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
-                            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
-                            <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
-                            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
-                                Name: {{employee.emergency_contact_name}}<br>Contact #: {{employee.emergency_contact_number}}
-                            </div>
-                      </div>  
-                
-
-           </div>
-           <div class ="row">
-               
-            <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-                      padding-top:10px;padding-bottom:10px;">
-            <div class="panel panel-default">
-                 <div class="panel-heading" style="font-weight:900">Company Profile</div>
-                    <div class="panel-body">
-
-                         <table style="width:100%;">
-                            <tr>
-                                <td style="width:33%;" >
-                                   <b> Employee ID:</b>
-                                </td>    
-                                <td style="width:50%;">
-                                    {{ employee.employee_id }}
-                                </td>
-                            </tr>   
-                            <tr>
-                                <td>
-                                    <div><b>Start Date:</b></div>
-                                </td>
-                                 <td>
-                                    <div> {{ employee.date_started | date: "MMMM dd, yyyy" }} </div>
-                                </td>
-
-                            <tr>
-                            </tr>    
-                                <td>
-                                   <div><b>Business Email Address:</b></div>
-                                </td>
-                                <td>
-                                    <div> {{ employee.business_email_address }}</div>
-                                </td>
-                             
-                            </tr>
-                            <tr>
-                             
-                             
-                                <td>
-                                    <div><b>Level</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ employee.levels }}</div>
-                                </td>
-                            </tr>
-                         
-                           <tr>
-                                <td>
-                                    <div><b>Position:</b></div>
-                                </td>
-                                <td>
-                                    <div> {{ employee.titles }}</div>
-                                </td>
-
-                          
-
-                           </tr>
-                            <tr>
-
-                                <td>
-                                    <div><b>Supervisor:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ employee.supervisor }}</div>
-                                </td>
-
-                               
-                           </tr>
-                           <tr>
-                                <td>
-                                    <div><b>Department:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ employee.departments }}</div>
-                                </td>
-
-                           </tr>
-                             <tr>
-                                <td>
-                                    <div><b>Employment Type:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ employee.employment_types }}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div><b>Employee Status:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{ employee.employee_statuses }}</div>
-                                </td>
-                             </tr>   
-                             <tr ng-show=" employee.company.salary !== null ">
-                                <td>
-                                    <div><b>Salary type:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.salary_type}}</div>
-                                </td>
-                            </tr>
-                             <tr ng-show="isShown('bank')">
-                                <td>
-                                    <div><b>Bank Name:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.bank_name}}</div>
-                                </td>
-                            </tr>
-                            <tr ng-show="isShown('bank')">
-                                <td>
-                                    <div><b>Account No:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.account_number}}</div>
-                                </td>
-                             </tr>
-                             <tr ng-show="isShown('bank')">
-                                <td>
-                                    <div><b>Amount:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.amount}}</div>
-                                </td>
-                             </tr>
-                             <tr ng-show="isShown('bank')">
-                                <td>
-                                    <div><b>Rate Type:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.ratypes}}</div>
-                                </td>
-                            </tr>
-                            <tr ng-show="isShown('bank')">
-                                <td>
-                                    <div><b>Pay Period:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.pay_periodl}}</div>
-                                </td>
-                            </tr>
-
-                             <tr ng-show="isShown('wire')">
-                                <td>
-                                    <div><b>Mode Of Payment:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.mode_payment}}</div>
-                                </td>
-                            </tr>
-                            <tr ng-show="isShown('wire')">
-                                <td>
-                                    <div><b>Account No:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.account_number}}</div>
-                                </td>
-                             </tr>
-                             <tr ng-show="isShown('wire')">
-                                <td>
-                                    <div><b>Amount:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.amount}}</div>
-                                </td>
-                             </tr>
-                             <tr ng-show="isShown('wire')">
-                                <td>
-                                    <div><b>Rate Type:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.ratypes}}</div>
-                                </td>
-                            </tr>
-                            <tr ng-show="isShown('wire')">
-                                <td>
-                                    <div><b>Pay Period:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.pay_periodl}}</div>
-                                </td>
-                            </tr>
-                              <tr ng-show="isShown('cash')">
-                                <td>
-                                    <div><b>Amount:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.amount}}</div>
-                                </td>
-                             </tr>
-                             <tr ng-show="isShown('cash')">
-                                <td>
-                                    <div><b>Rate Type:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.ratypes}}</div>
-                                </td>
-                            </tr>
-                            <tr ng-show="isShown('cash')">
-                                <td>
-                                    <div><b>Pay Period:</b></div>
-                                </td>
-                                <td>
-                                    <div>{{employee.pay_periodl}}</div>
-                                </td>
-                            </tr>
-
-                    </table>
-                        
-                </div>   
-              </div>
-
-          </div>
-
-            <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-                      padding-top:10px;padding-bottom:10px;">
-            <div class="panel panel-default">
-                 <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
-                    <div class="panel-body">
+</style>
+<div class="container">
+<div class="row">
+<div class ="col-md-2" style="padding-top:45px;word-wrap: break-word;">
+<img src="{{employee.profile_picture}}" class="imageprofile"/>
+</div>
+<div class ="col-md-4" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
+<h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
+<div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
+</div>
+<div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
 
 
-                        <table width="100%" ng-repeat="education in employee.education">
-                            <tr >
-                                <td style="width:50%" >
-                                <div style="color:#1c84c6;margin-top:1px"><b><i>{{ education.educ_level }}</i><b></div>
-                                </td>
-                                <td style="width:100%">
-                                </td>    
-                            </tr>
-                            <tr >
-                                <td >
-                                   <div><b>School Name:</b></div>
-                                </td>
-                                <td>
-                                    <div style="margin-top:10px;">{{ education.school_name }}
-                                    </div>
-                                </td>
-                               
-                            </tr>
-                            <tr>
-                                 <td>
-                                    <div><b>Location:</b></div>
-                                </td>
-                                 <td>
-                                    <div>{{ education.school_location }}</div>
-                                </td>
-                            </td>
-                            <tr>
-                                   <td>
-                                    <div ><b >From Date:</b></div>
-                                    <div>{{ education.date_from_school | date: "MMMM dd, yyyy" }}</div>
-                                    </td>
-                                   
-                                    <td>
-                                        <div><b>To Date:</b></div>
-                                        <div>{{ education.date_to_school | date: "MMMM dd, yyyy" }}</div>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-
-                            </tr>
-                           
-
-                        </table>
-
-                    </div>
-                  </div>
-                </div>
-            </div>
-       <div class="row">    
-        <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
-                      padding-top:10px;padding-bottom:10px;">
-             <div class="panel panel-default">
-                 <div class="panel-heading" style="font-weight:900">Government Mandated Benefits</div>
-                    <div class="panel-body">
-
-                        <table width="100%">
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:100px; height:20px;">PHIC:</div>
-                                </td>
-                                <td>
-                                      <div style="width:100px; height:20px;">{{employee.data_phid}}</div>
-                                </td>
-                                <td>
-                                <div style="font-weight:bold; width:100px; height:20px;">HDMF:</div>
-                                </td>
-                                <td>
-                                      <div style="width:100px; height:20px;">{{employee.data_pagmid}}</div>
-                                </td>
-                            </tr>
-                            <tr>    
-                                <td>
-                                <div style="font-weight:bold; width:100px; height:20px;">TIN:</div>
-                                </td>
-                                <td>
-                                      <div style="width:100px; height:20px;">{{employee.data_tin}}</div>
-                                </td>    
-                                <td>
-                                <div style="font-weight:bold; width:100px; height:20px;">SSS:</div>
-                                </td>
-                                <td>
-                                      <div style="width:100px; height:20px;">{{employee.data_sss}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                            </tr>   
-                        </table>       
-                    </div>
-                    
-                </div>
-            </div>
+<div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
+<div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
+<div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
+<div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
+<div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
 
 
-        <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
-                      padding-top:10px;padding-bottom:10px;">
-             <div class="panel panel-default">
-                 <div class="panel-heading" style="font-weight:900">Work Schedule</div>
-                    <div class="panel-body">
+</div>
+<div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
+padding-top:10px;padding-bottom:10px;">
 
-                        <table width="100%">
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Sunday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_sunday |  date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_sunday| date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_sunday}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Monday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_monday | date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_monday| date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_monday}}</div>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Tuesday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_tuesday| date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_tuesday| date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_tuesday}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Wednesday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_wednesday| date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_wednesday | date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_wednesday}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Thursday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_thursday| date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_thursday| date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_thursday}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Friday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_friday| date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_friday| date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_friday}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div style="font-weight:bold; width:80px; height:20px;">Saturday:</div>
-                                </td>
-                                <td>
-                                      <div style="width:120px; height:20px;">Time-In: {{employee.timein_saturday| date: "h:mm a"}}</div>
-                                </td>
-                                <td>
-                                <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_saturday| date: "h:mm a"}}</br></div>
-                                </td>
-                                <td>
-                                      <div style="width:60px; height:20px;">Flexi: {{employee.flexi_saturday}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                            </tr>   
-                        </table>       
-                    </div>
-                    
-                </div>
+<div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
+<div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
+<div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
+<div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
+Name: {{employee.emergency_contact_name}}<br>Contact #: {{employee.emergency_contact_number}}
+</div>
+</div>  
 
 
-            </div>
-            <div class="row">   
-                 <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
-                      padding-top:10px;padding-bottom:10px;">
-             <div class="panel panel-default">
-                 <div class="panel-heading" style="font-weight:900">Leave Balances</div>
-                    <div class="panel-body">
-                       <div class="leave-square" style="margin-bottom:10px;" ng-repeat="(k, v) in employee.leave_balances">
-                            <div class="leave-circle" >{{v}}</div>
-                            <label>{{k}}</label>
-                        </div>      
-                    </div>
-                    
-                </div>
-            </div>
-            </div>
+</div>
+<div class ="row">
 
-         </div>
-         <div>
-        </div>
-            <center style="font-size: 18px; font-style: bold">
-            <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
-            </center>
-      </div>
-    </div>  
-    </div>
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+padding-top:10px;padding-bottom:10px;">
+<div class="panel panel-default">
+<div class="panel-heading" style="font-weight:900">Company Profile</div>
+<div class="panel-body">
+
+<table style="width:100%;">
+<tr>
+<td style="width:33%;" >
+<b> Employee ID:</b>
+</td>    
+<td style="width:50%;">
+{{ employee.employee_id }}
+</td>
+</tr>   
+<tr>
+<td>
+<div><b>Start Date:</b></div>
+</td>
+<td>
+<div> {{ employee.date_started | date: "MMMM dd, yyyy" }} </div>
+</td>
+
+<tr>
+</tr>    
+<td>
+<div><b>Business Email Address:</b></div>
+</td>
+<td>
+<div> {{ employee.business_email_address }}</div>
+</td>
+
+</tr>
+<tr>
+
+
+<td>
+<div><b>Level</b></div>
+</td>
+<td>
+<div>{{ employee.levels }}</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<div><b>Position:</b></div>
+</td>
+<td>
+<div> {{ employee.titles }}</div>
+</td>
+
+
+
+</tr>
+<tr>
+
+<td>
+<div><b>Supervisor:</b></div>
+</td>
+<td>
+<div>{{ employee.supervisor }}</div>
+</td>
+
+
+</tr>
+<tr>
+<td>
+<div><b>Department:</b></div>
+</td>
+<td>
+<div>{{ employee.departments }}</div>
+</td>
+
+</tr>
+<tr>
+<td>
+<div><b>Employment Type:</b></div>
+</td>
+<td>
+<div>{{ employee.employment_types }}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div><b>Employee Status:</b></div>
+</td>
+<td>
+<div>{{ employee.employee_statuses }}</div>
+</td>
+</tr>   
+<tr ng-show=" employee.company.salary !== null ">
+<td>
+<div><b>Salary type:</b></div>
+</td>
+<td>
+<div>{{employee.salary_type}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('bank')">
+<td>
+<div><b>Bank Name:</b></div>
+</td>
+<td>
+<div>{{employee.bank_name}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('bank')">
+<td>
+<div><b>Account No:</b></div>
+</td>
+<td>
+<div>{{employee.account_number}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('bank')">
+<td>
+<div><b>Amount:</b></div>
+</td>
+<td>
+<div>{{employee.amount}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('bank')">
+<td>
+<div><b>Rate Type:</b></div>
+</td>
+<td>
+<div>{{employee.ratypes}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('bank')">
+<td>
+<div><b>Pay Period:</b></div>
+</td>
+<td>
+<div>{{employee.pay_periodl}}</div>
+</td>
+</tr>
+
+<tr ng-show="isShown('wire')">
+<td>
+<div><b>Mode Of Payment:</b></div>
+</td>
+<td>
+<div>{{employee.mode_payment}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('wire')">
+<td>
+<div><b>Account No:</b></div>
+</td>
+<td>
+<div>{{employee.account_number}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('wire')">
+<td>
+<div><b>Amount:</b></div>
+</td>
+<td>
+<div>{{employee.amount}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('wire')">
+<td>
+<div><b>Rate Type:</b></div>
+</td>
+<td>
+<div>{{employee.ratypes}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('wire')">
+<td>
+<div><b>Pay Period:</b></div>
+</td>
+<td>
+<div>{{employee.pay_periodl}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('cash')">
+<td>
+<div><b>Amount:</b></div>
+</td>
+<td>
+<div>{{employee.amount}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('cash')">
+<td>
+<div><b>Rate Type:</b></div>
+</td>
+<td>
+<div>{{employee.ratypes}}</div>
+</td>
+</tr>
+<tr ng-show="isShown('cash')">
+<td>
+<div><b>Pay Period:</b></div>
+</td>
+<td>
+<div>{{employee.pay_periodl}}</div>
+</td>
+</tr>
+
+</table>
+
+</div>   
+</div>
+
+</div>
+
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+padding-top:10px;padding-bottom:10px;">
+<div class="panel panel-default">
+<div class="panel-heading" style="font-weight:900">Educational Attainment</div>
+<div class="panel-body">
+
+
+<table width="100%" ng-repeat="education in employee.education">
+<tr >
+<td style="width:50%" >
+<div style="color:#1c84c6;margin-top:1px"><b><i>{{ education.educ_level }}</i><b></div>
+</td>
+<td style="width:100%">
+</td>    
+</tr>
+<tr >
+<td >
+<div><b>School Name:</b></div>
+</td>
+<td>
+<div style="margin-top:10px;">{{ education.school_name }}
+</div>
+</td>
+
+</tr>
+<tr>
+<td>
+<div><b>Location:</b></div>
+</td>
+<td>
+<div>{{ education.school_location }}</div>
+</td>
+</td>
+<tr>
+<td>
+<div ><b >From Date:</b></div>
+<div>{{ education.date_from_school | date: "MMMM dd, yyyy" }}</div>
+</td>
+
+<td>
+<div><b>To Date:</b></div>
+<div>{{ education.date_to_school | date: "MMMM dd, yyyy" }}</div>
+</td>
+<td>
+<div></div>
+</td>
+
+</tr>
+
+
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div class="row">    
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+padding-top:10px;padding-bottom:10px;">
+<div class="panel panel-default">
+<div class="panel-heading" style="font-weight:900">Government Mandated Benefits</div>
+<div class="panel-body">
+
+<table width="100%">
+<tr>
+<td>
+<div style="font-weight:bold; width:100px; height:20px;">PHIC:</div>
+</td>
+<td>
+<div style="width:100px; height:20px;">{{employee.data_phid}}</div>
+</td>
+<td>
+<div style="font-weight:bold; width:100px; height:20px;">HDMF:</div>
+</td>
+<td>
+<div style="width:100px; height:20px;">{{employee.data_pagmid}}</div>
+</td>
+</tr>
+<tr>    
+<td>
+<div style="font-weight:bold; width:100px; height:20px;">TIN:</div>
+</td>
+<td>
+<div style="width:100px; height:20px;">{{employee.data_tin}}</div>
+</td>    
+<td>
+<div style="font-weight:bold; width:100px; height:20px;">SSS:</div>
+</td>
+<td>
+<div style="width:100px; height:20px;">{{employee.data_sss}}</div>
+</td>
+</tr>
+<tr>
+</tr>   
+</table>       
+</div>
+
+</div>
+</div>
+
+
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+padding-top:10px;padding-bottom:10px;">
+<div class="panel panel-default">
+<div class="panel-heading" style="font-weight:900">Work Schedule</div>
+<div class="panel-body">
+
+<table width="100%">
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Sunday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_sunday |  date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_sunday| date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_sunday}}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Monday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_monday | date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_monday| date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_monday}}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Tuesday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_tuesday| date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_tuesday| date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_tuesday}}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Wednesday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_wednesday| date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_wednesday | date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_wednesday}}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Thursday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_thursday| date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_thursday| date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_thursday}}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Friday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_friday| date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_friday| date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_friday}}</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="font-weight:bold; width:80px; height:20px;">Saturday:</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-In: {{employee.timein_saturday| date: "h:mm a"}}</div>
+</td>
+<td>
+<div style="width:120px; height:20px;">Time-Out: {{employee.timeout_saturday| date: "h:mm a"}}</br></div>
+</td>
+<td>
+<div style="width:60px; height:20px;">Flexi: {{employee.flexi_saturday}}</div>
+</td>
+</tr>
+<tr>
+</tr>   
+</table>       
+</div>
+
+</div>
+
+
+</div>
+<div class="row">   
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+padding-top:10px;padding-bottom:10px;">
+<div class="panel panel-default">
+<div class="panel-heading" style="font-weight:900">Leave Balances</div>
+<div class="panel-body">
+<div class="leave-square" style="margin-bottom:10px;" ng-repeat="(k, v) in employee.leave_balances">
+<div class="leave-circle" >{{v}}</div>
+<label>{{k}}</label>
+</div>      
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div>
+</div>
+<center style="font-size: 18px; font-style: bold">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+</center>
+</div>
+</div>  
+</div>
 </script>
 
