@@ -887,7 +887,6 @@ EOT;
         return ClassParent::get($sql);
     }
 
-// (select (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name'))
 
     public function get_permissions(){
         $sql = <<<EOT

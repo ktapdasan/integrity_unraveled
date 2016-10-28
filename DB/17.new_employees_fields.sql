@@ -37,8 +37,8 @@ values
 
 
 /*IMPORTANT!*/
--- For profile pic upload please create folder on - ASSETS/uploads/profile for it to save!
--- Then on terminal go cd (change directory) to ASSETS and type chmod 775 -R uploads/
+-- For Profile Pic Go the Integrity Folder and Open Terminal Type sudo mkdir ASSETS/uploads/profile
+-- After Type on Terminal sudo chmod 777 -R ASSETS/uploads/profile :)
 
 /*start of details fields*/
 /*
