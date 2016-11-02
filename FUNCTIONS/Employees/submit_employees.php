@@ -26,7 +26,7 @@ $class = new Employees(
                             $_POST['data_pagmid'],
                             $_POST['data_phid'],
                             $_POST['education'],
-                            $_POST['rate_type']
+                            $_POST['rate_type'],
                             $_POST['salary_type'],
                             $_POST['bank_name'],
                             $_POST['account_number'],
