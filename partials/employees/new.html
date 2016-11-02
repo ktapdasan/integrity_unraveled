@@ -153,7 +153,7 @@ text-shadow: 0 1px 0 #fff;
                 <li ng-class="current.personal"><a name="tab1">Personal Information</a></li>
                 <li ng-class="current.education"><a name="tab2">Educational Attainment</a></li>
                 <li ng-class="current.company"><a name="tab3">Company Profile</a></li>
-                <li ng-class="current.government"><a name="tab4">Government Mandated Benefits</a></li>    
+                <li ng-class="current.government"><a ng-click="change_tab('government')" name="tab4">Government Mandated Benefits</a></li>    
             </ul>
 
             <div>
@@ -536,14 +536,14 @@ text-shadow: 0 1px 0 #fff;
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Salary Type:</label>
                     </td>
                     <td>
-                        <input type="radio" id="bank" name="salarys" ng-model="employees.salary_type" value="bank"> Bank</input>
-                        <input type="radio" id="wire" name="salarys" ng-model="employees.salary_type" value="wire"> Wire Transfer</input>
-                        <input type="radio" id="cash" name="salarys" ng-model="employees.salary_type" value="cash"> Cash</input>
+                        <input type="radio" id="1" name="salarys" ng-model="employees.salary_type" value="1"> Bank</input>
+                        <input type="radio" id="3" name="salarys" ng-model="employees.salary_type" value="3"> Wire Transfer</input>
+                        <input type="radio" id="2" name="salarys" ng-model="employees.salary_type" value="2"> Cash</input>
                     </td>
 
                 </tr>
             </tr>
-            <tr ng-show="isShown('bank')">
+            <tr ng-show="isShown('1')">
                 <td> 
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Bank Name:</label>
                 </td>
@@ -559,7 +559,7 @@ text-shadow: 0 1px 0 #fff;
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
                 </td>
             </tr>
-            <tr ng-show="isShown('bank')">
+            <tr ng-show="isShown('1')">
                 <td> 
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                 </td>
@@ -580,7 +580,7 @@ text-shadow: 0 1px 0 #fff;
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
                 </td> 
             </tr>
-            <tr ng-show="isShown('bank')">
+            <tr ng-show="isShown('1')">
                 <td>
                     <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Pay Period:</label>
                 </td>
@@ -596,7 +596,7 @@ text-shadow: 0 1px 0 #fff;
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                 </td> 
             </tr>
-            <tr ng-show="isShown('wire')">
+            <tr ng-show="isShown('3')">
                 <td> 
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Mode of Payment:</label>
                 </td>
@@ -613,7 +613,7 @@ text-shadow: 0 1px 0 #fff;
                 </td>
 
             </tr>
-            <tr ng-show="isShown('wire')">
+            <tr ng-show="isShown('3')">
                 <td> 
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                 </td>
@@ -635,7 +635,7 @@ text-shadow: 0 1px 0 #fff;
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
                 </td> 
             </tr>
-            <tr ng-show="isShown('wire')">
+            <tr ng-show="isShown('3')">
                 <td>
                     <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Pay Period:</label>
                 </td>
@@ -651,7 +651,7 @@ text-shadow: 0 1px 0 #fff;
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                 </td> 
             </tr>
-            <tr ng-show="isShown('cash')">
+            <tr ng-show="isShown('2')">
                 <td> 
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Amount:</label>
                 </td>
@@ -673,7 +673,7 @@ text-shadow: 0 1px 0 #fff;
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
                 </td>
             </tr>
-            <tr ng-show="isShown('cash')">
+            <tr ng-show="isShown('2')">
                 <td>
                     <label style="display:block; float:left; padding-top:-10px; padding-right:10px">Pay Period:</label>
                 </td>

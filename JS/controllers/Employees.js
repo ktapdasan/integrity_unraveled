@@ -479,6 +479,11 @@ else if ($scope.employees.data[k].details.company.salary.pay_period_pk !== undef
     $scope.employee.pay_period = $scope.employees.data[k].details.company.salary.pay_period_pk;
 }
 
+if ($scope.employees.data[k].details.company.salary.details === undefined) {
+    $scope.employees.data[k].details.company.salary.details == null;
+}
+else if ($scope.employees.data[k].details.company.salary.details != null) {
+
 //Company -> Salary - > Salary Bank Name Validator
 if ($scope.employees.data[k].details.company.salary.details.bank_name === undefined) {
     $scope.employees.data[k].details.company.salary.details.bank_name = null;
@@ -513,6 +518,7 @@ if ($scope.employees.data[k].details.company.salary.details.mode_payment === und
 }
 else if ($scope.employees.data[k].details.company.salary.details.mode_payment !== undefined) {
     $scope.employee.salary_mode_payment = $scope.employees.data[k].details.company.salary.details.mode_payment;
+}
 }
 }
 

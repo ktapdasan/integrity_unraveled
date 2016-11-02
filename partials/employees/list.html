@@ -687,9 +687,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Salary Type:</label>
 </td>
 <td>
-<input type="radio" id="bank" name="salarys" ng-model="employee.salary_type" value="bank"> Bank</input>
-<input type="radio" id="wire" name="salarys" ng-model="employee.salary_type" value="wire"> Wire Transfer</input>
-<input type="radio" id="cash" name="salarys" ng-model="employee.salary_type" value="cash"> Cash</input>
+<input type="radio" id="1" name="salarys" ng-model="employee.salary_type" value="1"> Bank</input>
+<input type="radio" id="3" name="salarys" ng-model="employee.salary_type" value="3"> Wire Transfer</input>
+<input type="radio" id="2" name="salarys" ng-model="employee.salary_type" value="2"> Cash</input>
 </td>
 <td>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Start Date:</label>
@@ -701,7 +701,7 @@ body>footer .footer-main {
 </tr>
 </tr>
 </tr>
-<tr ng-show="isShown('bank')">
+<tr ng-show="isShown('1')">
 <td> 
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Bank Name:</label>
 </td>
@@ -717,7 +717,7 @@ body>footer .footer-main {
 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.aname.$error.required">Account Number is required.</span>
 </td>
 </tr>
-<tr ng-show="isShown('bank')">
+<tr ng-show="isShown('1')">
 <td> 
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
 </td>
@@ -738,7 +738,7 @@ body>footer .footer-main {
 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
 </td> 
 </tr>
-<tr ng-show="isShown('bank')">
+<tr ng-show="isShown('1')">
 <td>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
 </td>
@@ -754,7 +754,7 @@ body>footer .footer-main {
 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
 </td> 
 </tr>
-<tr ng-show="isShown('wire')">
+<tr ng-show="isShown('3')">
 <td> 
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Mode of Payment:</label>
 </td>
@@ -771,7 +771,7 @@ body>footer .footer-main {
 </td>
 
 </tr>
-<tr ng-show="isShown('wire')">
+<tr ng-show="isShown('3')">
 <td> 
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
 </td>
@@ -808,7 +808,7 @@ body>footer .footer-main {
 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
 </td> 
 </tr>
-<tr ng-show="isShown('cash')">
+<tr ng-show="isShown('2')">
 <td> 
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Amount:</label>
 </td>
@@ -829,7 +829,7 @@ body>footer .footer-main {
 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
 </td> 
 </tr>
-<tr ng-show="isShown('cash')">
+<tr ng-show="isShown('2')">
 <td>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Pay Period:</label>
 </td>
