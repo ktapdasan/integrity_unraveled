@@ -464,10 +464,12 @@ if ($scope.employees.data[k].details.company.salary === undefined) {
     $scope.employees.data[k].details.company.salary = null;
 }
 else if ($scope.employees.data[k].details.company.salary != null) {
+
 //Company -> Salary - > Salary Type Validator
 if ($scope.employees.data[k].details.company.salary.salary_type === undefined) {
     $scope.employees.data[k].details.company.salary.salary_type = null;
 }
+
 else if ($scope.employees.data[k].details.company.salary.salary_type !== undefined) {
     $scope.employee.salary_type = $scope.employees.data[k].details.company.salary.salary_type;
 }
@@ -1740,7 +1742,6 @@ else if ($scope.employees.data[k].details.education != null) {
     }
 }
 
-$scope.employee.leave_balances
 if ($scope.employee.salary_type != null || $scope.employee.salary_type != undefined){
     $scope.isShown = function(salarys_type) {
         return salarys_type === $scope.employee.salary_type;

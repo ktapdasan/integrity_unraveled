@@ -175,7 +175,7 @@ details = jsonb_set(details, '{company}', ' {
     "employment_type": "Non-Exempt",
     "business_email_address": "ken.tapdasan@chrsglobal.com",
     "salary": {
-        "salary_type": "1",
+        "salary_type": "2",
         "rate_type_pk": "2",
         "pay_period_pk": "1",
         "details": {
