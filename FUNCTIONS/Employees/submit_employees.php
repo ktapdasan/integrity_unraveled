@@ -56,6 +56,8 @@ $class = new Employees(
                             $_POST['flexi_thursday'],
                             $_POST['flexi_friday'],
                             $_POST['flexi_saturday'],
+                            $_POST['leaveintern'],
+                            $_POST['leavefte'],
                             NULL,
                             NULL,
                             NULL
@@ -225,6 +227,12 @@ $government['data_phid']             = pg_escape_string(strip_tags(trim($_POST['
 
 $educations['school_type']           = $education;
 
+if ($_POST['levels_pk'] == 3){
+   $extra['leave_balances'] = $_POST['leaveintern'];  
+}
+if ($_POST['levels_pk'] != 3){
+   $extra['leave_balances'] = $_POST['leavefte'];  
+}
 $details = array();
 $details['company']                  = $company;
 $details['personal']                 = $personal; 

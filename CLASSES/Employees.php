@@ -686,9 +686,11 @@ EOT;
 
         $array = $extra['details'];
         $details = json_encode($array);
-        
+
+        $leave = $extra['leave_balances'];
+
         $sql = "begin;";
-        echo $sql .= <<<EOT
+        $sql .= <<<EOT
                 insert into employees
                 (
                     employee_id,
@@ -697,7 +699,8 @@ EOT;
                     last_name,
                     business_email_address,
                     email_address,
-                    details
+                    details,
+                    leave_balances
                 )
                 values
                 (
@@ -707,10 +710,11 @@ EOT;
                     '$this->last_name',
                     '$this->business_email_address',
                     '$this->email_address',
-                    '$details'
+                    '$details',
+                    '$leave'
                 );
 EOT;
-        echo $sql .= <<<EOT
+        $sql .= <<<EOT
                 insert into accounts
                 (
                     employee_id,
@@ -722,8 +726,8 @@ EOT;
                     md5('user123456')
                 );
 EOT;
-        echo $supervisor_pk = $extra['supervisor_pk'];
-        echo $sql .= <<<EOT
+        $supervisor_pk = $extra['supervisor_pk'];
+        $sql .= <<<EOT
                 insert into groupings
                 (   
                     employees_pk,
