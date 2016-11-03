@@ -854,9 +854,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Sunday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-change="date_time.timein = employee.timein_sunday "/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_sunday"/>
 
-<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_sunday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_sunday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_sunday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>
@@ -864,9 +864,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Monday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_monday"/>
 
-<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_monday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_monday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_monday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>
@@ -876,9 +876,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Tuesday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_tuesday"/>
 
-<input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_tuesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_tuesday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_tuesday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>
@@ -886,9 +886,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Wednesday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_wednesday"/>
 
-<input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out"  ng-model="employee.timeout_wednesday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_wednesday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_wednesday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>
@@ -898,9 +898,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Thursday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_thursday"/>
 
-<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_thursday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_thursday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_thursday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>
@@ -908,9 +908,9 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Friday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_friday"/>
 
-<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_friday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_friday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_friday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>
@@ -920,8 +920,8 @@ body>footer .footer-main {
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Saturday:</label>
 </td>
 <td>
-<input  type="text" placeholder="Time-In" ng-model="employee.timein_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>  
-<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker/>
+<input  type="text" placeholder="Time-In" ng-model="employee.timein_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_saturday"/>  
+<input  type="text" placeholder="Time-Out" ng-model="employee.timeout_saturday" style="display: block; float: left; width:100px; height:25px;" bs-timepicker ng-disabled="employee.flexi_saturday"/>
 <label style="display:block; float:left; padding-top:10px; padding-right:10px; width:170px;">Flexi Working Hours:</label>
 <input  type="checkbox" ng-model="employee.flexi_saturday" style="display: block; float: left; width:20px; height:34px;"/>
 </td>

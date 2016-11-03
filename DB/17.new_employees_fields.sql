@@ -231,19 +231,7 @@ details = jsonb_set(details, '{personal}', '
 {
     "first_name": "Ken",
     "middle_name": "Villanueva",
-    "last_name": "Tapdasan",
-    "email_address": "ktapdasan.chrs@gmail.com",
-    "gender": "Male",
-    "civilstatus": "Single",
-    "religion": "Catholic",
-    "present_address": "Mandaluyong",
-    "permanent_address": "Dasmarinas",
-    "birth_date": "7-27-1995",
-    "contact_number": "09504151950",
-    "landline_number": "5340368",
-    "profile_picture": "./ASSETS/img/blank.gif",
-    "emergency_contact_name": "Clarissa Mae Fortuno",
-    "emergency_contact_number": "09504151950"
+    "last_name": "Tapdasan"
 }
 ', true)
 where pk = 12;
