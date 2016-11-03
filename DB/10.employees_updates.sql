@@ -2,15 +2,15 @@
 update objects set body=jsonb_set(body, '{name}', '"Mary"', true) where id=1;
 */
 
-create table employees_backup
+create table employees
 (
 	pk serial primary key,
 	details jsonb,
 	leave_balances jsonb,
 	date_created timestamptz default now(),
-	archived boolean default false,
-	image bytea
+	archived boolean default false
 );
+
 alter table employees_backup owner to chrs;
 
 -- begin;
