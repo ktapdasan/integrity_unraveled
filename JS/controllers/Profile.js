@@ -18,7 +18,6 @@ app.controller('Profile', function(
     };
 
 
-
             
 
 
@@ -157,6 +156,9 @@ app.controller('Profile', function(
             if ($scope.profile.details.personal.birth_date == null){
                 $scope.profile.details.personal.birth_date ='No Data';
             }
+            else{
+                $scope.profile.details.personal.birth_date = new Date($scope.profile.details.personal.birth_date);
+            }
 
             if ($scope.profile.details.personal.email_address == undefined){
                 $scope.profile.details.personal.email_address = 'No Data';
@@ -164,6 +166,9 @@ app.controller('Profile', function(
 
             if ($scope.profile.details.company.date_started == undefined){
                 $scope.profile.details.company.date_started = 'No data';
+            }
+            else{
+                $scope.profile.details.company.date_started = new Date($scope.profile.details.company.date_started);
             }
 
             if ($scope.profile.supervisor == undefined){
@@ -212,6 +217,8 @@ app.controller('Profile', function(
             };
             }
             
+            $scope.minus = 1;
+            $scope.minus_20 = 20;
 
             $scope.profile.details.company.titles_pk = parseInt($scope.profile.details.company.titles_pk) - parseInt($scope.minus);
             $scope.profile.titles = $scope.titles.data[$scope.profile.details.company.titles_pk].title;
@@ -222,9 +229,6 @@ app.controller('Profile', function(
             $scope.profile.details.company.departments_pk = parseInt($scope.profile.details.company.departments_pk) - parseInt($scope.minus_20);
             $scope.profile.deparments = $scope.department.data[$scope.profile.details.company.departments_pk].department;
 
-
-
-           
             if ($scope.profile.details.company.employment_type == undefined){
                  $scope.profile.employment_typess = 'No Data';
             }

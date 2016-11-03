@@ -80,8 +80,7 @@ app.controller('New_Employees', function(
         present_address:'',
         emergency_contact_number:null,
         emergency_name:'',
-        leaveintern:'{"1": "0", "3": "0", "4": "0", "5": "0", "7": "0"}',
-        leavefte:'{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}',
+        leave_balance:'{"1": "0", "3": "0", "4": "0", "5": "0", "7": "0"}',
         contact_number:null,
         landline_number:null,
         flexi_sunday:false,
@@ -230,6 +229,11 @@ app.controller('New_Employees', function(
         }
     };
 
+    $scope.removeChoice = function (z) {
+        //var lastItem = $scope.choiceSet.choices.length - 1;
+        $scope.employees.education.splice(z,1);
+    };
+
     $scope.submit_employees = function(){
         get_supervisors();
         for(var i in $scope.employees.education){
@@ -314,18 +318,7 @@ app.controller('New_Employees', function(
                 positionY: 'top', positionX: 'right'
             });
 
-        })
-        .then(null, function(data){
-
-            UINotification.error({
-                message: 'An error occured, please try again.', 
-                title: 'ERROR', 
-                delay : 5000,
-                positionY: 'top', positionX: 'right'
-            });
-        });
-
-        $scope.employees={
+            $scope.employees={
             profile_picture:'./ASSETS/img/blank.gif',
             first_name:'',
             middle_name:'',
@@ -356,8 +349,7 @@ app.controller('New_Employees', function(
             account_number:'',
             education: [{educ_level: "Primary"}],
             amount:'',
-            leaveintern:'{"1": "0", "3": "0", "4": "0", "5": "0", "7": "0"}',
-            leavefte:'{"1": "12", "3": "12", "4": "3", "5": "12", "7": "12"}',
+            leave_balance:'{"1": "0", "3": "0", "4": "0", "5": "0", "7": "0"}',
             mode_payment:'',
             timein_sunday:null,
             timein_monday:null,
@@ -387,6 +379,17 @@ app.controller('New_Employees', function(
             flexi_friday:false,
             flexi_saturday:false
         };
+
+        })
+        .then(null, function(data){
+
+            UINotification.error({
+                message: 'An error occured, please try again.', 
+                title: 'ERROR', 
+                delay : 5000,
+                positionY: 'top', positionX: 'right'
+            });
+        });
     }
 
     $scope.level_changed = function(){

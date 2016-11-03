@@ -37,20 +37,6 @@ app.controller('Employees', function(
     $scope.employeesheet_data = [];
     $scope.employee.education = [];
 
-    $scope.pay_periods = [
-    { pk:'1', periods:'Daily' },
-    { pk:'2', periods:'Weekly'},
-    { pk:'3', periods:'Semi-Monthly' },
-    { pk:'4', periods:'Monthly'},
-    { pk:'5', periods:'Annually' }
-    ];
-
-    $scope.rates_type = [
-    { pk:'1', ratetypek:'Hourly' },
-    { pk:'2', ratetypek:'Daily' },
-    { pk:'3', ratetypek:'Monthly'}
-    ];
-
     $scope.modal = {};
     $scope.level_class = 'orig_width';
     $scope.show_hours = false;
@@ -1043,6 +1029,11 @@ $scope.addNewChoice = function() {
     else if ($scope.employees.school_type == 'Tertiary'){
         $scope.employee.educations.push({educ_level: "Tertiary" });
     }
+};
+
+$scope.removeChoice = function (z) {
+    //var lastItem = $scope.choiceSet.choices.length - 1;
+    $scope.employee.educations.splice(z,1);
 };
 
 $scope.isShown = function(salarys_type) {

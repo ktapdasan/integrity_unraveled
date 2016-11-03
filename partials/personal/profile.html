@@ -127,7 +127,7 @@ th, td {
                       <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
                       padding-top:10px;padding-bottom:10px;">
 
-                            <div style="color:#1c84c6;"><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date:"MMMM dd, yyyy" }}</div>
+                            <div style="color:#1c84c6;"><b>Birthday:</b></div><div style="margin-left:30px;">{{ profile.details.personal.birth_date | date }}</div>
                             <div style="color:#1c84c6;"><b>Civil Status:</b></div><div style="margin-left:30px;">{{ profile.civil_types }}</div>
                             <div style="color:#1c84c6;"><b>Religion:</b></div><div style="margin-left:30px;">{{ profile.details.personal.religion }}</div>
                              <div style="color:#1c84c6;"><b>Gender:</b></div><div style="margin-left:30px;">{{ profile.gender_type }}</div>
@@ -163,7 +163,7 @@ th, td {
                                     <div><b>Start Date:</b></div>
                                 </td>
                                  <td>
-                                    <div> {{ profile.details.company.date_started | date: "MMMM dd, yyyy" }} </div>
+                                    <div> {{ profile.details.company.date_started | date }} </div>
                                 </td>
 
                             <tr>
@@ -236,13 +236,19 @@ th, td {
                              </tr>   
                              <tr ng-show=" profile.details.company.salary !== null ">
                                 <td>
-                                    <div><b>Salary type:</b></div>
+                                    <div><b>Salary Type:</b></div>
                                 </td>
-                                <td>
-                                    <div>{{profile.details.company.salary.salary_type}}</div>
+                                <td ng-show="profile.details.company.salary.salary_type == 1">
+                                <div>Bank</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.salary_type == 2">
+                                <div>Cash</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.salary_type == 3">
+                                <div>Wire</div>
                                 </td>
                             </tr>
-                             <tr ng-show="isShown('bank')">
+                             <tr ng-show="isShown('1')">
                                 <td>
                                     <div><b>Bank Name:</b></div>
                                 </td>
@@ -250,7 +256,7 @@ th, td {
                                     <div>{{profile.details.company.salary.details.bank_name}}</div>
                                 </td>
                             </tr>
-                            <tr ng-show="isShown('bank')">
+                            <tr ng-show="isShown('1')">
                                 <td>
                                     <div><b>Account No:</b></div>
                                 </td>
@@ -258,7 +264,7 @@ th, td {
                                     <div>{{profile.details.company.salary.details.account_number}}</div>
                                 </td>
                              </tr>
-                             <tr ng-show="isShown('bank')">
+                             <tr ng-show="isShown('1')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
@@ -267,7 +273,7 @@ th, td {
                                 </td>
                              </tr>
 
-                             <tr ng-show="isShown('wire')">
+                             <tr ng-show="isShown('3')">
                                 <td>
                                     <div><b>Mode Of Payment:</b></div>
                                 </td>
@@ -275,7 +281,7 @@ th, td {
                                     <div>{{profile.details.company.salary.details.mode_payment}}</div>
                                 </td>
                             </tr>
-                            <tr ng-show="isShown('wire')">
+                            <tr ng-show="isShown('3')">
                                 <td>
                                     <div><b>Account No:</b></div>
                                 </td>
@@ -283,7 +289,7 @@ th, td {
                                     <div>{{profile.details.company.salary.details.account_number}}</div>
                                 </td>
                              </tr>
-                             <tr ng-show="isShown('wire')">
+                             <tr ng-show="isShown('3')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
@@ -291,12 +297,46 @@ th, td {
                                     <div>{{profile.details.company.salary.details.amount}}</div>
                                 </td>
                              </tr>
-                              <tr ng-show="isShown('cash')">
+                              <tr ng-show="isShown('2')">
                                 <td>
                                     <div><b>Amount:</b></div>
                                 </td>
                                 <td>
                                     <div>{{profile.details.company.salary.details.amount}}</div>
+                                </td>
+                             </tr>
+                             <tr>
+                                <td>
+                                    <div><b>Pay Period:</b></div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.pay_period_pk == 1">
+                                    <div>Daily</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.pay_period_pk == 2">
+                                    <div>Weekly</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.pay_period_pk == 3">
+                                    <div>Semi-Monthly</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.pay_period_pk == 4">
+                                    <div>Monthly</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.pay_period_pk == 5">
+                                    <div>Annually</div>
+                                </td>
+                             </tr>
+                             <tr>
+                                <td>
+                                    <div><b>Rate Type:</b></div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.rate_type_pk == 1">
+                                    <div>Hourly</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.rate_type_pk == 2">
+                                    <div>Daily</div>
+                                </td>
+                                <td ng-show="profile.details.company.salary.rate_type_pk == 3">
+                                    <div>Monthly</div>
                                 </td>
                              </tr>
 

@@ -353,7 +353,6 @@ text-shadow: 0 1px 0 #fff;
                 <tr>
 
                     <td><h4 style="margin-left:-34px;color:#219DEC;" ><div class ="labelbck">{{form.educ_level}}<div class="skew"></div></div></h4></td>
-
                 </tr>
                 <tr >
                     <td>
@@ -385,6 +384,12 @@ text-shadow: 0 1px 0 #fff;
                     <td id="css">
                         <input ng-model="form.date_to_school" type="date" id="datefrom" style="display: block; float: left; width:350px; height:36px;" />
                     </td>
+                    <td>
+                    <div>
+                        <input type="image" src="./ASSETS/img/delete.png" title="Remove" s ng-click="removeChoice($index)" title="Remove">
+                    </div>
+                    </td>
+
                 </tr>
             </table>
 
