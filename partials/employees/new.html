@@ -428,7 +428,7 @@ text-shadow: 0 1px 0 #fff;
                     <label style="display:block; float:left; padding-top:10px; padding-right:10px">Employee ID:</label>
                 </td>
                 <td id="css">
-                    <input name="user" required ng-model="employees.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:340px; height:38px;" />
+                    <input name="user" required ng-model="employees.employee_id" maxlength = "9"type = "text" is-number style="display: block; float: left; width:340px; height:38px;" disabled/>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.user.$error.required">Employee I.D. is required.</span>
                 </td>
                 <td>
@@ -512,12 +512,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="employeet" required ng-model="employees.employee_status" style="display: block; float: left; width:340px;padding:5px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-
-                        <option value="Probationary">Probationary</option>
-                        <option value="Trainee">Trainee</option>
-                        <option value="Contractual">Contractual</option>
-                        <option value="Regular">Regular</option>
-                        <option value="Consultant">Consultant</option>
+                        <option ng-repeat="(k, v) in employee_status.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.status}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employeet.$error.required">Employee status is required.</span>
                 </td>
@@ -530,8 +527,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="employmenttype" required ng-model="employees.employment_type" style="display: block; float: left; width:340px;padding:5px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="Exempt">Exempt</option>
-                        <option value="Non-Exempt">Non-Exempt</option>
+                        <option ng-repeat="(k, v) in employment_type.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.type}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.employmenttype.$error.required">Employment type is required.</span>
 
@@ -541,6 +539,7 @@ text-shadow: 0 1px 0 #fff;
                         <label style="display:block; float:left; padding-top:10px; padding-right:10px">Salary Type:</label>
                     </td>
                     <td>
+                        <input type="radio" id="4" name="salarys" ng-model="employees.salary_type" value="4"> None</input>
                         <input type="radio" id="1" name="salarys" ng-model="employees.salary_type" value="1"> Bank</input>
                         <input type="radio" id="3" name="salarys" ng-model="employees.salary_type" value="3"> Wire Transfer</input>
                         <input type="radio" id="2" name="salarys" ng-model="employees.salary_type" value="2"> Cash</input>
@@ -578,9 +577,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="ratype" required ng-model="employees.rate_type" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="2">Daily</option>
-                        <option value="3">Monthly</option>
-                        <option value="1">Hourly</option>
+                        <option ng-repeat="(k, v) in rate_type.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.type}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
                 </td> 
@@ -592,11 +591,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="ptype" required ng-model="employees.pay_period" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="1">Daily</option>
-                        <option value="2">Weekly</option>
-                        <option value="3">Semi-Monthly</option>
-                        <option value="4">Monthly</option>
-                        <option value="5">Annually</option>
+                        <option ng-repeat="(k, v) in pay_period.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.period}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                 </td> 
@@ -633,9 +630,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="ratype" required ng-model="employees.rate_type" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="2">Daily</option>
-                        <option value="3">Monthly</option>
-                        <option value="1">Hourly</option>
+                        <option ng-repeat="(k, v) in rate_type.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.type}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
                 </td> 
@@ -647,11 +644,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="ptype" required ng-model="employees.pay_period" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="1">Daily</option>
-                        <option value="2">Weekly</option>
-                        <option value="3">Semi-Monthly</option>
-                        <option value="4">Monthly</option>
-                        <option value="5">Annually</option>
+                        <option ng-repeat="(k, v) in pay_period.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.period}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                 </td> 
@@ -671,9 +666,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="ratype" required ng-model="employees.rate_type" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="2">Daily</option>
-                        <option value="3">Monthly</option>
-                        <option value="1">Hourly</option>
+                        <option ng-repeat="(k, v) in rate_type.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.type}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ratype.$error.required">Rate Type is required.</span>
                 </td>
@@ -685,11 +680,9 @@ text-shadow: 0 1px 0 #fff;
                 <td id="css">
                     <select name="ptype" required ng-model="employees.pay_period" style="display: block; float: left; width:340px;padding:5px; height:36px;" >
                         <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
-                        <option value="1">Daily</option>
-                        <option value="2">Weekly</option>
-                        <option value="3">Semi-Monthly</option>
-                        <option value="4">Monthly</option>
-                        <option value="5">Annually</option>
+                        <option ng-repeat="(k, v) in pay_period.data" style="cursor:pointer;" value="{{v.pk}}">
+                            {{v.period}}
+                        </option>
                     </select>
                     <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
                 </td> 

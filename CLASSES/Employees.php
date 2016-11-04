@@ -886,6 +886,75 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_max_employee_id(){
+
+        $sql = <<<EOT
+            select 
+            employee_id
+            from employees
+            where employee_id = (select max(employee_id) from employees)
+            ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_employment_type(){
+
+        $sql = <<<EOT
+            select 
+            pk, 
+            type 
+            from employee_types 
+            where archived = 'f'
+            ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_employment_statuses(){
+
+        $sql = <<<EOT
+            select 
+            pk, 
+            status 
+            from employment_statuses 
+            where archived = 'f'
+            ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_pay_period(){
+
+        $sql = <<<EOT
+            select 
+            pk, 
+            period 
+            from pay_period 
+            where archived = 'f'
+            ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_rate_type(){
+
+        $sql = <<<EOT
+            select 
+            pk, 
+            type 
+            from rate_type 
+            where archived = 'f'
+            ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
 
     public function get_permissions(){
         $sql = <<<EOT

@@ -35,6 +35,107 @@ values
 	'wire'
 );
 
+create table employee_types
+(
+    pk serial primary key,
+    type text not null,
+    archived boolean default false
+);
+alter table employee_types owner to chrs;
+
+insert into employee_types
+(
+    type
+)
+values
+(
+    'Exempt'
+),
+(
+    'Non-Exempt'
+);
+
+create table employment_statuses
+(
+    pk serial primary key,
+    status text not null,
+    archived boolean default false
+);
+alter table employment_statuses owner to chrs;
+
+insert into employment_statuses
+(
+    status
+)
+values
+(
+    'Probationary'
+),
+(
+    'Trainee'
+),
+(
+    'Contractual'
+),
+(
+    'Regular'
+),
+(
+    'Consultant'
+);
+
+create table rate_type
+(
+    pk serial primary key,
+    type text not null,
+    archived boolean default false
+);
+alter table rate_type owner to chrs;
+
+insert into rate_type
+(
+    type
+)
+values
+(
+    'Hourly'
+),
+(
+    'Daily'
+),
+(
+    'Monthly'
+);
+
+create table pay_period
+(
+    pk serial primary key,
+    period text not null,
+    archived boolean default false
+);
+alter table pay_period owner to chrs;
+
+insert into pay_period
+(
+    period
+)
+values
+(
+    'Daily'
+),
+(
+    'Weekly'
+),
+(
+    'Semi-Monthly'
+),
+(
+    'Monthly'
+),
+(
+    'Annually'
+);
+
 
 /*IMPORTANT!*/
 -- For Profile Pic Go the Integrity Folder and Open Terminal Type sudo mkdir ASSETS/uploads/profile
@@ -171,8 +272,8 @@ details = jsonb_set(details, '{company}', ' {
     "levels_pk": "7",
     "titles_pk": "14",
     "supervisor": "28",
-    "employee_status": "Contractual",
-    "employment_type": "Non-Exempt",
+    "employee_status_pk": "3",
+    "employment_type_pk": "2",
     "business_email_address": "ken.tapdasan@chrsglobal.com",
     "salary": {
         "salary_type": "2",
@@ -308,8 +409,8 @@ Example: When All Data is Completly Inserted or Updated
             }
         },
         "departments_pk": "26",
-        "employee_status": "Contractual",
-        "employment_type": "Non-Exempt",
+        "employee_status_pk": "3",
+        "employment_type_pk": "2",
         "business_email_address": "ken.tapdasan@chrsglobal.com"
     },
     "personal": {

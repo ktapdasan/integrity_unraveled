@@ -66,8 +66,8 @@ $class = new Employees(
 //Company Array! Ken
 $company = array();
 $company['employee_id']              = pg_escape_string(strip_tags(trim($_POST['employee_id'])));
-$company['employee_status']          = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
-$company['employment_type']          = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
+$company['employee_status_pk']          = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
+$company['employment_type_pk']          = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
 $company['departments_pk']           = pg_escape_string(strip_tags(trim($_POST['departments_pk'])));
 $company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['titles_pk'])));
 $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
@@ -98,6 +98,9 @@ $company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['
        $company['salary']['rate_type_pk']            = pg_escape_string(strip_tags(trim($_POST['rate_type'])));
        $company['salary']['pay_period_pk']            = pg_escape_string(strip_tags(trim($_POST['pay_period'])));
        $company['salary']['details']['amount']                = pg_escape_string(strip_tags(trim($_POST['amount'])));
+    }
+    if ($_POST['salary_type'] == '4'){
+       $company['salary']['salary_type']           = pg_escape_string(strip_tags(trim($_POST['salary_type'])));
     }
 
 if ($_POST['timein_sunday'] != 'data' ) {

@@ -36,6 +36,10 @@ app.controller('Employees', function(
     $scope.employees.filters={};
     $scope.employeesheet_data = [];
     $scope.employee.education = [];
+    $scope.employment_type={};
+    $scope.employee_status={};
+    $scope.rate_type={};
+    $scope.pay_period={};
 
     $scope.modal = {};
     $scope.level_class = 'orig_width';
@@ -71,6 +75,10 @@ app.controller('Employees', function(
             fetch_levels();
             fetch_titles();
             leave_types();
+            get_employment_type();
+            get_employment_statuses();
+            get_rate_type();
+            get_pay_period();
         })
         .then(null, function(data){
             window.location = './login.html';
@@ -106,141 +114,178 @@ app.controller('Employees', function(
         var today = new Date();
 
         var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
 
-if(dd<10) {
-    dd='0'+dd
-} 
+        if(dd<10) {
+            dd='0'+dd
+        } 
 
-if(mm<10) {
-    mm='0'+mm
-} 
+        if(mm<10) {
+            mm='0'+mm
+        } 
 
-today = yyyy+'-'+mm+'-'+dd;
+        today = yyyy+'-'+mm+'-'+dd;
 
-$scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
-$scope.filter.date_to = new Date();
+        $scope.filter.date_from = new Date(yyyy+'-'+mm+'-01'); 
+        $scope.filter.date_to = new Date();
 
-}
-
-function getMonday(d) {
-    var d = new Date(d);
-    var day = d.getDay(),
-diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-
-var new_date = new Date(d.setDate(diff));
-var dd = new_date.getDate();
-var mm = new_date.getMonth()+1; //January is 0!
-var yyyy = new_date.getFullYear();
-
-if(dd<10) {
-    dd='0'+dd
-} 
-
-if(mm<10) {
-    mm='0'+mm
-} 
-
-var monday = yyyy+'-'+mm+'-'+dd;
-
-return monday;
-}
-
-
-
-$scope.show_employees = function(){
-
-    employees();
-}
-
-function employees(){
-
-    $scope.filter.archived = 'false';
-
-
-    var promise = EmployeesFactory.fetch_all($scope.filter);
-    promise.then(function(data){
-        $scope.employees.status = true;
-//$scope.employees.data = data.data.result;
-
-//$scope.employees.data
-var a = data.data.result;
-for(var i in a){
-    a[i].details = JSON.parse(a[i].details);
-}
-
-$scope.employees.data = a;
-$scope.employees.count = data.data.result.length;
-})
-    .then(null, function(data){
-        $scope.employees.status = false;
-    });
-
-}
-
-function get_positions(){
-    var promise = EmployeesFactory.get_positions();
-    promise.then(function(data){
-        $scope.titles.data = data.data.result;
-    })
-    .then(null, function(data){
-
-    });
-}
-
-function get_department(){
-    var filter = {
-        archived : false
     }
 
-    var promise = EmployeesFactory.get_department(filter);
-    promise.then(function(data){
-        $scope.department.data = data.data.result;
-    })
-    .then(null, function(data){
+    function getMonday(d) {
+        var d = new Date(d);
+        var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); 
 
-    });
-}
+        var new_date = new Date(d.setDate(diff));
+        var dd = new_date.getDate();
+        var mm = new_date.getMonth()+1; 
+        var yyyy = new_date.getFullYear();
 
-function get_levels(){
-    var promise = EmployeesFactory.get_levels();
-    promise.then(function(data){
-        $scope.level_title.data = data.data.result;
-    })
-    .then(null, function(data){
+        if(dd<10) {
+            dd='0'+dd
+        } 
 
-    });
-}
+        if(mm<10) {
+            mm='0'+mm
+        } 
 
-function get_supervisors(){
-    var promise = EmployeesFactory.get_supervisors();
-    promise.then(function(data){
-        $scope.employees.supervisors = data.data.result;
-    })
-    .then(null, function(data){
+        var monday = yyyy+'-'+mm+'-'+dd;
 
-    });
-}
+        return monday;
+    }
 
-function leave_types(){
-    var filter = {
-        archived : false
-    };
-    $scope.leave_types.data = [];
-    var promise = LeaveFactory.get_leave_types(filter);
-    promise.then(function(data){
-        $scope.leave_types.status = true;
-        $scope.leave_types.data = data.data.result;
-    })
-    .then(null, function(data){
 
-    });
-}
 
-$scope.export_employees = function(){
-    window.open('./FUNCTIONS/Timelog/employees_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
-}
+    $scope.show_employees = function(){
+
+        employees();
+    }
+
+    function employees(){
+
+        $scope.filter.archived = 'false';
+
+
+        var promise = EmployeesFactory.fetch_all($scope.filter);
+        promise.then(function(data){
+            $scope.employees.status = true;
+            var a = data.data.result;
+            for(var i in a){
+                a[i].details = JSON.parse(a[i].details);
+            }
+
+            $scope.employees.data = a;
+            $scope.employees.count = data.data.result.length;
+        })
+        .then(null, function(data){
+            $scope.employees.status = false;
+        });
+
+    }
+
+    function get_positions(){
+        var promise = EmployeesFactory.get_positions();
+        promise.then(function(data){
+            $scope.titles.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_department(){
+        var filter = {
+            archived : false
+        }
+
+        var promise = EmployeesFactory.get_department(filter);
+        promise.then(function(data){
+            $scope.department.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_levels(){
+        var promise = EmployeesFactory.get_levels();
+        promise.then(function(data){
+            $scope.level_title.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_supervisors(){
+        var promise = EmployeesFactory.get_supervisors();
+        promise.then(function(data){
+            $scope.employees.supervisors = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function leave_types(){
+        var filter = {
+            archived : false
+        };
+        $scope.leave_types.data = [];
+        var promise = LeaveFactory.get_leave_types(filter);
+        promise.then(function(data){
+            $scope.leave_types.status = true;
+            $scope.leave_types.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_employment_type(){
+        var promise = EmployeesFactory.get_employment_type();
+        promise.then(function(data){
+            $scope.employment_type.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_employment_statuses(){
+        var promise = EmployeesFactory.get_employment_statuses();
+        promise.then(function(data){
+            $scope.employee_status.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_rate_type(){
+        var promise = EmployeesFactory.get_rate_type();
+        promise.then(function(data){
+            $scope.rate_type.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_pay_period(){
+        var promise = EmployeesFactory.get_pay_period();
+        promise.then(function(data){
+            $scope.pay_period.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    $scope.export_employees = function(){
+        window.open('./FUNCTIONS/Timelog/employees_export.php?pk='+$scope.filter.pk+'&datefrom='+$scope.filter.datefrom+"&dateto="+$scope.filter.dateto);
+    }
 
 // $scope.delete_employees = function(k){
 
@@ -448,12 +493,13 @@ else if ($scope.employees.data[k].details.company != null) {
 //Company - Salary Type
 if ($scope.employees.data[k].details.company.salary === undefined) {
     $scope.employees.data[k].details.company.salary = null;
+    $scope.employee.salary_type = '4';
 }
 else if ($scope.employees.data[k].details.company.salary != null) {
 
 //Company -> Salary - > Salary Type Validator
-if ($scope.employees.data[k].details.company.salary.salary_type === undefined) {
-    $scope.employees.data[k].details.company.salary.salary_type = null;
+if ($scope.employees.data[k].details.company.salary.salary_type === undefined || $scope.employees.data[k].details.company.salary.salary_type == 'null') {
+    $scope.employee.salary_type = '4';
 }
 
 else if ($scope.employees.data[k].details.company.salary.salary_type !== undefined) {
@@ -814,18 +860,18 @@ else if ($scope.employees.data[k].details.company.titles_pk != null) {
     $scope.employee.titles_pk = $scope.employees.data[k].details.company.titles_pk;
 }
 // Employee Status
-if ($scope.employees.data[k].details.company.employee_status === undefined || $scope.employees.data[k].details.company.employee_status == null) {
+if ($scope.employees.data[k].details.company.employee_status_pk === undefined || $scope.employees.data[k].details.company.employee_status_pk == null) {
     $scope.employee.employee_status = null;
 }
-else if ($scope.employees.data[k].details.company.employee_status != null) {
-    $scope.employee.employee_status = $scope.employees.data[k].details.company.employee_status;
+else if ($scope.employees.data[k].details.company.employee_status_pk != null) {
+    $scope.employee.employee_status = $scope.employees.data[k].details.company.employee_status_pk;
 }
 // Employee Type
-if ($scope.employees.data[k].details.company.employment_type === undefined || $scope.employees.data[k].details.company.employment_type == null) {
+if ($scope.employees.data[k].details.company.employment_type_pk === undefined || $scope.employees.data[k].details.company.employment_type_pk == null) {
     $scope.employee.employment_type = null;
 }
-else if ($scope.employees.data[k].details.company.employment_type != null) {
-    $scope.employee.employment_type = $scope.employees.data[k].details.company.employment_type;
+else if ($scope.employees.data[k].details.company.employment_type_pk != null) {
+    $scope.employee.employment_type = $scope.employees.data[k].details.company.employment_type_pk;
 }
 // Date Started
 if ($scope.employees.data[k].details.company.date_started === undefined || $scope.employees.data[k].details.company.date_started == null) {
@@ -1032,8 +1078,8 @@ $scope.addNewChoice = function() {
 };
 
 $scope.removeChoice = function (z) {
-    //var lastItem = $scope.choiceSet.choices.length - 1;
-    $scope.employee.educations.splice(z,1);
+//var lastItem = $scope.choiceSet.choices.length - 1;
+$scope.employee.educations.splice(z,1);
 };
 
 $scope.isShown = function(salarys_type) {
@@ -1193,11 +1239,12 @@ else if ($scope.employees.data[k].details.company != null) {
 //Company - Salary Type
 if ($scope.employees.data[k].details.company.salary === undefined) {
     $scope.employees.data[k].details.company.salary = null;
+    $scope.employee.salary_type = '4';
 }
 else if ($scope.employees.data[k].details.company.salary != null) {
 //Company -> Salary - > Salary Type Validator
 if ($scope.employees.data[k].details.company.salary.salary_type === undefined) {
-    $scope.employees.data[k].details.company.salary.salary_type = null;
+    $scope.employee.salary_type = '4';
 }
 else if ($scope.employees.data[k].details.company.salary.salary_type !== undefined) {
     $scope.employee.salary_type = $scope.employees.data[k].details.company.salary.salary_type;
@@ -1528,18 +1575,18 @@ else if ($scope.employees.data[k].details.company.titles_pk != null) {
     $scope.employee.titles_pk = $scope.employees.data[k].details.company.titles_pk;
 }
 // Employee Status
-if ($scope.employees.data[k].details.company.employee_status === undefined || $scope.employees.data[k].details.company.employee_status == null) {
+if ($scope.employees.data[k].details.company.employee_status_pk === undefined || $scope.employees.data[k].details.company.employee_status_pk == null) {
     $scope.employee.employee_status = null;
 }
-else if ($scope.employees.data[k].details.company.employee_status != null) {
-    $scope.employee.employee_status = $scope.employees.data[k].details.company.employee_status;
+else if ($scope.employees.data[k].details.company.employee_status_pk != null) {
+    $scope.employee.employee_status = $scope.employees.data[k].details.company.employee_status_pk;
 }
 // Employee Type
-if ($scope.employees.data[k].details.company.employment_type === undefined || $scope.employees.data[k].details.company.employment_type == null) {
+if ($scope.employees.data[k].details.company.employment_type_pk === undefined || $scope.employees.data[k].details.company.employment_type_pk == null) {
     $scope.employee.employment_type = null;
 }
-else if ($scope.employees.data[k].details.company.employment_type != null) {
-    $scope.employee.employment_type = $scope.employees.data[k].details.company.employment_type;
+else if ($scope.employees.data[k].details.company.employment_type_pk != null) {
+    $scope.employee.employment_type = $scope.employees.data[k].details.company.employment_type_pk;
 }
 // Date Started
 if ($scope.employees.data[k].details.company.date_started === undefined || $scope.employees.data[k].details.company.date_started == null) {
@@ -1752,15 +1799,16 @@ $scope.employee.departments_pk = parseInt($scope.employee.departments_pk) - pars
 $scope.employee.departments = $scope.department.data[$scope.employee.departments_pk].department;
 
 if ($scope.employee.employee_status != null) {
-    $scope.employee.employee_statuses = $scope.employee.employee_status
+    $scope.employee.employee_status = parseInt($scope.employee.employee_status) - parseInt($scope.minus);
+    $scope.employee.employee_statuses = $scope.employee_status.data[$scope.employee.employee_status].status;
 }
-
 else if ($scope.employee.employee_status == null) {
     $scope.employee.employee_statuses = 'No Data';
 }
 
 if ($scope.employee.employment_type != null) {
-    $scope.employee.employment_types = $scope.employee.employment_type
+    $scope.employee.employment_type = parseInt($scope.employee.employment_type) - parseInt($scope.minus);
+    $scope.employee.employment_types = $scope.employment_type.data[$scope.employee.employment_type].type;
 }
 else if ($scope.employee.employment_type == null) {
     $scope.employee.employment_types = 'No Data';
@@ -1782,7 +1830,7 @@ else if ($scope.employee.civilstatus == null) {
 
 if ($scope.employee.ratype != null) {
     $scope.employee.ratype = parseInt($scope.employee.ratype) - parseInt($scope.minus);
-    $scope.employee.ratypes = $scope.rates_type[$scope.employee.ratype].ratetypek;
+    $scope.employee.ratypes = $scope.rate_type.data[$scope.employee.ratype].type;
 }
 else if ($scope.employee.ratype == null) {
     $scope.employee.ratypes = 'No Data';
@@ -1790,7 +1838,7 @@ else if ($scope.employee.ratype == null) {
 
 if ($scope.employee.pay_periodk != null) {
     $scope.employee.pay_periodk = parseInt($scope.employee.pay_periodk) - parseInt($scope.minus);
-    $scope.employee.pay_periodl = $scope.pay_periods[$scope.employee.pay_periodk].periods;
+    $scope.employee.pay_periodl = $scope.pay_period.data[$scope.employee.pay_periodk].period;
 }
 else if ($scope.employee.pay_periodk == null) {
     $scope.employee.pay_periodl = 'No Data';

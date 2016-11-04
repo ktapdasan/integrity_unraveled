@@ -233,6 +233,51 @@ app.factory('EmployeesFactory', function($http){
         return promise;
     };
 
+    factory.get_max_employee_id = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_max_employee_id.php',
+            method: 'GET'         
+        })
+
+        return promise;
+    };
+
+    factory.get_employment_type = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_employment_type.php',
+            method: 'GET'         
+        })
+
+        return promise;
+    };
+
+    factory.get_employment_statuses = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_employment_statuses.php',
+            method: 'GET'         
+        })
+
+        return promise;
+    };
+
+    factory.get_pay_period = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_pay_period.php',
+            method: 'GET'         
+        })
+
+        return promise;
+    };
+
+    factory.get_rate_type = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Employees/get_rate_type.php',
+            method: 'GET'         
+        })
+
+        return promise;
+    };
+
     factory.edit_supervisor = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Employees/edit_supervisor.php',

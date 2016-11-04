@@ -29,7 +29,12 @@ app.controller('New_Employees', function(
     $scope.titles={};
     $scope.level_title={};
     $scope.department={};
-
+    $scope.max_employee_id={};
+    $scope.add_one_employee_id={};
+    $scope.employment_type={};
+    $scope.employee_status={};
+    $scope.rate_type={};
+    $scope.pay_period={};
 
     $scope.employees={
         profile_picture:'./ASSETS/img/blank.gif',
@@ -55,7 +60,7 @@ app.controller('New_Employees', function(
         data_pagmid: null,
         data_tin: null,
         intern_hours:'',
-        salary_type:'',
+        salary_type:'4',
         bank_name:'',
         pay_period:'',
         rate_type:'',
@@ -120,12 +125,16 @@ app.controller('New_Employees', function(
         promise.then(function(data){
             var _id = md5.createHash('pk');
             $scope.pk = data.data[_id];
-
+            get_employment_type();
+            get_employment_statuses();
+            get_rate_type();
+            get_pay_period();
             get_positions();
             get_department();
             get_levels();
             employees();
             get_supervisors();
+            get_max_employee_id();
         })
         .then(null, function(data){
             window.location = './login.html';
@@ -205,13 +214,53 @@ app.controller('New_Employees', function(
         });
     }
 
-    function get_gender(){
-        var promise = EmployeesFactory.get_gender();
+    function get_max_employee_id(){
+        var promise = EmployeesFactory.get_max_employee_id();
         promise.then(function(data){
-            $scope.type.data = data.data.result;
-
+            $scope.max_employee_id.data = data.data.result;
+            $scope.add_one_employee_id = parseInt($scope.max_employee_id.data[0].employee_id) + 1;
+            $scope.employees.employee_id = $scope.add_one_employee_id.toString();
         })
+        .then(null, function(data){
 
+        });
+    }
+
+    function get_employment_type(){
+        var promise = EmployeesFactory.get_employment_type();
+        promise.then(function(data){
+            $scope.employment_type.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_employment_statuses(){
+        var promise = EmployeesFactory.get_employment_statuses();
+        promise.then(function(data){
+            $scope.employee_status.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_rate_type(){
+        var promise = EmployeesFactory.get_rate_type();
+        promise.then(function(data){
+            $scope.rate_type.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_pay_period(){
+        var promise = EmployeesFactory.get_pay_period();
+        promise.then(function(data){
+            $scope.pay_period.data = data.data.result;
+        })
         .then(null, function(data){
 
         });
@@ -236,6 +285,11 @@ app.controller('New_Employees', function(
 
     $scope.submit_employees = function(){
         get_supervisors();
+        get_employment_type();
+        get_employment_statuses();
+        get_rate_type();
+        get_pay_period();
+        
         for(var i in $scope.employees.education){
             $scope.employees.education[i].date_from_school = $filter('date')($scope.employees.education[i].date_from_school, "yyyy-MM-dd");
             $scope.employees.education[i].date_to_school = $filter('date')($scope.employees.education[i].date_to_school, "yyyy-MM-dd");
@@ -318,7 +372,18 @@ app.controller('New_Employees', function(
                 positionY: 'top', positionX: 'right'
             });
 
-            $scope.employees={
+            
+        })
+        .then(null, function(data){
+
+            UINotification.error({
+                message: 'An error occured, please try again.', 
+                title: 'ERROR', 
+                delay : 5000,
+                positionY: 'top', positionX: 'right'
+            });
+        });
+        $scope.employees={
             profile_picture:'./ASSETS/img/blank.gif',
             first_name:'',
             middle_name:'',
@@ -380,16 +445,6 @@ app.controller('New_Employees', function(
             flexi_saturday:false
         };
 
-        })
-        .then(null, function(data){
-
-            UINotification.error({
-                message: 'An error occured, please try again.', 
-                title: 'ERROR', 
-                delay : 5000,
-                positionY: 'top', positionX: 'right'
-            });
-        });
     }
 
     $scope.level_changed = function(){

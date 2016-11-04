@@ -13,6 +13,10 @@ app.controller('Profile', function(
     $scope.level_title = {};
     $scope.leave_types ={};
     $scope.leave_balances = {};
+    $scope.employment_typek={};
+    $scope.employee_statusk={};
+    $scope.rate_type={};
+    $scope.pay_period={};
     $scope.employees = {
         education:[{educ_level: "Primary"}]
     };
@@ -72,6 +76,46 @@ app.controller('Profile', function(
             
         });
     }
+
+    function get_employment_type(){
+        var promise = EmployeesFactory.get_employment_type();
+        promise.then(function(data){
+            $scope.employment_typek.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_employment_statuses(){
+        var promise = EmployeesFactory.get_employment_statuses();
+        promise.then(function(data){
+            $scope.employee_statusk.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_rate_type(){
+        var promise = EmployeesFactory.get_rate_type();
+        promise.then(function(data){
+            $scope.rate_type.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
+
+    function get_pay_period(){
+        var promise = EmployeesFactory.get_pay_period();
+        promise.then(function(data){
+            $scope.pay_period.data = data.data.result;
+        })
+        .then(null, function(data){
+
+        });
+    }
      $scope.addNewChoice = function() {
         if ($scope.employee.school_type == 1){
             $scope.employees.education.push({educ_level: "Primary"});
@@ -108,6 +152,8 @@ app.controller('Profile', function(
          get_department();
          get_positions();
          leave_types();
+         get_employment_statuses();
+         get_employment_type();
 
 
         var filters = { 
@@ -229,21 +275,22 @@ app.controller('Profile', function(
             $scope.profile.details.company.departments_pk = parseInt($scope.profile.details.company.departments_pk) - parseInt($scope.minus_20);
             $scope.profile.deparments = $scope.department.data[$scope.profile.details.company.departments_pk].department;
 
-            if ($scope.profile.details.company.employment_type == undefined){
-                 $scope.profile.employment_typess = 'No Data';
-            }
-            else{
-                $scope.profile.employment_typess = $scope.profile.details.company.employment_type;
-            }
+            // if ($scope.profile.details.company.employee_status_pk == undefined){
+            //     $scope.profile.employment_status = 'No Data';
+            // }
+            // else{
+            //     $scope.profile.details.company.employee_status_pk = parseInt($scope.profile.details.company.employee_status_pk) - parseInt($scope.minus);
+            //     $scope.profile.employment_status = $scope.employee_statusk.data[$scope.profile.details.company.employee_status_pk].status;
+            // }
 
+            // if ($scope.profile.details.company.employment_type_pk == undefined){
+            //     $scope.profile.employment_typess = 'No Data';
 
-            if ($scope.profile.details.company.employee_status == undefined){
-                $scope.profile.details.company.employee_status = 'No Data';
-            }
-            else{
-                $scope.profile.employment_status = $scope.profile.details.company.employee_status;
-            }
-
+            // }
+            // else{
+            //     $scope.profile.details.company.employment_type_pk = parseInt($scope.profile.details.company.employment_type_pk) - parseInt($scope.minus);
+            //     $scope.profile.employment_typess = $scope.employment_typek.data[$scope.profile.details.company.employment_type_pk].type;
+            // }
 
             if($scope.profile.details.personal.civilstatus == undefined){
                  $scope.profile.details.personal.civilstatus = 'No Data';
