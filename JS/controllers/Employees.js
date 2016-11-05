@@ -1242,10 +1242,12 @@ if ($scope.employees.data[k].details.company.salary === undefined) {
     $scope.employee.salary_type = '4';
 }
 else if ($scope.employees.data[k].details.company.salary != null) {
+
 //Company -> Salary - > Salary Type Validator
-if ($scope.employees.data[k].details.company.salary.salary_type === undefined) {
+if ($scope.employees.data[k].details.company.salary.salary_type === undefined || $scope.employees.data[k].details.company.salary.salary_type == 'null') {
     $scope.employee.salary_type = '4';
 }
+
 else if ($scope.employees.data[k].details.company.salary.salary_type !== undefined) {
     $scope.employee.salary_type = $scope.employees.data[k].details.company.salary.salary_type;
 }
@@ -1254,28 +1256,34 @@ if ($scope.employees.data[k].details.company.salary.pay_period_pk === undefined)
     $scope.employees.data[k].details.company.salary.pay_period_pk = null;
 }
 else if ($scope.employees.data[k].details.company.salary.pay_period_pk !== undefined) {
-    $scope.employee.pay_periodk = $scope.employees.data[k].details.company.salary.pay_period_pk;
+    $scope.employee.pay_period = $scope.employees.data[k].details.company.salary.pay_period_pk;
 }
+
+if ($scope.employees.data[k].details.company.salary.details === undefined) {
+    $scope.employees.data[k].details.company.salary.details == null;
+}
+else if ($scope.employees.data[k].details.company.salary.details != null) {
+
 //Company -> Salary - > Salary Bank Name Validator
 if ($scope.employees.data[k].details.company.salary.details.bank_name === undefined) {
     $scope.employees.data[k].details.company.salary.details.bank_name = null;
 }
 else if ($scope.employees.data[k].details.company.salary.details.bank_name !== undefined) {
-    $scope.employee.bank_name = $scope.employees.data[k].details.company.salary.details.bank_name;
+    $scope.employee.salary_bank_name = $scope.employees.data[k].details.company.salary.details.bank_name;
 }
 //Company -> Salary - > Salary Account Number Validator
 if ($scope.employees.data[k].details.company.salary.details.account_number === undefined) {
     $scope.employees.data[k].details.company.salary.details.account_number = null;
 }
 else if ($scope.employees.data[k].details.company.salary.details.account_number !== undefined) {
-    $scope.employee.account_number = $scope.employees.data[k].details.company.salary.details.account_number;
+    $scope.employee.salary_account_number = $scope.employees.data[k].details.company.salary.details.account_number;
 }
 //Company -> Salary - > Rate Type
 if ($scope.employees.data[k].details.company.salary.rate_type_pk === undefined) {
     $scope.employees.data[k].details.company.salary.rate_type_pk = null;
 }
 else if ($scope.employees.data[k].details.company.salary.rate_type_pk !== undefined) {
-    $scope.employee.ratype = $scope.employees.data[k].details.company.salary.rate_type_pk;
+    $scope.employee.rate_type = $scope.employees.data[k].details.company.salary.rate_type_pk;
 }
 //Company -> Salary - > Salary Amount Validator
 if ($scope.employees.data[k].details.company.salary.details.amount === undefined) {
@@ -1289,7 +1297,8 @@ if ($scope.employees.data[k].details.company.salary.details.mode_payment === und
     $scope.employees.data[k].details.company.salary.details.mode_payment = null;
 }
 else if ($scope.employees.data[k].details.company.salary.details.mode_payment !== undefined) {
-    $scope.employee.mode_payment = $scope.employees.data[k].details.company.salary.details.mode_payment;
+    $scope.employee.salary_mode_payment = $scope.employees.data[k].details.company.salary.details.mode_payment;
+}
 }
 }
 
