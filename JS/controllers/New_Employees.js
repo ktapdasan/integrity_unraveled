@@ -344,13 +344,13 @@ app.controller('New_Employees', function(
         if ($scope.employees.timein_friday == 'null' || $scope.employees.timein_friday == undefined || $scope.employees.flexi_friday == true) {$scope.employees.timein_friday = 'data'};
         if ($scope.employees.timein_saturday == 'null' || $scope.employees.timein_saturday == undefined || $scope.employees.flexi_saturday == true) {$scope.employees.timein_saturday = 'data'};
 
-        if ($scope.employees.timeout_sunday == 'null' || $scope.employees.timeout_sunday == undefined) {$scope.employees.timeout_sunday = 'data'};
-        if ($scope.employees.timeout_monday == 'null' || $scope.employees.timeout_monday == undefined) {$scope.employees.timeout_monday = 'data'};
-        if ($scope.employees.timeout_tuesday == 'null' || $scope.employees.timeout_tuesday == undefined) {$scope.employees.timeout_tuesday = 'data'};
-        if ($scope.employees.timeout_wednesday == 'null' || $scope.employees.timeout_wednesday == undefined) {$scope.employees.timeout_wednesday = 'data'};
-        if ($scope.employees.timeout_thursday == 'null' || $scope.employees.timeout_thursday == undefined) {$scope.employees.timeout_thursday = 'data'};
-        if ($scope.employees.timeout_friday == 'null' || $scope.employees.timeout_friday == undefined) {$scope.employees.timeout_friday = 'data'};
-        if ($scope.employees.timeout_saturday == 'null' || $scope.employees.timeout_saturday == undefined) {$scope.employees.timeout_saturday = 'data'};
+        if ($scope.employees.timeout_sunday == 'null' || $scope.employees.timeout_sunday == undefined || $scope.employees.flexi_sunday == true) {$scope.employees.timeout_sunday = 'data'};
+        if ($scope.employees.timeout_monday == 'null' || $scope.employees.timeout_monday == undefined || $scope.employees.flexi_monday == true) {$scope.employees.timeout_monday = 'data'};
+        if ($scope.employees.timeout_tuesday == 'null' || $scope.employees.timeout_tuesday == undefined || $scope.employees.flexi_tuesday == true) {$scope.employees.timeout_tuesday = 'data'};
+        if ($scope.employees.timeout_wednesday == 'null' || $scope.employees.timeout_wednesday == undefined || $scope.employees.flexi_wednesday == true) {$scope.employees.timeout_wednesday = 'data'};
+        if ($scope.employees.timeout_thursday == 'null' || $scope.employees.timeout_thursday == undefined || $scope.employees.flexi_thursday == true) {$scope.employees.timeout_thursday = 'data'};
+        if ($scope.employees.timeout_friday == 'null' || $scope.employees.timeout_friday == undefined || $scope.employees.flexi_friday == true) {$scope.employees.timeout_friday = 'data'};
+        if ($scope.employees.timeout_saturday == 'null' || $scope.employees.timeout_saturday == undefined || $scope.employees.flexi_saturday == true) {$scope.employees.timeout_saturday = 'data'};
 
         if ($scope.employees.flexi_sunday == 'null' || $scope.employees.flexi_sunday == false || $scope.employees.flexi_sunday == undefined) {$scope.employees.flexi_sunday = 'false'};
         if ($scope.employees.flexi_monday == 'null' || $scope.employees.flexi_monday == false || $scope.employees.flexi_monday == undefined) {$scope.employees.flexi_monday = 'false'};
