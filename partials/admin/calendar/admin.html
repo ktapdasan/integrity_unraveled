@@ -127,12 +127,16 @@
         <div>
             <table class="table table-bordered">
                 <tbody>
-                <div id="circle" style="background-color:{{modal.color}}"></div>
+                <!-- <div id="circle" style="background-color:{{modal.color}}"></div> -->
                     <tr>
                         <td>Color</td>
                         <td>
-                            <input required type="color" ng-model="modal.color" style="cursor:pointer;"/>
-                            <input required type="text" ng-model="modal.color"/>
+                            <div style="width:75%; float:left;">
+                                <input required type="text" ng-model="modal.color" style="width:100%;"/>
+                            </div>
+                            <div style="width:25%; float:left;">
+                                <input required type="color" ng-model="modal.color" style="cursor:pointer; height:34px;"/>
+                            </div>
                         </td>
                     </tr>
                     <tr>
