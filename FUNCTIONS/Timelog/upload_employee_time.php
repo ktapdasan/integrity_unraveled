@@ -17,8 +17,8 @@ if ( !empty( $_FILES ) ) {
 
             $random_hash = randomPrefix(50);
 
-            $sql .= <<<EOT
-                    delete from time_log
+            /*
+            delete from time_log
                     where type = 'In' 
                         and employees_pk in (select pk from employees where employee_id = '$employee_id')
                         and time_log::date = '$time_in'::date
@@ -29,7 +29,10 @@ if ( !empty( $_FILES ) ) {
                         and employees_pk in (select pk from employees where employee_id = '$employee_id')
                         and time_log::date = '$time_in'::date
                     ;
+            */
 
+            if($data[1]){
+                $sql .= <<<EOT
                     insert into time_log
                     (
                         employees_pk,
@@ -44,22 +47,28 @@ if ( !empty( $_FILES ) ) {
                         '$time_in'::timestamptz,
                         '$random_hash'
                     );
-
-                    insert into time_log
-                    (
-                        employees_pk,
-                        type,
-                        time_log,
-                        random_hash
-                    )
-                    values
-                    (
-                        (select pk from employees where employee_id = '$employee_id'),
-                        'Out',
-                        '$time_out'::timestamptz,
-                        '$random_hash'
-                    );
 EOT;
+            }
+            
+
+            if($data[3]){
+                $sql .= <<<EOT
+                        insert into time_log
+                        (
+                            employees_pk,
+                            type,
+                            time_log,
+                            random_hash
+                        )
+                        values
+                        (
+                            (select pk from employees where employee_id = '$employee_id'),
+                            'Out',
+                            '$time_out'::timestamptz,
+                            '$random_hash'
+                        );
+EOT;
+            }
         }
 
         $count++;

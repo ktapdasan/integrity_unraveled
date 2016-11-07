@@ -70,6 +70,31 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function fetch_all(){
+
+        $status = $this->archived;
+        $date1 = $this->time_from;
+        $date2 = $this->time_to;
+        $where = "and time_from between '$date1' and '$date2' and time_to between '$date1' and '$date2'";
+
+        $sql = <<<EOT
+                select 
+                    pk,
+                    time_from::timestamp(0) as time_from,
+                    time_to::timestamp(0) as time_to,
+                    created_by,
+                    remarks,
+                    archived
+                from suspension
+                where archived = $status
+                $where
+                order by pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function save_suspension($extra){
         foreach($extra as $k=>$v){
             $extra[$k] = pg_escape_string(trim(strip_tags($v)));

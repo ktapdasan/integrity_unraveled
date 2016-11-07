@@ -96,6 +96,17 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function count(){
+        $sql = <<<EOT
+                select
+                    count(*) as count
+                from employees where archived = $this->archived
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function fetch_birthday_celebrants(){
         $sql = <<<EOT
                 select 
@@ -128,10 +139,11 @@ EOT;
         foreach($data as $k=>$v){
             $data[$k] = pg_escape_string(trim(strip_tags($v)));
         }
-        $start_date= $data['newdatefrom'];
-        $end_date= $data['newdateto'];
-        $date= $data['date'];
-        $pk = $data['employees_pk'];
+
+        // $start_date= $data['newdatefrom'];
+        // $end_date= $data['newdateto'];
+        // $date= $data['date'];
+        // $pk = $data['employees_pk'];
         $and="";
         if($data['employees_pk'] && $data['employees_pk'] != "undefined"){
             $and = "and employees.pk = " . $data['employees_pk'];
@@ -149,7 +161,10 @@ EOT;
                         employees.email_address,
                         employees_titles.titles_pk,
                         employees.details->'company'->'flexible' as flexible,
-                        employees.details->'company'->'work_schedule' as work_schedule
+                        employees.details->'company'->'work_schedule' as work_schedule,
+                        (select type from rate_types where pk = cast(employees.details->'company'->'salary'->>'rate_types_pk' as int)) as rate,
+                        (select period from pay_periods where pk = cast(employees.details->'company'->'salary'->>'pay_periods_pk' as int)) as pay_period,
+                        (select type from employee_types where pk = cast(employees.details->'company'->>'employee_types_pk' as int)) as employee_type
                     from employees
                     left join employees_titles on (employees.pk = employees_titles.employees_pk)
                     where employees.archived = false
@@ -219,9 +234,7 @@ EOT;
 
     public function profile(){
         $sql = <<<EOT
-                select 
-                    (select (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name') from employees where pk = groupings.supervisor_pk)
-                    as supervisor,
+                select
                     pk,
                     first_name,
                     middle_name,
@@ -229,9 +242,10 @@ EOT;
                     email_address,
                     employees_permissions.permission,
                     (select supervisor_pk from groupings where employees_pk = pk) as supervisor_pk,
+                    (select (details->'personal'->>'first_name') ||' '|| (details->'personal'->>'last_name') from employees where pk = groupings.supervisor_pk) as supervisor,
+                    (select type from employee_types where pk = cast(employees.details->'company'->>'employee_types_pk' as int)) as employee_type, 
                     details,
                     leave_balances
-                    
                 from employees
                 left join employees_permissions on (employees.pk = employees_permissions.employees_pk)
                 left join groupings on (groupings.employees_pk = employees.pk)
@@ -377,68 +391,68 @@ EOT;
         return $randomString;
     }
 
-    public function timesheet($data){
-        foreach($data as $k=>$v){
-            $data[$k] = pg_escape_string(trim(strip_tags($v)));
-        }
+//     public function timesheet($data){
+//         foreach($data as $k=>$v){
+//             $data[$k] = pg_escape_string(trim(strip_tags($v)));
+//         }
 
-        $datefrom = $data['newdatefrom'];
-        $dateto = $data['newdateto'];
-        $pk = $data['pk'];
+//         $datefrom = $data['newdatefrom'];
+//         $dateto = $data['newdateto'];
+//         $pk = $data['pk'];
 
-        $sql = <<<EOT
-                with Q as
-                (
-                    select
-                        employees_pk,
-                        (select employee_id from employees where pk = employees_pk) as employee_id,
-                        (select first_name ||' '|| middle_name ||' '|| last_name from employees where pk = employees_pk) as employee,
-                        type,
-                        time_log::date as log_date,
-                        time_log::time(0) as log_time,
-                        date_created
-                    from time_log
-                    where employees_pk = $pk
-                    and time_log::date between '$datefrom' and '$dateto'
-                )
-                select
-                    employees_pk,
-                    employee_id,
-                    employee,
-                    log_date,
-                    to_char(log_date, 'Day') as log_day,
-                    (
-                        coalesce((select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'In')::text,'None')
-                    ) as login,
-                    (
-                        coalesce((select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'Out')::text,'None')
-                    ) as logout,
-                    coalesce(((
-                        select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'Out'
-                    ) -
-                    (
-                        select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'In'
-                    ))::text,'N/A') as hrs
-                from Q as logs
-                group by employees_pk, employee, employee_id, log_date, log_day
-                order by logs.log_date, employee
-                ;
-EOT;
+//         $sql = <<<EOT
+//                 with Q as
+//                 (
+//                     select
+//                         employees_pk,
+//                         (select employee_id from employees where pk = employees_pk) as employee_id,
+//                         (select first_name ||' '|| middle_name ||' '|| last_name from employees where pk = employees_pk) as employee,
+//                         type,
+//                         time_log::date as log_date,
+//                         time_log::time(0) as log_time,
+//                         date_created
+//                     from time_log
+//                     where employees_pk = $pk
+//                     and time_log::date between '$datefrom' and '$dateto'
+//                 )
+//                 select
+//                     employees_pk,
+//                     employee_id,
+//                     employee,
+//                     log_date,
+//                     to_char(log_date, 'Day') as log_day,
+//                     (
+//                         coalesce((select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'In')::text,'None')
+//                     ) as login,
+//                     (
+//                         coalesce((select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'Out')::text,'None')
+//                     ) as logout,
+//                     coalesce(((
+//                         select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'Out'
+//                     ) -
+//                     (
+//                         select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'In'
+//                     ))::text,'N/A') as hrs
+//                 from Q as logs
+//                 group by employees_pk, employee, employee_id, log_date, log_day
+//                 order by logs.log_date, employee
+//                 ;
+// EOT;
 
-        return ClassParent::get($sql);
-    }
+//         return ClassParent::get($sql);
+//     }
 
     public function employees($data){
         foreach($data as $k=>$v){
@@ -500,57 +514,73 @@ EOT;
         $datefrom = $data['newdatefrom'];
         $dateto = $data['newdateto'];
 
+//         echo $sql = <<<EOT
+//                 with Q as
+//                 (
+//                     select
+//                         employees_pk,
+//                         (select employee_id from employees where pk = employees_pk) as employee_id,
+//                         (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
+//                         type,
+//                         time_log::date as log_date,
+//                         time_log::timestamp(0) as log_time,
+//                         employees.details->'company'->'work_schedule' as work_schedule
+//                     from time_log
+//                     left join employees on (employees.pk = time_log.employees_pk)
+//                     where time_log::date between '$datefrom' and '$dateto'
+//                     $where
+//                 )
+//                 select
+//                     employees_pk,
+//                     employee_id,
+//                     employee,
+//                     work_schedule,
+//                     log_date,
+//                     to_char(log_date, 'dd-Mon-YYYY') as log_date2,
+//                     to_char(log_date, 'Day') as log_day,
+//                     (
+//                         coalesce((select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'In')::text,'None')
+//                     ) as log_in,
+//                     (
+//                         coalesce((select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'Out')::text,'None')
+//                     ) as log_out,
+//                     coalesce(((
+//                         select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'Out'
+//                     ) -
+//                     (
+//                         select
+//                             min(log_time)
+//                         from Q where Q.employees_pk = logs.employees_pk
+//                         and Q.log_date = logs.log_date and Q.type = 'In'
+//                     ))::text,'N/A') as hrs
+//                 from Q as logs
+//                 group by employees_pk, employee, employee_id, log_date, work_schedule
+//                 order by logs.log_date,logs.employee
+//                 ;
+// EOT;
         $sql = <<<EOT
-                with Q as
-                (
-                    select
-                        employees_pk,
-                        (select employee_id from employees where pk = employees_pk) as employee_id,
-                        (select last_name ||', '|| first_name ||' '|| middle_name from employees where pk = employees_pk) as employee,
-                        type,
-                        time_log::date as log_date,
-                        time_log::timestamp(0) as log_time,
-                        employees.details->'company'->'work_schedule' as work_schedule
-                    from time_log
-                    left join employees on (employees.pk = time_log.employees_pk)
-                    where time_log::date between '$datefrom' and '$dateto'
-                    $where
-                )
                 select
+                    pk,
                     employees_pk,
-                    employee_id,
-                    employee,
-                    work_schedule,
-                    log_date,
-                    to_char(log_date, 'dd-Mon-YYYY') as log_date2,
-                    to_char(log_date, 'Day') as log_day,
-                    (
-                        coalesce((select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'In')::text,'None')
-                    ) as log_in,
-                    (
-                        coalesce((select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'Out')::text,'None')
-                    ) as log_out,
-                    coalesce(((
-                        select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'Out'
-                    ) -
-                    (
-                        select
-                            min(log_time)
-                        from Q where Q.employees_pk = logs.employees_pk
-                        and Q.log_date = logs.log_date and Q.type = 'In'
-                    ))::text,'N/A') as hrs
-                from Q as logs
-                group by employees_pk, employee, employee_id, log_date, work_schedule
-                order by logs.log_date,logs.employee
+                    type,
+                    time_log::date as date_log,
+                    to_char(time_log, 'Day') as day_log,
+                    time_log::timestamp(0) as time_log,
+                    date_created::timestamp(0) as date_created,
+                    random_hash
+                from time_log
+                where time_log::date between '$datefrom' and '$dateto'
+                $where
+                order by time_log
                 ;
 EOT;
 

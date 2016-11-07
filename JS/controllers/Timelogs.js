@@ -8,6 +8,7 @@ app.controller('Timelogs', function(
                                         UINotification,
                                         ngDialog,
                                         FileUploader,
+                                        cfpLoadingBar,
                                         $filter
   									){
 
@@ -173,6 +174,7 @@ app.controller('Timelogs', function(
     }
 
     function timesheet(){
+        cfpLoadingBar.start();
         var datefrom =  $filter('date')($scope.filter.datefrom, "yyyy-MM-dd");
         var dateto =  $filter('date')($scope.filter.dateto, "yyyy-MM-dd");
 
@@ -220,9 +222,12 @@ app.controller('Timelogs', function(
             for(var i in data.data[$scope.profile.employee_id]){
                 $scope.timesheet.count++;                
             }
+
+            cfpLoadingBar.complete();
         })
         .then(null, function(data){
             $scope.timesheet.status = false;
+            cfpLoadingBar.complete();
         });
 
     }

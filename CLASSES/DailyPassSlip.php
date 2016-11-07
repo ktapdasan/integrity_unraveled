@@ -424,6 +424,44 @@ EOT;
 EOT;
         return ClassParent::get($sql);
     }
+
+    public function fetch_all_dps($extra){
+        foreach($extra as $k=>$v){
+            $extra[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+
+        $date_from = $extra['date_from'];
+        $date_to = $extra['date_to'];
+
+        $sql = <<<EOT
+                with Q as
+                (
+                    select
+                        pk,
+                        employees_pk,
+                        type,
+                        time_from::timestamp(0) as time_from,
+                        time_to::timestamp(0) as time_to,
+                        date_created::timestamp(0) as date_created,
+                        (select status from daily_pass_slip_status where daily_pass_slip_pk = daily_pass_slip.pk order by date_created desc limit 1) as status
+                    from daily_pass_slip
+                    where employees_pk = $this->employees_pk
+                        and (time_from >= '$date_from 0000' and time_from <= '$date_to 2359' or time_to >= '$date_from 0000' and time_to <= '$date_to 2359')
+                )
+                select
+                    pk,
+                    employees_pk,
+                    type,
+                    time_from,
+                    time_to,
+                    status,
+                    date_created
+                from Q
+                -- where status = 'Approved'
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
 }
 
 ?>
