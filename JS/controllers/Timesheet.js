@@ -724,9 +724,6 @@ app.controller('Timesheet', function(
             $scope.modal.type = 'Unpaid';
         }
 
-        console.log($scope.modal);
-        return false;
-
         ngDialog.openConfirm({
             template: 'OvertimeModal',
             className: 'ngdialog-theme-plain custom-widthfourfifty',
@@ -735,7 +732,7 @@ app.controller('Timesheet', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Apply Manual Log?</p>' +
+                                '<p>Apply Overtime?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +

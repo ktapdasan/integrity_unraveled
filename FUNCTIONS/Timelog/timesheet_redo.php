@@ -180,6 +180,8 @@ foreach ($employees_data['result'] as $k => $v) {
 	}
 
 	//construct the timesheet array based on the date from and date to from dropdown
+	//print_r($work_schedule);
+
 	$timesheet=array();
 	$i = $_POST['newdatefrom'];
 	$dateto = $_POST['newdateto'];
@@ -301,6 +303,7 @@ foreach ($employees_data['result'] as $k => $v) {
 	}
 	
 	foreach ($timesheet as $key => $value) {
+
 		$timesheet[$key]['employees_pk'] = $value['employees_pk'];
 
 		if($multiple_logs['in'] == "first"){
@@ -523,12 +526,24 @@ foreach ($employees_data['result'] as $k => $v) {
 
 				$value['overtime'] = round($overtime, 1);
 				$value['overtime_status'] = 'false';
-
+				
 				foreach ($filed_overtimes as $a => $b) {
-					if($value['employees_pk'] == $b['employees_pk'] && strtotime($value['date']) >= strtotime($b['datefrom']) && strtotime($value['date']) <= strtotime($b['dateto'])){
-						$value['overtime'] = "";
-						$value['overtime_status'] = $b['status'];
+					//print_r($b);
+					//echo $value['employees_pk']." == ".$b['employees_pk']." && ".$value['datex']." >= ".$b['datefrom']." && ".$value['datex']." <= ".$b['dateto']."\n";
+					
+					if(strtotime(date('H:i:s', $value['login_time'])) > date('H:i:s', strtotime($value['logout_time']))){
+						if($value['employees_pk'] == $b['employees_pk'] && strtotime($value['datex']. "+1 day") >= strtotime($b['datefrom']) && strtotime($value['datex']."+1 day") <= strtotime($b['dateto'])){
+							$value['overtime'] = $b['status'];
+							$value['overtime_status'] = $b['status'];
+						}
 					}
+					else {
+						if($value['employees_pk'] == $b['employees_pk'] && strtotime($value['datex']) >= strtotime($b['datefrom']) && strtotime($value['datex']) <= strtotime($b['dateto'])){
+							$value['overtime'] = $b['status'];
+							$value['overtime_status'] = $b['status'];
+						}
+					}
+						
 				}
 			}
 		}
