@@ -1,3 +1,4 @@
+
 <style type="text/css">
 .red {
     color: #ff0000; 
@@ -326,7 +327,7 @@ body>footer .footer-main {
 <style type="text/css">
 #tabs {
     overflow: hidden;
-    width: 100%;
+    width: 90%;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -334,14 +335,14 @@ body>footer .footer-main {
 
 #tabs li {
     float: left;
-    margin: 0 .5em 0 0;
+    margin: 0 0 0 0;
 }
 
 #tabs a {
     position: relative;
     background: #ddd;
     /*background-image: linear-gradient(to bottom, #fff, #ddd);*/  
-    padding: .6em 2.2em;
+    padding: .5em 1.8em;
     float: left;
     text-decoration: none;
     color: #444;
@@ -411,7 +412,7 @@ text-shadow: 0 1px 0 #fff;
 
 </style>
 
-<div id="content2" style="margin-left: 70px; margin-top : 30px; border:0px solid #f0f0f0; width:1000px;">
+<div id="content2" style="margin-left: 10px; margin-top : 30px; border:0px solid #f0f0f0; width:900px;">
 
     <div>
     <div style="width: 120%;">
@@ -1102,7 +1103,8 @@ text-shadow: 0 1px 0 #fff;
 </script>
 
 <script type="text/ng-template" id="ViewModal" class="ngdialog-buttons">
-<div class="ngdialog-message" style="width: 1000px;">
+<div class="ngdialog-message" style="width:100%">
+
     <style type ="text/css">
 
     .imageprofile{
@@ -1149,48 +1151,40 @@ text-shadow: 0 1px 0 #fff;
     }
 
     </style>
-    <div class="container">
-        <div class="row">
-            <div class ="col-md-2" style="padding-top:45px;word-wrap: break-word;">
-                <img src="{{employee.profile_picture}}" class="imageprofile"/>
-            </div>
-            <div class ="col-md-4" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
-                <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
-                <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
-            </div>
-            <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
-
-
-                <div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
-                <div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
-                <div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
-                <div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
-                <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
-
-
-            </div>
-            <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
-            padding-top:10px;padding-bottom:10px;">
-
-            <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
-            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
-            <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
-            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
-            Name: {{employee.emergency_contact_name}}<br>Contact #: {{employee.emergency_contact_number}}
+    <div class="container" style="width:100%">
+    <div class="row">
+        <div class ="col-md-3" style="padding-top:45px;word-wrap: break-word;">
+            <img src="{{employee.profile_picture}}" class="imageprofile"/>
         </div>
-    </div>  
-
-
+        <div class ="col-md-3" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
+            <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
+            <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
+        </div>
+        <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
+            <div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
+            <div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
+            <div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
+            <div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
+            <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
+        </div>
+        <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
+        padding-top:10px;padding-bottom:10px;">
+        <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
+        <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
+        <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
+        <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
+        Name: {{employee.emergency_contact_name}}<br>Contact #: {{employee.emergency_contact_number}}
+    </div>
+</div>  
 </div>
-<div class ="row">
-
-    <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-    padding-top:10px;padding-bottom:10px;">
+<div class="row">
+    <div class="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+    padding-top:10px;padding-bottom:10px; float:left;">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:900">Company Profile</div>
         <div class="panel-body">
 
-            <table style="width:100%;">
+            <table style="width:100%;" cellspacing="0">
                 <tr>
                     <td style="width:33%;" >
                         <b> Employee ID:</b>
@@ -1391,21 +1385,15 @@ text-shadow: 0 1px 0 #fff;
                         <div>{{employee.pay_periodl}}</div>
                     </td>
                 </tr>
-
             </table>
-
         </div>   
     </div>
-
 </div>
-
-<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-padding-top:10px;padding-bottom:10px;">
+<div class="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+padding-top:10px;padding-bottom:10px; ">
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
     <div class="panel-body">
-
-
         <table width="100%" ng-repeat="education in employee.education">
             <tr >
                 <td style="width:50%" >
@@ -1445,50 +1433,46 @@ padding-top:10px;padding-bottom:10px;">
                 <td>
                     <div></div>
                 </td>
-
             </tr>
-
-
         </table>
-
     </div>
 </div>
 </div>
 </div>
-<div class="row">    
+<div class="row">
     <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
     padding-top:10px;padding-bottom:10px;">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:900">Government Mandated Benefits</div>
         <div class="panel-body">
 
-            <table width="100%">
+            <table>
                 <tr>
                     <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">PHIC:</div>
+                        PHIC:
                     </td>
-                    <td>
-                        <div style="width:100px; height:20px;">{{employee.data_phid}}</div>
+                    <td style="width:35%;">
+                        {{employee.data_phid}}
                     </td>
-                    <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">HDMF:</div>
+                    <td >
+                        HDMF:
                     </td>
-                    <td>
-                        <div style="width:100px; height:20px;">{{employee.data_pagmid}}</div>
+                    <td style="width:35%;">
+                        {{employee.data_pagmid}}
                     </td>
                 </tr>
                 <tr>    
                     <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">TIN:</div>
+                        TIN:
                     </td>
                     <td>
-                        <div style="width:100px; height:20px;">{{employee.data_tin}}</div>
+                        {{employee.data_tin}}
                     </td>    
                     <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">SSS:</div>
+                        SSS:
                     </td>
                     <td>
-                        <div style="width:100px; height:20px;">{{employee.data_sss}}</div>
+                        {{employee.data_sss}}
                     </td>
                 </tr>
                 <tr>
@@ -1498,124 +1482,120 @@ padding-top:10px;padding-bottom:10px;">
 
     </div>
 </div>
-
-
 <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
 padding-top:10px;padding-bottom:10px;">
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:900">Work Schedule</div>
     <div class="panel-body">
 
-        <table width="100%">
+        <table>
             <tr>
-                <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Sunday:</div>
+                <td style="width:20%;">
+                    Sunday:
                 </td>
-                <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_sunday |  date: "h:mm a"}}</div>
+                <td style="width:30%;">
+                    Time-In: {{employee.timein_sunday |  date: "h:mm a"}}
                 </td>
-                <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_sunday| date: "h:mm a"}}</br></div>
+                <td style="width:30%;">
+                    Time-Out: {{employee.timeout_sunday| date: "h:mm a"}}
                 </td>
-                <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_sunday}}</div>
+                <td style="width:30%;">
+                    Flexi: {{employee.flexi_sunday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Monday:</div>
+                   Monday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_monday | date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_monday | date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_monday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_monday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_monday}}</div>
+                   Flexi: {{employee.flexi_monday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Tuesday:</div>
+                    Tuesday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_tuesday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_tuesday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_tuesday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_tuesday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_tuesday}}</div>
+                    Flexi: {{employee.flexi_tuesday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Wednesday:</div>
+                    Wednesday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_wednesday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_wednesday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_wednesday | date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_wednesday | date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_wednesday}}</div>
+                    Flexi: {{employee.flexi_wednesday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Thursday:</div>
+                    Thursday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_thursday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_thursday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_thursday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_thursday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_thursday}}</div>
+                    Flexi: {{employee.flexi_thursday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Friday:</div>
+                    Friday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_friday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_friday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_friday| date: "h:mm a"}}</br></div>
+                   Time-Out: {{employee.timeout_friday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_friday}}</div>
+                    Flexi: {{employee.flexi_friday}}
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Saturday:</div>
+                <td style="font-weight:bold;">
+                    Saturday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_saturday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_saturday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_saturday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_saturday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_saturday}}</div>
+                   Flexi: {{employee.flexi_saturday}}
                 </td>
             </tr>
-            <tr>
-            </tr>   
+              
         </table>       
     </div>
-
 </div>
-
-
 </div>
-<div class="row">   
-    <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+</div>
+<div class="row">
+    
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
     padding-top:10px;padding-bottom:10px;">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:900">Leave Balances</div>
@@ -1629,14 +1609,11 @@ padding-top:10px;padding-bottom:10px;">
     </div>
 </div>
 </div>
-
-</div>
 <div>
-</div>
 <center style="font-size: 18px; font-style: bold">
     <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
 </center>
 </div>
-</div>  
+</div>
 </div>
 </script>

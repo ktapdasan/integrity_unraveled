@@ -278,7 +278,7 @@ details = jsonb_set(details, '{company}', ' {
     "salary": {
         "salary_type": "2",
         "rate_type_pk": "2",
-        "pay_period_pk": "1",
+        "pay_period_pk": "2",
         "details": {
             "amount": "12000"
         }
@@ -330,9 +330,21 @@ details = jsonb_set(details, '{government}', '
 update employees set
 details = jsonb_set(details, '{personal}', ' 
 {
-    "first_name": "Ken",
-    "middle_name": "Villanueva",
-    "last_name": "Tapdasan"
+"gender": "Male",
+"religion": "Catholic",
+"last_name": "Tapdasan",
+"birth_date": "7-27-1995",
+"first_name": "Ken",
+"civilstatus": "Single",
+"middle_name": "Villanueva",
+"email_address": "ktapdasan.chrs@gmail.com",
+"contact_number": "09504151950",
+"landline_number": "5340368",
+"present_address": "Mandaluyong",
+"profile_picture": "./ASSETS/img/blank.gif",
+"permanent_address": "Dasmarinas",
+"emergency_contact_name": "Clarissa Mae Fortuno",
+"emergency_contact_number": "09504151950"
 }
 ', true)
 where pk = 12;
@@ -372,7 +384,7 @@ Example: When All Data is Completly Inserted or Updated
             },
             "salary_type": "cash",
             "rate_type_pk": "2",
-            "pay_period_pk": "1"
+            "pay_period_pk": "2"
         },
         "levels_pk": "7",
         "titles_pk": "14",

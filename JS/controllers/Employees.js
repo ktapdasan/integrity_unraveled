@@ -1336,11 +1336,11 @@ else if ($scope.employees.data[k].details.company.salary.salary_type !== undefin
     $scope.employee.salary_type = $scope.employees.data[k].details.company.salary.salary_type;
 }
 //Company -> Salary - > Period Pay Validator
-if ($scope.employees.data[k].details.company.salary.pay_period_pk === undefined) {
-    $scope.employees.data[k].details.company.salary.pay_period_pk = null;
+if ($scope.employees.data[k].pay_period === undefined) {
+    $scope.employee.pay_periodl = 'No Data';
 }
-else if ($scope.employees.data[k].details.company.salary.pay_period_pk !== undefined) {
-    $scope.employee.pay_period = $scope.employees.data[k].details.company.salary.pay_period_pk;
+else if ($scope.employees.data[k].pay_period !== undefined) {
+    $scope.employee.pay_periodl = $scope.employees.data[k].pay_period;
 }
 
 if ($scope.employees.data[k].details.company.salary.details === undefined) {
@@ -1363,11 +1363,11 @@ else if ($scope.employees.data[k].details.company.salary.details.account_number 
     $scope.employee.salary_account_number = $scope.employees.data[k].details.company.salary.details.account_number;
 }
 //Company -> Salary - > Rate Type
-if ($scope.employees.data[k].details.company.salary.rate_type_pk === undefined) {
-    $scope.employees.data[k].details.company.salary.rate_type_pk = null;
+if ($scope.employees.data[k].rate_type === undefined) {
+    $scope.employee.ratypes = 'No Data';
 }
-else if ($scope.employees.data[k].details.company.salary.rate_type_pk !== undefined) {
-    $scope.employee.rate_type = $scope.employees.data[k].details.company.salary.rate_type_pk;
+else if ($scope.employees.data[k].rate_type !== undefined) {
+    $scope.employee.ratypes = $scope.employees.data[k].rate_type;
 }
 //Company -> Salary - > Salary Amount Validator
 if ($scope.employees.data[k].details.company.salary.details.amount === undefined) {
@@ -1647,39 +1647,46 @@ else if ($scope.employees.data[k].details.company.business_email_address != null
     $scope.employee.business_email_address = $scope.employees.data[k].details.company.business_email_address;
 }
 // Department
-if ($scope.employees.data[k].details.company.departments_pk === undefined || $scope.employees.data[k].details.company.departments_pk == null) {
-    $scope.employee.departments_pk = null;
+if ($scope.employees.data[k].department === undefined || $scope.employees.data[k].department == null) {
+    $scope.employee.departments = 'No Data';
 }
-else if ($scope.employees.data[k].details.company.departments_pk != null) {
-    $scope.employee.departments_pk = $scope.employees.data[k].details.company.departments_pk;
+else if ($scope.employees.data[k].department != null) {
+    $scope.employee.departments = $scope.employees.data[k].department;
 }
 // Levels
-if ($scope.employees.data[k].details.company.levels_pk === undefined || $scope.employees.data[k].details.company.levels_pk == null) {
-    $scope.employee.levels_pk = null;
+if ($scope.employees.data[k].level === undefined || $scope.employees.data[k].level == null) {
+    $scope.employee.levels = 'No Data';
 }
-else if ($scope.employees.data[k].details.company.levels_pk != null) {
-    $scope.employee.levels_pk = $scope.employees.data[k].details.company.levels_pk;
+else if ($scope.employees.data[k].level != null) {
+    $scope.employee.levels = $scope.employees.data[k].level;
 }
 // Titles
-if ($scope.employees.data[k].details.company.titles_pk === undefined || $scope.employees.data[k].details.company.titles_pk == null) {
-    $scope.employee.titles_pk = null;
+if ($scope.employees.data[k].title === undefined || $scope.employees.data[k].title == null) {
+    $scope.employee.titles = null;
 }
-else if ($scope.employees.data[k].details.company.titles_pk != null) {
-    $scope.employee.titles_pk = $scope.employees.data[k].details.company.titles_pk;
+else if ($scope.employees.data[k].title != null) {
+    $scope.employee.titles = $scope.employees.data[k].title;
+}
+//Supervisor
+if ($scope.employees.data[k].supervisor === undefined || $scope.employees.data[k].supervisor == null) {
+    $scope.employee.supervisor = null;
+}
+else if ($scope.employees.data[k].supervisor != null) {
+    $scope.employee.supervisor = $scope.employees.data[k].supervisor;
 }
 // Employee Status
-if ($scope.employees.data[k].details.company.employee_status_pk === undefined || $scope.employees.data[k].details.company.employee_status_pk == null) {
-    $scope.employee.employee_status = null;
+if ($scope.employees.data[k].employee_status === undefined || $scope.employees.data[k].employee_status == null) {
+    $scope.employee.employee_statuses = 'No Data';
 }
-else if ($scope.employees.data[k].details.company.employee_status_pk != null) {
-    $scope.employee.employee_status = $scope.employees.data[k].details.company.employee_status_pk;
+else if ($scope.employees.data[k].employee_status != null) {
+    $scope.employee.employee_statuses = $scope.employees.data[k].employee_status;
 }
 // Employee Type
-if ($scope.employees.data[k].details.company.employment_type_pk === undefined || $scope.employees.data[k].details.company.employment_type_pk == null) {
-    $scope.employee.employment_type = null;
+if ($scope.employees.data[k].employment_type === undefined || $scope.employees.data[k].employment_type == null) {
+    $scope.employee.employment_types = 'No Data';
 }
-else if ($scope.employees.data[k].details.company.employment_type_pk != null) {
-    $scope.employee.employment_type = $scope.employees.data[k].details.company.employment_type_pk;
+else if ($scope.employees.data[k].employment_type != null) {
+    $scope.employee.employment_types = $scope.employees.data[k].employment_type;
 }
 // Date Started
 if ($scope.employees.data[k].details.company.date_started === undefined || $scope.employees.data[k].details.company.date_started == null) {
@@ -1878,34 +1885,7 @@ if ($scope.employee.salary_type != null || $scope.employee.salary_type != undefi
         return salarys_type === $scope.employee.salary_type;
     };
 }
-//Ken can only understand this below:D
-$scope.minus = 1;
-$scope.minus_20 = 20;
 
-$scope.employee.titles_pk = parseInt($scope.employee.titles_pk) - parseInt($scope.minus);
-$scope.employee.titles = $scope.titles.data[$scope.employee.titles_pk].title;
-
-$scope.employee.levels_pk = parseInt($scope.employee.levels_pk) - parseInt($scope.minus);
-$scope.employee.levels = $scope.level_title.data[$scope.employee.levels_pk].level_title;
-
-$scope.employee.departments_pk = parseInt($scope.employee.departments_pk) - parseInt($scope.minus_20);
-$scope.employee.departments = $scope.department.data[$scope.employee.departments_pk].department;
-
-if ($scope.employee.employee_status != null) {
-    $scope.employee.employee_status = parseInt($scope.employee.employee_status) - parseInt($scope.minus);
-    $scope.employee.employee_statuses = $scope.employee_status.data[$scope.employee.employee_status].status;
-}
-else if ($scope.employee.employee_status == null) {
-    $scope.employee.employee_statuses = 'No Data';
-}
-
-if ($scope.employee.employment_type != null) {
-    $scope.employee.employment_type = parseInt($scope.employee.employment_type) - parseInt($scope.minus);
-    $scope.employee.employment_types = $scope.employment_type.data[$scope.employee.employment_type].type;
-}
-else if ($scope.employee.employment_type == null) {
-    $scope.employee.employment_types = 'No Data';
-}
 if ($scope.employee.gender != null) {
     $scope.employee.gender_types = $scope.employee.gender;
 }
@@ -1920,23 +1900,6 @@ if ($scope.employee.civilstatus != null) {
 else if ($scope.employee.civilstatus == null) {
     $scope.employee.civil_statuses = 'No Data';
 }
-
-if ($scope.employee.ratype != null) {
-    $scope.employee.ratype = parseInt($scope.employee.ratype) - parseInt($scope.minus);
-    $scope.employee.ratypes = $scope.rate_type.data[$scope.employee.ratype].type;
-}
-else if ($scope.employee.ratype == null) {
-    $scope.employee.ratypes = 'No Data';
-}
-
-if ($scope.employee.pay_periodk != null) {
-    $scope.employee.pay_periodk = parseInt($scope.employee.pay_periodk) - parseInt($scope.minus);
-    $scope.employee.pay_periodl = $scope.pay_period.data[$scope.employee.pay_periodk].period;
-}
-else if ($scope.employee.pay_periodk == null) {
-    $scope.employee.pay_periodl = 'No Data';
-}
-
 
 $scope.modal = {
     title : 'View ' + $scope.employees.data[k].first_name,
