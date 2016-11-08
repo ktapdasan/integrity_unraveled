@@ -84,15 +84,15 @@ values
     'Consultant'
 );
 
-create table rate_type
+create table rate_types
 (
     pk serial primary key,
     type text not null,
     archived boolean default false
 );
-alter table rate_type owner to chrs;
+alter table rate_types owner to chrs;
 
-insert into rate_type
+insert into rate_types
 (
     type
 )
@@ -107,15 +107,15 @@ values
     'Monthly'
 );
 
-create table pay_period
+create table pay_periods
 (
     pk serial primary key,
     period text not null,
     archived boolean default false
 );
-alter table pay_period owner to chrs;
+alter table pay_periods owner to chrs;
 
-insert into pay_period
+insert into pay_periods
 (
     period
 )
