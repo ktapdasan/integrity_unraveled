@@ -10,7 +10,8 @@ app.controller('New_Employees', function(
 
     $scope.pk='';
     $scope.employee={
-        school_type:''
+        school_type:'',
+        seminar:''
     };
     $scope.tab = {
         personal : true,
@@ -98,6 +99,7 @@ app.controller('New_Employees', function(
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
+    $scope.employees.seminar_training = [];
 
     $scope.filter={};
 
@@ -277,10 +279,22 @@ app.controller('New_Employees', function(
             $scope.employees.education.push({educ_level: "Tertiary" });
         }
     };
+    $scope.addNewChoice1 = function() {
+        if ($scope.employee.seminar == 1){
+            $scope.employees.seminar_training.push({type: "Seminar"});
+        }
+        else if ($scope.employee.seminar == 2){
+            $scope.employees.seminar_training.push({type: "Training" });
+        }
+    };
 
     $scope.removeChoice = function (z) {
         //var lastItem = $scope.choiceSet.choices.length - 1;
         $scope.employees.education.splice(z,1);
+    };
+    $scope.removeChoice1 = function (z) {
+        //var lastItem = $scope.choiceSet.choices.length - 1;
+        $scope.employees.seminar_training.splice(z,1);
     };
 
     $scope.submit_employees = function(){
@@ -442,7 +456,8 @@ app.controller('New_Employees', function(
             flexi_wednesday:false,
             flexi_thursday:false,
             flexi_friday:false,
-            flexi_saturday:false
+            flexi_saturday:false,
+            seminar_training:''
         };
 
     }
