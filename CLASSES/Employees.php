@@ -932,7 +932,7 @@ EOT;
         $sql = <<<EOT
             select 
             pk, 
-            periods 
+            period 
             from pay_periods 
             where archived = 'f'
             ;
