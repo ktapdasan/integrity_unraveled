@@ -933,7 +933,7 @@ EOT;
             select 
             pk, 
             periods 
-            from pay_period 
+            from pay_periods 
             where archived = 'f'
             ;
 EOT;
