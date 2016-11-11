@@ -957,8 +957,62 @@ text-shadow: 0 1px 0 #fff;
                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
             </td> 
         </tr>
+        </table>
+        <table class="tblemployees">
         <tr>
-            <td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
+            <td style ="color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Trainings<br> and <br>Seminar</td>
+        </tr>
+        </table>
+        <table class="tblemployees" ng-repeat="forms in employee.seminar_trainings track by $index" ng-init="name = forms.type
+        ">
+        <tr>
+            <td><h4 style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;" >{{forms.type}}</h4></td>
+        </tr>
+        <tr>
+            <td>
+                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Name:</label>
+            </td>
+            <td id="css">     
+                <input name="seminar" required ng-model="forms.seminar_type" type="text" style="display: block; float: left; width:320px; height:25px;"/>
+            </td>
+            <td>
+                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Location:</label>
+            </td>
+            <td id="css">     
+                <input name="seminar" required ng-model="forms.seminar_locations" type="text" style="display: block; float: left; width:320px; height:25px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Date :</label>
+            </td>
+            <td id="css">
+                <input ng-model="forms.seminar_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
+            </td>
+            <td>
+                        <div>
+                            <input type="image" src="./ASSETS/img/delete.png" title="Remove" s ng-click="removeChoice1($index)" title="Remove">
+                        </div>
+                    </td>
+        </tr>
+        </table>
+        <table class="tblemployees">
+            <tr> 
+            <td >
+                <select required ng-model="employees.seminar" style="display: block; float: left; width:300px;padding:5px;margin-top:20px;" >
+                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                    <option value="1">Seminar</option>
+                    <option value="2">Training</option>
+                </select>
+            </td>      
+            <td>
+                <button type="button" ng-click="addNewChoice1()" class="large button green fa-fa" style="margin-top:20px;" >+ Add Seminar / Training</button>
+            </td>
+            </tr>
+        </table>
+        <table class="tblemployees">
+        <tr>
+            <td style ="color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work <br>Schedule</td>
 
         </tr>
         <tr>
@@ -1608,7 +1662,57 @@ padding-top:10px;padding-bottom:10px;">
 
     </div>
 </div>
+<div class="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+padding-top:10px;padding-bottom:10px; ">
+<div class="panel panel-default">
+    <div class="panel-heading" style="font-weight:900">Training and Seminars</div>
+    <div class="panel-body">
+        <table width="100%" ng-repeat="forms in employee.seminar_trainings">
+            <tr >
+                <td style="width:25%" >
+                    <div style="color:#1c84c6;margin-top:1px"><b><i>{{ forms.type }}</i><b></div>
+                </td>
+                <td style="width:200%">
+                </td>    
+            </tr>
+            <tr >
+                <td >
+                    <div><b>Name:</b></div>
+                </td>
+                <td>
+                    <div>{{ forms.seminar_type }}
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <div><b>Location:</b></div>
+                </td>
+                <td>
+                    <div>{{ forms.seminar_locations }}</div>
+                </td>
+            </td>
+            <tr>
+                <td>
+                    <div ><b >From Date:</b></div>
+                    
+                </td>
+
+                <td>
+                    <div>{{ forms.seminar_date | date: "MMMM dd, yyyy" }}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+</div>
+</div>
+
+
+</div>
+
+
 <div>
 <center style="font-size: 18px; font-style: bold">
     <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>

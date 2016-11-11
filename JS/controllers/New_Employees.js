@@ -99,7 +99,7 @@ app.controller('New_Employees', function(
     };
 
     $scope.employees.education = [{educ_level: "Primary"}];
-    $scope.employees.seminar_training = [];
+    $scope.employees.seminar_training = [{type: "Training"}];
 
     $scope.filter={};
 

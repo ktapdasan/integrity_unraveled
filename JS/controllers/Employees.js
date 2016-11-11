@@ -17,7 +17,7 @@ app.controller('Employees', function(
     $scope.profile = {};
     $scope.filter = {};
     $scope.employee={
-        school_type:''
+        school_type:'',
     };
     $scope.filter.status = 'Active';
     $scope.filter.max_count = "10";
@@ -32,6 +32,7 @@ app.controller('Employees', function(
     $scope.groupings= {};
 
     $scope.employee = {};
+    $scope.employee.seminar_training = [];
     $scope.leave_types = [];
     $scope.employees = {};
     $scope.time_employee = {};
@@ -75,17 +76,6 @@ app.controller('Employees', function(
         { pk:'3', civilstatus:'Divorced'},
         { pk:'4', civilstatus:'Living Common Law'},
         { pk:'5', civilstatus:'Widowed'}
-    ];
-    $scope.estatus = [
-        { pk:'1', emstatus:'Probationary'},
-        { pk:'2', emstatus:'Trainee'},
-        { pk:'3', emstatus:'Contractual'},
-        { pk:'4', emstatus:'Regular'},
-        { pk:'5', emstatus:'Consultant'}
-    ];
-    $scope.etype = [
-        { pk:'1', emtype:'Exempt'},
-        { pk:'2', emtype:'Non-Exempt'}
     ];
 
     $scope.pager = {};
@@ -567,6 +557,8 @@ $scope.edit_employees = function(k){
 
     $scope.employee = $scope.employees.data[k];
 
+    
+
 // Undefined? Nested If/Else is here to help - Ken Tapdasan
 
 //Root "COMPANY" Validator
@@ -964,6 +956,17 @@ if ($scope.employees.data[k].details.company.date_started === undefined || $scop
 else if ($scope.employees.data[k].details.company.date_started != null) {
     $scope.employee.date_started = new Date($scope.employees.data[k].details.company.date_started);
 }
+
+if ($scope.employees.data[k].details.company.training_seminar === undefined || $scope.employees.data[k].details.company.training_seminar  == null) {
+    $scope.employee.seminar_training = [{type: "Training"}];
+} 
+else if ($scope.employees.data[k].details.company.training_seminar != null || $scope.employees.data[k].details.company.training_seminar !== undefined) {
+    $scope.employee.seminar_training = $scope.employees.data[k].details.company.training_seminar;
+    for(var i in $scope.employee.seminar_training){
+        $scope.employee.seminar_training[i].seminar_date = new Date($scope.employee.seminar_training[i].seminar_date);
+    }
+    $scope.employee.seminar_trainings = $scope.employee.seminar_training;
+}
 }
 
 //Root "PERSONAL" Validator
@@ -1161,9 +1164,23 @@ $scope.addNewChoice = function() {
     }
 };
 
+$scope.addNewChoice1 = function() {
+    if ($scope.employees.seminar == '1'){
+        $scope.employee.seminar_training.push({type: "Training"});
+    }
+    else if ($scope.employees.seminar == '2'){
+        $scope.employee.seminar_training.push({type: "Seminar" });
+    }
+};
+
+
 $scope.removeChoice = function (z) {
 //var lastItem = $scope.choiceSet.choices.length - 1;
 $scope.employee.educations.splice(z,1);
+};
+$scope.removeChoice1 = function (z) {
+//var lastItem = $scope.choiceSet.choices.length - 1;
+$scope.employee.seminar_training.splice(z,1);
 };
 
 $scope.isShown = function(salarys_type) {
@@ -1694,6 +1711,17 @@ if ($scope.employees.data[k].details.company.date_started === undefined || $scop
 }
 else if ($scope.employees.data[k].details.company.date_started != null) {
     $scope.employee.date_started = new Date($scope.employees.data[k].details.company.date_started);
+}
+
+if ($scope.employees.data[k].details.company.training_seminar === undefined || $scope.employees.data[k].details.company.training_seminar  == null) {
+    $scope.employee.seminar_training = [{type: "Training"}];
+} 
+else if ($scope.employees.data[k].details.company.training_seminar != null || $scope.employees.data[k].details.company.training_seminar !== undefined) {
+    $scope.employee.seminar_training = $scope.employees.data[k].details.company.training_seminar;
+    for(var i in $scope.employee.seminar_training){
+        $scope.employee.seminar_training[i].seminar_date = new Date($scope.employee.seminar_training[i].seminar_date);
+    }
+    $scope.employee.seminar_trainings = $scope.employee.seminar_training;
 }
 }
 
