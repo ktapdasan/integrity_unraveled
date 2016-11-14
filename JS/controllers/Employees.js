@@ -1665,7 +1665,7 @@ else if ($scope.employees.data[k].details.company.business_email_address != null
 }
 // Department
 if ($scope.employees.data[k].department === undefined || $scope.employees.data[k].department == null) {
-$scope.employee.departments = 'No Data';
+    $scope.employee.departments = 'No Data';
 }
 else if ($scope.employees.data[k].department != null) {
     $scope.employee.departments = $scope.employees.data[k].department;
