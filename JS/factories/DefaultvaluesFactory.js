@@ -1,5 +1,14 @@
 app.factory('DefaultvaluesFactory', function($http){
-    var factory = {};           
+    var factory = {}; 
+
+    factory.fetch_all = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Defaultvalues/fetch_all.php',
+            method: 'GET'
+        })
+
+        return promise;
+    };          
 
     factory.get_work_days = function(data){
         var promise = $http({

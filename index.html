@@ -30,11 +30,14 @@
  
     <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/libs.min.css">
     <link rel="stylesheet" href="./ASSETS/js/plugins/timepicker/docs.min.css">
+    <link rel="stylesheet" href="./ASSETS/css/plugins/endless.css">
 
     <!-- FOR CALENDAR -->
     <link href="./ASSETS/js/plugins/calendar/colorpicker.min.css" rel="stylesheet">
     <link href="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar.min.css" rel="stylesheet">
     <!-- end: Css -->
+
+    <link href="./ASSETS/js/plugins/loader/loading-bar.css" rel="stylesheet">
     
     <link rel="shortcut icon" href="./ASSETS/img/time_32.png"> 
     
@@ -295,6 +298,7 @@
                         <ul class="dropdown-menu"> 
                              <li><a style="cursor:pointer;" href="#/timesheet/request" ng-click="menuclicked('timesheet')"> Compensation and Benefits</a></li>
                             <li><a style="cursor:pointer;" href="#/timesheet" ng-click="menuclicked('timesheet')"> Timesheet</a></li>
+                            <li><a style="cursor:pointer;" href="#/timesheet/payslip" ng-click="menuclicked('timesheet')"> Payslip</a></li>
                             <!-- <li><a style="cursor:pointer;" href="#/timesheet/manual_logs" ng-click="menuclicked('timesheet')">Manual Logs</a></li> --> 
                             <li><a style="cursor:pointer;" href="#/timesheet/leaves" ng-click="menuclicked('timesheet')">Leaves</a></li>
                             <li><a style="cursor:pointer;" href="#/timesheet/overtime" ng-click="menuclicked('timesheet')">Over Time</a></li>
@@ -313,6 +317,14 @@
                             <li><a style="cursor:pointer;" href="#/employees/list" ng-click="menuclicked('employees')">List of Employees</a></li>
                             <li><a style="cursor:pointer;" href="#/employees/timesheet" ng-click="menuclicked('employees')">View Timelogs</a></li>
                             <li><a style="cursor:pointer;" href="#/employees/request" ng-click="menuclicked('employees')">Compensation and Benefits</a></li>
+                        </ul>
+
+                    </li>
+                    <li ng-class="menu.payroll" ng-if="profile.permission.payroll">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Payroll<span class="caret" ></span></a>
+                        <ul class="dropdown-menu">
+                            
+                            <li><a style="cursor:pointer;" href="#/payroll/timesheet" ng-click="menuclicked('payroll')">Timesheet</a></li>
                         </ul>
 
                     </li>
@@ -362,13 +374,13 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right user-nav" style="margin-right:20px;" >
-                    <li class="user-name"><span>{{ profile.details.personal.first_name + " " + profile.details.personal.last_name }}</span></li>
-                    <li class="dropdown avatar-dropdown">
+                    <li class="user-name nobottomborder"><span>{{ profile.details.personal.first_name + " " + profile.details.personal.last_name }}</span></li>
+                    <li class="dropdown avatar-dropdown nobottomborder">
                         <img ng-if="profile.details.personal.profile_picture" src="{{profile.details.personal.profile_picture}}" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <img ng-if="!profile.details.personal.profile_picture" src="./ASSETS/img/blank.gif" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu user-dropdown">
-                            <li><a href="#/profile"><span class="fa fa-user"></span> My Profile</a></li>
-                            <li><a href="#/calendar"><span class="fa fa-calendar"></span> My Calendar</a></li>
+                            <li><a href="#/profile" ng-click="menuclicked('profile')"><span class="fa fa-user"></span> My Profile</a></li>
+                            <li><a href="#/calendar" ng-click="menuclicked('admin')"><span class="fa fa-calendar"></span> My Calendar</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="more">
                                 <ul>
@@ -552,6 +564,7 @@
     <script src="./ASSETS/js/jquery.min.js"></script>
     <script src="./ASSETS/js/jquery.ui.min.js"></script>
     <script src="./ASSETS/js/bootstrap.min.js"></script>
+    <script src="./ASSETS/js/underscore-min.js"></script>
    
     <!-- Angular.js Libraries -->
     <script src="./ASSETS/js/angularjs/angular.min.js"></script>
@@ -568,6 +581,8 @@
     <script src="./JS/controllers/Dashboard.js"></script>
     <script src="./JS/controllers/Profile.js"></script>
     <script src="./JS/controllers/Timesheet.js"></script>
+    <script src="./JS/controllers/Payroll.js"></script>
+    <script src="./JS/controllers/Payslip.js"></script>
     <script src="./JS/controllers/Timelogs.js"></script>
     <script src="./JS/controllers/Employees.js"></script>
     <script src="./JS/controllers/New_Employees.js"></script>
@@ -622,7 +637,8 @@
     <script src="./JS/factories/BirthdayFactory.js"></script>
 
 
-
+    <!-- SERVICE -->
+    <script src="./JS/services/PagerService.js"></script>  
 
     <!-- DIRECTIVES -->
     <script src="./JS/directives/splash.js"></script>
@@ -641,6 +657,7 @@
     <!-- <script src="./ASSETS/js/plugins/chart/Chart.bundle.js"></script> -->
     <script src="./ASSETS/js/plugins/chart/Chart.min.js"></script>
     <script src="./ASSETS/js/plugins/chart/angular-chart.min.js"></script>
+    <script src="./ASSETS/js/plugins/loader/loading-bar.js"></script>
 
 
     <!--timepicker-->
@@ -656,6 +673,8 @@
     <script src="./ASSETS/js/plugins/calendar/rrule.js"></script>
     <script src="./ASSETS/js/plugins/calendar/bootstrap-colorpicker-module.min.js"></script>
     <script src="./ASSETS/js/plugins/calendar/angular-bootstrap-calendar-tpls.js"></script>
+
+    <script src="./ASSETS/js/plugins/hotkeys/hotkeys.min.js"></script>
 </head>
 
     <!-- custom -->
@@ -1083,7 +1102,7 @@
                 <label style= "font-size:15px;">Total hours: </label>
                 <label style= "font-size:15px;">{{modal.overtime}}</label>
             </div>
-            <div>
+            <div style="display:none;">
                 <label style= "font-size:15px;">Type: </label>
                 <select ng-model="modal.type">
                     <option>Paid</option>

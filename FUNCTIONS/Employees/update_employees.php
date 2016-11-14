@@ -84,6 +84,7 @@ if ($_POST['levels_pk'] == 3){
     $company['employee_status_pk']        = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
     $company['employment_type_pk']        = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
     $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
+    $company['training_seminars']        = pg_escape_string(strip_tags(trim($_POST['seminar_training'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));
@@ -150,6 +151,7 @@ if ($_POST['levels_pk'] != 3){
     $company['employee_status_pk']        = pg_escape_string(strip_tags(trim($_POST['employee_status'])));
     $company['employment_type_pk']        = pg_escape_string(strip_tags(trim($_POST['employment_type'])));
     $company['date_started']           = pg_escape_string(strip_tags(trim($_POST['date_started'])));
+    $company['training_seminars']        = pg_escape_string(strip_tags(trim($_POST['seminar_training'])));
 
     $personal['first_name']            = pg_escape_string(strip_tags(trim($_POST['first_name'])));
     $personal['middle_name']           = pg_escape_string(strip_tags(trim($_POST['middle_name'])));

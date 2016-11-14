@@ -169,7 +169,8 @@ app.controller('Profile', function(
             $scope.profile.details = JSON.parse($scope.profile.details);
             $scope.profile.permission = JSON.parse($scope.profile.permission);
             $scope.profile.leave_balances = JSON.parse($scope.profile.leave_balances);
-           
+
+            
             if ($scope.profile.details.personal.profile_picture === undefined || $scope.profile.details.personal.profile_picture === null
                 || $scope.profile.details.personal.profile_picture == 'No Data') {
                 $scope.profile.details.personal.profile_picture = './ASSETS/img/blank.gif';
@@ -221,15 +222,23 @@ app.controller('Profile', function(
                 $scope.profile.supervisor = 'No Data';
             }
 
-            if ($scope.profile.deparments == undefined){
-                $scope.profile.deparments = 'No Data';
+            if ($scope.profile.department == undefined){
+                $scope.profile.department = 'No Data';
             }
-            if ($scope.profile.levels == undefined){
-                $scope.profile.levels = 'No Data';
+            if ($scope.profile.level == undefined){
+                $scope.profile.level = 'No Data';
             }
 
-            if ($scope.profile.titles == undefined){
-                $scope.profile.titles = 'No Data';
+            if ($scope.profile.title == undefined){
+                $scope.profile.title = 'No Data';
+            }
+
+            if ($scope.profile.employee_type == undefined){
+                $scope.profile.employee_type = 'No Data';
+            }
+
+            if ($scope.profile.employment_status == undefined){
+                $scope.profile.employment_status = 'No Data';
             }
 
             if ($scope.profile.details.company.business_email_address == undefined){
@@ -262,54 +271,7 @@ app.controller('Profile', function(
             return salarys_type === $scope.profile.details.company.salary.salary_type;
             };
             }
-            
-            $scope.minus = 1;
-            $scope.minus_20 = 20;
-
-            $scope.profile.details.company.titles_pk = parseInt($scope.profile.details.company.titles_pk) - parseInt($scope.minus);
-            $scope.profile.titles = $scope.titles.data[$scope.profile.details.company.titles_pk].title;
-            
-            $scope.profile.details.company.levels_pk = parseInt($scope.profile.details.company.levels_pk) - parseInt($scope.minus);
-            $scope.profile.levels = $scope.level_title.data[$scope.profile.details.company.levels_pk].level_title;
-            
-            $scope.profile.details.company.departments_pk = parseInt($scope.profile.details.company.departments_pk) - parseInt($scope.minus_20);
-            $scope.profile.deparments = $scope.department.data[$scope.profile.details.company.departments_pk].department;
-
-            // if ($scope.profile.details.company.employee_status_pk == undefined){
-            //     $scope.profile.employment_status = 'No Data';
-            // }
-            // else{
-            //     $scope.profile.details.company.employee_status_pk = parseInt($scope.profile.details.company.employee_status_pk) - parseInt($scope.minus);
-            //     $scope.profile.employment_status = $scope.employee_statusk.data[$scope.profile.details.company.employee_status_pk].status;
-            // }
-
-            // if ($scope.profile.details.company.employment_type_pk == undefined){
-            //     $scope.profile.employment_typess = 'No Data';
-
-            // }
-            // else{
-            //     $scope.profile.details.company.employment_type_pk = parseInt($scope.profile.details.company.employment_type_pk) - parseInt($scope.minus);
-            //     $scope.profile.employment_typess = $scope.employment_typek.data[$scope.profile.details.company.employment_type_pk].type;
-            // }
-
-            if($scope.profile.details.personal.civilstatus == undefined){
-                 $scope.profile.details.personal.civilstatus = 'No Data';
-            }
-            else{
-                
-                $scope.profile.civil_types = $scope.profile.details.personal.civilstatus;
-
-            }
-            if($scope.profile.details.personal.gender == undefined){
-                $scope.profile.gender = 'No Data';
-            }
-            else{
-                
-                $scope.profile.gender_type = $scope.profile.details.personal.gender;
-            }
-
-            
-    
+        
         })   
     } 
 

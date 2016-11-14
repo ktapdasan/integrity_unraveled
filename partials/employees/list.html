@@ -1,3 +1,4 @@
+
 <style type="text/css">
 .red {
     color: #ff0000; 
@@ -29,26 +30,27 @@
 }
 
 .table1{
-    width: 91.3%;
+    width: 98.3%;
     margin:0 auto;
     background-color:white;
     font-size:12px;
     margin-top:3px;
     table-layout:fixed;
+    word-wrap: break-word;
 }
 th, td {
     text-align: left;
     padding: 8px;
     color:#3d3d3d;
     border: 1px solid #c6c6c6;
-    overflow: hidden;
+       overflow: hidden;
     word-break:break-all;
 }
 
 tr:nth-child(odd){background-color:#F9F9F9;}
 
 th {
-    font-size:13px;
+      font-size:13px;
     background-color:white;
     color: #3d3d3d;
     border: 1px solid #c6c6c6;
@@ -63,7 +65,6 @@ select{
     font-weight: 900;
 
 }
-
 
 
 </style>
@@ -82,149 +83,189 @@ select{
         </div>
     </div>
     <div class="panel">
-        <div style="padding-left: 20px; padding-top:5px;"> 
-
-
-            <div class="bck">     
-
+        <div style="padding-left: 20px; padding-top:5px;">
+            <div class="bck">
                 <div style="float:left; margin-left:20px;margin-top: 14px;">
                     <label style="float:left;font-size: 13px;">Search</label><br>
                     <input ng-model="filter.searchstring" type="text" style="width:230px; margin-left:-43px;float:left" ng-change= "show_employees()"/>
                     <select ng-model="filter.status" style ="float:left;width:100px;margin-left:235px;
                     margin-top:-32px;"ng-change= "show_employees()">
-                    <option>Active</option>
-                    <option>Inactive</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </div>
+             
+                <div style="float:left; margin-left:-178px;margin-top: 10px;margin-right: 6px;">
+                    <label style="float:left;font-size: 13px;">Select a Department</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="employees.filters.department"
+                        output-model="filter.department"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                </div>
+
+                <div style="float:left; margin-top: 10px;margin-left:-18px;margin-right:10px;">
+                    <label style="float:left;font-size: 13px;">Select a Level</label><br>
+                    <div
+                        isteven-multi-select
+                        input-model="employees.filters.level_title"
+                        output-model="filter.level_title"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px; float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br> 
+                </div>
+
+                <div style="float:left; margin-top: 10px;margin-right: 10px;">
+                    <label style="float:left;font-size: 13px;">Select a Position</label><br>
+                 
+                    <div
+                        isteven-multi-select
+                        input-model="employees.filters.titles"
+                        output-model="filter.titles"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        selection-mode="single"
+                        style="width:150px;float:left;"
+                        max-height="200px"
+                            >
+                    </div>
+                    </br>
+                   
+                </div>
+                <div style="float:left; margin-top:33px;margin-right:15px;">
+                    <input type="button" class="medium button blue fa-fa"  value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; ">
+                </div>
+                <div style="float:left; margin-top:33px;">
+
+                     <input type="button" class="medium button green fa-fa" value="&#xf1c3; EXPORT" ng-click="export_employeelist()"; style="float:left;margin-right:10px;">
+                        <a href = "#/employees/new"><input type="button" class="medium button red fa-fa" value="&#xf055; ADD NEW EMPLOYEE" style="float:left;margin-right:1px;"></a>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div>
+        <div style="height:10px; width:100%;">
+
+        </div>
+       
+        <div style="width:98%;">
+            <div style="width:20%; float:left;">
+                <b class="total">Total: {{employees.count}}</b>
+            </div>
+            <div style="width:80%; float:left; text-align:right;">
+                <select ng-model="filter.max_count" ng-change="setPage(1)">
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
                 </select>
             </div>
+        </div>
 
+        <div>
+            <table id="datatables-example" class="table1" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="width:7%;">Employee #</th>
+                        <th style="width:18%;">Name</th>
+                        <th style="width:15%;">E-mails</th>
+                        <th style="width:10%;">Supervisor</th>
+                        <th style="width:10%;">Position</th>
+                        <th style="width:10%;">Level</th>
+                        <th style="width:10%;">Department</th>
+                        <th style="width:5%;">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(k, v) in items" style="cursor:pointer;" ng-if="employees.status"  title="View">
+                        <td ng-click="view_employees(k)"title="View">{{v.details.company.employee_id}}</td>
+                        <td ng-click="view_employees(k)"title="View">
+                            <div ng-if="v.details.personal.last_name && v.details.personal.first_name">
+                                {{v.details.personal.last_name}}, 
+                                {{v.details.personal.first_name}} 
+                                {{v.details.personal.middle_name}}
+                            </div>
+                        </td>
+                        <td ng-click="view_employees(k)"title="View">
+                            <div>{{v.details.personal.email_address}}</div> 
+                            <div>{{v.details.company.business_email_address}}</div>
+                        </td>
+                        <td ng-click="view_employees(k)"title="View">
+                            {{v.supervisor}}
+                            <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
+                        </td>
+                        <td ng-click="view_employees(k)"title="View">{{v.title}}</td>
+                        <td ng-click="view_employees(k)"title="View">
+                            <div>{{v.level}}</div> 
+                            <div>{{v.details.company.hours}} <span ng-if="v.details.company.hours">hrs</span></div>
+                        </td> 
+                        <td ng-click="view_employees(k)" title="View">{{v.department}}</td>
+                        <td><center> 
+                            <!-- <input type="image" src="edit.png" alt="edit" style="width:25px; height:28px"><a href="" ng-click="delete_employee()"></a>
+                            <input type="image" src="delete.png" alt="delete" style="width:25px; height:28px"> <a href="" ng-click="delete_employee()"></a> -->
+                            <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
 
+                            <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px" ng-if="v.archived=='f'" ng-click="delete_employees(k)" title="Delete">
+                            
+                            <input type="image" src="ASSETS/img/activate.png" alt="delete"style="width:16px; height:16px" ng-if="v.archived=='t'" ng-click="activate_employees(k)" title="Activate">
+                                
+                        </center>
+                        </td>
+                    </tr>
+                    <tr ng-if="!employees.status" style = "text-align: center;">
+                        <td colspan = "8" style="text-align:center;">No Data Found</td>
+                    </tr>
 
+                </tbody>
+            </table>
+        </div>
 
+        <div style="text-align:right;">
+            <!-- pager -->
+            <ul ng-if="pager.pages.length" class="pagination">
+                <li ng-class="{disabled:current_page === 1}">
+                    <a ng-click="setPage(1)">First</a>
+                </li>
+                <li ng-class="{disabled:current_page === 1}">
+                    <a ng-click="setPage(current_page - 1)">Previous</a>
+                </li>
+                <li ng-repeat="page in pager.pages" ng-class="{active:current_page === page}">
+                    <a ng-click="setPage(page)">{{page}}</a>
+                </li>                
+                <li ng-class="{disabled:current_page === pager.totalPages}">
+                    <a ng-click="setPage(current_page + 1)">Next</a>
+                </li>
+                <li ng-class="{disabled:current_page === pager.totalPages}">
+                    <a ng-click="setPage(pager.totalPages)">Last</a>
+                </li>
+            </ul>
+        </div>
+       
+        <div style="height:50px; width:100%;">
 
-
-            <div style="float:left; margin-left:-178px;margin-top: 10px;margin-right: 6px;">
-                <label style="float:left;font-size: 13px;">Select a Department</label><br>
-                <div
-                isteven-multi-select
-                input-model="employees.filters.department"
-                output-model="filter.department"
-                button-label="icon name"
-                item-label="icon name maker"
-                tick-property="ticked"
-                selection-mode="single"
-                style="width:150px; float:left;"
-                max-height="200px"
-                >
-            </div>
-        </br>
+        </div>
     </div>
 
-    <div style="float:left; margin-top: 10px;margin-left:-18px;margin-right:10px;">
-        <label style="float:left;font-size: 13px;">Select a Level</label><br>
-        <div
-        isteven-multi-select
-        input-model="employees.filters.level_title"
-        output-model="filter.level_title"
-        button-label="icon name"
-        item-label="icon name maker"
-        tick-property="ticked"
-        selection-mode="single"
-        style="width:150px; float:left;"
-        max-height="200px"
-        >
-    </div>
-</br> 
-</div>
-
-<div style="float:left; margin-top: 10px;margin-right: 10px;">
-    <label style="float:left;font-size: 13px;">Select a Position</label><br>
-
-    <div
-    isteven-multi-select
-    input-model="employees.filters.titles"
-    output-model="filter.titles"
-    button-label="icon name"
-    item-label="icon name maker"
-    tick-property="ticked"
-    selection-mode="single"
-    style="width:150px;float:left;"
-    max-height="200px"
-    >
-</div>
-</br>
-
-</div>
-<div style="float:left; margin-top:33px;margin-right:15px;">
-    <input type="button" class="medium button blue fa-fa"  value="&#xf002; SEARCH" ng-click="show_list()" style="float:left; ">
-</div>
-<div style="float:left; margin-top:33px;">
-
-    <input type="button" class="medium button green fa-fa" value="&#xf1c3; EXPORT" ng-click="export_employeelist()"; style="float:left;margin-right:10px;">
-
-    <a href = "#/employees/new"><input type="button" class="medium button green fa-fa" value="&#xf055; ADD NEW EMPLOYEE" style="float:left;margin-right:1px;">
-    </a>
-</div>
-</div>
-</div>
-</div> 
-</div>
-<div style="height:10px; width:100%;">
-
-</div>
-
-<b class="total">Total: {{employees.count}}</b>
-<table id="datatables-example" class="table1" width="90%" cellspacing="0">
-    <thead>
-
-        <tr>
-            <th col width="80" >Employee Number</th>
-            <th col width="55">First Name</th>
-            <th col width="65">Middle Name</th>
-            <th col width="55">Last Name</th>
-            <th col width="120">E-mails</th>
-            <th col width="60">Supervisor</th>
-            <th col width="90">Position</th>
-            <th col width="70">Level</th>
-            <th col width="65">Department</th>
-            <th col width="50">Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="(k, v) in employees.data" style="cursor:pointer;" ng-if="employees.status"  title="View">
-            <td ng-click="view_employees(k)"title="View">{{v.details.company.employee_id}}</td>
-            <td ng-click="view_employees(k)"title="View">{{v.details.personal.first_name}}</td>
-            <td ng-click="view_employees(k)"title="View">{{v.details.personal.middle_name}}</td>
-            <td ng-click="view_employees(k)"title="View">{{v.details.personal.last_name}}</td>
-            <td ng-click="view_employees(k)"title="View">{{v.details.personal.email_address}}</br> {{v.details.company.business_email_address}}</td>
-            <td ng-click="view_employees(k)"title="View">
-                {{v.supervisor}}
-                <!-- <div ng-repeat = "(k, v) in groupings.data" style="cursor:pointer;" value="{{v.pk}}" ng-if="employees.status"> {{v.supervisor_pk}}</div> -->
-            </td>
-            <td ng-click="view_employees(k)"title="View">{{v.title}}</td>
-            <td ng-click="view_employees(k)"title="View">{{v.level}} </br> {{v.details.company.hours}}</td> 
-            <td ng-click="view_employees(k)"title="View">{{v.department}}</td>
-            <td><center> 
-
-                <input type="image" src="ASSETS/img/edit.png" alt="edit" style="width:16px; height:16px;margin-right:4px;" ng-click="edit_employees(k)" title="Edit">
-
-                <input type="image" src="ASSETS/img/delete.png" alt="delete" style="width:14px; height:14px" ng-if="v.archived=='f'" ng-click="delete_employees(k)" title="Delete">
-
-                <input type="image" src="ASSETS/img/activate.png" alt="delete"style="width:16px; height:16px" ng-if="v.archived=='t'" ng-click="activate_employees(k)" title="Activate">
-
-            </center>
-        </td>
-    </tr>
-    <tr ng-if="!employees.status" style = "text-align: center;">
-        <td colspan = "10">No Data Found</td>
-    </tr>
-
-</tbody>
-</table>
-
-<div style="height:50px; width:100%;">
-
-</div>
-</div>
+    <!--<input type="button" class="btn btn-success" value="EXPORT" ng-click="EXPORT()">-->
+           
 </div>
 
 <script type="text/ng-template" id="EditModal" class="ngdialog-buttons">
@@ -286,7 +327,7 @@ body>footer .footer-main {
 <style type="text/css">
 #tabs {
     overflow: hidden;
-    width: 100%;
+    width: 90%;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -294,14 +335,14 @@ body>footer .footer-main {
 
 #tabs li {
     float: left;
-    margin: 0 .5em 0 0;
+    margin: 0 0 0 0;
 }
 
 #tabs a {
     position: relative;
     background: #ddd;
     /*background-image: linear-gradient(to bottom, #fff, #ddd);*/  
-    padding: .6em 2.2em;
+    padding: .5em 1.8em;
     float: left;
     text-decoration: none;
     color: #444;
@@ -371,7 +412,7 @@ text-shadow: 0 1px 0 #fff;
 
 </style>
 
-<div id="content2" style="margin-left: 70px; margin-top : 30px; border:0px solid #f0f0f0; width:1000px;">
+<div id="content2" style="margin-left: 10px; margin-top : 30px; border:0px solid #f0f0f0; width:900px;">
 
     <div>
     <div style="width: 120%;">
@@ -916,8 +957,62 @@ text-shadow: 0 1px 0 #fff;
                 <span style="color:red;display: block; float: left; width:340px;" ng-show="myForm.ptype.$error.required">Pay Period is required.</span>
             </td> 
         </tr>
+        </table>
+        <table class="tblemployees">
         <tr>
-            <td style ="width:500px;color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work Schedule</td>
+            <td style ="color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Trainings<br> and <br>Seminar</td>
+        </tr>
+        </table>
+        <table class="tblemployees" ng-repeat="forms in employee.seminar_trainings track by $index" ng-init="name = forms.type
+        ">
+        <tr>
+            <td><h4 style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;" >{{forms.type}}</h4></td>
+        </tr>
+        <tr>
+            <td>
+                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Name:</label>
+            </td>
+            <td id="css">     
+                <input name="seminar" required ng-model="forms.seminar_type" type="text" style="display: block; float: left; width:320px; height:25px;"/>
+            </td>
+            <td>
+                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Location:</label>
+            </td>
+            <td id="css">     
+                <input name="seminar" required ng-model="forms.seminar_locations" type="text" style="display: block; float: left; width:320px; height:25px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label style="display:block; float:left; padding-top:10px; padding-right:10px; font-size:14px; width:120px border:0px;">Date :</label>
+            </td>
+            <td id="css">
+                <input ng-model="forms.seminar_date" type="date" style="display: block; float: left; width:320px; height:25px;" ng-required="true"/>
+            </td>
+            <td>
+                        <div>
+                            <input type="image" src="./ASSETS/img/delete.png" title="Remove" s ng-click="removeChoice1($index)" title="Remove">
+                        </div>
+                    </td>
+        </tr>
+        </table>
+        <table class="tblemployees">
+            <tr> 
+            <td >
+                <select required ng-model="employees.seminar" style="display: block; float: left; width:300px;padding:5px;margin-top:20px;" >
+                    <option value="" disabled selected style="display:none"> -- Select from the options -- </option>
+                    <option value="1">Seminar</option>
+                    <option value="2">Training</option>
+                </select>
+            </td>      
+            <td>
+                <button type="button" ng-click="addNewChoice1()" class="large button green fa-fa" style="margin-top:20px;" >+ Add Seminar / Training</button>
+            </td>
+            </tr>
+        </table>
+        <table class="tblemployees">
+        <tr>
+            <td style ="color:#219DEC;border-bottom:2px solid #219DEC;height:40px;font-size:25px;">Work <br>Schedule</td>
 
         </tr>
         <tr>
@@ -1060,8 +1155,10 @@ text-shadow: 0 1px 0 #fff;
 </div>
 
 </script>
+
 <script type="text/ng-template" id="ViewModal" class="ngdialog-buttons">
-<div class="ngdialog-message" style="width: 1000px;">
+<div class="ngdialog-message" style="width:100%">
+
     <style type ="text/css">
 
     .imageprofile{
@@ -1108,48 +1205,40 @@ text-shadow: 0 1px 0 #fff;
     }
 
     </style>
-    <div class="container">
-        <div class="row">
-            <div class ="col-md-2" style="padding-top:45px;word-wrap: break-word;">
-                <img src="{{employee.profile_picture}}" class="imageprofile"/>
-            </div>
-            <div class ="col-md-4" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
-                <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
-                <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
-            </div>
-            <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
-
-
-                <div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
-                <div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
-                <div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
-                <div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
-                <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
-
-
-            </div>
-            <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
-            padding-top:10px;padding-bottom:10px;">
-
-            <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
-            <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
-            <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
-            <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
-            Name: {{employee.emergency_contact_name}}<br>Contact #: {{employee.emergency_contact_number}}
+    <div class="container" style="width:100%">
+    <div class="row">
+        <div class ="col-md-3" style="padding-top:45px;word-wrap: break-word;">
+            <img src="{{employee.profile_picture}}" class="imageprofile"/>
         </div>
-    </div>  
-
-
+        <div class ="col-md-3" style="padding-top:30px;word-wrap: break-word;margin-top:50px">
+            <h3 style="color:#2196F3;">{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}   </h3>
+            <div style="font-weight:900;margin-top:10px;margin-left:3px;">{{employee.titles}}</div>
+        </div>
+        <div class ="col-md-3" style="border-left:2px solid #d9d9d9; word-wrap: break-word;font-size:12px;margin-top:20px;padding-top:10px;padding-bottom:10px;">
+            <div><b>Contact #:</b></div><div style="margin-left:30px;">{{employee.contact_number}}</div> 
+            <div><b>Email:</b></div><div style="margin-left:30px;">{{employee.email_address}}</div>
+            <div><b>Gender:</b></div><div style="margin-left:30px;">{{employee.gender_types}}</div>
+            <div><b>Present Address:</b></div><div style="margin-left:30px;">{{employee.present_address}}</div>
+            <div><b>Permanent Address:</b></div><div style="margin-left:30px;">{{employee.permanent_address}}</div>
+        </div>
+        <div class ="col-md-3" style="word-wrap: break-word;font-size:12px;margin-top:20px;
+        padding-top:10px;padding-bottom:10px;">
+        <div><b>Birthday:</b></div><div style="margin-left:30px;">{{employee.birth_date | date}}</div>
+        <div><b>Civil Status:</b></div><div style="margin-left:30px;">{{employee.civil_statuses}}</div>
+        <div><b>Religion:</b></div><div style="margin-left:30px;">{{employee.religion}}</div>
+        <div><b>In Case Of Emergency:</b></div><div style="margin-left:30px;">
+        Name: {{employee.emergency_contact_name}}<br>Contact #: {{employee.emergency_contact_number}}
+    </div>
+</div>  
 </div>
-<div class ="row">
-
-    <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-    padding-top:10px;padding-bottom:10px;">
+<div class="row">
+    <div class="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+    padding-top:10px;padding-bottom:10px; float:left;">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:900">Company Profile</div>
         <div class="panel-body">
 
-            <table style="width:100%;">
+            <table style="width:100%;" cellspacing="0">
                 <tr>
                     <td style="width:33%;" >
                         <b> Employee ID:</b>
@@ -1350,21 +1439,15 @@ text-shadow: 0 1px 0 #fff;
                         <div>{{employee.pay_periodl}}</div>
                     </td>
                 </tr>
-
             </table>
-
         </div>   
     </div>
-
 </div>
-
-<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
-padding-top:10px;padding-bottom:10px;">
+<div class="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+padding-top:10px;padding-bottom:10px; ">
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:900">Educational Attainment</div>
     <div class="panel-body">
-
-
         <table width="100%" ng-repeat="education in employee.education">
             <tr >
                 <td style="width:50%" >
@@ -1404,50 +1487,46 @@ padding-top:10px;padding-bottom:10px;">
                 <td>
                     <div></div>
                 </td>
-
             </tr>
-
-
         </table>
-
     </div>
 </div>
 </div>
 </div>
-<div class="row">    
+<div class="row">
     <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
     padding-top:10px;padding-bottom:10px;">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:900">Government Mandated Benefits</div>
         <div class="panel-body">
 
-            <table width="100%">
+            <table>
                 <tr>
                     <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">PHIC:</div>
+                        PHIC:
                     </td>
-                    <td>
-                        <div style="width:100px; height:20px;">{{employee.data_phid}}</div>
+                    <td style="width:35%;">
+                        {{employee.data_phid}}
                     </td>
-                    <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">HDMF:</div>
+                    <td >
+                        HDMF:
                     </td>
-                    <td>
-                        <div style="width:100px; height:20px;">{{employee.data_pagmid}}</div>
+                    <td style="width:35%;">
+                        {{employee.data_pagmid}}
                     </td>
                 </tr>
                 <tr>    
                     <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">TIN:</div>
+                        TIN:
                     </td>
                     <td>
-                        <div style="width:100px; height:20px;">{{employee.data_tin}}</div>
+                        {{employee.data_tin}}
                     </td>    
                     <td>
-                        <div style="font-weight:bold; width:100px; height:20px;">SSS:</div>
+                        SSS:
                     </td>
                     <td>
-                        <div style="width:100px; height:20px;">{{employee.data_sss}}</div>
+                        {{employee.data_sss}}
                     </td>
                 </tr>
                 <tr>
@@ -1457,124 +1536,120 @@ padding-top:10px;padding-bottom:10px;">
 
     </div>
 </div>
-
-
 <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
 padding-top:10px;padding-bottom:10px;">
 <div class="panel panel-default">
     <div class="panel-heading" style="font-weight:900">Work Schedule</div>
     <div class="panel-body">
 
-        <table width="100%">
+        <table>
             <tr>
-                <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Sunday:</div>
+                <td style="width:20%;">
+                    Sunday:
                 </td>
-                <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_sunday |  date: "h:mm a"}}</div>
+                <td style="width:30%;">
+                    Time-In: {{employee.timein_sunday |  date: "h:mm a"}}
                 </td>
-                <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_sunday| date: "h:mm a"}}</br></div>
+                <td style="width:30%;">
+                    Time-Out: {{employee.timeout_sunday| date: "h:mm a"}}
                 </td>
-                <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_sunday}}</div>
+                <td style="width:30%;">
+                    Flexi: {{employee.flexi_sunday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Monday:</div>
+                   Monday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_monday | date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_monday | date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_monday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_monday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_monday}}</div>
+                   Flexi: {{employee.flexi_monday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Tuesday:</div>
+                    Tuesday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_tuesday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_tuesday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_tuesday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_tuesday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_tuesday}}</div>
+                    Flexi: {{employee.flexi_tuesday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Wednesday:</div>
+                    Wednesday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_wednesday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_wednesday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_wednesday | date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_wednesday | date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_wednesday}}</div>
+                    Flexi: {{employee.flexi_wednesday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Thursday:</div>
+                    Thursday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_thursday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_thursday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_thursday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_thursday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_thursday}}</div>
+                    Flexi: {{employee.flexi_thursday}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Friday:</div>
+                    Friday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_friday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_friday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_friday| date: "h:mm a"}}</br></div>
+                   Time-Out: {{employee.timeout_friday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_friday}}</div>
+                    Flexi: {{employee.flexi_friday}}
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div style="font-weight:bold; width:80px; height:20px;">Saturday:</div>
+                <td style="font-weight:bold;">
+                    Saturday:
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-In: {{employee.timein_saturday| date: "h:mm a"}}</div>
+                    Time-In: {{employee.timein_saturday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:120px; height:20px;">Time-Out: {{employee.timeout_saturday| date: "h:mm a"}}</br></div>
+                    Time-Out: {{employee.timeout_saturday| date: "h:mm a"}}
                 </td>
                 <td>
-                    <div style="width:60px; height:20px;">Flexi: {{employee.flexi_saturday}}</div>
+                   Flexi: {{employee.flexi_saturday}}
                 </td>
             </tr>
-            <tr>
-            </tr>   
+              
         </table>       
     </div>
-
 </div>
-
-
 </div>
-<div class="row">   
-    <div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
+</div>
+<div class="row">
+    
+<div class ="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:-20px;
     padding-top:10px;padding-bottom:10px;">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:900">Leave Balances</div>
@@ -1587,16 +1662,62 @@ padding-top:10px;padding-bottom:10px;">
 
     </div>
 </div>
+<div class="col-md-6" style="word-wrap: break-word;font-size:14px;margin-top:20px;
+padding-top:10px;padding-bottom:10px; ">
+<div class="panel panel-default">
+    <div class="panel-heading" style="font-weight:900">Training and Seminars</div>
+    <div class="panel-body">
+        <table width="100%" ng-repeat="forms in employee.seminar_trainings">
+            <tr >
+                <td style="width:25%" >
+                    <div style="color:#1c84c6;margin-top:1px"><b><i>{{ forms.type }}</i><b></div>
+                </td>
+                <td style="width:200%">
+                </td>    
+            </tr>
+            <tr >
+                <td >
+                    <div><b>Name:</b></div>
+                </td>
+                <td>
+                    <div>{{ forms.seminar_type }}
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <div><b>Location:</b></div>
+                </td>
+                <td>
+                    <div>{{ forms.seminar_locations }}</div>
+                </td>
+            </td>
+            <tr>
+                <td>
+                    <div ><b >From Date:</b></div>
+                    
+                </td>
+
+                <td>
+                    <div>{{ forms.seminar_date | date: "MMMM dd, yyyy" }}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
 </div>
 
+
 </div>
+
+
 <div>
-</div>
 <center style="font-size: 18px; font-style: bold">
     <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
 </center>
 </div>
-</div>  
+</div>
 </div>
 </script>
-

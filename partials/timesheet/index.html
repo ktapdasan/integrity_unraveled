@@ -54,6 +54,10 @@ tr:hover {
 .holiday-blue {
     color:#280df0;
 }
+
+.restday-green {
+    color:#008e00;
+}
 </style>
 <div id="content2">
     <div class="panel box-shadow-none content-header">
@@ -85,7 +89,11 @@ tr:hover {
                         <input type="button" class="medium button green fa-fa" value="EXPORT" ng-click="export_timesheet()">
 
                         <input type="button" class="medium button red fa-fa" value="PDF" ng-click="pdf_timesheet()">
-                        
+
+                    </div>
+
+                    <div style="margin-top:25px;margin-right:10px;float:right;font-size: 16px; font-weight: bold;">
+                        <input type="button" class="medium button white fa-fa" value="ACCEPT & SUBMIT" ng-click="accept_timesheet()" style="float:right;">
                     </div>
                 </div>
             </h4>
@@ -93,91 +101,180 @@ tr:hover {
         <div style="height:15px; width:100%;">
 
         </div>
+
+        <h2 style="padding-left:10px;">Current</h2>
       
-            <b class="total">Total: {{timesheet.count}}</b>
-            <table id="datatables-example" class="table1" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th style="width:7%;">Date</th>
-                        <th style="width:8%;">Day</th>
-                        <th style="width:8%;">Schedule</th>
-                        <th style="width:9.5%;">Log In</th>
-                        <th style="width:9.5%;">Log Out</th>
-                        <th style="width:7%;"># of Hours</th>
-                        <th style="width:7%;">Tardiness</th>
-                        <th style="width:7%;">Undertime</th>
-                        <th style="width:9%;">Overtime</th>
-                        <th style="width:12%;">DPS</th>
-                        <th style="width:9%;">Suspension</th>
-                        <th style="width:10%;">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(k, v) in timesheet.data" >
-                        <td>{{v.log_date}}</td>
-                        <td>{{v.log_day}}</td>
-                        <td>{{v.schedule}}</td>
-                        <td>
-                            <span ng-if = "v.login == 'None' || v.login == ''">
-                                <a ng-click="open_manual_log('In', k)">
-                                    <font color="red" title = "File Manual Log"><u>File Manual Log</u></font>
-                                </a>
+        <b class="total">Total: {{timesheet.count}} days</b>
+        <table id="datatables-example" class="table1" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="width:4.5%;">Date</th>
+                    <th style="width:4%;">Day</th>
+                    <th style="width:7.5%;">Schedule</th>
+                    <th style="width:6.5%;">Log In</th>
+                    <th style="width:6.5%;">Log Out</th>
+                    <th style="width:5%;">Hours</th>
+                    <th style="width:6%;">Tardiness</th>
+                    <th style="width:6%;">Undertime</th>
+                    <th style="width:8%;">Overtime</th>
+                    <th style="width:8%;">DPS</th>
+                    <th style="width:8%;">Suspension</th>
+                    <th style="width:10%;">Status</th>
+                    <th style="width:3%;">
+                        <input type="checkbox" ng-model="toggleall" ng-click="toggle_all()">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k, v) in timesheet.data" style="background-color:{{ (v.toggle)?'#f8f7a9':'' }};">
+                    <td>{{v.date}}</td>
+                    <td>{{v.day}}</td>
+                    <td>{{v.schedule}}</td>
+                    <td>
+                        <span ng-if="v.login_time!=''" ng-bind-html="v.login_time_html"></span>
+                        <span ng-if="v.date && v.login=='' && v.login_time=='' && v.schedule !='No Schedule'">
+                            <a ng-click="open_manual_log('In', k)">
+                                <font color="red" title = "File Manual Log"><u>File Log In</u></font>
+                            </a>
+                        </span>
+                        <span ng-if="v.login!=''">{{v.login}}</span>
+                        <!-- <span ng-if = "v.login == 'None' || v.login == ''">
+                            <a ng-click="open_manual_log('In', k)">
+                                <font color="red" title = "File Manual Log"><u>File Manual Log</u></font>
+                            </a>
+                        </span>
+                        
+                        <span ng-if = 'v.login != "None" && v.login != ""'>
+                            <span ng-if='v.login == "Pending"'>
+                                {{v.login}}
                             </span>
-
+                            <span ng-if='v.login != "Pending"' ng-bind-html="v.login_time_html"></span>
                             
-                            <span ng-if = 'v.login != "None" && v.login != ""'>
-                                <span ng-if='v.login == "Pending"'>
-                                    {{v.login}}
-                                </span>
-                                <span ng-if='v.login != "Pending"'>
-                                    {{v.login_time}}
-                                </span>
-                                
-                            </span>
-                        </td>
-                        <td>
-                            <span ng-if="v.logout == 'None' || v.logout == ''">
-                                <a ng-click="open_manual_log('Out', k)">
-                                    <font color="red" title = "File Manual Log"><u>File Manual Log</u></font>
-                                </a>
-                            </span>
+                        </span> -->
+                    </td>
+                    <td>
+                        <span ng-if="v.logout == 'None' || v.logout == ''">
+                            <a ng-click="open_manual_log('Out', k)">
+                                <font color="red" title = "File Manual Log"><u>File Manual Log</u></font>
+                            </a>
+                        </span>
 
-                            <span ng-if="v.logout != 'None' && v.logout != ''">
-                                <span ng-if='v.logout == "Pending"'>
-                                    {{v.logout}}
-                                </span>
-                                <span ng-if='v.logout != "Pending"'>
-                                    {{v.logout_time}}
-                                </span>
-                                
+                        <span ng-if="v.logout != 'None' && v.logout != ''">
+                            <span ng-if='v.logout == "Pending"'>
+                                {{v.logout}}
                             </span>
-                        </td>
-                        <td>
-                            <span >
+                            <span ng-if='v.logout != "Pending"' ng-bind-html="v.logout_time_html"></span>
+                            
+                        </span>
+                    </td>
+                    <td>
+                        <span >
                             {{v.hrs}}
-                            </span>
-                        </td> 
-                        <td>{{v.tardiness}}</td> 
-                        <td>{{v.undertime}}</td> 
-                        <td>
-                            <span ng-if="v.overtime=='false'">
-                                <a ng-click="open_overtime(k)">
-                                    <font color="red" title = "File Overtime"><u>File Overtime</u></font>
-                                </a>
-                            </span>
-                            <span ng-if="v.overtime=='Approved'">{{v.overtime_value}}</span>
-                            <span ng-if="v.overtime=='Pending'">{{v.overtime}}</span>
-                            <span ng-if="v.overtime=='Disapproved'">{{v.overtime}}</span>
-                        </td> 
-                        <td ng-bind-html="v.dps"></td> 
-                        <td>{{v.suspension}}</td> 
-                        <td ng-bind-html="v.status"></td> 
-                    </tr>               
-                    <!-- <tr ng-if="!timesheet.status" style= "text-align: center;">
-                        <td colspan="9" style="text-align:center;">No Data Found</td>
-                    </tr> -->
-                </tbody>
-            </table>
+                        </span>
+                         <span ng-if="v.hrs">hrs</span>
+                    </td> 
+                    <td>
+                        <span>
+                            {{v.tardiness}}
+                        </span>
+                        <span ng-if="v.tardiness">hrs</span>
+                    </td> 
+                    <td>
+                        <span>
+                            {{v.undertime}}
+                        </span>
+                        <span ng-if="v.undertime">hrs</span>
+                    </td> 
+                    <td>
+                        <span ng-if="v.overtime_status=='false'">
+                            <a ng-click="open_overtime(k)">
+                                <font color="red" title = "File Overtime"><u>File Overtime</u></font>
+                            </a>
+                        </span>
+                        <span ng-if="v.overtime_status=='Approved'">{{v.overtime_status}}</span>
+                        <span ng-if="v.overtime_status=='Pending'">{{v.overtime_status}}</span>
+                        <span ng-if="v.overtime_status=='Disapproved'">{{v.overtime_status}}</span>
+                    </td> 
+                    <td>
+                        <span ng-if="v.dps_status=='Pending'">{{v.dps_status}}</span>
+                        <span ng-if="v.dps_status=='Approved'" ng-bind-html="v.dps_html"></span>
+                    </td> 
+                    <td ng-bind-html="v.suspension_html"></td> 
+                    <td ng-bind-html="v.status_html"></td> 
+                    <td>
+                        <input ng-checked="(v.schedule=='No Schedule' || v.status.indexOf('Holiday') >= 0)?true:false" type="checkbox" ng-model="v.toggle">
+                    </td> 
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr style="font-weight:bold; text-align:center;">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <span ng-if="total.hrs">{{total.hrs}} hrs</span>
+                    </td>
+                    <td>
+                        <span ng-if="total.tardiness">{{total.tardiness}} hrs</span>
+                    </td>
+                    <td>
+                        <span ng-if="total.undertime">{{total.undertime}} hrs</span>
+                    </td>
+                    <td>
+                        <span ng-if="total.overtime">{{total.overtime}} hrs</span>
+                    </td>
+                    <td>
+                        <span ng-if="total.dps">{{total.dps}} hrs</span>
+                    </td>
+                    <td>
+                        <span ng-if="total.suspension">{{total.suspension}} hrs</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div style="height:15px; width:100%;">
+
+        </div>
+
+        <!-- <h2 style="padding-left:10px;">Adjustments</h2>
+      
+        <b class="total">Total: {{timesheet.count}} days</b>
+        <table id="datatables-example" class="table1" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="width:4.5%;">Date</th>
+                    <th style="width:4%;">Day</th>
+                    <th style="width:7.5%;">Schedule</th>
+                    <th style="width:6.5%;">Log In</th>
+                    <th style="width:6.5%;">Log Out</th>
+                    <th style="width:4.5%;">Hours</th>
+                    <th style="width:6%;">Tardiness</th>
+                    <th style="width:6%;">Undertime</th>
+                    <th style="width:8%;">Overtime</th>
+                    <th style="width:8%;">DPS</th>
+                    <th style="width:8%;">Suspension</th>
+                    <th style="width:10%;">Status</th>
+                    <th style="width:3%;">
+                        <input type="checkbox" ng-model="toggleall" ng-click="toggle_all()">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k, v) in adjustments.data" style="background-color:{{ (v.toggle)?'#f8f7a9':'' }};">
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr style= "text-align: center;">
+                    <td colspan="13" style="text-align:center;">No Data Found</td>
+                </tr>
+            </tbody>
+        </table> -->
         
         <div style="height:50px; width:100%;">
 

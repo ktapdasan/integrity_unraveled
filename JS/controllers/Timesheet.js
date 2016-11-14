@@ -9,14 +9,20 @@ app.controller('Timesheet', function(
                                         CutoffFactory,
                                         DefaultvaluesFactory,
                                         LeaveFactory,
+                                        cfpLoadingBar,
                                         md5,
                                         $filter
   									){
 
     $scope.profile = {};
     $scope.filter = {};
+    
     $scope.timesheet = {};
     $scope.timesheet.count = 0;
+
+    $scope.adjustments = {};
+    $scope.adjustments.count = 0;
+
     $scope.log = {};
     $scope.log.time_log = new Date;
 
@@ -28,6 +34,8 @@ app.controller('Timesheet', function(
 
     $scope.workdays = {};
     $scope.approved_leaves = [];
+
+    $scope.toggleall = false;
 
     init();
 
@@ -131,6 +139,11 @@ app.controller('Timesheet', function(
                 $scope.filter.dateto = new Date(mm+"/"+a.dates.to+"/"+yyyy);
             }
 
+            $scope.cutoff = {
+                from: $scope.filter.datefrom,
+                to: $scope.filter.dateto
+            };
+
             //fetch_myemployees();
             timesheet();
         })
@@ -153,6 +166,7 @@ app.controller('Timesheet', function(
     }
 
     function timesheet(){
+        cfpLoadingBar.start();
         var datefrom =  $filter('date')($scope.filter.datefrom, "yyyy-MM-dd");
         var dateto =  $filter('date')($scope.filter.dateto, "yyyy-MM-dd");
         
@@ -180,222 +194,259 @@ app.controller('Timesheet', function(
         $scope.timesheet.data = [];
         var promise = TimelogFactory.timesheet(filter);
         promise.then(function(data){
-            //console.log($scope.profile.details);
+            
             $scope.timesheet.status = true;
-            $scope.timesheet.data = data.data[$scope.profile.details.company.employee_id];
+            $scope.timesheet.data = data.data[$scope.profile.pk];
+            
             //console.log(data.data);
+            $scope.total = {
+                hrs : 0,
+                tardiness : 0,
+                undertime : 0,
+                overtime : 0,
+                dps : 0
+            };
+
             $scope.timesheet.count=0;
             for(var i in $scope.timesheet.data){
+                if($scope.timesheet.data[i].hrs){
+                    $scope.total.hrs += parseFloat($scope.timesheet.data[i].hrs);
+                }
+
+                if($scope.timesheet.data[i].tardiness){
+                    $scope.total.tardiness += parseFloat($scope.timesheet.data[i].tardiness);
+                }
+
+                if($scope.timesheet.data[i].undertime){
+                    $scope.total.undertime += parseFloat($scope.timesheet.data[i].undertime);
+                }
+
+                if($scope.timesheet.data[i].overtime){
+                    if($scope.timesheet.data[i].overtime_status == 'Approved'){
+                        $scope.total.overtime += parseFloat($scope.timesheet.data[i].overtime);    
+                    }
+                }
+
+                if($scope.timesheet.data[i].dps){
+                    if($scope.timesheet.data[i].dps_status == 'Approved'){
+                        $scope.total.dps += parseFloat($scope.timesheet.data[i].dps);    
+                    }
+                }
+
                 $scope.timesheet.count++;                
             }
+
+            //console.log($scope.timesheet.data);
+            cfpLoadingBar.complete();
         })
         .then(null, function(data){
             $scope.timesheet.status = false;
+            cfpLoadingBar.complete();
         });
 
     }
 
-    function timesheet2(){
-        var datefrom = new Date($scope.filter.datefrom);
-        var dd = datefrom.getDate();
-        var mm = datefrom.getMonth()+1; //January is 0!
-        var yyyy = datefrom.getFullYear();
+    // function timesheet2(){
+    //     var datefrom = new Date($scope.filter.datefrom);
+    //     var dd = datefrom.getDate();
+    //     var mm = datefrom.getMonth()+1; //January is 0!
+    //     var yyyy = datefrom.getFullYear();
 
-        var dateto = new Date($scope.filter.dateto);
-        var Dd = dateto.getDate();
-        var Mm = dateto.getMonth()+1; //January is 0!
-        var Yyyy = dateto.getFullYear();
+    //     var dateto = new Date($scope.filter.dateto);
+    //     var Dd = dateto.getDate();
+    //     var Mm = dateto.getMonth()+1; //January is 0!
+    //     var Yyyy = dateto.getFullYear();
 
-        $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
-        $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
+    //     $scope.filter.newdatefrom=yyyy+'-'+mm+'-'+dd;
+    //     $scope.filter.newdateto=Yyyy+'-'+Mm+'-'+Dd;
 
-        $scope.filter.pk = $scope.profile.pk;
+    //     $scope.filter.pk = $scope.profile.pk;
 
-        $scope.timesheet.data = [];
-        var promise = TimelogFactory.timesheet2($scope.filter);
-        promise.then(function(data){
-            $scope.timesheet.data = data.data.result;
-            $scope.timesheet.count = data.data.result.length;
-            $scope.timesheet.status = true;
-            //console.log($scope.timesheet);
+    //     $scope.timesheet.data = [];
+    //     var promise = TimelogFactory.timesheet2($scope.filter);
+    //     promise.then(function(data){
+    //         $scope.timesheet.data = data.data.result;
+    //         $scope.timesheet.count = data.data.result.length;
+    //         $scope.timesheet.status = true;
+    //         //console.log($scope.timesheet);
 
-            var a = getDates( datefrom, dateto );
+    //         var a = getDates( datefrom, dateto );
             
-            var new_timesheet=[];
-            for(var i in a){
+    //         var new_timesheet=[];
+    //         for(var i in a){
                 
-                mm = a[i].getMonth()+1;
-                date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
+    //             mm = a[i].getMonth()+1;
+    //             date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
 
-                var done = false;
-                for(var j in $scope.timesheet.data){
+    //             var done = false;
+    //             for(var j in $scope.timesheet.data){
 
-                    var timesheet_date = new Date($scope.timesheet.data[j].log_date);
-                    var dd = timesheet_date.getDate();
-                    var mm = timesheet_date.getMonth()+1; //January is 0!
-                    var yyyy = timesheet_date.getFullYear();
-                    var date1 = yyyy +"-"+ mm +"-"+ dd;
+    //                 var timesheet_date = new Date($scope.timesheet.data[j].log_date);
+    //                 var dd = timesheet_date.getDate();
+    //                 var mm = timesheet_date.getMonth()+1; //January is 0!
+    //                 var yyyy = timesheet_date.getFullYear();
+    //                 var date1 = yyyy +"-"+ mm +"-"+ dd;
 
-                    var Dd = a[i].getDate();
-                    var Mm = a[i].getMonth()+1; //January is 0!
-                    var Yyyy = a[i].getFullYear();
-                    var date2 = Yyyy +"-"+ Mm +"-"+ Dd;
+    //                 var Dd = a[i].getDate();
+    //                 var Mm = a[i].getMonth()+1; //January is 0!
+    //                 var Yyyy = a[i].getFullYear();
+    //                 var date2 = Yyyy +"-"+ Mm +"-"+ Dd;
 
-                    if(date1 == date2){
-                        var day_checked = check_day($scope.timesheet.data[j]);
+    //                 if(date1 == date2){
+    //                     var day_checked = check_day($scope.timesheet.data[j]);
 
-                        if(contains(['Regular','Rest Day'], day_checked)){
-                            if(day_checked == "Rest Day"){
-                                $scope.timesheet.data[j].login = '';
-                                $scope.timesheet.data[j].logout = '';
-                                $scope.timesheet.data[j].hrs = '';  
-                            }
-                        }
-                        else {  
-                            if($scope.profile.details.company.work_schedule[$scope.timesheet.data[j].log_day.toLowerCase()]){
-                                $scope.timesheet.data[j].login = $scope.profile.details.company.work_schedule[$scope.timesheet.data[j].log_day.toLowerCase()]['in'];
-                                $scope.timesheet.data[j].logout = $scope.profile.details.company.work_schedule[$scope.timesheet.data[j].log_day.toLowerCase()]['out'];    
-                                $scope.timesheet.data[j].hrs = "9";
-                            }
-                            else {
-                                $scope.timesheet.data[j].login = '';
-                                $scope.timesheet.data[j].logout = '';    
-                                $scope.timesheet.data[j].hrs = '';   
-                            }
-                        }
+    //                     if(contains(['Regular','Rest Day'], day_checked)){
+    //                         if(day_checked == "Rest Day"){
+    //                             $scope.timesheet.data[j].login = '';
+    //                             $scope.timesheet.data[j].logout = '';
+    //                             $scope.timesheet.data[j].hrs = '';  
+    //                         }
+    //                     }
+    //                     else {  
+    //                         if($scope.profile.details.company.work_schedule[$scope.timesheet.data[j].log_day.toLowerCase()]){
+    //                             $scope.timesheet.data[j].login = $scope.profile.details.company.work_schedule[$scope.timesheet.data[j].log_day.toLowerCase()]['in'];
+    //                             $scope.timesheet.data[j].logout = $scope.profile.details.company.work_schedule[$scope.timesheet.data[j].log_day.toLowerCase()]['out'];    
+    //                             $scope.timesheet.data[j].hrs = "9";
+    //                         }
+    //                         else {
+    //                             $scope.timesheet.data[j].login = '';
+    //                             $scope.timesheet.data[j].logout = '';    
+    //                             $scope.timesheet.data[j].hrs = '';   
+    //                         }
+    //                     }
 
-                        new_timesheet.push({
-                            employee: $scope.timesheet.data[j].employee,
-                            employee_id : $scope.timesheet.data[j].employee_id,
-                            employees_pk : $scope.timesheet.data[j].employees_pk,
-                            hrs : $scope.timesheet.data[j].hrs,
-                            log_date : $scope.timesheet.data[j].log_date,
-                            log_day : $scope.timesheet.data[j].log_day,
-                            login : $scope.timesheet.data[j].login,
-                            logout : $scope.timesheet.data[j].logout,
-                            status : day_checked
-                        });
-                        done = true;
-                    }
-                }
+    //                     new_timesheet.push({
+    //                         employee: $scope.timesheet.data[j].employee,
+    //                         employee_id : $scope.timesheet.data[j].employee_id,
+    //                         employees_pk : $scope.timesheet.data[j].employees_pk,
+    //                         hrs : $scope.timesheet.data[j].hrs,
+    //                         log_date : $scope.timesheet.data[j].log_date,
+    //                         log_day : $scope.timesheet.data[j].log_day,
+    //                         login : $scope.timesheet.data[j].login,
+    //                         logout : $scope.timesheet.data[j].logout,
+    //                         status : day_checked
+    //                     });
+    //                     done = true;
+    //                 }
+    //             }
 
-                if(done == false){
-                    var z = date.split('-');
+    //             if(done == false){
+    //                 var z = date.split('-');
 
-                    if(z[1].length < 2){
-                        z[1] = "0" + z[1];
-                    }
+    //                 if(z[1].length < 2){
+    //                     z[1] = "0" + z[1];
+    //                 }
 
-                    if(z[2].length < 2){
-                        z[2] = "0" + z[2];
-                    }
+    //                 if(z[2].length < 2){
+    //                     z[2] = "0" + z[2];
+    //                 }
 
-                    date = z.join('-');
+    //                 date = z.join('-');
 
-                    var data = {
-                        log_date : date,
-                        log_day : dayofweek(a[i].getDay())
-                    };
+    //                 var data = {
+    //                     log_date : date,
+    //                     log_day : dayofweek(a[i].getDay())
+    //                 };
 
-                    var day_checked = check_day(data);
+    //                 var day_checked = check_day(data);
 
-                    var login, logout, hrs;
-                    if(contains(['Regular','Rest Day'], day_checked)){
-                        login = "None";
-                        logout = "None";
-                        hrs = "N/A";
+    //                 var login, logout, hrs;
+    //                 if(contains(['Regular','Rest Day'], day_checked)){
+    //                     login = "None";
+    //                     logout = "None";
+    //                     hrs = "N/A";
 
-                        if(day_checked == "Rest Day"){
-                            login = '';
-                            logout = '';
-                            hrs = '';
-                        }
-                    }
-                    else {
-                        login = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['in'];
-                        logout = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['out'];
-                        hrs = "9";
-                    }
+    //                     if(day_checked == "Rest Day"){
+    //                         login = '';
+    //                         logout = '';
+    //                         hrs = '';
+    //                     }
+    //                 }
+    //                 else {
+    //                     login = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['in'];
+    //                     logout = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['out'];
+    //                     hrs = "9";
+    //                 }
                     
-                    new_timesheet.push({
-                            employee: "",
-                            employee_id : "",
-                            employees_pk : "",
-                            hrs : hrs,
-                            log_date : date,
-                            log_day : dayofweek(a[i].getDay()),
-                            login : login,
-                            logout : logout,
-                            status : day_checked
-                        });
-                }
-            }
+    //                 new_timesheet.push({
+    //                         employee: "",
+    //                         employee_id : "",
+    //                         employees_pk : "",
+    //                         hrs : hrs,
+    //                         log_date : date,
+    //                         log_day : dayofweek(a[i].getDay()),
+    //                         login : login,
+    //                         logout : logout,
+    //                         status : day_checked
+    //                     });
+    //             }
+    //         }
             
-            $scope.timesheet.data = new_timesheet;
-        })  
-        .then(null, function(data){
+    //         $scope.timesheet.data = new_timesheet;
+    //     })  
+    //     .then(null, function(data){
 
-            //$scope.timesheet.status = false;
-            var a = getDates( datefrom, dateto );
+    //         //$scope.timesheet.status = false;
+    //         var a = getDates( datefrom, dateto );
             
-            var new_timesheet=[];
-            for(var i in a){
-                mm = a[i].getMonth()+1;
-                date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
+    //         var new_timesheet=[];
+    //         for(var i in a){
+    //             mm = a[i].getMonth()+1;
+    //             date = a[i].getFullYear() +"-"+ mm +"-"+ a[i].getDate();
 
-                var z = date.split('-');
+    //             var z = date.split('-');
 
-                if(z[1].length < 2){
-                    z[1] = "0" + z[1];
-                }
+    //             if(z[1].length < 2){
+    //                 z[1] = "0" + z[1];
+    //             }
 
-                if(z[2].length < 2){
-                    z[2] = "0" + z[2];
-                }
+    //             if(z[2].length < 2){
+    //                 z[2] = "0" + z[2];
+    //             }
 
-                date = z.join('-');
+    //             date = z.join('-');
 
-                var data = {
-                    log_date : date,
-                    log_day : dayofweek(a[i].getDay())
-                };
+    //             var data = {
+    //                 log_date : date,
+    //                 log_day : dayofweek(a[i].getDay())
+    //             };
 
-                var day_checked = check_day(data);
-                //console.log(day_checked);
-                var login, logout, hrs;
-                if(contains(['Regular','Rest Day'], day_checked)){
-                    login = "None";
-                    logout = "None";
-                    hrs = "N/A";
+    //             var day_checked = check_day(data);
+    //             //console.log(day_checked);
+    //             var login, logout, hrs;
+    //             if(contains(['Regular','Rest Day'], day_checked)){
+    //                 login = "None";
+    //                 logout = "None";
+    //                 hrs = "N/A";
 
-                    if(day_checked == "Rest Day"){
-                        login = '';
-                        logout = '';
-                        hrs = '';
-                    }
-                }
-                else {
-                    login = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['in'];
-                    logout = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['out'];
-                    hrs = "9";
-                }
+    //                 if(day_checked == "Rest Day"){
+    //                     login = '';
+    //                     logout = '';
+    //                     hrs = '';
+    //                 }
+    //             }
+    //             else {
+    //                 login = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['in'];
+    //                 logout = $scope.profile.details.company.work_schedule[dayofweek(a[i].getDay()).toLowerCase()]['out'];
+    //                 hrs = "9";
+    //             }
 
-                new_timesheet.push({
-                                employee: "",
-                                employee_id : "",
-                                employees_pk : "",
-                                hrs : hrs,
-                                log_date : date,
-                                log_day : dayofweek(a[i].getDay()),
-                                login : login,
-                                logout : logout,
-                                status : day_checked
-                            });
-            }            
+    //             new_timesheet.push({
+    //                             employee: "",
+    //                             employee_id : "",
+    //                             employees_pk : "",
+    //                             hrs : hrs,
+    //                             log_date : date,
+    //                             log_day : dayofweek(a[i].getDay()),
+    //                             login : login,
+    //                             logout : logout,
+    //                             status : day_checked
+    //                         });
+    //         }            
             
-            $scope.timesheet.data = new_timesheet;
-        });
-    }
+    //         $scope.timesheet.data = new_timesheet;
+    //     });
+    // }
 
     function check_day(data){
         var status;
@@ -522,7 +573,7 @@ app.controller('Timesheet', function(
         $scope.log.reason = '';
         $scope.log.time_log = new Date;
 
-        $scope.log.date_log = $scope.timesheet.data[key].log_date;
+        $scope.log.date_log = $scope.timesheet.data[key].datex;
         $scope.log.selectedTimeAsString;
         //$scope.employee = $scope.timesheet.data[key];
         $scope.modal = {
@@ -558,6 +609,7 @@ app.controller('Timesheet', function(
         .then(function(value){
             return false;
         }, function(value){
+            
             var a = new Date($scope.log.time_log);
             var Y = a.getFullYear();
             var month = a.getMonth();
@@ -565,8 +617,8 @@ app.controller('Timesheet', function(
             var H = a.getHours();
             var M = a.getMinutes(); 
 
-            $scope.log["employees_pk"] = $scope.profile.pk;
-            $scope.log["supervisor_pk"] = $scope.profile.supervisor_pk;
+            $scope.log.employees_pk = $scope.profile.pk;
+            $scope.log.supervisor_pk = $scope.profile.supervisor_pk;
             $scope.log.time_log = H + ":" + M ;
             $scope.log.type = type;
 
@@ -650,13 +702,14 @@ app.controller('Timesheet', function(
     $scope.open_overtime = function(k){
         // console.log($scope.timesheet.data[k]);
         // return false;
+
         var schedule = $scope.timesheet.data[k].schedule.split(' - ');
-        var logout = $scope.timesheet.data[k].logout.split(' ');
+        var logout = $scope.timesheet.data[k].logout_time.split(' ');
 
         var sched_logout = new Date(logout[0] +" "+schedule[1]);
-        var actual_logout = new Date($scope.timesheet.data[k].logout);
+        var actual_logout = new Date($scope.timesheet.data[k].logout_time);
 
-        var moment_time = $scope.timesheet.data[k].overtime_value;//moment.utc(moment(actual_logout,"DD/MM/YYYY HH:mm:ss").diff(moment(sched_logout,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
+        var moment_time = $scope.timesheet.data[k].overtime;//moment.utc(moment(actual_logout,"DD/MM/YYYY HH:mm:ss").diff(moment(sched_logout,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
 
         $scope.modal = {
 
@@ -667,6 +720,10 @@ app.controller('Timesheet', function(
             overtime : moment_time
         };
 
+        if($scope.profile.employee_type == 'Exempt'){
+            $scope.modal.type = 'Unpaid';
+        }
+
         ngDialog.openConfirm({
             template: 'OvertimeModal',
             className: 'ngdialog-theme-plain custom-widthfourfifty',
@@ -675,7 +732,7 @@ app.controller('Timesheet', function(
                     nestedConfirmDialog = ngDialog.openConfirm({
                         template:
                                 '<p></p>' +
-                                '<p>Apply Manual Log?</p>' +
+                                '<p>Apply Overtime?</p>' +
                                 '<div class="ngdialog-buttons">' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeThisDialog(0)">No' +
                                     '<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="confirm(1)">Yes' +
@@ -730,5 +787,66 @@ app.controller('Timesheet', function(
 
     $scope.pdf_timesheet = function(){
         window.open('./FUNCTIONS/Timelog/pdf_export.php');
+    }
+    
+    $scope.toggle_all = function(){
+        if($scope.toggleall){
+            for(var i in $scope.timesheet.data){
+                $scope.timesheet.data[i].toggle = true;
+            }
+        }
+        else {
+            for(var i in $scope.timesheet.data){
+                $scope.timesheet.data[i].toggle = false;
+            }
+        }
+    }
+
+    $scope.accept_timesheet = function(){
+        var cutoff = {
+            from: $filter('date')($scope.cutoff.from, "yyMMdd"),
+            to: $filter('date')($scope.cutoff.to, "yyMMdd")
+        };
+        
+        var timesheet = [];
+        
+        for(var i in $scope.timesheet.data){
+            // if($scope.timesheet.data[i].toggle == true){
+                //add the current cutoff because
+                //this needs to be saved as a reference
+                //for every timesheet
+                $scope.timesheet.data[i].cutoff = cutoff.from+"-"+cutoff.to;
+                timesheet.push(JSON.stringify($scope.timesheet.data[i]));
+            // }
+            // else {
+            //     $scope.timesheet.data[i].status = 'Absent';
+            //     timesheet.push(JSON.stringify($scope.timesheet.data[i]));
+
+            //     console.log($scope.timesheet.data[i]);
+            // }
+        }
+
+        // console.log(timesheet);
+        // return false;
+
+        var promise = TimelogFactory.accept_timesheet(timesheet);
+        promise.then(function(data){
+            UINotification.success({
+                                    message: 'You have successfully accepted your timesheet', 
+                                    title: 'SUCCESS', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+
+                                });
+        })
+        .then(null, function(data){
+            UINotification.error({
+                                    message: 'An error occured, unable to accept timesheet, please try again.', 
+                                    title: 'ERROR', 
+                                    delay : 5000,
+                                    positionY: 'top', positionX: 'right'
+                                });
+
+        });
     }
 });

@@ -1,10 +1,10 @@
-create table request_type (
+create table request_types (
 	pk serial primary key,
 	type text not null,
 	recipient int[] not null,
 	archived boolean default false
 );
-alter table request_type owner to chrs;
+alter table request_types owner to chrs;
 
 drop table requests_handlers;
 -- create table requests_handlers (
@@ -18,7 +18,7 @@ drop table requests_handlers;
 drop table requests cascade;
 create table requests (
 	pk serial primary key,
-	request_type_pk int references request_type(pk),
+	request_types_pk int references request_types(pk),
 	created_by int references employees(pk),
 	date_created timestamptz default now(),
 	archived boolean default false

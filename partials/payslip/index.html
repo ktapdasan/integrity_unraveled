@@ -1,0 +1,104 @@
+
+
+<style type="text/css">
+.red {
+    color: #ff0000;
+}
+.total{
+    font-size: 14px;
+    margin: 1px 0 -100px 0px;
+}
+.table1{
+    width: 100%;
+    margin:0 auto;
+    background-color:white;
+    font-size:12px;
+    margin-top:3px;
+    table-layout:fixed;
+}
+.table1 th, td {
+    text-align: left;
+    padding: 8px;
+    color:#3d3d3d;
+    border: 1px solid #c6c6c6;
+    overflow: hidden;
+
+}
+
+.table1 tr:nth-child(odd){background-color:#F9F9F9;}
+
+.table1 th {
+    font-size:13px;
+    background-color:white;
+    color: #3d3d3d;
+    border: 1px solid #c6c6c6;
+}
+.bck{
+    background-color: #F9F9F9;
+    height:80px;
+    width: 99%;
+
+    margin-left:5px;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+}  
+select{
+    background-color:#FBFBFB;
+    color:#433D43;
+    padding: 4px;
+    display: inline-block; 
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 14px;
+
+}
+</style>
+
+<div id="content2">
+    <div class="panel box-shadow-none content-header">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <h3 class="animated fadeInLeft">Payslip</h3>
+                <p class="animated fadeInDown">
+                    My Timesheet <span class="fa-angle-right fa"></span> 
+                    Payslip
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <b class="total">Total: 0</b>
+        
+        <table id="datatables-example" class="table1" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="width:15%;">Date Range</th>
+                    <th style="width:7%;">Total # of Tardiness</th>
+                    <th style="width:7%;">Total # of Undertime</th>
+                    <th style="width:9%;">Total # of Overtime</th>
+                    <th style="width:12%;">Total # of DPS</th>
+                    <th style="width:9%;">Total # of Suspension</th>
+                    <th style="width:10%;">Total # of Holidays</th>
+                    <th style="width:7%;">Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="timesheet.status" ng-repeat="(k, v) in timesheet.data" style="background-color:{{ (v.toggle)?'#f8f7a9':'' }};">
+                    <td>{{v.log_date}}</td>
+                    <td>{{v.tardiness}}</td> 
+                    <td>{{v.undertime}}</td> 
+                    <td>{{v.overtime}}</td> 
+                    <td ng-bind-html="v.dps"></td> 
+                    <td>{{v.suspension}}</td> 
+                    <td ng-bind-html="v.holidays"></td> 
+                    <td>
+                        <input type="button" class="medium button red fa-fa" value="PDF" ng-click="pdf_timesheet()">
+                    </td> 
+                </tr>               
+                <tr ng-if="!timesheet.status" style= "text-align: center;">
+                    <td colspan="8" style="text-align:center;">No Data Found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -57,6 +57,7 @@ $class = new Employees(
                             $_POST['flexi_friday'],
                             $_POST['flexi_saturday'],
                             $_POST['leave_balance'],
+                            $_POST['seminar_training'],
                             NULL,
                             NULL,
                             NULL
@@ -73,6 +74,7 @@ $company['titles_pk']                = pg_escape_string(strip_tags(trim($_POST['
 $company['supervisor_pk']            = pg_escape_string(strip_tags(trim($_POST['supervisor_pk'])));
 $company['date_started']             = pg_escape_string(strip_tags(trim($_POST['date_started'])));
 $company['business_email_address']   = pg_escape_string(strip_tags(trim($_POST['business_email_address'])));
+$company['training_seminars']        = pg_escape_string(strip_tags(trim($_POST['seminar_training'])));
 
     //Salary Type
     if ($_POST['salary_type'] == '1'){

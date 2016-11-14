@@ -44,7 +44,7 @@ class Request extends ClassParent {
         $sql = <<<EOT
                 with Q as
                 (
-                    select pk, type,recipient, unnest(recipient) as employees_pk from request_type
+                    select pk, type,recipient, unnest(recipient) as employees_pk from request_types
                     where archived = $this->archived
                     $where
                 ),
@@ -78,7 +78,7 @@ EOT;
 
 
 		 $sql = <<<EOT
-                insert into request_type
+                insert into request_types
                 (    
                     type,
                     recipient
@@ -99,7 +99,7 @@ EOT;
         $dat="{".$dat."}";
 
         $sql = <<<EOT
-                UPDATE request_type set
+                UPDATE request_types set
                 (
                     type,
                     recipient
@@ -120,7 +120,7 @@ EOT;
     public function deactivate_request_type(){
 
         $sql = <<<EOT
-                update request_type set 
+                update request_types set 
                 archived = true
                 where pk = $this->pk;
 EOT;
@@ -131,7 +131,7 @@ EOT;
     public function reactivate_request_type(){
 
         $sql = <<<EOT
-                update request_type set 
+                update request_types set 
                 archived = false
                 where pk = $this->pk;
 EOT;
@@ -154,10 +154,10 @@ EOT;
                     request_type_pk,
                     created_by,
                     date_created:: date as datecreated,
-                    (select type from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as type,
+                    (select type from request_types where pk = requests.request_type_pk order by date_created desc limit 1) as type,
                     (select remarks from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as reason,
                     (select status from requests_status where requests_pk = requests.pk order by date_created desc limit 1) as status,
-                    (select request_type.recipient from request_type where pk = requests.request_type_pk order by date_created desc limit 1) as recipient
+                    (select request_type.recipient from request_types where pk = requests.request_type_pk order by date_created desc limit 1) as recipient
                     from requests
                     where
                     date_created::date between '$date_from' and '$date_to'

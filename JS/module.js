@@ -10,7 +10,9 @@ var app = angular.module('onload', [
                                     'angularFileUpload',
                                     'chart.js',
                                     'mwl.calendar',
-                                    'colorpicker.module'
+                                    'colorpicker.module',
+                                    'cfp.hotkeys',
+                                    'cfp.loadingBar'
                                 ]);
 
 app.config(function($routeProvider){
@@ -34,6 +36,11 @@ app.config(function($routeProvider){
     {
         controller: 'Timesheet',
         templateUrl: 'partials/timesheet/index.html'
+    })
+    .when('/timesheet/payslip',
+    {
+        controller: 'Payslip',
+        templateUrl: 'partials/payslip/index.html'
     })
     /*.when('/timesheet/manual_logs',
     { 
@@ -180,11 +187,16 @@ app.config(function($routeProvider){
         controller: 'Management_DailyPassSlip',
         templateUrl: 'partials/management/dps.html'
     })
+    .when('/payroll/timesheet',
+    {
+        controller: 'Payroll',
+        templateUrl: 'partials/payroll/timesheet.html'
+    })
     .otherwise(
     {
         redirectTo: '/'
     })
-})
+});
 
 function contains(obj, str) {
     var i = obj.length;
